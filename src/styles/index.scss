@@ -10,7 +10,7 @@ body {
   min-width: 100vw;
   min-height: 100vh;
   font-family: $fontDefault;
-  background-image: linear-gradient(135deg, $accent 10%, $accentDark 100%);
+  background-image: linear-gradient(165deg, darken($accent, 5%) 25%, $accentDark 60%); //used to be 10% and 100%
 }
 
 input,

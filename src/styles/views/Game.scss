@@ -10,11 +10,11 @@
 .game {
   &.container {
     background: $background;
-    padding: 1.5em;
     border-radius: $borderRadius;
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 1.5em 34px;
     box-shadow: $dropShadow;
   }
   &.user-list {
@@ -35,7 +35,8 @@
 .player {
   &.container {
     margin: 0.5em 0;
-    width: 20em;
+    min-width: 20em;
+    flex-width: row;
     padding: 10px;
     border-radius: $borderRadius;
     display: flex;
@@ -48,12 +49,18 @@
   }
   &.username {
     font-weight: 500;
-    color: $accent;
+    color: $contrast;
+    cursor: pointer;
+    padding-right: 8px;
+    &:hover {
+      transform: scale(1.1);
+    }
   }
   &.id {
     margin-left: auto;
     margin-right: 10px;
     font-family: $fontMono;
     font-weight: 300;
+    padding-left: 2em;
   }
 }

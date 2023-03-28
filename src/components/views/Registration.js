@@ -2,24 +2,18 @@ import React, {useState} from 'react';
 import {api, handleError} from 'helpers/api';
 import {useHistory} from 'react-router-dom';
 import {Button} from 'components/ui/Button';
-import 'styles/views/Login.scss';
+import 'styles/views/Registration.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 
-/*
-It is possible to add multiple components inside a single file,
-however be sure not to clutter your files with an endless amount!
-As a rule of thumb, use one file per component and only add small,
-specific components that belong to the main one in the same file.
- */
 const FormField = props => {
     return (
-        <div className="login field">
-            <label className="login label">
+        <div className="registration field">
+            <label className="registration label">
                 {props.label}
             </label>
             <input
-                className="login input"
+                className="registration input"
                 placeholder={"enter your " + props.label.toLowerCase()}
                 value={props.value}
                 type={props.type}
@@ -37,15 +31,16 @@ FormField.propTypes = {
 };
 
 
-const Login = props => {
+const Registration = props => {
     const history = useHistory();
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
+    const [retypePassword, setRetypePassword] = useState(null);
 
-    const doLogin = async () => {
+    const doRegistration = async () => {
         try {
             const requestBody = JSON.stringify({username, password});
-            const response = await api.post('/login', requestBody);
+            const response = await api.post('/users', requestBody);
 
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('id', response.data.id);
@@ -56,22 +51,21 @@ const Login = props => {
                 localStorage.getItem('id')
             ]);
 
-            // Login successfully worked --> navigate to the route /game in the GameRouter
             history.push(`/game`);
         } catch (error) {
-            alert(`Something went wrong during login: \n${handleError(error)}`);
+            alert(`Something went wrong during registration: \n${handleError(error)}`);
         }
     };
 
     return (
         <BaseContainer>
-            <div className="login container">
-                <div className="login form">
-                    <h2>Login</h2>
+            <div className="registration container">
+                <div className="registration form">
+                    <h2>Registration</h2>
                     <FormField
-                        label="Username"
-                        value={username}
-                        onChange={un => setUsername(un)}
+                      label="Username"
+                      value={username}
+                      onChange={un => setUsername(un)}
                     />
                     <FormField
                         label="Password"
@@ -79,21 +73,27 @@ const Login = props => {
                         type="password"
                         onChange={pw => setPassword(pw)}
                     />
-                    <div className="login button-container">
+                    <FormField
+                        label="Confirm password"
+                        value={retypePassword}
+                        type="password"
+                        onChange={rp => setRetypePassword(rp)}
+                    />
+                    <div className="registration button-container">
                         <Button
-                            disabled={!username || !password}
+                            disabled={!username || !password || (password !== retypePassword)}
                             width="100%"
-                            onClick={() => doLogin()}
+                            onClick={() => doRegistration()}
                         >
-                            Login
+                          Create account
                         </Button>
                     </div>
-                    <div className="login button-container">
+                    <div className="registration button-container">
                         <Button
                             width="100%"
-                            onClick={() => history.push('/registration')}
+                            onClick={() => history.push('/login')}
                         >
-                        Register now!
+                          Return to login page
                         </Button>
                     </div>
                 </div>
@@ -102,8 +102,4 @@ const Login = props => {
     );
 };
 
-/**
- * You can get access to the history object's properties via the withRouter.
- * withRouter will pass updated match, location, and history props to the wrapped component whenever it renders.
- */
-export default Login;
+export default Registration;

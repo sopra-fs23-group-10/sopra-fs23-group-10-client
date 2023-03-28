@@ -12,14 +12,15 @@ import "styles/views/Header.scss";
  * @FunctionalComponent
  */
 const Header = props => (
-  <div className="header container" style={{height: props.height}}>
-    <h1 className="header title">SoPra FS23 rocks with React!</h1>
-    <ReactLogo width="60px" height="60px"/>
-  </div>
+    <div className="header container" style={{height: props.height}}>
+        <ReactLogo width="40px" height="40px"/>
+        <h1 className="header title">Cheese Trading Inc.</h1>
+        <ReactLogo width="40px" height="40px"/>
+    </div>
 );
 
 Header.propTypes = {
-  height: PropTypes.string
+    height: PropTypes.string
 };
 
 /**
