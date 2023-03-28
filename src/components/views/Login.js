@@ -50,14 +50,14 @@ const Login = props => {
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('id', response.data.id);
 
-            // Wait for token and id to be set to avoid errors in /Game
+            // Wait for token and id to be set to avoid errors in /Home
             await Promise.all([
                 localStorage.getItem('token'),
                 localStorage.getItem('id')
             ]);
 
-            // Login successfully worked --> navigate to the route /game in the GameRouter
-            history.push(`/game`);
+            // Login successfully worked --> navigate to the route /home in the HomeRouter
+            history.push(`/home`);
         } catch (error) {
             alert(`Something went wrong during login: \n${handleError(error)}`);
         }

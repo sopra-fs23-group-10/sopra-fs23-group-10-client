@@ -26,7 +26,7 @@ Player.propTypes = {
     user: PropTypes.object
 };
 
-const Game = () => {
+const Home = () => {
     // use react-router-dom's hook to access the history
     const history = useHistory();
 
@@ -118,4 +118,4 @@ const Game = () => {
     );
 }
 
-export default Game;
+export default Home;
