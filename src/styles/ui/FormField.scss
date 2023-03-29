@@ -1,0 +1,22 @@
+@import 'styles/theme';
+
+.input {
+    border-style: solid;
+    border-color: $disabled_button;
+    border-radius: $borderRadius;
+    background-color: $off_white;
+    border-width: 1.5px;
+    width:100%;
+    height: 45px;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.field {
+    display: block;
+    padding-bottom: $base_padding;
+}
+
+.label {
+    width: 100%;
+}

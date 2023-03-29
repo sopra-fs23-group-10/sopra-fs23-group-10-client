@@ -4,36 +4,12 @@ import {useHistory} from 'react-router-dom';
 import {Button} from 'components/ui/Button';
 import 'styles/views/Registration.scss';
 import BaseContainer from "components/ui/BaseContainer";
-import PropTypes from "prop-types";
-
-const FormField = props => {
-    return (
-        <div className="registration field">
-            <label className="registration label">
-                {props.label}
-            </label>
-            <input
-                className="registration input"
-                placeholder={"enter your " + props.label.toLowerCase()}
-                value={props.value}
-                type={props.type}
-                onChange={e => props.onChange(e.target.value)}
-            />
-        </div>
-    );
-};
-
-FormField.propTypes = {
-    label: PropTypes.string,
-    value: PropTypes.string,
-    type: PropTypes.string,
-    onChange: PropTypes.func
-};
-
+import {FormField} from "components/ui/FormField";
 
 const Registration = props => {
     const history = useHistory();
     const [username, setUsername] = useState(null);
+    const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
     const [retypePassword, setRetypePassword] = useState(null);
 
@@ -59,11 +35,15 @@ const Registration = props => {
 
     return (
         <BaseContainer>
-            <h2>Registration</h2>
             <FormField
               label="Username"
               value={username}
               onChange={un => setUsername(un)}
+            />
+            <FormField
+              label="Email"
+              value={email}
+              onChange={e => setEmail(e)}
             />
             <FormField
                 label="Password"
@@ -79,7 +59,7 @@ const Registration = props => {
             />
             <div className="registration button-container">
                 <Button
-                    disabled={!username || !password || (password !== retypePassword)}
+                    disabled={!username || !password || !email || (password !== retypePassword)}
                     width="100%"
                     onClick={() => doRegistration()}
                 >

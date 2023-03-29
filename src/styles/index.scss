@@ -13,6 +13,11 @@ body {
   background-image: linear-gradient(165deg, darken($background_orange, 5%) 25%, $background_red 60%); //used to be 10% and 100%
 }
 
+h2,h1 {
+  margin:0px;
+  padding:0px;
+}
+
 input,
 textarea,
 select,

@@ -2,9 +2,8 @@
 
 .base-container {
   margin-left: auto;
-  padding-left: 15px;
+  padding: $base_padding;
   margin-right: auto;
-  padding-right: 15px;
   border-radius: $borderRadius;
   max-width: $DESKTOP_WIDTH;
   background-color: $off_white;
