@@ -7,6 +7,7 @@
   &:disabled {
     cursor: default;
     opacity: 0.4;
+    background-color: $disabled_button;
     &:hover {
       transform: none;
     }
@@ -21,7 +22,7 @@
   border-radius: $borderRadius;
   cursor: pointer;
   opacity: 1;
-  color: $background;
-  background-color: $contrast;
+  color: $off_white;
+  background-color: $secondary_color;
   transition: all 0.3s ease;
 }
