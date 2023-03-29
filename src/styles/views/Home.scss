@@ -9,7 +9,7 @@
 
 .game {
   &.container {
-    background: $background;
+    background: $off_white;
     border-radius: $borderRadius;
     display: flex;
     flex-direction: column;
@@ -41,7 +41,7 @@
     border-radius: $borderRadius;
     display: flex;
     align-items: center;
-    background: lighten($background, 5);
+    background: lighten($off_white, 5);
   }
   &.name {
     font-weight: 300;
@@ -49,7 +49,6 @@
   }
   &.username {
     font-weight: 500;
-    color: $contrast;
     cursor: pointer;
     padding-right: 8px;
     &:hover {

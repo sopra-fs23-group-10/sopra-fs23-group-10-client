@@ -4,7 +4,6 @@ import User from 'models/User';
 import {generatePath, useHistory, useParams} from 'react-router-dom';
 import {Button} from 'components/ui/Button';
 import 'styles/views/UserProfile.scss';
-import 'styles/ui/Birthday.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 
