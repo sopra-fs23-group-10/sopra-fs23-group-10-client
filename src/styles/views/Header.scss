@@ -1,6 +1,8 @@
 @import 'styles/theme';
 
 .header {
+  font-family: $fontDisplay;
+  font-size: 100px;
   &.container {
     @include center;
   }
