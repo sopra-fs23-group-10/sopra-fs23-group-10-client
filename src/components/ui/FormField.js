@@ -8,7 +8,7 @@ export const FormField = props => {
           {props.label}
         </label>
         <input
-          type={props.visible ? "text" : "password"}
+          type={props.type}
           className="input"
           placeholder="enter here.."
           value={props.value}
@@ -20,7 +20,7 @@ export const FormField = props => {
   
 FormField.propTypes = {
     label: PropTypes.string,
-    visible: PropTypes.bool,
+    type: PropTypes.string,
     value: PropTypes.string,
     onChange: PropTypes.func
 };
