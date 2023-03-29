@@ -5,7 +5,6 @@ import {generatePath, useHistory, useParams} from 'react-router-dom';
 import {Button} from 'components/ui/Button';
 import 'styles/views/UserProfile.scss';
 import BaseContainer from "components/ui/BaseContainer";
-import {Spinner} from "../ui/Spinner";
 import PropTypes from "prop-types";
 
 
@@ -91,7 +90,7 @@ const ProfileEditor = props => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    let editorFields = <Spinner/>;
+    let editorFields = <div>waiting</div>;
 
     if (username !== null) {
         editorFields = (

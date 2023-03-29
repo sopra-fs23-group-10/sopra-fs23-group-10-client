@@ -1,11 +1,10 @@
 import {useEffect, useState} from 'react';
 import {api, handleError} from 'helpers/api';
-import {Spinner} from 'components/ui/Spinner';
 import {Button} from 'components/ui/Button';
 import {generatePath, Link, useHistory} from 'react-router-dom';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
-import "styles/views/Game.scss";
+import "styles/views/Home.scss";
 
 
 const Player = ({user}) => (
@@ -84,7 +83,7 @@ const Home = () => {
         // eslint-disable-next-line
     }, []);
 
-    let userList = <Spinner/>;
+    let userList = <div>waiting</div>;
 
     if (users) {
         userList = (

@@ -6,7 +6,6 @@ import {Button} from 'components/ui/Button';
 import 'styles/views/UserProfile.scss';
 import 'styles/ui/Birthday.scss';
 import BaseContainer from "components/ui/BaseContainer";
-import {Spinner} from "../ui/Spinner";
 import PropTypes from "prop-types";
 
 
@@ -87,7 +86,7 @@ const UserProfile = props => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    let profileFields = <Spinner/>;
+    let profileFields = <div>waiting</div>;
 
     if (username) {
         profileFields = (
