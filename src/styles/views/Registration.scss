@@ -2,9 +2,13 @@
 
 .registration {
   &.container {
-    min-width: 300px;
+    min-width: 500px;
     max-width: 1000px;
     width:40%;
+
+    &.secondary {
+      margin-top: $base_padding;
+    }
   }
   &.form {
     display: flex;

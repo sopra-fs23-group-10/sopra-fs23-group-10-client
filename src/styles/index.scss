@@ -18,6 +18,15 @@ h2,h1 {
   padding:0px;
 }
 
+a {
+  color: $secondary_color;
+  text-decoration: none;
+  &:hover {
+    color: $disabled_button;
+    transition: color 0.3s ease;
+  }
+}
+
 input,
 textarea,
 select,
