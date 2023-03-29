@@ -65,38 +65,34 @@ const Login = props => {
 
     return (
         <BaseContainer>
-            <div className="login container">
-                <div className="login form">
-                    <h2>Login</h2>
-                    <FormField
-                        label="Username"
-                        value={username}
-                        onChange={un => setUsername(un)}
-                    />
-                    <FormField
-                        label="Password"
-                        value={password}
-                        type="password"
-                        onChange={pw => setPassword(pw)}
-                    />
-                    <div className="login button-container">
-                        <Button
-                            disabled={!username || !password}
-                            width="100%"
-                            onClick={() => doLogin()}
-                        >
-                            Login
-                        </Button>
-                    </div>
-                    <div className="login button-container">
-                        <Button
-                            width="100%"
-                            onClick={() => history.push('/registration')}
-                        >
-                        Register now!
-                        </Button>
-                    </div>
-                </div>
+            <h2>Login</h2>
+            <FormField
+                label="Username"
+                value={username}
+                onChange={un => setUsername(un)}
+            />
+            <FormField
+                label="Password"
+                value={password}
+                type="password"
+                onChange={pw => setPassword(pw)}
+            />
+            <div className="login button-container">
+                <Button
+                    disabled={!username || !password}
+                    width="100%"
+                    onClick={() => doLogin()}
+                >
+                    Login
+                </Button>
+            </div>
+            <div className="login button-container">
+                <Button
+                    width="100%"
+                    onClick={() => history.push('/registration')}
+                >
+                Register now!
+                </Button>
             </div>
         </BaseContainer>
     );
