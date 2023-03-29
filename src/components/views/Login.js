@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {api, handleError} from 'helpers/api';
-import {useHistory} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import {Button} from 'components/ui/Button';
 import 'styles/views/Login.scss';
 import BaseContainer from "components/ui/BaseContainer";
@@ -42,8 +42,7 @@ const Login = props => {
 
     return (
         <>
-            <BaseContainer>
-                <h2>Login</h2>
+            <BaseContainer className="login container">
                 <FormField
                     label="Username"
                     value={username}
@@ -65,13 +64,13 @@ const Login = props => {
                     </Button>
                 </div>
             </BaseContainer>
-            <BaseContainer>
+            <BaseContainer className="login container">
                 <div className="login button-container">
                     <Button
                         width="100%"
                         onClick={() => history.push('/registration')}
                     >
-                        Register now!
+                        No account yet?
                     </Button>
                 </div>
             </BaseContainer>
