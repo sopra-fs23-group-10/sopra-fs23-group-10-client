@@ -20,7 +20,7 @@ const AppRouter = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/hone">
+        <Route path="/home">
           <HomeGuard>
             <HomeRouter base="/home"/>
           </HomeGuard>

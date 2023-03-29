@@ -1,5 +1,4 @@
 import React from "react";
-import {ReactLogo} from "components/ui/ReactLogo";
 import PropTypes from "prop-types";
 import "styles/views/Header.scss";
 
@@ -13,9 +12,7 @@ import "styles/views/Header.scss";
  */
 const Header = props => (
     <div className="header container" style={{height: props.height}}>
-        <ReactLogo width="40px" height="40px"/>
         <h1 className="header title">Cheese Trading Inc.</h1>
-        <ReactLogo width="40px" height="40px"/>
     </div>
 );
 
