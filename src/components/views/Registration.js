@@ -59,44 +59,40 @@ const Registration = props => {
 
     return (
         <BaseContainer>
-            <div className="registration container">
-                <div className="registration form">
-                    <h2>Registration</h2>
-                    <FormField
-                      label="Username"
-                      value={username}
-                      onChange={un => setUsername(un)}
-                    />
-                    <FormField
-                        label="Password"
-                        value={password}
-                        type="password"
-                        onChange={pw => setPassword(pw)}
-                    />
-                    <FormField
-                        label="Confirm password"
-                        value={retypePassword}
-                        type="password"
-                        onChange={rp => setRetypePassword(rp)}
-                    />
-                    <div className="registration button-container">
-                        <Button
-                            disabled={!username || !password || (password !== retypePassword)}
-                            width="100%"
-                            onClick={() => doRegistration()}
-                        >
-                          Create account
-                        </Button>
-                    </div>
-                    <div className="registration button-container">
-                        <Button
-                            width="100%"
-                            onClick={() => history.push('/login')}
-                        >
-                          Return to login page
-                        </Button>
-                    </div>
-                </div>
+            <h2>Registration</h2>
+            <FormField
+              label="Username"
+              value={username}
+              onChange={un => setUsername(un)}
+            />
+            <FormField
+                label="Password"
+                value={password}
+                type="password"
+                onChange={pw => setPassword(pw)}
+            />
+            <FormField
+                label="Confirm password"
+                value={retypePassword}
+                type="password"
+                onChange={rp => setRetypePassword(rp)}
+            />
+            <div className="registration button-container">
+                <Button
+                    disabled={!username || !password || (password !== retypePassword)}
+                    width="100%"
+                    onClick={() => doRegistration()}
+                >
+                  Create account
+                </Button>
+            </div>
+            <div className="registration button-container">
+                <Button
+                    width="100%"
+                    onClick={() => history.push('/login')}
+                >
+                  Return to login page
+                </Button>
             </div>
         </BaseContainer>
     );

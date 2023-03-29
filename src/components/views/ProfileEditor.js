@@ -113,28 +113,24 @@ const ProfileEditor = props => {
 
     return (
         <BaseContainer>
-            <div className="user-profile container">
-                <div className="user-profile form">
-                    {editorFields}
-                    <div style={{display:"inline-block"}}>
-                        <Button
-                            style={{color:"red", float:"left"}}
-                            width="49%"
-                            onClick={() => history.push('/users/' + user_id)}
-                        >
-                            Abort and go back
-                        </Button>
-                        <Button
-                            style={{color:"darkgreen", float:"right"}}
-                            width="49%"
-                            hidden={false}
-                            disabled={!username}
-                            onClick={() => commitChanges()}
-                        >
-                            Save changes
-                        </Button>
-                    </div>
-                </div>
+            {editorFields}
+            <div style={{display:"inline-block"}}>
+                <Button
+                    style={{color:"red", float:"left"}}
+                    width="49%"
+                    onClick={() => history.push('/users/' + user_id)}
+                >
+                    Abort and go back
+                </Button>
+                <Button
+                    style={{color:"darkgreen", float:"right"}}
+                    width="49%"
+                    hidden={false}
+                    disabled={!username}
+                    onClick={() => commitChanges()}
+                >
+                    Save changes
+                </Button>
             </div>
         </BaseContainer>
     );

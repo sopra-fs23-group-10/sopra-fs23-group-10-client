@@ -119,25 +119,21 @@ const UserProfile = props => {
 
     return (
         <BaseContainer>
-            <div className="user-profile container">
-                <div className="user-profile form">
-                    {profileFields}
-                    <Button
-                        width="100%"
-                        hidden={localStorage.getItem('id') !== user_id}
-                        onClick={() => history.push('/users/edit/' + user_id)}
-                    >
-                        Edit profile
-                    </Button>
-                    &nbsp;
-                    <Button
-                        width="100%"
-                        onClick={() => history.push('/game')}
-                    >
-                        Back to dashboard
-                    </Button>
-                </div>
-            </div>
+            {profileFields}
+            <Button
+                width="100%"
+                hidden={localStorage.getItem('id') !== user_id}
+                onClick={() => history.push('/users/edit/' + user_id)}
+            >
+                Edit profile
+            </Button>
+            &nbsp;
+            <Button
+                width="100%"
+                onClick={() => history.push('/game')}
+            >
+                Back to dashboard
+            </Button>
         </BaseContainer>
     );
 }
