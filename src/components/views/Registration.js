@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {api, handleError} from 'helpers/api';
-import {useHistory} from 'react-router-dom';
+import {useHistory, Link} from 'react-router-dom';
 import {Button} from 'components/ui/Button';
 import 'styles/views/Registration.scss';
 import BaseContainer from "components/ui/BaseContainer";
@@ -34,47 +34,45 @@ const Registration = props => {
     };
 
     return (
-        <BaseContainer className="registration container">
-            <FormField
-              label="Username"
-              value={username}
-              onChange={un => setUsername(un)}
-            />
-            <FormField
-              label="Email"
-              value={email}
-              onChange={e => setEmail(e)}
-            />
-            <FormField
-                label="Password"
-                value={password}
-                type="password"
-                onChange={pw => setPassword(pw)}
-            />
-            <FormField
-                label="Confirm password"
-                value={retypePassword}
-                type="password"
-                onChange={rp => setRetypePassword(rp)}
-            />
-            <div className="registration button-container">
-                <Button
-                    disabled={!username || !password || !email || (password !== retypePassword)}
-                    width="100%"
-                    onClick={() => doRegistration()}
-                >
-                  Create account
-                </Button>
-            </div>
-            <div className="registration button-container">
-                <Button
-                    width="100%"
-                    onClick={() => history.push('/login')}
-                >
-                  Return to login page
-                </Button>
-            </div>
-        </BaseContainer>
+        <>
+            <BaseContainer className="registration container">
+                <FormField
+                label="Username"
+                value={username}
+                onChange={un => setUsername(un)}
+                />
+                <FormField
+                label="Email"
+                value={email}
+                onChange={e => setEmail(e)}
+                />
+                <FormField
+                    label="Password"
+                    value={password}
+                    type="password"
+                    onChange={pw => setPassword(pw)}
+                />
+                <FormField
+                    label="Confirm password"
+                    value={retypePassword}
+                    type="password"
+                    onChange={rp => setRetypePassword(rp)}
+                />
+                <div className="registration button-container">
+                    <Button
+                        disabled={!username || !password || !email || (password !== retypePassword)}
+                        width="100%"
+                        onClick={() => doRegistration()}
+                    >
+                    Create account
+                    </Button>
+                </div>
+
+            </BaseContainer>
+            <BaseContainer className="registration container secondary">
+                Already have an account? <Link to="/login">Sign in here.</Link>
+            </BaseContainer>
+        </>
     );
 };
 
