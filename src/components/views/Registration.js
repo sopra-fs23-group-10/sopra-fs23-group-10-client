@@ -34,7 +34,7 @@ const Registration = props => {
     };
 
     return (
-        <BaseContainer>
+        <BaseContainer className="registration container">
             <FormField
               label="Username"
               value={username}
