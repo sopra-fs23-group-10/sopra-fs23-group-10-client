@@ -1,6 +1,6 @@
 import Header from "components/views/Header";
 import AppRouter from "components/routing/routers/AppRouter";
-import bg from "BG.png";
+import bg from "images/BG.png";
 
 /**
  * Happy coding!
