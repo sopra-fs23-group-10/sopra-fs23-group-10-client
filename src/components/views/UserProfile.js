@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {api, handleError} from 'helpers/api';
+import {fetchUserData} from 'helpers/api';
 import User from 'models/User';
 import {generatePath, useHistory, useParams} from 'react-router-dom';
 import {Button} from 'components/ui/Button';
@@ -53,36 +53,33 @@ const UserProfile = props => {
     useEffect(() => {
         async function fetchData() {
             try {
-                const authToken = localStorage.getItem('token');
-                const response = await api.get(generatePath('/users/:userId', {userId: user_id}), {headers: {token: authToken}});
+                const userData = await fetchUserData(user_id);
 
-                const user = new User(response.data);
+                const user = new User(userData);
 
                 setUsername(user.username);
                 setStatus(user.status);
-                const reformDate = user.creationDate.slice(0,16).split("T");
+                const reformDate = user.creationDate.slice(0, 16).split("T");
                 reformDate[0] = reformDate[0].split("-");
-                setCreationDate(reformDate[0][2] + "." + reformDate[0][1] + "." + reformDate[0][0] + " at " + reformDate[1]);
+                setCreationDate(
+                    reformDate[0][2] +
+                    "." +
+                    reformDate[0][1] +
+                    "." +
+                    reformDate[0][0] +
+                    " at " +
+                    reformDate[1]
+                );
                 setBirthdayDate(user.birthdayDate ? user.birthdayDate.split("T")[0] : null);
 
-                // This is just some data for you to see what is available.
-                // Feel free to remove it.
-                console.log('request to:', response.request.responseURL);
-                console.log('status code:', response.status);
-                console.log('status text:', response.statusText);
-                console.log('requested data:', response.data);
-
-                // See here to get more data.
-                console.log(response);
+                console.log('requested data:', userData);
             } catch (error) {
-                console.error(`Something went wrong while fetching the user data: \n${handleError(error)}`);
-                console.error("Details:", error);
+                console.error(error.message);
                 alert("Something went wrong while fetching the user data! See the console for details.");
             }
         }
 
         fetchData();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     let profileFields = <div>waiting</div>;
