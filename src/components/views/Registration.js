@@ -5,6 +5,7 @@ import {Button} from 'components/ui/Button';
 import 'styles/views/Registration.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import {FormField} from "components/ui/FormField";
+import Player from "components/ui/Player";
 
 const Registration = props => {
     const history = useHistory();

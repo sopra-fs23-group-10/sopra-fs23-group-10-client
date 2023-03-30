@@ -3,28 +3,10 @@ import {api, handleError} from 'helpers/api';
 import {Button} from 'components/ui/Button';
 import {generatePath, Link, useHistory} from 'react-router-dom';
 import BaseContainer from "components/ui/BaseContainer";
-import PropTypes from "prop-types";
 import HomeHeader from "components/views/HomeHeader";
 import "styles/views/Home.scss";
+import Player from "components/ui/Player";
 
-
-const Player = ({user}) => (
-    <div className="player container">
-        <Link
-            to={{pathname:generatePath('/users/:userId', {userId: user.id})}}
-            style={{textDecoration: 'none', color: 'inherit'}}>
-            <div className="player username">
-                {user.username}
-            </div>
-        </Link>
-            <div className="player name">{user.name}</div>
-        <div className="player id">id: {user.id}</div>
-    </div>
-);
-
-Player.propTypes = {
-    user: PropTypes.object
-};
 
 const Home = () => {
     // use react-router-dom's hook to access the history
