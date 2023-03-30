@@ -20,7 +20,6 @@ const Registration = props => {
                 alert("Email format is incorrect");
                 return;
             }
-
             const requestBody = JSON.stringify({username, password, email});
             const response = await api.post('/users', requestBody);
 

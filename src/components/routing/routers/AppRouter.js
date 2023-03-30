@@ -6,6 +6,7 @@ import Registration from "../../views/Registration";
 import Login from "../../views/Login";
 import UserProfile from "../../views/UserProfile";
 import ProfileEditor from "../../views/ProfileEditor";
+import ForgotPassword from "../../views/ForgotPassword";
 
 /**
  * Main router of your application.
@@ -43,6 +44,11 @@ const AppRouter = () => {
         <Route exact path="/login">
           <LoginGuard>
             <Login/>
+          </LoginGuard>
+        </Route>
+        <Route exact path="/forgotPassword">
+          <LoginGuard>
+            <ForgotPassword/>
           </LoginGuard>
         </Route>
         <Route exact path="/">
