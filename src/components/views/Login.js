@@ -48,12 +48,17 @@ const Login = props => {
                     value={username}
                     onChange={un => setUsername(un)}
                 />
-                <FormField
-                    label="Password"
-                    value={password}
-                    type="password"
-                    onChange={pw => setPassword(pw)}
-                />
+                <>
+                    <div className="label-container">
+                        Password
+                        <Link to="/registration" style={{textAlign: "right"}}>Forgot Password?</Link>
+                    </div>
+                    <FormField
+                        value={password}
+                        type="password"
+                        onChange={pw => setPassword(pw)}
+                    />
+                </>
                 <div className="login button-container">
                     <Button
                         disabled={!username || !password}
@@ -64,15 +69,8 @@ const Login = props => {
                     </Button>
                 </div>
             </BaseContainer>
-            <BaseContainer className="login container">
-                <div className="login button-container">
-                    <Button
-                        width="100%"
-                        onClick={() => history.push('/registration')}
-                    >
-                        No account yet?
-                    </Button>
-                </div>
+            <BaseContainer className="login container secondary">
+                No account yet? <Link to ="/registration">  Register here.</Link>
             </BaseContainer>
         </>
 

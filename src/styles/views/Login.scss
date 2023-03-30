@@ -6,6 +6,9 @@
     max-width: 1000px;
     width: 40%;
   }
+  &.secondary {
+    margin-top: $base_padding;
+  }
   &.form {
     display: flex;
     flex-direction: column;
@@ -48,5 +51,9 @@
   }
   & p,h2 {
     margin: 0.5em 0;
+  }
+  .label-container{
+    display:flex;
+    justify-content: space-between;
   }
 }
