@@ -51,7 +51,7 @@ const Login = props => {
                 <>
                     <div className="label-container">
                         Password
-                        <Link to="/registration" style={{textAlign: "right"}}>Forgot Password?</Link>
+                        <Link to="/forgotPassword" style={{textAlign: "right"}}>Forgot Password?</Link>
                     </div>
                     <FormField
                         value={password}
