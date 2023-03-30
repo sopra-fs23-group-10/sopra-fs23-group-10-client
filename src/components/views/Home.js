@@ -107,7 +107,7 @@ const Home = () => {
     }
 
     return (
-        <BaseContainer className="game container">
+        <BaseContainer>
             <h2>Welcome!</h2>
             <p className="game paragraph">
                 Get all users from secure endpoint:
