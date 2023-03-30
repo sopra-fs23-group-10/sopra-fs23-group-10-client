@@ -8,15 +8,6 @@
  */
 
 .game {
-  &.container {
-    background: $off_white;
-    border-radius: $borderRadius;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 1.5em 34px;
-    box-shadow: $dropShadow;
-  }
   &.user-list {
     list-style: none;
     padding-left: 0;

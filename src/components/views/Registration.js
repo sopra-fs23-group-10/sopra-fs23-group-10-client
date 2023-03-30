@@ -15,6 +15,10 @@ const Registration = props => {
 
     const doRegistration = async () => {
         try {
+            if (!validateEmailFormat(email)) {
+                alert("Email format is incorrect");
+                return;
+            }
             const requestBody = JSON.stringify({username, password, email});
             const response = await api.post('/users', requestBody);
 
@@ -32,6 +36,11 @@ const Registration = props => {
             alert(`Something went wrong during registration: \n${handleError(error)}`);
         }
     };
+
+    const validateEmailFormat = (email) => {
+        const emailPattern = new RegExp('[a-zA-Z0-9.]+@[a-zA-Z]+.[a-zA-Z]+');
+        return emailPattern.test(email);
+    }
 
     return (
         <>
