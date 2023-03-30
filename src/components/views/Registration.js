@@ -58,16 +58,13 @@ const Registration = props => {
                     type="password"
                     onChange={rp => setRetypePassword(rp)}
                 />
-                <div className="registration button-container">
-                    <Button
-                        disabled={!username || !password || !email || (password !== retypePassword)}
-                        width="100%"
-                        onClick={() => doRegistration()}
-                    >
-                    Create account
-                    </Button>
-                </div>
-
+                <Button
+                    disabled={!username || !password || !email || (password !== retypePassword)}
+                    width="100%"
+                    onClick={() => doRegistration()}
+                >
+                Create account
+                </Button>
             </BaseContainer>
             <BaseContainer className="registration container secondary">
                 Already have an account? <Link to="/login">Sign in here.</Link>
