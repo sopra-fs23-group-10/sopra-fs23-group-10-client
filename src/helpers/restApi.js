@@ -86,7 +86,9 @@ export const loginUser = async (username, password) => {
   }
 };
 
-export const fetchUserData = async (userId) => {
+
+
+export const fetchUserById = async (userId) => {
   try {
     const authToken = localStorage.getItem('token');
     const response = await restApi.get(`/users/${userId}`, {headers: {token: authToken}});
@@ -97,14 +99,35 @@ export const fetchUserData = async (userId) => {
   }
 };
 
-export const fetchUserById = async (userId) => {
+export const logoutUser = async () => {
   try {
-    const authToken = localStorage.getItem('token');
-    const response = await restApi.get(`/users/${userId}`, {headers: {token: authToken}});
-
+    const id = localStorage.getItem('id');
+    const requestBody = JSON.stringify({id});
+    const response = await restApi.post('/logout', requestBody, {headers: {token: localStorage.getItem('token')}});
+    localStorage.removeItem('token');
+    localStorage.removeItem('id');
     return response.data;
   } catch (error) {
     throw new Error(`Something went wrong while fetching the user data: \n${handleError(error)}`);
+  }
+};
+
+export const fetchUsers = async () => {
+  try {
+    const authToken = localStorage.getItem('token');
+    const response = await restApi.get('/users', {headers: {token: authToken}});
+    console.log('request to:', response.request.responseURL);
+    console.log('status code:', response.status);
+    console.log('status text:', response.statusText);
+    console.log('requested data:', response.data);
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.error(`Something went wrong while fetching the users: \n${handleError(error)}`);
+    console.error("Details:", error);
+    alert("Something went wrong while fetching the users! See the console for details.");
+    localStorage.removeItem("token");
+    localStorage.removeItem("id");
   }
 };
 

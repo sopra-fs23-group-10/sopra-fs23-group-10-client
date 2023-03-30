@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {fetchUserData} from 'helpers/restApi';
+import {fetchUserById} from 'helpers/restApi';
 import User from 'models/User';
 import {generatePath, useHistory, useParams} from 'react-router-dom';
 import {Button} from 'components/ui/Button';
@@ -53,7 +53,7 @@ const UserProfile = props => {
     useEffect(() => {
         async function fetchData() {
             try {
-                const userData = await fetchUserData(user_id);
+                const userData = await fetchUserById(user_id);
 
                 const user = new User(userData);
 

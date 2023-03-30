@@ -1,7 +1,4 @@
 import React, {useState} from 'react';
-import {restApi, handleError} from 'helpers/restApi';
-import {useHistory, Link} from 'react-router-dom';
-import {Button} from 'components/ui/Button';
 import 'styles/views/Registration.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import {FormField} from "components/ui/FormField";
