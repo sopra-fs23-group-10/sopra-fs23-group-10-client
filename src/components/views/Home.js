@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import {api, handleError} from 'helpers/api';
+import {restApi, handleError} from 'helpers/restApi';
 import {Button} from 'components/ui/Button';
 import {generatePath, Link, useHistory} from 'react-router-dom';
 import BaseContainer from "components/ui/BaseContainer";
@@ -40,7 +40,7 @@ const Home = () => {
     const logout = async () => {
         const id = localStorage.getItem('id');
         const requestBody = JSON.stringify({id});
-        await api.post('/logout', requestBody, {headers: {token: localStorage.getItem('token')}});
+        await restApi.post('/logout', requestBody, {headers: {token: localStorage.getItem('token')}});
 
         localStorage.removeItem('token');
         localStorage.removeItem('id');
@@ -56,7 +56,7 @@ const Home = () => {
         async function fetchData() {
             try {
                 const authToken = localStorage.getItem('token');
-                const response = await api.get('/users', {headers: {token: authToken}});
+                const response = await restApi.get('/users', {headers: {token: authToken}});
 
                 // Get the returned users and update the state.
                 setUsers(response.data);

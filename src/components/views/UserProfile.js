@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {fetchUserData} from 'helpers/api';
+import {fetchUserData} from 'helpers/restApi';
 import User from 'models/User';
 import {generatePath, useHistory, useParams} from 'react-router-dom';
 import {Button} from 'components/ui/Button';

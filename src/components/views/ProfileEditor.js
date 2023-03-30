@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {api, fetchUserById, handleError} from 'helpers/api';
+import {restApi, fetchUserById, handleError, updateUser} from 'helpers/restApi';
 import User from 'models/User';
 import {generatePath, useHistory, useParams} from 'react-router-dom';
 import {Button} from 'components/ui/Button';
@@ -48,9 +48,7 @@ const ProfileEditor = props => {
 
     const commitChanges = async () => {
         try {
-            const authToken = localStorage.getItem('token');
-            const requestBody = JSON.stringify({username, birthdayDate});
-            await api.put(generatePath('/users/:userId', {userId: user_id}), requestBody, {headers: {token: authToken}});
+            await updateUser(user_id, username, birthdayDate);
 
             history.push(`/users/` + user_id);
         } catch (error) {

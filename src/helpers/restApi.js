@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getDomain } from 'helpers/getDomain';
 
-export const api = axios.create({
+export const restApi = axios.create({
   baseURL: getDomain(),
   headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
 });
@@ -38,7 +38,7 @@ export const registerUser = async (username, password, email) => {
   try {
 
     const requestBody = JSON.stringify({ username, password, email });
-    const response = await api.post('/users', requestBody);
+    const response = await restApi.post('/users', requestBody);
 
     localStorage.setItem('token', response.data.token);
     localStorage.setItem('id', response.data.id);
@@ -55,10 +55,21 @@ export const registerUser = async (username, password, email) => {
   }
 };
 
+export const updateUser = async (userId, username, birthdayDate) => {
+  try {
+    const authToken = localStorage.getItem('token');
+    const requestBody = JSON.stringify({username, birthdayDate});
+    await restApi.put(`/users/${userId}`, requestBody, {headers: {token: authToken}});
+  } catch (error) {
+    throw new Error(`Something went wrong during commitment of the changes: \n${handleError(error)}`);
+  }
+};
+
+
 export const loginUser = async (username, password) => {
   try {
     const requestBody = JSON.stringify({username, password});
-    const response = await api.post('/login', requestBody);
+    const response = await restApi.post('/login', requestBody);
 
     localStorage.setItem('token', response.data.token);
     localStorage.setItem('id', response.data.id);
@@ -78,7 +89,7 @@ export const loginUser = async (username, password) => {
 export const fetchUserData = async (userId) => {
   try {
     const authToken = localStorage.getItem('token');
-    const response = await api.get(`/users/${userId}`, {headers: {token: authToken}});
+    const response = await restApi.get(`/users/${userId}`, {headers: {token: authToken}});
 
     return response.data;
   } catch (error) {
@@ -89,7 +100,7 @@ export const fetchUserData = async (userId) => {
 export const fetchUserById = async (userId) => {
   try {
     const authToken = localStorage.getItem('token');
-    const response = await api.get(`/users/${userId}`, {headers: {token: authToken}});
+    const response = await restApi.get(`/users/${userId}`, {headers: {token: authToken}});
 
     return response.data;
   } catch (error) {

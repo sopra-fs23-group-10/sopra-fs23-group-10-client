@@ -5,7 +5,7 @@ import 'styles/views/Login.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import {FormField} from "components/ui/FormField";
-import { loginUser } from '../../helpers/api';
+import { loginUser } from '../../helpers/restApi';
 
 /*
 It is possible to add multiple components inside a single file,

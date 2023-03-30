@@ -4,7 +4,7 @@ import {Button} from 'components/ui/Button';
 import 'styles/views/Registration.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import {FormField} from "components/ui/FormField";
-import { registerUser } from '../../helpers/api';
+import { registerUser } from '../../helpers/restApi';
 
 const Registration = props => {
 
