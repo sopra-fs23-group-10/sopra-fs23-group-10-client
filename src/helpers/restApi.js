@@ -99,7 +99,7 @@ export const fetchUserById = async (userId) => {
   }
 };
 
-export const logoutUser = async () => {
+export const logoutUser = async (history) => {
   try {
     const id = localStorage.getItem('id');
     const requestBody = JSON.stringify({id});
@@ -108,6 +108,10 @@ export const logoutUser = async () => {
     localStorage.removeItem('id');
     return response.data;
   } catch (error) {
+
+    localStorage.removeItem('token');
+    localStorage.removeItem('id');
+    history.push('/login');
     throw new Error(`Something went wrong while fetching the user data: \n${handleError(error)}`);
   }
 };
@@ -128,6 +132,20 @@ export const fetchUsers = async () => {
     alert("Something went wrong while fetching the users! See the console for details.");
     localStorage.removeItem("token");
     localStorage.removeItem("id");
+  }
+};
+
+
+export const inviteUser = async (invitedUserId, quizType, modeType) => {
+  try {
+    const invitingUserId = localStorage.getItem('id');
+    const authToken = localStorage.getItem('token');
+    const requestBody = JSON.stringify({invitingUserId, invitedUserId, quizType, modeType});
+    const response = await restApi.post('/game/creation', requestBody, {headers: {token: authToken}});
+    alert(JSON.stringify(response.data));
+    return response.data;
+  } catch (error) {
+    throw new Error(`Something went wrong during game creation: \n${handleError(error)}`);
   }
 };
 
