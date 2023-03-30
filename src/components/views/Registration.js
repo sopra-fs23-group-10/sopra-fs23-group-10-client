@@ -15,7 +15,7 @@ const Registration = props => {
 
     const doRegistration = async () => {
         try {
-            const requestBody = JSON.stringify({username, password});
+            const requestBody = JSON.stringify({username, password, email});
             const response = await api.post('/users', requestBody);
 
             localStorage.setItem('token', response.data.token);
