@@ -4,6 +4,7 @@ import {Button} from 'components/ui/Button';
 import {generatePath, Link, useHistory} from 'react-router-dom';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
+import HomeHeader from "components/views/HomeHeader";
 import "styles/views/Home.scss";
 
 
@@ -107,13 +108,16 @@ const Home = () => {
     }
 
     return (
-        <BaseContainer>
-            <h2>Welcome!</h2>
-            <p className="game paragraph">
-                Get all users from secure endpoint:
-            </p>
-            {userList}
-        </BaseContainer>
+        <>
+            <HomeHeader height="100"/>
+            <BaseContainer>
+                <h2>Welcome!</h2>
+                <p className="game paragraph">
+                    Get all users from secure endpoint:
+                </p>
+                {userList}
+            </BaseContainer>
+        </>
     );
 }
 

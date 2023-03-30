@@ -10,17 +10,17 @@ import "styles/views/Header.scss";
  * https://reactjs.org/docs/components-and-props.html
  * @FunctionalComponent
  */
-const Header = props => (
+const HomeHeader = props => (
     <div className="header container" style={{height: props.height}}>
         <h1 className="header title">BrainBusters</h1>
     </div>
 );
 
-Header.propTypes = {
+HomeHeader.propTypes = {
     height: PropTypes.string
 };
 
 /**
  * Don't forget to export your component!
  */
-export default Header;
+export default HomeHeader;
