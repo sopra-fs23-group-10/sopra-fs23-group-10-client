@@ -51,6 +51,16 @@ const AppRouter = () => {
             <ForgotPassword/>
           </LoginGuard>
         </Route>
+        <Route path="/ranking">
+          <HomeGuard>
+            <Ranking/>
+          </HomeGuard>
+        </Route>
+        <Route path="/rules">
+          <HomeGuard>
+            <Rules/>
+          </HomeGuard>
+        </Route>
         <Route exact path="/">
           <Redirect to="/home"/>
         </Route>
