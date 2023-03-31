@@ -6,9 +6,7 @@ import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import HomeHeader from "components/views/HomeHeader";
 import "styles/views/Home.scss";
-import SockJS from "sockjs-client";
-import {Stomp} from "@stomp/stompjs";
-import axios from "axios";
+import {connect} from "../../helpers/WebSocketFactory";
 
 
 const Player = ({user}) => (
@@ -20,7 +18,7 @@ const Player = ({user}) => (
                 {user.username}
             </div>
         </Link>
-            <div className="player name">{user.name}</div>
+        <div className="player name">{user.name}</div>
         <div className="player id">id: {user.id}</div>
     </div>
 );
@@ -34,59 +32,21 @@ const Home = () => {
     const history = useHistory();
 
     const [users, setUsers] = useState(null);
+    const [userIdInput, setUserIdInput] = useState('');
 
     const logout = async () => {
         const response = await logoutUser(history);
     }
 
+    const invite = async () => {
+        try {
+            const response = await inviteUser(userIdInput, "TEXT", "DUEL");
+        } catch (error) {
+            console.log(`user ${userIdInput} is not online`);
+        }
+    }
+
     useEffect(() => {
-
-        const BASE_URL = 'http://localhost:8080';
-        const socketFactory = () => new SockJS(`${BASE_URL}/ws`);
-
-        async function connect() {
-            const id = localStorage.getItem('id');
-            const stompClient = Stomp.over(socketFactory());
-            stompClient.debug = (message) => {
-                console.log(message);
-            };
-
-            stompClient.reconnect_delay = 5000;
-            stompClient.onWebSocketError = (error) => {
-                console.error('WebSocket error:', error);
-                setTimeout(() => {
-                    connect();
-                }, stompClient.reconnect_delay);
-            };
-            stompClient.onWebSocketClose = () => {
-                console.error('WebSocket closed');
-                setTimeout(() => {
-                    connect();
-                }, stompClient.reconnect_delay);
-            };
-
-            stompClient.connect({}, () => {
-                stompClient.subscribe(`/invitations/${id}`, (message) => {
-                    console.log(`Received message: ${message.body}`);
-                    alert("Server says: " + message.body);
-                });
-            });
-
-            axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
-            axios.defaults.headers.post['Content-Type'] = 'application/json';
-            axios.defaults.baseURL = BASE_URL;
-        };
-
-
-        // TODO: remove prototype
-        async function invite() {
-            try {
-                const response = await inviteUser(1, "TEXT", "DUEL");
-            } catch (error) {
-                console.log("user 2 is not online");
-            }
-        };
-
 
         async function fetchData() {
             try {
@@ -98,7 +58,6 @@ const Home = () => {
         }
         fetchData();
         connect();
-        invite();
     }, []);
 
     let userList = <div>waiting</div>;
@@ -115,8 +74,8 @@ const Home = () => {
                     ))}
                 </ul>
                 <Button
-                  width="100%"
-                  onClick={() => logout()}
+                    width="100%"
+                    onClick={() => logout()}
                 >
                     Logout
                 </Button>
@@ -133,6 +92,20 @@ const Home = () => {
                     Get all users from secure endpoint:
                 </p>
                 {userList}
+                <div className="invite-form">
+                    <input
+                        type="text"
+                        value={userIdInput}
+                        onChange={(e) => setUserIdInput(e.target.value)}
+                        placeholder="Enter user ID"
+                    />
+                    <Button
+                        onClick={invite}
+                        disabled={!userIdInput}
+                    >
+                        Invite
+                    </Button>
+                </div>
             </BaseContainer>
         </>
     );
