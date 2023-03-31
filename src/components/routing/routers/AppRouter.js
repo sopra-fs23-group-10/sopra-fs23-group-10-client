@@ -7,6 +7,8 @@ import Login from "../../views/Login";
 import UserProfile from "../../views/UserProfile";
 import ProfileEditor from "../../views/ProfileEditor";
 import ForgotPassword from "../../views/ForgotPassword";
+import Ranking from "../../views/Ranking";
+import Rules from "../../views/Rules";
 
 /**
  * Main router of your application.
@@ -50,6 +52,16 @@ const AppRouter = () => {
           <LoginGuard>
             <ForgotPassword/>
           </LoginGuard>
+        </Route>
+        <Route path="/ranking">
+          <HomeGuard>
+            <Ranking/>
+          </HomeGuard>
+        </Route>
+        <Route path="/rules">
+          <HomeGuard>
+            <Rules/>
+          </HomeGuard>
         </Route>
         <Route exact path="/">
           <Redirect to="/home"/>
