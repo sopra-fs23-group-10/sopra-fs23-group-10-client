@@ -7,6 +7,8 @@ import Login from "../../views/Login";
 import UserProfile from "../../views/UserProfile";
 import ProfileEditor from "../../views/ProfileEditor";
 import ForgotPassword from "../../views/ForgotPassword";
+import Ranking from "../../views/Ranking";
+import Rules from "../../views/Rules";
 
 /**
  * Main router of your application.
