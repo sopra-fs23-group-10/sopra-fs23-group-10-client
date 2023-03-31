@@ -55,10 +55,10 @@ export const registerUser = async (username, password, email) => {
   }
 };
 
-export const updateUser = async (userId, username, birthdayDate) => {
+export const updateUser = async (userId, username) => {
   try {
     const authToken = localStorage.getItem('token');
-    const requestBody = JSON.stringify({username, birthdayDate});
+    const requestBody = JSON.stringify({username});
     await restApi.put(`/users/${userId}`, requestBody, {headers: {token: authToken}});
   } catch (error) {
     throw new Error(`Something went wrong during commitment of the changes: \n${handleError(error)}`);

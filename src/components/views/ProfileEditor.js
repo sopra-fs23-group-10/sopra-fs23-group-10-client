@@ -42,13 +42,12 @@ const ProfileEditor = props => {
     const history = useHistory();
 
     const [username, setUsername] = useState(null);
-    const [birthdayDate, setBirthdayDate] = useState(null);
 
     let { user_id } = useParams();
 
     const commitChanges = async () => {
         try {
-            await updateUser(user_id, username, birthdayDate);
+            await updateUser(user_id, username);
 
             history.push(`/users/` + user_id);
         } catch (error) {
@@ -65,7 +64,6 @@ const ProfileEditor = props => {
                 const user = new User(userData);
 
                 setUsername(user.username);
-                setBirthdayDate(user.birthdayDate ? user.birthdayDate.split("T")[0] : null);
 
                 console.log('requested data:', userData);
             } catch (error) {
@@ -88,12 +86,6 @@ const ProfileEditor = props => {
                     label="Username:"
                     value={username}
                     onChange={un => setUsername(un)}
-                />
-                <FormField
-                    type="date"
-                    label="Birthday Date:"
-                    value={birthdayDate}
-                    onChange={bd => setBirthdayDate(bd)}
                 />
             </div>
         );

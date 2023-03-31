@@ -45,8 +45,8 @@ const UserProfile = props => {
 
     const [username, setUsername] = useState(null);
     const [status, setStatus] = useState(null);
-    const [creationDate, setCreationDate] = useState(null);
-    const [birthdayDate, setBirthdayDate] = useState(null);
+    const [points, setPoints] = useState(null);
+    const [profilePicture, setProfilePicture] = useState(null);
 
     let { user_id } = useParams();
 
@@ -59,18 +59,8 @@ const UserProfile = props => {
 
                 setUsername(user.username);
                 setStatus(user.status);
-                const reformDate = user.creationDate.slice(0, 16).split("T");
-                reformDate[0] = reformDate[0].split("-");
-                setCreationDate(
-                    reformDate[0][2] +
-                    "." +
-                    reformDate[0][1] +
-                    "." +
-                    reformDate[0][0] +
-                    " at " +
-                    reformDate[1]
-                );
-                setBirthdayDate(user.birthdayDate ? user.birthdayDate.split("T")[0] : null);
+                setPoints(user.points);
+                setProfilePicture(user.profilePicture);
 
                 console.log('requested data:', userData);
             } catch (error) {
@@ -99,15 +89,13 @@ const UserProfile = props => {
                     disabled
                 />
                 <FormField
-                    label="Profile Creation Date:"
-                    value={creationDate}
+                    label="Total Points:"
+                    value={points}
                     disabled
                 />
                 <FormField
-                    type="date"
-                    label="Date of birth:"
-                    value={birthdayDate}
-                    hidden={birthdayDate == null}
+                    label="Profile Picture:"
+                    value={profilePicture}
                     disabled
                 />
             </div>
@@ -127,7 +115,7 @@ const UserProfile = props => {
             &nbsp;
             <Button
                 width="100%"
-                onClick={() => history.push('/game')}
+                onClick={() => history.push('/home')}
             >
                 Back to dashboard
             </Button>
