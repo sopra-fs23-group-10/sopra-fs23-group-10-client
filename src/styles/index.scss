@@ -7,23 +7,24 @@ This file contains the general and shared style of your application.
 body {
   margin: 0;
   padding: 0;
-  min-width: 100vw;
-  min-height: 100vh;
+  @extend .fill;
   font-family: $fontDefault;
 }
 
-.background {
-  position: absolute;
-  left:0;
-  right:0;
-  top:0;
-  bottom:0;
-  width:100%;
-  height:100%;
-  object-fit: cover;
-  z-index:-10;
+#root {
+  @extend .fill;
 }
 
+.background {
+  @extend .fill;
+  z-index:-10;
+  background-size: cover !important;
+}
+
+.fill {
+  min-width: 100vw;
+  min-height: 100vh;
+}
 
 h2,h1 {
   margin:0px;
