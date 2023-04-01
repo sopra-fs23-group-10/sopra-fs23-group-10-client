@@ -8,10 +8,9 @@ import bg from "images/BG.png";
  */
 const App = () => {
   return (
-    <div>
-      <img className="background" src={bg}></img>
-      <AppRouter/>
-    </div>
+      <div className="background" style={{background: `url(${bg})`}}>
+        <AppRouter/>
+      </div>
   );
 };
 
