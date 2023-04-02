@@ -6,6 +6,7 @@ import {Button} from 'components/ui/Button';
 import 'styles/views/UserProfile.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
+import HomeHeader from "./HomeHeader";
 
 
 const FormField = props => {
@@ -92,27 +93,31 @@ const ProfileEditor = props => {
     }
 
     return (
-        <BaseContainer>
-            {editorFields}
-            <div style={{display:"inline-block"}}>
-                <Button
-                    style={{color:"red", float:"left"}}
-                    width="49%"
-                    onClick={() => history.push('/users/' + user_id)}
-                >
-                    Abort and go back
-                </Button>
-                <Button
-                    style={{color:"darkgreen", float:"right"}}
-                    width="49%"
-                    hidden={false}
-                    disabled={!username}
-                    onClick={() => commitChanges()}
-                >
-                    Save changes
-                </Button>
-            </div>
-        </BaseContainer>
+        <>
+            <HomeHeader height="100"/>
+            <BaseContainer>
+                {editorFields}
+                <div style={{display:"inline-block"}}>
+                    <Button
+                        style={{color:"red", float:"left"}}
+                        width="49%"
+                        onClick={() => history.push('/users/' + user_id)}
+                    >
+                        Abort and go back
+                    </Button>
+                    <Button
+                        style={{color:"darkgreen", float:"right"}}
+                        width="49%"
+                        hidden={false}
+                        disabled={!username}
+                        onClick={() => commitChanges()}
+                    >
+                        Save changes
+                    </Button>
+                </div>
+            </BaseContainer>
+        </>
+
     );
 }
 
