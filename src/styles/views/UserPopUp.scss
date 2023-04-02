@@ -1,0 +1,44 @@
+@import 'styles/theme';
+
+.userpopup {
+  &.container {
+    min-width: 500px;
+    max-width: 1000px;
+    width: 40%;
+
+    &.secondary {
+      margin-top: $base_padding;
+    }
+  }
+  &.field {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  &.title {
+    display: flex;
+    height: 35px;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 15px;
+    margin-left: -4px;
+    width: 100%;
+    margin-bottom: 20px;
+    color: $font_primary;
+  }
+  &.content {
+    display: flex;
+    height: 35px;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 15px;
+    margin-left: -4px;
+    width: 100%;
+    margin-bottom: 20px;
+    color: $font_primary;
+  }
+  .label-container{
+    display:flex;
+    justify-content: space-between;
+  }
+}
