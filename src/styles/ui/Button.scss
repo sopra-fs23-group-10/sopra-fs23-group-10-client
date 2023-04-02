@@ -5,7 +5,6 @@
     transform: scale(1.04);
   }
   &:disabled {
-    cursor: default;
     opacity: 0.4;
     background-color: $disabled_button;
     &:hover {
@@ -20,9 +19,8 @@
   height: $base_padding;
   border: none;
   border-radius: $borderRadius;
-  cursor: pointer;
   opacity: 1;
   color: $off_white;
   background-color: $secondary_color;
-  transition: all 0.3s ease;
+  @extend .base-transition;
 }

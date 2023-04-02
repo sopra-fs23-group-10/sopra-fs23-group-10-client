@@ -1,6 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "styles/views/Header.scss";
+import {Button} from 'components/ui/Button';
+import {logoutUser} from 'helpers/api';
+import {useHistory} from 'react-router-dom';
+
 
 /**
  * This is an example of a Functional and stateless component (View) in React. Functional components are not classes and thus don't handle internal state changes.
@@ -10,9 +14,19 @@ import "styles/views/Header.scss";
  * https://reactjs.org/docs/components-and-props.html
  * @FunctionalComponent
  */
+const logout = async () => {
+    const response = await logoutUser(useHistory);
+}
+
 const HomeHeader = props => (
     <div className="header container" style={{height: props.height}}>
         <h1 className="header title">BrainBusters</h1>
+        <Button
+            width="100%"
+            onClick={() => logout()}
+        >
+            Logout
+        </Button>
     </div>
 );
 

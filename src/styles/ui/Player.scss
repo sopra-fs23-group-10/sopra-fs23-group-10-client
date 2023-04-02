@@ -1,0 +1,29 @@
+@import 'styles/theme';
+
+.player {
+    &.container {
+      border-radius: $borderRadius;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      &:hover {
+        @extend .base-transition;
+        transform: scale(1.03);
+      }
+    }
+    &.username {
+      font-weight: 500;
+      padding-right: 8px;
+      justify-self: left;
+    }
+    &.profile-picture {
+        height: $base_padding;
+        width: $base_padding;
+        background-color: $disabled_button;
+        border-radius: 100%;
+        justify-self: left;
+    }
+    &.rank {
+       margin-left: auto;
+    }
+  }

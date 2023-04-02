@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import {api, handleError} from 'helpers/api';
+import {api, handleError, inviteUser} from 'helpers/api';
 import {Button} from 'components/ui/Button';
 import {generatePath, Link, useHistory} from 'react-router-dom';
 import BaseContainer from "components/ui/BaseContainer";
@@ -19,14 +19,12 @@ const Home = () => {
     // more information can be found under https://reactjs.org/docs/hooks-state.html
     const [users, setUsers] = useState(null);
 
-    const logout = async () => {
-        const id = localStorage.getItem('id');
-        const requestBody = JSON.stringify({id});
-        await api.post('/logout', requestBody, {headers: {token: localStorage.getItem('token')}});
-
-        localStorage.removeItem('token');
-        localStorage.removeItem('id');
-        history.push('/login');
+    const invite = async () => {
+        try {
+            const response = await inviteUser(userIdInput, "TEXT", "DUEL");
+        } catch (error) {
+            console.log(`user ${userIdInput} is not online`);
+        }
     }
 
     // the effect hook can be used to react to change in your component.
@@ -70,8 +68,8 @@ const Home = () => {
 
     if (users) {
         userList = (
-            <div className="game">
-                <ul className="game user-list">
+            <>
+                <ul className="home user-list">
                     {users.map(user => (
                         <Player
                             user={user}
@@ -79,27 +77,46 @@ const Home = () => {
                         />
                     ))}
                 </ul>
-                <Button
-                  width="100%"
-                  onClick={() => logout()}
-                >
-                    Logout
-                </Button>
-            </div>
+            </>
         );
     }
 
     return (
-        <>
-            <HomeHeader height="100"/>
-            <BaseContainer>
-                <h2>Welcome!</h2>
-                <p className="game paragraph">
-                    Get all users from secure endpoint:
-                </p>
-                {userList}
-            </BaseContainer>
-        </>
+        <div className="fill">
+            <HomeHeader/>
+            <div className='home container'>
+                <BaseContainer className="home user-container">
+                    <div className='scroll-container'>
+                        <h3>Active Users</h3>
+                        {userList}
+                    </div>
+
+                    
+                    {/* 
+                    TODO: Move to duel select
+                    <div className="invite-form">
+                        <input
+                            type="text"
+                            value={userIdInput}
+                            onChange={(e) => setUserIdInput(e.target.value)}
+                            placeholder="Enter user ID"
+                        />
+                        <Button
+                            onClick={invite}
+                            disabled={!userIdInput}
+                        >
+                            Invite
+                        </Button>
+                    </div> */}
+
+                </BaseContainer>
+                <div className='home start-game-container'>
+                    <button className='home start-game-button'>
+                        <p className='home start-game'>Start Game</p>
+                    </button>
+                </div>
+            </div>
+        </div>
     );
 }
 

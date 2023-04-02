@@ -1,16 +1,16 @@
 @import 'styles/theme';
 
-/* The '&' is a shorthand for the containing element,
-  so for example a '&.user-list' inside .game will compile to
-  .game.user-list
 
-  for more information visit https://sass-lang.com/guide
- */
-
-.game {
+.home {
   &.user-list {
     list-style: none;
-    padding-left: 0;
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+    margin: 0px;
+    margin-top: 20px;
+    padding: 0px;
+    height:100%;
   }
   &.user-item {
     display: flex;
@@ -21,36 +21,53 @@
   & p,h2 {
     margin: 0.5em 0;
   }
-}
-
-.player {
   &.container {
-    margin: 0.5em 0;
-    min-width: 20em;
-    flex-width: row;
-    padding: 10px;
-    border-radius: $borderRadius;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    grid-template-rows: 100%;
+    padding: $base_padding;
+    width: 100%;
+    height: calc(100vh - #{$header_height});
+    overflow: hidden;
+  }
+  &.user-container {
+    grid-column: 1;
+    width: 100%;
+    max-height: 100%;
+    overflow: hidden;
+    margin: 0px;
+    overflow-y: scroll;
+  }
+  &.start-game-container{
     display: flex;
+    justify-content: center;
     align-items: center;
-    background: lighten($off_white, 5);
+  } 
+  &.scroll-container {
+    height:100%;
+    width:100%;
+    overflow: hidden;
   }
-  &.name {
-    font-weight: 300;
-    margin-left: 5px;
+  &.start-game-button {
+    height:170px;
+    width:400px;
+    overflow: hidden;
+    background-color: transparent;
+    border-style: none;
+    transform: translate(0, -70px);
   }
-  &.username {
-    font-weight: 500;
-    cursor: pointer;
-    padding-right: 8px;
+  &.start-game {
+    font-family: $fontDisplay;
+    color: $off_white;
+    font-size: 200px;
+    font-weight: 600;
+    line-height:160px;
+    height:400px;
+    transform: translate(0px, -130px);
+
     &:hover {
-      transform: scale(1.1);
+      transform: translate(-4px, -134px);
+      filter: drop-shadow(4px 4px 0px $secondary_color);
     }
-  }
-  &.id {
-    margin-left: auto;
-    margin-right: 10px;
-    font-family: $fontMono;
-    font-weight: 300;
-    padding-left: 2em;
   }
 }
