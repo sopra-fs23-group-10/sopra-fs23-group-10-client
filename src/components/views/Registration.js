@@ -5,6 +5,8 @@ import 'styles/views/Registration.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import {FormField} from "components/ui/FormField";
 import { registerUser } from '../../helpers/restApi';
+import HomeHeader from "./HomeHeader";
+import HeaderAuthentication from "./HeaderAuthentication";
 
 const Registration = props => {
 
@@ -35,6 +37,7 @@ const Registration = props => {
 
     return (
         <>
+            <HeaderAuthentication height="100"/>
             <BaseContainer className="registration container">
                 <FormField
                 label="Username"

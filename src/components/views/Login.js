@@ -6,6 +6,8 @@ import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import {FormField} from "components/ui/FormField";
 import { loginUser } from '../../helpers/restApi';
+import HomeHeader from "./HomeHeader";
+import HeaderAuthentication from "./HeaderAuthentication";
 
 /*
 It is possible to add multiple components inside a single file,
@@ -30,6 +32,7 @@ const Login = props => {
 
     return (
         <>
+            <HeaderAuthentication height="100"/>
             <BaseContainer className="login container">
                 <FormField
                     label="Username"
