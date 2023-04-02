@@ -6,6 +6,7 @@ import {Button} from 'components/ui/Button';
 import 'styles/views/UserProfile.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
+import HomeHeader from "./HomeHeader";
 
 
 const FormField = props => {
@@ -103,23 +104,27 @@ const UserProfile = props => {
     }
 
     return (
-        <BaseContainer>
-            {profileFields}
-            <Button
-                width="100%"
-                hidden={localStorage.getItem('id') !== user_id}
-                onClick={() => history.push('/users/edit/' + user_id)}
-            >
-                Edit profile
-            </Button>
-            &nbsp;
-            <Button
-                width="100%"
-                onClick={() => history.push('/home')}
-            >
-                Back to dashboard
-            </Button>
-        </BaseContainer>
+        <>
+            <HomeHeader height="100"/>
+            <BaseContainer>
+                {profileFields}
+                <Button
+                    width="100%"
+                    hidden={localStorage.getItem('id') !== user_id}
+                    onClick={() => history.push('/users/edit/' + user_id)}
+                >
+                    Edit profile
+                </Button>
+                &nbsp;
+                <Button
+                    width="100%"
+                    onClick={() => history.push('/home')}
+                >
+                    Back to dashboard
+                </Button>
+            </BaseContainer>
+        </>
+
     );
 }
 
