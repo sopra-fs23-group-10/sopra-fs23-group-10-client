@@ -1,13 +1,15 @@
 import React, {useState} from 'react';
-import {api, handleError} from 'helpers/api';
 import {useHistory, Link} from 'react-router-dom';
 import {Button} from 'components/ui/Button';
 import 'styles/views/Registration.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import {FormField} from "components/ui/FormField";
-import Player from "components/ui/Player";
+import { registerUser } from '../../helpers/restApi';
+import HomeHeader from "./HomeHeader";
+import HeaderAuthentication from "./HeaderAuthentication";
 
 const Registration = props => {
+
     const history = useHistory();
     const [username, setUsername] = useState(null);
     const [email, setEmail] = useState(null);
@@ -20,21 +22,11 @@ const Registration = props => {
                 alert("Email format is incorrect");
                 return;
             }
-            const requestBody = JSON.stringify({username, password, email});
-            const response = await api.post('/users', requestBody);
-
-            localStorage.setItem('token', response.data.token);
-            localStorage.setItem('id', response.data.id);
-
-            // Wait for token and id to be set to avoid errors in /Home
-            await Promise.all([
-                localStorage.getItem('token'),
-                localStorage.getItem('id')
-            ]);
-
+            const response = await registerUser(username, password, email);
             history.push(`/home`);
+
         } catch (error) {
-            alert(`Something went wrong during registration: \n${handleError(error)}`);
+            alert(error.message);
         }
     };
 
@@ -45,6 +37,7 @@ const Registration = props => {
 
     return (
         <>
+            <HeaderAuthentication height="100"/>
             <BaseContainer className="registration container">
                 <FormField
                 label="Username"

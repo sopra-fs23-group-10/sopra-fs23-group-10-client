@@ -5,34 +5,36 @@ import {FormField} from "components/ui/FormField";
 import HomeHeader from "./HomeHeader";
 import HeaderAuthentication from "./HeaderAuthentication";
 import {Button} from "../ui/Button";
-import {useHistory} from "react-router-dom";
+import {loginUser, registerUser} from "../../helpers/restApi";
 
 
 const ResetPassword = props => {
-    const history = useHistory();
+
     return (
         <>
             <HomeHeader height="100"/>
             <BaseContainer className="popup container">
                 <div className ="title" style={{textAlign: "center"}}>
                     <p>
-                        Do you want to reset your password? <br />
+                        CHANGE PASSWORD <br />
                     </p>
                 </div>
-                <div className="twoButtons">
+                <FormField
+                    label="Old Password"
+                />
+                <FormField
+                    label="New Password"
+                />
+                <FormField
+                    label="Confirm New Password"
+                />
+                <div className="popup button-container">
                     <Button
-                        width="80%"
-                        style={{margin: "auto"}}
-                        //onClick={() => history.push('/home')}
+                        // disabled={!username || !password}
+                        width="100%"
+                        //onClick={() => doLogin()}
                     >
-                        RESET
-                    </Button>
-                    <Button
-                        width="80%"
-                        style={{margin: "auto"}}
-                        onClick={() => history.push('/login')}
-                    >
-                        GO BACK
+                        SET PASSWORD
                     </Button>
                 </div>
             </BaseContainer>

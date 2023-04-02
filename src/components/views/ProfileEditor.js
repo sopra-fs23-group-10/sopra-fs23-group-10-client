@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {api, handleError} from 'helpers/api';
+import {fetchUserById, handleError, updateUser} from 'helpers/restApi';
 import User from 'models/User';
 import {generatePath, useHistory, useParams} from 'react-router-dom';
 import {Button} from 'components/ui/Button';
 import 'styles/views/UserProfile.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
+import HomeHeader from "./HomeHeader";
 
 
 const FormField = props => {
@@ -42,15 +43,12 @@ const ProfileEditor = props => {
     const history = useHistory();
 
     const [username, setUsername] = useState(null);
-    const [birthdayDate, setBirthdayDate] = useState(null);
 
     let { user_id } = useParams();
 
     const commitChanges = async () => {
         try {
-            const authToken = localStorage.getItem('token');
-            const requestBody = JSON.stringify({username, birthdayDate});
-            await api.put(generatePath('/users/:userId', {userId: user_id}), requestBody, {headers: {token: authToken}});
+            await updateUser(user_id, username);
 
             history.push(`/users/` + user_id);
         } catch (error) {
@@ -61,34 +59,23 @@ const ProfileEditor = props => {
     useEffect(() => {
         async function fetchData() {
             try {
-                const authToken = localStorage.getItem('token');
-                const response = await api.get(generatePath('/users/:userId', {userId: user_id}), {headers: {token: authToken}});
+                const userData = await fetchUserById(user_id);
 
                 // Get the returned users and update the state.
-                const user = new User(response.data);
+                const user = new User(userData);
 
                 setUsername(user.username);
-                setBirthdayDate(user.birthdayDate ? user.birthdayDate.split("T")[0] : null);
 
-                // This is just some data for you to see what is available.
-                // Feel free to remove it.
-                console.log('request to:', response.request.responseURL);
-                console.log('status code:', response.status);
-                console.log('status text:', response.statusText);
-                console.log('requested data:', response.data);
-
-                // See here to get more data.
-                console.log(response);
+                console.log('requested data:', userData);
             } catch (error) {
-                console.error(`Something went wrong while fetching the user data: \n${handleError(error)}`);
-                console.error("Details:", error);
+                console.error(error.message);
                 alert("Something went wrong while fetching the user data! See the console for details.");
             }
         }
 
         fetchData();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
 
     let editorFields = <div>waiting</div>;
 
@@ -101,38 +88,36 @@ const ProfileEditor = props => {
                     value={username}
                     onChange={un => setUsername(un)}
                 />
-                <FormField
-                    type="date"
-                    label="Birthday Date:"
-                    value={birthdayDate}
-                    onChange={bd => setBirthdayDate(bd)}
-                />
             </div>
         );
     }
 
     return (
-        <BaseContainer>
-            {editorFields}
-            <div style={{display:"inline-block"}}>
-                <Button
-                    style={{color:"red", float:"left"}}
-                    width="49%"
-                    onClick={() => history.push('/users/' + user_id)}
-                >
-                    Abort and go back
-                </Button>
-                <Button
-                    style={{color:"darkgreen", float:"right"}}
-                    width="49%"
-                    hidden={false}
-                    disabled={!username}
-                    onClick={() => commitChanges()}
-                >
-                    Save changes
-                </Button>
-            </div>
-        </BaseContainer>
+        <>
+            <HomeHeader height="100"/>
+            <BaseContainer>
+                {editorFields}
+                <div style={{display:"inline-block"}}>
+                    <Button
+                        style={{color:"red", float:"left"}}
+                        width="49%"
+                        onClick={() => history.push('/users/' + user_id)}
+                    >
+                        Abort and go back
+                    </Button>
+                    <Button
+                        style={{color:"darkgreen", float:"right"}}
+                        width="49%"
+                        hidden={false}
+                        disabled={!username}
+                        onClick={() => commitChanges()}
+                    >
+                        Save changes
+                    </Button>
+                </div>
+            </BaseContainer>
+        </>
+
     );
 }
 

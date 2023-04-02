@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
-import {api, handleError} from 'helpers/api';
 import {Link, useHistory} from 'react-router-dom';
 import {Button} from 'components/ui/Button';
 import 'styles/views/Login.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import {FormField} from "components/ui/FormField";
+import { loginUser } from '../../helpers/restApi';
+import HomeHeader from "./HomeHeader";
+import HeaderAuthentication from "./HeaderAuthentication";
 
 /*
 It is possible to add multiple components inside a single file,
@@ -21,27 +23,16 @@ const Login = props => {
 
     const doLogin = async () => {
         try {
-            const requestBody = JSON.stringify({username, password});
-            const response = await api.post('/login', requestBody);
-
-            localStorage.setItem('token', response.data.token);
-            localStorage.setItem('id', response.data.id);
-
-            // Wait for token and id to be set to avoid errors in /Home
-            await Promise.all([
-                localStorage.getItem('token'),
-                localStorage.getItem('id')
-            ]);
-
-            // Login successfully worked --> navigate to the route /home in the HomeRouter
+            const response = await loginUser(username, password);
             history.push(`/home`);
         } catch (error) {
-            alert(`Something went wrong during login: \n${handleError(error)}`);
+            alert(error.message);
         }
     };
 
     return (
         <>
+            <HeaderAuthentication height="100"/>
             <BaseContainer className="login container">
                 <FormField
                     label="Username"

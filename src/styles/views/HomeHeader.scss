@@ -1,0 +1,38 @@
+@import 'styles/theme';
+
+.homeheader {
+  height: 100px;
+  &.container {
+    display:grid;
+    grid-template-columns: 50% 15% 10% 10% 15%;
+    align-items:center;
+
+  }
+}
+
+.logo {
+  color: $off_white;
+  text-align: center;
+  font-family: $fontDisplay;
+  font-size: 50px;
+  justify-content: space-between;
+  padding-left: $borderRadius;
+  padding-bottom: $borderRadius;
+  &.fontbold {
+    font-weight: bold;
+    transform: none;
+  }
+}
+
+.content {
+  color: $off_white;
+  text-align: center;
+  font-family: $fontDefault;
+  font-size: 20px;
+  flex:1;
+  justify-content: space-between;
+  padding-left: $borderRadius;
+  &.fontbold{
+    font-weight: bold;
+  }
+}

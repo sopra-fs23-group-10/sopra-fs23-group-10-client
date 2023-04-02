@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {api, handleError} from 'helpers/api';
+import {fetchUserById} from 'helpers/restApi';
 import User from 'models/User';
 import {generatePath, useHistory, useParams} from 'react-router-dom';
 import {Button} from 'components/ui/Button';
 import 'styles/views/UserProfile.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
+import HomeHeader from "./HomeHeader";
 
 
 const FormField = props => {
@@ -45,44 +46,31 @@ const UserProfile = props => {
 
     const [username, setUsername] = useState(null);
     const [status, setStatus] = useState(null);
-    const [creationDate, setCreationDate] = useState(null);
-    const [birthdayDate, setBirthdayDate] = useState(null);
+    const [points, setPoints] = useState(null);
+    const [profilePicture, setProfilePicture] = useState(null);
 
     let { user_id } = useParams();
 
     useEffect(() => {
         async function fetchData() {
             try {
-                const authToken = localStorage.getItem('token');
-                const response = await api.get(generatePath('/users/:userId', {userId: user_id}), {headers: {token: authToken}});
+                const userData = await fetchUserById(user_id);
 
-                const user = new User(response.data);
+                const user = new User(userData);
 
                 setUsername(user.username);
                 setStatus(user.status);
-                const reformDate = user.creationDate.slice(0,16).split("T");
-                reformDate[0] = reformDate[0].split("-");
-                setCreationDate(reformDate[0][2] + "." + reformDate[0][1] + "." + reformDate[0][0] + " at " + reformDate[1]);
-                setBirthdayDate(user.birthdayDate ? user.birthdayDate.split("T")[0] : null);
+                setPoints(user.points);
+                setProfilePicture(user.profilePicture);
 
-                // This is just some data for you to see what is available.
-                // Feel free to remove it.
-                console.log('request to:', response.request.responseURL);
-                console.log('status code:', response.status);
-                console.log('status text:', response.statusText);
-                console.log('requested data:', response.data);
-
-                // See here to get more data.
-                console.log(response);
+                console.log('requested data:', userData);
             } catch (error) {
-                console.error(`Something went wrong while fetching the user data: \n${handleError(error)}`);
-                console.error("Details:", error);
+                console.error(error.message);
                 alert("Something went wrong while fetching the user data! See the console for details.");
             }
         }
 
         fetchData();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     let profileFields = <div>waiting</div>;
@@ -102,15 +90,13 @@ const UserProfile = props => {
                     disabled
                 />
                 <FormField
-                    label="Profile Creation Date:"
-                    value={creationDate}
+                    label="Total Points:"
+                    value={points}
                     disabled
                 />
                 <FormField
-                    type="date"
-                    label="Date of birth:"
-                    value={birthdayDate}
-                    hidden={birthdayDate == null}
+                    label="Profile Picture:"
+                    value={profilePicture}
                     disabled
                 />
             </div>
@@ -118,23 +104,27 @@ const UserProfile = props => {
     }
 
     return (
-        <BaseContainer>
-            {profileFields}
-            <Button
-                width="100%"
-                hidden={localStorage.getItem('id') !== user_id}
-                onClick={() => history.push('/users/edit/' + user_id)}
-            >
-                Edit profile
-            </Button>
-            &nbsp;
-            <Button
-                width="100%"
-                onClick={() => history.push('/game')}
-            >
-                Back to dashboard
-            </Button>
-        </BaseContainer>
+        <>
+            <HomeHeader height="100"/>
+            <BaseContainer>
+                {profileFields}
+                <Button
+                    width="100%"
+                    hidden={localStorage.getItem('id') !== user_id}
+                    onClick={() => history.push('/users/edit/' + user_id)}
+                >
+                    Edit profile
+                </Button>
+                &nbsp;
+                <Button
+                    width="100%"
+                    onClick={() => history.push('/home')}
+                >
+                    Back to dashboard
+                </Button>
+            </BaseContainer>
+        </>
+
     );
 }
 

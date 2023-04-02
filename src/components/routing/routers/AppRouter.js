@@ -6,7 +6,11 @@ import Registration from "../../views/Registration";
 import Login from "../../views/Login";
 import UserProfile from "../../views/UserProfile";
 import ProfileEditor from "../../views/ProfileEditor";
+import ResetPassword from "../../views/ResetPassword";
 import ForgotPassword from "../../views/ForgotPassword";
+import Ranking from "../../views/Ranking";
+import Rules from "../../views/Rules";
+import GameScreen from "../../views/GameScreen";
 
 /**
  * Main router of your application.
@@ -46,10 +50,30 @@ const AppRouter = () => {
             <Login/>
           </LoginGuard>
         </Route>
-        <Route exact path="/forgotPassword">
+        <Route exact path="/resetpassword">
+          <HomeGuard>
+            <ResetPassword/>
+          </HomeGuard>
+        </Route>
+        <Route exact path="/forgotpassword">
           <LoginGuard>
             <ForgotPassword/>
           </LoginGuard>
+        </Route>
+        <Route path="/ranking">
+          <HomeGuard>
+            <Ranking/>
+          </HomeGuard>
+        </Route>
+        <Route path="/rules">
+          <HomeGuard>
+            <Rules/>
+          </HomeGuard>
+        </Route>
+        <Route path="/game">
+          <HomeGuard>
+            <GameScreen/>
+          </HomeGuard>
         </Route>
         <Route exact path="/">
           <Redirect to="/home"/>

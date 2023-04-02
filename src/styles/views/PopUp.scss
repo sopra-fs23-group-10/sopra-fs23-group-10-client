@@ -1,0 +1,95 @@
+@import 'styles/theme';
+
+.popup {
+  &.container {
+    min-width: 500px;
+    max-width: 1000px;
+    width:40%;
+    color: $font_primary;
+    &.secondary {
+      margin-top: $base_padding;
+    }
+  }
+  &.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 60%;
+    max-width: 30em;
+    font-size: 16px;
+    font-weight: 300;
+    padding: 1.5em 37px;
+    border-radius: 0.75em;
+    background-color: $off_white;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    box-shadow: $dropShadow;
+  }
+  &.field {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  &.input {
+    height: 35px;
+    padding-left: 15px;
+    margin-left: -4px;
+    border: none;
+    border-radius: 0.6em;
+    margin-bottom: 20px;
+    background: transparentize(white, 0.85);
+    color: $font_primary;
+  }
+  &.label {
+    color: $font_primary;
+    margin-bottom: 5px;
+    text-transform: lowercase;
+    font-weight: 300;
+  }
+  &.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 1em;
+    font-weight: bold;
+    padding-top: $borderRadius;
+  }
+  &.title{
+    display: flex;
+    height: 35px;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 15px;
+    margin-left: -4px;
+    width: 100%;
+    margin-bottom: 20px;
+    color: $font_primary;
+  }
+  &.content{
+    display: flex;
+    height: 35px;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 15px;
+    margin-left: -4px;
+    width: 100%;
+    margin-bottom: 20px;
+    color: $font_primary;
+    &.font{
+      font-family: $fontDefault;
+      font-size: 20px;
+    }
+  }
+  .label-container{
+    display:flex;
+    justify-content: space-between;
+  }
+}
+
+.twoButtons{
+  display:grid;
+  grid-template-columns: 50% 50%;
+  margin: auto;
+  margin-top: 1em;
+  font-weight: bold;
+  padding-top: $borderRadius;
+}
+
