@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {Button} from 'components/ui/Button';
-import {logoutUser} from 'helpers/api';
+import {logoutUser} from 'helpers/restApi';
 import {useHistory} from 'react-router-dom';
 import "styles/views/HomeHeader.scss";
 import {Link} from "react-router-dom";
