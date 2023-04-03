@@ -101,9 +101,9 @@ export const fetchUserById = async (userId) => {
 
 export const logoutUser = async (history) => {
   try {
-    const id = localStorage.getItem('id');
-    const requestBody = JSON.stringify({id});
-    const response = await restApi.post('/logout', requestBody, {headers: {token: localStorage.getItem('token')}});
+    const userId = localStorage.getItem('id');
+    const requestBody = JSON.stringify({userId});
+    const response = await restApi.post(`/logout/${userId}`, requestBody, {headers: {token: localStorage.getItem('token')}});
     localStorage.removeItem('token');
     localStorage.removeItem('id');
     return response.data;
@@ -134,6 +134,24 @@ export const fetchUsers = async () => {
     localStorage.removeItem("id");
   }
 };
+
+export const sendAnswer = async (gameId, userId, questionId, answer, answeredTime) => {
+  try {
+    const requestBody = JSON.stringify({userId, questionId, answer, answeredTime})
+    const response = await restApi.put(`/game/question/${gameId}`, requestBody, {headers: {token: localStorage.getItem("token")}})
+    console.log('request to:', response.request.responseURL);
+    console.log('status code:', response.status);
+    console.log('status text:', response.statusText);
+    console.log('requested data:', response.data);
+    console.log(response);
+    return response;
+  }
+  catch (error) {
+    console.error(`Something went wrong while saving your answer in the server: \n${handleError(error)}`);
+    console.error("Details:", error);
+    alert("Something went wrong while saving your answer in the server! See the console for details.");
+  }
+}
 
 
 export const inviteUser = async (invitedUserId, quizType, modeType) => {
