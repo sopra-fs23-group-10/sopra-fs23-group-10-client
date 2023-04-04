@@ -169,6 +169,7 @@ export const inviteUser = async (invitedUserId, quizType, modeType) => {
 
 export const finishGame = async () => {
   try {
+    const gameId = localStorage.getItem('gameId');
     const authToken = localStorage.getItem('token');
     const response = await restApi.delete(`/game/finish/${gameId}`, {}, {headers: {token: authToken}});
     alert(JSON.stringify(response.data));
@@ -180,6 +181,7 @@ export const finishGame = async () => {
 
 export const getIntermediateResults = async () => {
   try {
+    const gameId = localStorage.getItem('gameId');
     const authToken = localStorage.getItem('token');
     const response = await restApi.delete(`/game/intermediate/${gameId}`, {}, {headers: {token: authToken}});
     alert(JSON.stringify(response.data));
