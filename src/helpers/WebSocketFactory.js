@@ -34,6 +34,14 @@ export const connect = () => {
         });
     });
 
+    stompClient.intermediateResult({}, () => {
+        stompClient.subscribe(`/game/result/${id}`, (message) => {
+            console.log(`Received message: ${message.body}`);
+            alert("Server says: " + message.body);
+        });
+    });
+    
+
     axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
     axios.defaults.headers.post['Content-Type'] = 'application/json';
     axios.defaults.baseURL = BASE_URL;
