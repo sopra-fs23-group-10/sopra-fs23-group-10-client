@@ -41,7 +41,6 @@ export const connect = () => {
             alert("Server says: " + message.body);
         });
     });
- 
      */
     
 
