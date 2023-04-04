@@ -41,8 +41,8 @@ export const connect = () => {
             alert("Server says: " + message.body);
         });
     });
- */
-     
+ 
+     */
     
 
     axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
