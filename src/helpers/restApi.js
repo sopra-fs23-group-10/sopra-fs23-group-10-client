@@ -183,7 +183,7 @@ export const getIntermediateResults = async () => {
   try {
     const gameId = localStorage.getItem('gameId');
     const authToken = localStorage.getItem('token');
-    const response = await restApi.delete(`/game/intermediate/${gameId}`, {}, {headers: {token: authToken}});
+    const response = await restApi.put(`/game/intermediate/${gameId}`, {}, {headers: {token: authToken}});
     alert(JSON.stringify(response.data));
     return response.data;
   } catch (error) {
