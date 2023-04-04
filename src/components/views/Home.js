@@ -88,6 +88,20 @@ const Home = () => {
                         <p className='home start-game'>Start Game</p>
                     </button>
                 </div>
+                <div className="invite-form">
+                    <input
+                        type="text"
+                        value={userIdInput}
+                        onChange={(e) => setUserIdInput(e.target.value)}
+                        placeholder="Enter user ID"
+                    />
+                    <Button
+                        onClick={invite}
+                        disabled={!userIdInput}
+                    >
+                        Invite
+                    </Button>
+                </div>
             </div>
         </div>
     );
