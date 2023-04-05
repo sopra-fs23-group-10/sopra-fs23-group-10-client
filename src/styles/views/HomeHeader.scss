@@ -1,38 +1,61 @@
 @import 'styles/theme';
 
 .homeheader {
-  height: 100px;
+  height: $header_height;
   &.container {
     display:grid;
-    grid-template-columns: 50% 15% 10% 10% 15%;
+    grid-template-columns: 100px 1fr 200px;
     align-items:center;
-
+    padding-left: $base_padding;
+    padding-right: $base_padding;
   }
+
+  .logo {
+    color: $off_white;
+    font-family: $fontDisplay;
+    font-size: 50px;
+    justify-content: space-between;
+    text-align: left;
+    line-height: $header_height;
+    &.fontbold {
+      font-weight: bold;
+      transform: none;
+    }
+  }
+  
+  .content {
+    grid-template-columns: 100px 1fr;
+    color: $off_white;
+    text-align: right;
+    font-family: $fontDefault;
+    font-size: 20px;
+    text-transform: uppercase;
+    &.fontbold{
+      font-weight: bold;
+    }
+  
+    &:hover {
+      @extends .base-transition;
+      color: $secondary_color;
+    }
+  }
+  
+  .profile {
+    grid-column:3;
+    text-align: right;
+  }
+  
+  .navigation {
+    grid-column: 2;
+  
+    > * {
+      float:right;
+      align-self: center;
+      height: $header_height;
+      line-height: $header_height;
+      margin-left: $base_padding;
+    }
+  }
+  
 }
 
-.logo {
-  color: $off_white;
-  text-align: center;
-  font-family: $fontDisplay;
-  font-size: 50px;
-  justify-content: space-between;
-  padding-left: $borderRadius;
-  padding-bottom: $borderRadius;
-  &.fontbold {
-    font-weight: bold;
-    transform: none;
-  }
-}
-
-.content {
-  color: $off_white;
-  text-align: center;
-  font-family: $fontDefault;
-  font-size: 20px;
-  flex:1;
-  justify-content: space-between;
-  padding-left: $borderRadius;
-  &.fontbold{
-    font-weight: bold;
-  }
-}
