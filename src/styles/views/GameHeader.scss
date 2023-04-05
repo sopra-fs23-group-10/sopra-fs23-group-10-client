@@ -8,38 +8,37 @@
     align-items:center;
     padding-bottom: 0px;
   }
-}
-
-.logo {
-  color: $off_white;
-  text-align: center;
-  font-family: $fontDisplay;
-  font-size: 50px;
-  justify-content: space-between;
-  padding-left: $borderRadius;
-}
-
-.content {
-  color: $off_white;
-  text-align: center;
-  font-family: $fontDefault;
-  font-size: 20px;
-  flex:1;
-  justify-content: space-between;
-  padding-left: $borderRadius;
-  padding-right: $borderRadius;
-}
-
-.gamecontentheader{
-  color: $off_white;
-  font-size: 20px;
-  text-align: center;
-  flex:1;
-  justify-content: space-between;
-  font-family: $fontDefault;
-  padding-left: $borderRadius;
-  &.fontbold{
-    font-weight: bold;
+  .logo {
+    color: $off_white;
+    text-align: center;
+    font-family: $fontDisplay;
+    font-size: 50px;
+    justify-content: space-between;
+    padding-left: $borderRadius;
   }
+  
+  .content {
+    color: $off_white;
+    text-align: center;
+    font-family: $fontDefault;
+    font-size: 20px;
+    flex:1;
+    justify-content: space-between;
+    padding-left: $borderRadius;
+    padding-right: $borderRadius;
+  }
+  
+  .gamecontentheader{
+    color: $off_white;
+    font-size: 20px;
+    text-align: center;
+    flex:1;
+    justify-content: space-between;
+    font-family: $fontDefault;
+    padding-left: $borderRadius;
+    &.fontbold{
+      font-weight: bold;
+    }
+  }  
 }
 

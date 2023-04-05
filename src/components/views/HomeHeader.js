@@ -20,19 +20,21 @@ const logout = async () => {
 
 const HomeHeader = props => (
     <header className="homeheader container">
-            <Link className="logo fontbold" to="/home" style={{textAlign: "left"}}>
+            <Link className="logo fontbold" to="/home">
                 BrainBusters
             </Link>
-            <Link className="content fontbold" to="/ranking" style={{textAlign: "right"}}>
-                RANKING
-            </Link>
-            <div className="content fontbold" to="/ranking" style={{textAlign: "right"}}>
-                MUSIC
+            <div className="navigation">
+                <Link className="content fontbold" to="/ranking">
+                    RANKING
+                </Link>
+                <div className="content fontbold" to="/ranking">
+                    MUSIC
+                </div>
+                <Link className="content fontbold" to="/rules">
+                    RULES
+                </Link>
             </div>
-            <Link className="content fontbold" to="/rules" style={{textAlign: "right"}}>
-                RULES
-            </Link>
-            <div className="content fontbold" style={{textAlign: "right"}}>
+            <div className="content fontbold profile">
                 UserName
             </div>
     </header>
