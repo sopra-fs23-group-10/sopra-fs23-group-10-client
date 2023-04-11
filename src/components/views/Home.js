@@ -34,7 +34,9 @@ const Home = () => {
             }
         }
         fetchData();
-        connect();
+        if (localStorage.getItem('id')) {
+            connect();
+        }
     }, []);
 
     let userList = <div>waiting</div>;

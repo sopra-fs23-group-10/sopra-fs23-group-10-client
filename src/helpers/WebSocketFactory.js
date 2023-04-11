@@ -27,26 +27,26 @@ export const connect = () => {
         }, stompClient.reconnect_delay);
     };
 
-    stompClient.connect({}, () => {
+
+
+    stompClient.connect({'userId': localStorage.getItem('id')}, () => {
         stompClient.subscribe(`/invitations/${id}`, (message) => {
             console.log(`Received message: ${message.body}`);
             alert("Server says: " + message.body);
         });
+
+        const socket = socketFactory();
+        socket.onopen = () => {
+            stompClient.send('/register', {}, localStorage.getItem('id'));
+        };
     });
 
-   /* 
-    stompClient.intermediateResult({}, () => {
-        stompClient.subscribe(`/game/result/${id}`, (message) => {
-            console.log(`Received message: ${message.body}`);
-            alert("Server says: " + message.body);
-        });
+    window.addEventListener('beforeunload', () => {
+        stompClient.send('/unregister', {}, localStorage.getItem('id'));
+        stompClient.disconnect();
     });
- 
-     */
-    
 
     axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
     axios.defaults.headers.post['Content-Type'] = 'application/json';
     axios.defaults.baseURL = BASE_URL;
 };
-
