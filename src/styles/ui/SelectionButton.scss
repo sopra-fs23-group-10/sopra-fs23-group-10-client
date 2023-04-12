@@ -27,6 +27,13 @@
             transform: scale(1.1);
         }
     }
+
+    &.inactive {
+        opacity: 0.5;
+        &:hover {
+            transform: scale(1.0);
+        }
+    }
     .title {
         color: $secondary_color;
         font-family: $fontDisplay;

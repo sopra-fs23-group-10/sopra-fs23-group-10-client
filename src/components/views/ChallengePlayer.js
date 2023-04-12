@@ -29,7 +29,6 @@ const ChallengePlayer = props => {
                         BACK
                     </Button>
                 </div>
-
             </BaseContainer>
         </>
     );

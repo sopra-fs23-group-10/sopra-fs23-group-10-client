@@ -20,15 +20,28 @@ const Login = props => {
     const history = useHistory();
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
+    const [msg, setMsg] = useState("");
 
     const doLogin = async () => {
         try {
+            setMsg("");
             const response = await loginUser(username, password);
             history.push(`/home`);
         } catch (error) {
-            alert(error.message);
+            console.log(error);
+            if (error.response.status == 404) {
+                setMsg("Sorry, this username does not exist.");
+            } else if (error.response.status == 406) {
+                setMsg("Sorry, this password is incorrect.");
+            }
         }
     };
+
+    const error = () => {
+        return (
+            <div className='error'>{msg}</div>
+        );
+    }
 
     return (
         <>
@@ -50,6 +63,7 @@ const Login = props => {
                         onChange={pw => setPassword(pw)}
                     />
                 </>
+                {error()}
                 <div className="login button-container">
                     <Button
                         disabled={!username || !password}
