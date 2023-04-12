@@ -5,11 +5,23 @@ import {getDomain} from "./getDomain";
 
 const BASE_URL = getDomain();
 
-export const socketFactory = () => new SockJS(`${BASE_URL}/ws`);
+
+/*
+function getWebSocketUrl() {
+    const protocol = window.location.protocol;
+    const domain = getDomain().split('//')[1];
+    return `${protocol === "https:" ? "wss:" : "ws:"}//${domain}/ws`;
+}
+ */
+
+export const socketFactory = () => {
+    return new SockJS(`${BASE_URL}` + "/ws");}
 
 export const connect = () => {
     const id = localStorage.getItem('id');
-    const stompClient = Stomp.over(socketFactory());
+    const stompClient = Stomp.over(function (){
+        return new SockJS(`${BASE_URL}` + "/ws")
+    });
     stompClient.debug = (message) => {
         console.log(message);
     };
