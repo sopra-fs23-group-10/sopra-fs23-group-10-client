@@ -119,7 +119,7 @@ const Home = () => {
                             class="player"
                             title={"Duel\nMode"}
                             url={duel}
-                            inactive={users.length < 1}
+                            inactive={users.length < 2}
                             >
                         </SelectionButton>
                     </div>

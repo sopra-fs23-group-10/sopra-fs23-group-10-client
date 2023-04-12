@@ -133,6 +133,25 @@ export const fetchUsers = async () => {
   }
 };
 
+export const fetchOnlineUsers = async () => {
+  try {
+    const authToken = localStorage.getItem('token');
+    const response = await restApi.get('/users/online', {headers: {token: authToken}});
+    console.log('request to:', response.request.responseURL);
+    console.log('status code:', response.status);
+    console.log('status text:', response.statusText);
+    console.log('requested data:', response.data);
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.error(`Something went wrong while fetching the users: \n${handleError(error)}`);
+    console.error("Details:", error);
+    alert("Something went wrong while fetching the users! See the console for details.");
+    localStorage.removeItem("token");
+    localStorage.removeItem("id");
+  }
+};
+
 export const sendAnswer = async (gameId, userId, questionId, answer, answeredTime) => {
   try {
     const requestBody = JSON.stringify({userId, questionId, answer, answeredTime})
