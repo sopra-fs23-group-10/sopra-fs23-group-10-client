@@ -15,20 +15,29 @@ const Registration = props => {
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
     const [retypePassword, setRetypePassword] = useState(null);
+    const [msg, setMsg] = useState("");
 
     const doRegistration = async () => {
         try {
-            if (!validateEmailFormat(email)) {
-                alert("Email format is incorrect");
+            setMsg("");
+            if (!validateEmailFormat(email)) { 
+                setMsg("Please enter a valid email address."); 
                 return;
             }
             const response = await registerUser(username, password, email);
             history.push(`/home`);
-
         } catch (error) {
-            alert(error.message);
+            console.log(error);
+            console.log(error.response);
+            if (error.response.status == 409) { setMsg("Sorry, but this username is taken."); }
         }
     };
+
+    const error = () => {
+        return (
+            <div className='error'>{msg}</div>
+        );
+    }
 
     const validateEmailFormat = (email) => {
         const emailPattern = new RegExp('[a-zA-Z0-9.]+@[a-zA-Z]+.[a-zA-Z]+');
@@ -61,13 +70,16 @@ const Registration = props => {
                     type="password"
                     onChange={rp => setRetypePassword(rp)}
                 />
-                <Button
-                    disabled={!username || !password || !email || (password !== retypePassword)}
-                    width="100%"
-                    onClick={() => doRegistration()}
-                >
-                Create account
-                </Button>
+                {error()}
+                <div class="registration button-container">
+                    <Button
+                        disabled={!username || !password || !email || (password !== retypePassword)}
+                        width="100%"
+                        onClick={() => doRegistration()}
+                    >
+                    Create account
+                    </Button>
+                </div>
             </BaseContainer>
             <BaseContainer className="registration container secondary">
                 Already have an account? <Link to="/login">Sign in here.</Link>

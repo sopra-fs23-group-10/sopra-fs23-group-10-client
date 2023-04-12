@@ -35,8 +35,6 @@ export const handleError = error => {
 };
 
 export const registerUser = async (username, password, email) => {
-  try {
-
     const requestBody = JSON.stringify({ username, password, email });
     const response = await restApi.post('/users', requestBody);
 
@@ -50,9 +48,6 @@ export const registerUser = async (username, password, email) => {
     ]);
 
     return response.data;
-  } catch (error) {
-    throw new Error(`Something went wrong during registration: \n${handleError(error)}`);
-  }
 };
 
 export const updateUser = async (userId, username) => {
@@ -67,23 +62,17 @@ export const updateUser = async (userId, username) => {
 
 
 export const loginUser = async (username, password) => {
-  try {
-    const requestBody = JSON.stringify({username, password});
-    const response = await restApi.post('/login', requestBody);
+  const requestBody = JSON.stringify({username, password});
+  const response = await restApi.post('/login', requestBody);
 
-    localStorage.setItem('token', response.data.token);
-    localStorage.setItem('id', response.data.id);
+  localStorage.setItem('token', response.data.token);
+  localStorage.setItem('id', response.data.id);
 
-    // Wait for token and id to be set to avoid errors in /Home
-    await Promise.all([
-      localStorage.getItem('token'),
-      localStorage.getItem('id')
-    ]);
-
-    // Login successfully worked --> navigate to the route /home in the HomeRouter
-  } catch (error) {
-    alert(`Something went wrong during login: \n${handleError(error)}`);
-  }
+  // Wait for token and id to be set to avoid errors in /Home
+  await Promise.all([
+    localStorage.getItem('token'),
+    localStorage.getItem('id')
+  ]);
 };
 
 
