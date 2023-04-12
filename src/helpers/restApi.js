@@ -92,7 +92,6 @@ export const fetchUserById = async (userId) => {
   try {
     const authToken = localStorage.getItem('token');
     const response = await restApi.get(`/users/${userId}`, {headers: {token: authToken}});
-
     return response.data;
   } catch (error) {
     throw new Error(`Something went wrong while fetching the user data: \n${handleError(error)}`);
@@ -111,7 +110,6 @@ export const logoutUser = async (history) => {
 
     localStorage.removeItem('token');
     localStorage.removeItem('id');
-    history.push('/login');
     throw new Error(`Something went wrong while fetching the user data: \n${handleError(error)}`);
   }
 };

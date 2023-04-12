@@ -2,10 +2,11 @@
 
 .homeheader {
   height: $header_height;
+
   &.container {
-    display:grid;
+    display: grid;
     grid-template-columns: 100px 1fr 200px;
-    align-items:center;
+    align-items: center;
     padding-left: $base_padding;
     padding-right: $base_padding;
   }
@@ -17,12 +18,13 @@
     justify-content: space-between;
     text-align: left;
     line-height: $header_height;
+
     &.fontbold {
       font-weight: bold;
       transform: none;
     }
   }
-  
+
   .content {
     grid-template-columns: 100px 1fr;
     color: $off_white;
@@ -30,32 +32,63 @@
     font-family: $fontDefault;
     font-size: 20px;
     text-transform: uppercase;
-    &.fontbold{
+
+    &.fontbold {
       font-weight: bold;
     }
-  
+
     &:hover {
       @extends .base-transition;
       color: $secondary_color;
     }
   }
-  
+
   .profile {
-    grid-column:3;
+    grid-column: 3;
     text-align: right;
   }
-  
+
   .navigation {
     grid-column: 2;
-  
+
     > * {
-      float:right;
+      float: right;
       align-self: center;
       height: $header_height;
       line-height: $header_height;
       margin-left: $base_padding;
     }
   }
-  
 }
+
+  .dropdown{
+    position: absolute;
+    padding: $base_padding;
+    border-radius: $borderRadius;
+    width: 300px;
+    height: 150px;
+    margin-right:$base_padding;
+    background-color: $off_white;
+    color: $font_primary;
+    margin-bottom: $base_padding;
+    margin-top: 10px;
+    &.container {
+      display:grid;
+      grid-template-columns: 50% 50%;
+      grid-template-rows: 50% 50%;
+      align-items:center;
+      justify-content: space-between;
+      padding-left: 15px;
+      padding-bottom: 15px;
+      padding-top: 15px;
+      padding-right: 15px;
+    }
+    .logout{
+      grid-column-start:1;
+      grid-column-end:3;
+      grid-row: 2;
+    }
+  }
+
+
 
