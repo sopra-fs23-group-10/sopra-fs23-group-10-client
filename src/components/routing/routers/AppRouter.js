@@ -8,6 +8,7 @@ import UserProfile from "../../views/UserProfile";
 import ProfileEditor from "../../views/ProfileEditor";
 import ResetPassword from "../../views/ResetPassword";
 import ForgotPassword from "../../views/ForgotPassword";
+import ChallengePlayer from "../../views/ChallengePlayer";
 import Ranking from "../../views/Ranking";
 import Rules from "../../views/Rules";
 import GameScreen from "../../views/GameScreen";
@@ -33,6 +34,11 @@ const AppRouter = () => {
         <Route exact path="/users/:user_id">
           <HomeGuard>
             <UserProfile/>
+          </HomeGuard>
+        </Route>
+        <Route exact path="/challenge/:gameMode">
+          <HomeGuard>
+            <ChallengePlayer/>
           </HomeGuard>
         </Route>
         <Route exact path="/users/edit/:user_id">
