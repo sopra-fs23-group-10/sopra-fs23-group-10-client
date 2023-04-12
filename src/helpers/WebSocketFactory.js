@@ -1,4 +1,3 @@
-import SockJS from "sockjs-client";
 import {Stomp} from "@stomp/stompjs";
 import axios from "axios";
 import {getDomain} from "./getDomain";
@@ -6,21 +5,30 @@ import {getDomain} from "./getDomain";
 const BASE_URL = getDomain();
 
 
-/*
+
 function getWebSocketUrl() {
     const protocol = window.location.protocol;
     const domain = getDomain().split('//')[1];
     return `${protocol === "https:" ? "wss:" : "ws:"}//${domain}/ws`;
 }
+
+/*
+function getWebSocketUrl() {
+    const protocol = window.location.protocol;
+    const domain = getDomain().split('//')[1];
+    const ws = protocol === "https:" ? "wss:" : "ws:"
+    return `${ws}//${domain}/${ws}`;
+}
  */
 
+
 export const socketFactory = () => {
-    return new SockJS(`${BASE_URL}` + "/ws");}
+    return new WebSocket(`${getWebSocketUrl()}`);}
 
 export const connect = () => {
     const id = localStorage.getItem('id');
     const stompClient = Stomp.over(function (){
-        return new SockJS(`${BASE_URL}` + "/ws")
+        return new WebSocket(`${getWebSocketUrl()}`)
     });
     stompClient.debug = (message) => {
         console.log(message);
