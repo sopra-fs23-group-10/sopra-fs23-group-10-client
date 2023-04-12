@@ -28,7 +28,7 @@ jobs:
     name: Deploying to Google Cloud
     runs-on: ubuntu-latest
     env:
-      process.env.CI: false # disable treating warnings as errors -> set to true for final production
+      CI: false # disable treating warnings as errors -> set to true for final production
 
     steps:
       - name: Checkout
