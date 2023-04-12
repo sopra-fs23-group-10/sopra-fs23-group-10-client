@@ -25,31 +25,45 @@ function getWebSocketUrl() {
 export const socketFactory = () => {
     return new WebSocket(`${getWebSocketUrl()}`);}
 
+const MAX_RETRIES = 2; // Maximum number of retries
+let currentRetries = 0; // Current retry count
+
+const exponentialBackoff = (retries) => {
+    return Math.min(30, (Math.pow(2, retries) - 1)) * 1000;
+};
+
 export const connect = () => {
+    if (currentRetries >= MAX_RETRIES) {
+        console.error('Max retries reached, connection aborted');
+        return;
+    }
+
     const id = localStorage.getItem('id');
     const stompClient = Stomp.over(function (){
-        return new WebSocket(`${getWebSocketUrl()}`)
+        return new WebSocket(`${getWebSocketUrl()}`);
     });
     stompClient.debug = (message) => {
         console.log(message);
     };
 
-    stompClient.reconnect_delay = 5000;
     stompClient.onWebSocketError = (error) => {
         console.error('WebSocket error:', error);
+        currentRetries++;
         setTimeout(() => {
             connect();
-        }, stompClient.reconnect_delay);
+        }, exponentialBackoff(currentRetries));
     };
 
     stompClient.onWebSocketClose = () => {
         console.error('WebSocket closed');
+        currentRetries++;
         setTimeout(() => {
             connect();
-        }, stompClient.reconnect_delay);
+        }, exponentialBackoff(currentRetries));
     };
 
     stompClient.connect({'userId': localStorage.getItem('id')}, () => {
+        currentRetries = 0; // Reset the retry count after successful connection
         stompClient.subscribe(`/invitations/${id}`, (message) => {
             console.log(`Received message: ${message.body}`);
             alert("Server says: " + message.body);
