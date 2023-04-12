@@ -27,6 +27,10 @@
             transform: scale(1.1);
         }
     }
+
+    &.inactive {
+        opacity: 0.5;
+    }
     .title {
         color: $secondary_color;
         font-family: $fontDisplay;

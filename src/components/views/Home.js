@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import {fetchUsers, inviteUser, logoutUser} from 'helpers/restApi';
+import {fetchOnlineUsers, inviteUser, logoutUser} from 'helpers/restApi';
 import {Button} from 'components/ui/Button';
 import {generatePath, Link, useHistory} from 'react-router-dom';
 import BaseContainer from "components/ui/BaseContainer";
@@ -54,7 +54,7 @@ const Home = () => {
 
         async function fetchData() {
             try {
-                const response = await fetchUsers();
+                const response = await fetchOnlineUsers();
                 setUsers(response.data);
             } catch (error) {
                 history.push("/login");
@@ -117,6 +117,7 @@ const Home = () => {
                             class="player"
                             title={"Duel\nMode"}
                             url={duel}
+                            inactive={users.length < 1}
                             >
                         </SelectionButton>
                     </div>
