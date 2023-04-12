@@ -1,8 +1,9 @@
 import SockJS from "sockjs-client";
 import {Stomp} from "@stomp/stompjs";
 import axios from "axios";
+import {getDomain} from "./getDomain";
 
-const BASE_URL = 'http://localhost:8080';
+const BASE_URL = getDomain();
 
 export const socketFactory = () => new SockJS(`${BASE_URL}/ws`);
 
@@ -20,14 +21,13 @@ export const connect = () => {
             connect();
         }, stompClient.reconnect_delay);
     };
+
     stompClient.onWebSocketClose = () => {
         console.error('WebSocket closed');
         setTimeout(() => {
             connect();
         }, stompClient.reconnect_delay);
     };
-
-
 
     stompClient.connect({'userId': localStorage.getItem('id')}, () => {
         stompClient.subscribe(`/invitations/${id}`, (message) => {
