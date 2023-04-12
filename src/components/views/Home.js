@@ -7,6 +7,11 @@ import HomeHeader from "components/views/HomeHeader";
 import "styles/views/Home.scss";
 import {connect} from "../../helpers/WebSocketFactory";
 import Player from "components/ui/Player";
+import {SelectionButton} from "components/ui/SelectionButton.js";
+import image from "images/image.png";
+import trivia from "images/trivia.png";
+import duel from "images/duel.png";
+import single from "images/single.png";
 
 const Home = () => {
 
@@ -85,25 +90,45 @@ const Home = () => {
             );
         } else if (gameMode === gameModes.none) {
             return (    
-                <>       
-                    <button onClick={() => chooseGameMode(gameModes.text)} className='home start-game-button'>
-                        <p className='home start-game'>Trivia</p>
-                    </button>
-                    <button onClick={() => chooseGameMode(gameModes.image)} className='home start-game-button'>
-                        <p className='home start-game'>Image</p>
-                    </button>
+                <>      
+                    <div class="selection-container" onClick={() => chooseGameMode(gameModes.text)}>
+                        <SelectionButton 
+                            class="game"
+                            title={"Trivia\nQuiz"}
+                            url={trivia}
+                            >
+                        </SelectionButton>
+                    </div>
+                    <div class="selection-container" onClick={() => chooseGameMode(gameModes.image)}>
+                        <SelectionButton 
+                            class="game"
+                            title={"Image\nQuiz"}
+                            url={image}
+                            >
+                        </SelectionButton>
+                    </div>
                 </> 
             );
         } else {
             return (
-                <>       
-                <button onClick={() => choosePlayerMode(playerModes.duel)} className='home start-game-button'>
-                    <p className='home start-game'>Duel</p>
-                </button>
-                <button onClick={() => choosePlayerMode(playerModes.single)} className='home start-game-button'>
-                    <p className='home start-game'>Single</p>
-                </button>
-            </> 
+                <> 
+                    <div class="selection-container" onClick={() => choosePlayerMode(playerModes.duel)}>
+                        <SelectionButton
+                            class="player"
+                            title={"Duel\nMode"}
+                            url={duel}
+                            >
+                        </SelectionButton>
+                    </div>
+                    <div class="selection-container" onClick={() => choosePlayerMode(playerModes.single)}>
+                        <SelectionButton 
+                            class="player"
+                            title={"Single\nMode"}
+                            url={single}
+                            >
+                        </SelectionButton>
+                    </div>
+                </> 
             );
         }
     }

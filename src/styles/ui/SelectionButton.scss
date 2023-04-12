@@ -1,0 +1,40 @@
+@import 'styles/theme';
+
+.selection-button {
+    @keyframes scale {
+        0% {
+          transform: scale(0%);
+        }
+        100% {
+          transform: scale(100%);
+        }
+    }
+
+    &.container {
+        background-repeat: no-repeat !important;
+        background-size:contain !important;
+        background-position: center !important; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width:280px;
+        height:280px;
+        cursor: pointer;
+        animation: 0.2s ease-in-out 0s 1 scale;
+        transition: transform 0.3s ease;
+
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
+    .title {
+        color: $secondary_color;
+        font-family: $fontDisplay;
+        font-size:  160px;
+        line-height:130px;
+        transform: translate(0, -10px);
+        font-weight: 600;
+        text-align: center;
+        white-space: pre-line;
+    }
+}
