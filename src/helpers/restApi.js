@@ -92,7 +92,6 @@ export const fetchUserById = async (userId) => {
   try {
     const authToken = localStorage.getItem('token');
     const response = await restApi.get(`/users/${userId}`, {headers: {token: authToken}});
-
     return response.data;
   } catch (error) {
     throw new Error(`Something went wrong while fetching the user data: \n${handleError(error)}`);
@@ -101,9 +100,9 @@ export const fetchUserById = async (userId) => {
 
 export const logoutUser = async (history) => {
   try {
-    const id = localStorage.getItem('id');
-    const requestBody = JSON.stringify({id});
-    const response = await restApi.post('/logout', requestBody, {headers: {token: localStorage.getItem('token')}});
+    const userId = localStorage.getItem('id');
+    const requestBody = JSON.stringify({userId});
+    const response = await restApi.post(`/logout/${userId}`, requestBody, {headers: {token: localStorage.getItem('token')}});
     localStorage.removeItem('token');
     localStorage.removeItem('id');
     return response.data;
@@ -111,7 +110,6 @@ export const logoutUser = async (history) => {
 
     localStorage.removeItem('token');
     localStorage.removeItem('id');
-    history.push('/login');
     throw new Error(`Something went wrong while fetching the user data: \n${handleError(error)}`);
   }
 };
@@ -135,24 +133,23 @@ export const fetchUsers = async () => {
   }
 };
 
-export const fetchOnlineUsers = async () => {
+export const sendAnswer = async (gameId, userId, questionId, answer, answeredTime) => {
   try {
-    const authToken = localStorage.getItem('token');
-    const response = await restApi.get('/users/online', {headers: {token: authToken}});
+    const requestBody = JSON.stringify({userId, questionId, answer, answeredTime})
+    const response = await restApi.put(`/game/question/${gameId}`, requestBody, {headers: {token: localStorage.getItem("token")}})
     console.log('request to:', response.request.responseURL);
     console.log('status code:', response.status);
     console.log('status text:', response.statusText);
     console.log('requested data:', response.data);
     console.log(response);
     return response;
-  } catch (error) {
-    console.error(`Something went wrong while fetching the users: \n${handleError(error)}`);
-    console.error("Details:", error);
-    alert("Something went wrong while fetching the users! See the console for details.");
-    localStorage.removeItem("token");
-    localStorage.removeItem("id");
   }
-};
+  catch (error) {
+    console.error(`Something went wrong while saving your answer in the server: \n${handleError(error)}`);
+    console.error("Details:", error);
+    alert("Something went wrong while saving your answer in the server! See the console for details.");
+  }
+}
 
 
 export const inviteUser = async (invitedUserId, quizType, modeType) => {
@@ -165,6 +162,30 @@ export const inviteUser = async (invitedUserId, quizType, modeType) => {
     return response.data;
   } catch (error) {
     throw new Error(`Something went wrong during game creation: \n${handleError(error)}`);
+  }
+};
+
+export const finishGame = async () => {
+  try {
+    const gameId = localStorage.getItem('gameId');
+    const authToken = localStorage.getItem('token');
+    const response = await restApi.delete(`/game/finish/${gameId}`, {}, {headers: {token: authToken}});
+    alert(JSON.stringify(response.data));
+    return response.data;
+  } catch (error) {
+    throw new Error(`Something went wrong during fetching final results: \n${handleError(error)}`);
+  }
+};
+
+export const getIntermediateResults = async () => {
+  try {
+    const gameId = localStorage.getItem('gameId');
+    const authToken = localStorage.getItem('token');
+    const response = await restApi.put(`/game/intermediate/${gameId}`, {}, {headers: {token: authToken}});
+    alert(JSON.stringify(response.data));
+    return response.data;
+  } catch (error) {
+    throw new Error(`Something went wrong during fetching intermediate results: \n${handleError(error)}`);
   }
 };
 

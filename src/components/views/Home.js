@@ -61,7 +61,9 @@ const Home = () => {
             }
         }
         fetchData();
-        connect();
+        if (localStorage.getItem('id')) {
+            connect();
+        }
     }, []);
 
     let userList = <div>waiting</div>;
@@ -146,6 +148,20 @@ const Home = () => {
                 </BaseContainer>
                 <div className='home start-game-container'>
                     {startGameMenu()}
+                </div>
+                <div className="invite-form">
+                    <input
+                        type="text"
+                        value={userIdInput}
+                        onChange={(e) => setUserIdInput(e.target.value)}
+                        placeholder="Enter user ID"
+                    />
+                    <Button
+                        onClick={invite}
+                        disabled={!userIdInput}
+                    >
+                        Invite
+                    </Button>
                 </div>
             </div>
         </div>
