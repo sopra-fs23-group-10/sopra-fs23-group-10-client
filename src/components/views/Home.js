@@ -10,16 +10,38 @@ import Player from "components/ui/Player";
 
 const Home = () => {
 
+    const gameModes = {text: "TEXT", image: "IMAGE", none: "NONE"};
+    const playerModes = {single: "SINGLE", duel: "DUEL", none: "NONE"};
+
     const history = useHistory();
 
     const [users, setUsers] = useState(null);
     const [userIdInput, setUserIdInput] = useState('');
+    const [startGame, setStartGame] = useState(false);
+    const [gameMode, setGameMode] = useState(gameModes.none);
+    const [playerMode, setPlayerMode] = useState(playerModes.none)
 
     const invite = async () => {
         try {
             const response = await inviteUser(userIdInput, "TEXT", "DUEL");
         } catch (error) {
             console.log(`user ${userIdInput} is not online`);
+        }
+    }
+
+    const start = () => {
+        setStartGame(true);
+    }
+
+    const chooseGameMode = (gm) => {
+        setGameMode(gm);
+    }
+
+    const choosePlayerMode = (pm) => {
+        console.log("set player mode");
+        setPlayerMode(pm);
+        if (pm === playerModes.duel) {
+            history.push("/challenge/" + gameMode.toLowerCase());
         }
     }
 
@@ -54,6 +76,38 @@ const Home = () => {
         );
     }
 
+    const startGameMenu = () => {
+        if (!startGame) {
+            return (
+                <button onClick={() => start()} className='home start-game-button'>
+                    <p className='home start-game'>Start Game</p>
+                </button>
+            );
+        } else if (gameMode === gameModes.none) {
+            return (    
+                <>       
+                    <button onClick={() => chooseGameMode(gameModes.text)} className='home start-game-button'>
+                        <p className='home start-game'>Trivia</p>
+                    </button>
+                    <button onClick={() => chooseGameMode(gameModes.image)} className='home start-game-button'>
+                        <p className='home start-game'>Image</p>
+                    </button>
+                </> 
+            );
+        } else {
+            return (
+                <>       
+                <button onClick={() => choosePlayerMode(playerModes.duel)} className='home start-game-button'>
+                    <p className='home start-game'>Duel</p>
+                </button>
+                <button onClick={() => choosePlayerMode(playerModes.single)} className='home start-game-button'>
+                    <p className='home start-game'>Single</p>
+                </button>
+            </> 
+            );
+        }
+    }
+
     return (
         <div className="fill">
             <HomeHeader/>
@@ -63,30 +117,9 @@ const Home = () => {
                         <h3>Active Users</h3>
                         {userList}
                     </div>
-
-                    
-                    {/* 
-                    TODO: Move to duel select
-                    <div className="invite-form">
-                        <input
-                            type="text"
-                            value={userIdInput}
-                            onChange={(e) => setUserIdInput(e.target.value)}
-                            placeholder="Enter user ID"
-                        />
-                        <Button
-                            onClick={invite}
-                            disabled={!userIdInput}
-                        >
-                            Invite
-                        </Button>
-                    </div> */}
-
                 </BaseContainer>
                 <div className='home start-game-container'>
-                    <button className='home start-game-button'>
-                        <p className='home start-game'>Start Game</p>
-                    </button>
+                    {startGameMenu()}
                 </div>
             </div>
         </div>
