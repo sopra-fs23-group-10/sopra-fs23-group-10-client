@@ -25,8 +25,9 @@ function getWebSocketUrl() {
 export const socketFactory = () => {
     return new WebSocket(`${getWebSocketUrl()}`);}
 
-const MAX_RETRIES = 2; // Maximum number of retries
+const MAX_RETRIES = 10; // Maximum number of retries
 let currentRetries = 0; // Current retry count
+let listenersAdded = false; // Moved outside the connect function
 
 const exponentialBackoff = (retries) => {
     return Math.min(30, (Math.pow(2, retries) - 1)) * 1000;
@@ -69,15 +70,19 @@ export const connect = () => {
             alert("Server says: " + message.body);
         });
 
-        const socket = socketFactory();
-        socket.onopen = () => {
-            stompClient.send('/register', {}, localStorage.getItem('id'));
-        };
-    });
+        if (!listenersAdded) {
+            const socket = socketFactory();
+            socket.onopen = () => {
+                stompClient.send('/register', {}, localStorage.getItem('id'));
+            };
 
-    window.addEventListener('beforeunload', () => {
-        stompClient.send('/unregister', {}, localStorage.getItem('id'));
-        stompClient.disconnect();
+            window.addEventListener('beforeunload', () => {
+                stompClient.send('/unregister', {}, localStorage.getItem('id'));
+                stompClient.disconnect();
+            });
+
+            listenersAdded = true;
+        }
     });
 
     axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
