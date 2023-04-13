@@ -10,6 +10,7 @@ import HomeHeader from "./HomeHeader";
 import {Button} from "../ui/Button";
 import {connect} from "../../helpers/WebSocketFactory";
 import { PlayerList } from 'components/ui/PlayerList';
+import 'styles/views/ChallengePlayer.scss';
 
 
 const ChallengePlayer = props => {
@@ -41,8 +42,8 @@ const ChallengePlayer = props => {
     return (
         <>
             <HomeHeader height="100"/>
-            <div className='popup grid'>
-                <Link to="/home" className='popup back'>✕ Cancel</Link>
+            <div className='challenge popup grid'>
+                <Link to="/home" className='back'>✕ Cancel</Link>
                 <BaseContainer className="popup container">
                     <h3 className='popup title'>Challenge Player</h3>
                     <PlayerList callback={getUsers} action={chooseOpponent}/>

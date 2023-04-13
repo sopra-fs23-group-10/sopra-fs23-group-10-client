@@ -2,9 +2,10 @@
 
 .popup {
   &.container {
+    width: 40%;
+    max-width: 1000px;
+    min-width: 500px;
     color: $font_primary;
-    grid-column: 2;
-    margin: 0px;
     height: auto;
     &.secondary {
       margin-top: $base_padding;
@@ -79,24 +80,6 @@
   }
   .button-container {
     margin-top: $base_padding;
-  }
-  &.grid {
-    display: grid;
-    grid-template-columns: 1fr minmax(500px, 1fr) 1fr;
-    max-height: calc(100vh - #{$header_height});
-  }
-  &.back {
-    @extend .base-transition;
-    color: $off_white;
-    grid-column: 2;
-    text-transform: uppercase;
-    font-weight: 600;
-    margin-bottom: 10px;
-    width:80px;
-
-    &:hover {
-      color: $secondary_color;
-    }
   }
 }
 

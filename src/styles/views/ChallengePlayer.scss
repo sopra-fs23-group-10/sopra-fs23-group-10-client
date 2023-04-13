@@ -1,0 +1,30 @@
+@import 'styles/theme';
+
+.challenge {
+    .container {
+        &.base-container {
+            grid-column: 2;
+            margin:0px !important;
+        }
+    }
+
+    &.grid {
+        display: grid;
+        grid-template-columns: 1fr minmax(500px, 1fr) 1fr;
+        max-height: calc(100vh - #{$header_height});
+    }
+
+    .back {
+        @extend .base-transition;
+        color: $off_white;
+        grid-column: 2;
+        text-transform: uppercase;
+        font-weight: 600;
+        margin-bottom: 10px;
+        width:80px;
+
+        &:hover {
+            color: $secondary_color;
+        }
+    }
+}
