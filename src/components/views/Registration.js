@@ -30,6 +30,9 @@ const Registration = props => {
             console.log(error);
             console.log(error.response);
             if (error.response.status == 409) { setMsg("Sorry, but this username is taken."); }
+            else {
+                alert(error);
+            }
         }
     };
 

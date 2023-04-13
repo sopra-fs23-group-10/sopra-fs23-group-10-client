@@ -33,6 +33,8 @@ const Login = props => {
                 setMsg("Sorry, this username does not exist.");
             } else if (error.response.status == 406) {
                 setMsg("Sorry, this password is incorrect.");
+            } else {
+                alert(error);
             }
         }
     };
