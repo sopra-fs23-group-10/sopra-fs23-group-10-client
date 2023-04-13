@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import {Button} from 'components/ui/Button';
-import {fetchUserById} from 'helpers/restApi';
+import {fetchUserById, answerInvite} from 'helpers/restApi';
 import "styles/views/HomeHeader.scss";
 import React,{useEffect,useState} from 'react';
 import {connect} from "../../helpers/WebSocketFactory";
@@ -33,6 +33,10 @@ const ReceiveInvitation = props => {
         }
     }
 
+    const reply = (accepted) => {
+        answerInvite(invitation.id, accepted)
+    }
+
     const receiveInvitation = () => {
         if (invitation) {
             return (
@@ -42,8 +46,8 @@ const ReceiveInvitation = props => {
                     <div className="invitation base-container">
                         <p>{username} has challenged you to a {invitation.quizType === "IMAGE" ? "image" : "trivia"} quiz!</p>
                         <div className="twoButtons button-container">
-                            <Button>Decline</Button>
-                            <Button>Accept</Button>
+                            <Button onClick={() => reply(false)}>Decline</Button>
+                            <Button onClick={() => reply(true)}>Accept</Button>
                         </div>
                     </div>
                 </>
