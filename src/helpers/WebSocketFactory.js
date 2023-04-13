@@ -67,7 +67,6 @@ export const connect = (inviteCallback) => {
         stompClient.subscribe(`/invitations/${id}`, (message) => {
             inviteCallback(message.body);
             console.log(`Received message: ${message.body}`);
-            // alert("Server says: " + message.body);
         });
 
         if (!listenersAdded) {

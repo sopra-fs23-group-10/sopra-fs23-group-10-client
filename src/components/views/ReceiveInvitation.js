@@ -8,8 +8,11 @@ import "styles/views/PopUp.scss";
 import "styles/ui/Invitation.scss";
 import Invitation from "../../models/Invitation";
 import User from "../../models/User";
+import {useHistory} from 'react-router-dom';
+
 
 const ReceiveInvitation = props => {
+    const history = useHistory;
     const [invitation, setInvitation] = useState(null);
     const [username, setUsername] = useState("");
 
@@ -33,8 +36,15 @@ const ReceiveInvitation = props => {
         }
     }
 
-    const reply = (accepted) => {
-        answerInvite(invitation.id, accepted)
+    const reply = async (accepted) => {
+        const response = await answerInvite(invitation.id, accepted);
+        const answer = Object.values(response)[0];
+        if (answer) {
+            setInvitation(null);
+            history.push("/game")
+        } else {
+            setInvitation(null);
+        }
     }
 
     const receiveInvitation = () => {
