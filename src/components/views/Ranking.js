@@ -17,7 +17,7 @@ const Ranking = props => {
             <BaseContainer className="popup container">
                 <div className ="title" style={{textAlign: "center"}}>
                     <p>
-                        STAR PLAYERS <br />
+                        <strong> STAR PLAYERS </strong> <br />
                     </p>
 
                 </div>
