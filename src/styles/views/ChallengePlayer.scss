@@ -2,6 +2,8 @@
 
 .challenge {
     .container {
+        width:100% !important;
+        min-width: 100%;
         &.base-container {
             grid-column: 2;
             margin:0px !important;
@@ -10,8 +12,9 @@
 
     &.grid {
         display: grid;
-        grid-template-columns: 1fr minmax(500px, 1fr) 1fr;
-        max-height: calc(100vh - #{$header_height});
+        margin-top:$base_padding;
+        grid-template-columns: 1fr minmax(400px, 1fr) 1fr;
+        max-height: calc(100vh - #{$header_height} - #{$base_padding});
     }
 
     .back {

@@ -49,6 +49,12 @@ const Home = () => {
         }
     }
 
+    const blabla = (msg) => {
+        console.log("bi ba boop bi boopi boop");
+        console.log(msg);
+    }
+
+
     const startGameMenu = () => {
         if (users) {
             if (!startGame) {

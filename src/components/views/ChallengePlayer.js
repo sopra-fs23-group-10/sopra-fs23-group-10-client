@@ -24,7 +24,7 @@ const ChallengePlayer = props => {
 
     const invite = async (id) => {
         try {
-            const response = await inviteUser(id, "TEXT", "DUEL");
+            const response = await inviteUser(id, gameMode, "DUEL");
         } catch (error) {
             console.log(`user ${id} is not online`);
         }

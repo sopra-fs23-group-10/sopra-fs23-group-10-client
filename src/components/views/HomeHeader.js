@@ -7,6 +7,8 @@ import {Link} from "react-router-dom";
 import React,{useEffect,useState} from 'react';
 import {connect} from "../../helpers/WebSocketFactory";
 import User from "../../models/User";
+import "styles/views/PopUp.scss";
+import "styles/ui/Invitation.scss";
 
 /**
  * This is an example of a Functional and stateless component (View) in React. Functional components are not classes and thus don't handle internal state changes.
@@ -52,10 +54,28 @@ const HomeHeader = props => {
     }
 
     const edit = () => {
-            return <Link
-                onClick={() => toEdit(localStorage.getItem('id'))}>
-                Edit Profile -{'>'}
-            </Link>
+        return <Link
+            onClick={() => toEdit(localStorage.getItem('id'))}>
+            Edit Profile -{'>'}
+        </Link>
+    }
+
+    const receiveInvitation = () => {
+        if (false) {
+            return (
+                <>
+                    <div class="invitation overlay">
+                    </div>
+                    <div class="invitation base-container">
+                        <p>Someone has challenged you to a match!</p>
+                        <div class="twoButtons button-container">
+                            <Button>Decline</Button>
+                            <Button>Accept</Button>
+                        </div>
+                    </div>
+                </>
+            );
+        }
     }
 
     const toEdit = (userId) => {
@@ -105,7 +125,7 @@ const HomeHeader = props => {
                 {username}
                 {dropDown()}
             </a>
-
+            {receiveInvitation()}
         </header>
     );
 };
