@@ -38,11 +38,10 @@
     justify-content: center;
     align-items: center;
   } 
-  @media only screen and (max-width: 1200px) {
-    &.start-game-container{
-      grid-column-start: 2 !important;
-      grid-column-end: 3 !important;
-    } 
+  @media only screen and (max-width: 1300px) {
+    &.user-container {
+      display: none;
+    }
   }
   &.scroll-container {
     height:100%;
