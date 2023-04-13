@@ -7,17 +7,30 @@ import {connect} from "../../helpers/WebSocketFactory";
 import "styles/views/PopUp.scss";
 import "styles/ui/Invitation.scss";
 import Invitation from "../../models/Invitation";
+import User from "../../models/User";
 
 const ReceiveInvitation = props => {
     const [invitation, setInvitation] = useState(null);
+    const [username, setUsername] = useState("");
 
     useEffect(() => {
         connect(handleInvite);
     }, []);
 
-    const handleInvite = (msg) => {
+    const handleInvite = async (msg) => {
         let obj = JSON.parse(msg);
-        setInvitation(new Invitation(obj));
+        let inv = new Invitation(obj)
+        getInvitingUser(inv.invitingUserId);
+        setInvitation(inv);
+    }
+
+    const getInvitingUser = async(id) => {
+        try {
+            const userData = await fetchUserById(id);
+            setUsername(userData.username);
+        } catch (error) {
+            alert(error);
+        }
     }
 
     const receiveInvitation = () => {
@@ -27,7 +40,7 @@ const ReceiveInvitation = props => {
                     <div className="invitation overlay">
                     </div>
                     <div className="invitation base-container">
-                        <p>Someone has challenged you to a {invitation.quizType === "IMAGE" ? "image" : "trivia"} quiz!</p>
+                        <p>{username} has challenged you to a {invitation.quizType === "IMAGE" ? "image" : "trivia"} quiz!</p>
                         <div className="twoButtons button-container">
                             <Button>Decline</Button>
                             <Button>Accept</Button>
