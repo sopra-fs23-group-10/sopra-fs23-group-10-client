@@ -86,10 +86,10 @@ const HomeHeader = props => {
         if(showProfile){
             return(
                 <div className="dropdown container">
-                    <div style={{textAlign: "left"}}>
+                    <div className="contentNoHover" style={{textAlign: "left"}}>
                         Points: {points}
                     </div>
-                    <div style={{textAlign: "right"}}>
+                    <div className="contentHover" style={{textAlign: "right"}}>
                         {edit()}
                     </div>
                     <Button className ="logout"

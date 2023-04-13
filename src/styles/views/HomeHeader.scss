@@ -72,6 +72,7 @@
     color: $font_primary;
     margin-bottom: $base_padding;
     margin-top: 10px;
+    right:0;
     &.container {
       display:grid;
       grid-template-columns: 50% 50%;
@@ -88,7 +89,28 @@
       grid-column-end:3;
       grid-row: 2;
     }
+    .contentNoHover {
+      //grid-template-columns: 100px 1fr;
+      color: black;
+      font-family: $fontDefault;
+      font-size: 20px;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+    .contentHover {
+      //grid-template-columns: 100px 1fr;
+      color: black;
+      font-family: $fontDefault;
+      font-size: 20px;
+      text-transform: uppercase;
+      font-weight: bold;
+
+      &:hover {
+      @extends .base-transition;
+      color: $secondary_color;
+    }
   }
+}
 
 
 
