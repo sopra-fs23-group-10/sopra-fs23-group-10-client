@@ -166,10 +166,20 @@ export const inviteUser = async (invitedUserId, quizType, modeType) => {
     const authToken = localStorage.getItem('token');
     const requestBody = JSON.stringify({invitingUserId, invitedUserId, quizType, modeType});
     const response = await restApi.post('/game/creation', requestBody, {headers: {token: authToken}});
-    alert(JSON.stringify(response.data));
     return response.data;
   } catch (error) {
     throw new Error(`Something went wrong during game creation: \n${handleError(error)}`);
+  }
+};
+
+export const answerInvite = async (gameId, answer) => {
+  try {
+    const authToken = localStorage.getItem('token');
+    const requestBody = JSON.stringify(answer);
+    const response = await restApi.post(`/game/invitation/${gameId}`, requestBody, {headers: {token: authToken}});
+    return response.data;
+  } catch (error) {
+    throw new Error(`Something went wrong during invite response: \n${handleError(error)}`);
   }
 };
 
@@ -178,7 +188,6 @@ export const finishGame = async () => {
     const gameId = localStorage.getItem('gameId');
     const authToken = localStorage.getItem('token');
     const response = await restApi.delete(`/game/finish/${gameId}`, {}, {headers: {token: authToken}});
-    alert(JSON.stringify(response.data));
     return response.data;
   } catch (error) {
     throw new Error(`Something went wrong during fetching final results: \n${handleError(error)}`);
@@ -190,7 +199,6 @@ export const getIntermediateResults = async () => {
     const gameId = localStorage.getItem('gameId');
     const authToken = localStorage.getItem('token');
     const response = await restApi.put(`/game/intermediate/${gameId}`, {}, {headers: {token: authToken}});
-    alert(JSON.stringify(response.data));
     return response.data;
   } catch (error) {
     throw new Error(`Something went wrong during fetching intermediate results: \n${handleError(error)}`);

@@ -27,12 +27,6 @@ const Home = () => {
         setUsers(u);
     }
 
-    useEffect(() => {
-        if (localStorage.getItem('id')) {
-            connect();
-        }
-    }, []);
-
     const start = () => {
         setStartGame(true);
     }
@@ -48,12 +42,6 @@ const Home = () => {
             history.push("/challenge/" + gameMode.toLowerCase());
         }
     }
-
-    const blabla = (msg) => {
-        console.log("bi ba boop bi boopi boop");
-        console.log(msg);
-    }
-
 
     const startGameMenu = () => {
         if (users) {

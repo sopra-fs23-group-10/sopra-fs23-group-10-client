@@ -8,7 +8,6 @@ import 'styles/views/PopUp.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import HomeHeader from "./HomeHeader";
 import {Button} from "../ui/Button";
-import {connect} from "../../helpers/WebSocketFactory";
 import { PlayerList } from 'components/ui/PlayerList';
 import 'styles/views/ChallengePlayer.scss';
 
@@ -26,7 +25,7 @@ const ChallengePlayer = props => {
         try {
             const response = await inviteUser(id, gameMode.toUpperCase(), "DUEL");
         } catch (error) {
-            console.log(`user ${id} is not online`);
+            alert(error);
         }
     }
 
@@ -35,8 +34,10 @@ const ChallengePlayer = props => {
     }
 
     const challengeRandomUser = () => {
-        const rnd = Math.floor(Math.random() * users.length);
-        invite(users[rnd].id);
+        const id = localStorage.getItem('id');
+        const others = users.filter(user => user.id != id);
+        const rnd = Math.floor(Math.random() * others.length);
+        invite(others[rnd].id);
     }
 
     return (
@@ -53,7 +54,7 @@ const ChallengePlayer = props => {
                             onClick={() => challengeRandomUser()}
                             disabled={users == null}
                         >
-                            Challenge Random Player
+                            Random
                         </Button>
                     </div>
                 </BaseContainer>
