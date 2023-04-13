@@ -1,4 +1,6 @@
 import React from 'react';
+import {useEffect, useState} from 'react';
+import {inviteUser} from 'helpers/restApi';
 //import {api, handleError} from 'helpers/api';
 import {useHistory, useParams} from 'react-router-dom';
 //import {Button} from 'components/ui/Button';
@@ -6,27 +8,49 @@ import 'styles/views/PopUp.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import HomeHeader from "./HomeHeader";
 import {Button} from "../ui/Button";
+import {connect} from "../../helpers/WebSocketFactory";
+import { PlayerList } from 'components/ui/PlayerList';
 
 
 const ChallengePlayer = props => {
     const history = useHistory();
     const { gameMode } = useParams();
+    const [users, setUsers] = useState(null);
+
+    const getUsers = async (u) => {
+        setUsers(u);
+    }
+
+    const invite = async (id) => {
+        try {
+            const response = await inviteUser(id, "TEXT", "DUEL");
+        } catch (error) {
+            console.log(`user ${id} is not online`);
+        }
+    }
+
+    const chooseOpponent = (id) => {
+        invite(id);
+    }
+
+    const challengeRandomUser = () => {
+        const rnd = Math.floor(Math.random() * users.length);
+        invite(users[rnd].id);
+    }
 
     return (
         <>
             <HomeHeader height="100"/>
             <BaseContainer className="popup container">
-                <div className ="title" style={{textAlign: "center"}}>
-                    <p>
-                       {gameMode}<br />
-                    </p>
-                </div>
+                <h3 className='popup title'>Challenge Player</h3>
+                <PlayerList callback={getUsers} action={chooseOpponent}/>
                 <div className="button-container">
                     <Button
                         width="100%"
-                        onClick={() => history.push('/home')}
+                        onClick={() => challengeRandomUser()}
+                        disabled={users == null}
                     >
-                        BACK
+                        Challenge Random Player
                     </Button>
                 </div>
             </BaseContainer>

@@ -2,16 +2,6 @@
 
 
 .home {
-  &.user-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap:10px;
-    margin: 0px;
-    margin-top: 20px;
-    padding: 0px;
-    height:100%;
-  }
   &.user-item {
     display: flex;
     flex-direction: column;

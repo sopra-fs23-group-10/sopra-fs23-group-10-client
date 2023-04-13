@@ -54,7 +54,7 @@ const HomeHeader = props => {
     const edit = () => {
             return <Link
                 onClick={() => toEdit(localStorage.getItem('id'))}>
-                Edit Profile ->
+                Edit Profile -{'>'}
             </Link>
     }
 
