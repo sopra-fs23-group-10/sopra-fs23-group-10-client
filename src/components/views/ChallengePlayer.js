@@ -2,7 +2,7 @@ import React from 'react';
 import {useEffect, useState} from 'react';
 import {inviteUser} from 'helpers/restApi';
 //import {api, handleError} from 'helpers/api';
-import {useHistory, useParams} from 'react-router-dom';
+import {useHistory, useParams, Link} from 'react-router-dom';
 //import {Button} from 'components/ui/Button';
 import 'styles/views/PopUp.scss';
 import BaseContainer from "components/ui/BaseContainer";
@@ -41,19 +41,22 @@ const ChallengePlayer = props => {
     return (
         <>
             <HomeHeader height="100"/>
-            <BaseContainer className="popup container">
-                <h3 className='popup title'>Challenge Player</h3>
-                <PlayerList callback={getUsers} action={chooseOpponent}/>
-                <div className="button-container">
-                    <Button
-                        width="100%"
-                        onClick={() => challengeRandomUser()}
-                        disabled={users == null}
-                    >
-                        Challenge Random Player
-                    </Button>
-                </div>
-            </BaseContainer>
+            <div className='popup grid'>
+                <Link to="/home" className='popup back'>✕ Cancel</Link>
+                <BaseContainer className="popup container">
+                    <h3 className='popup title'>Challenge Player</h3>
+                    <PlayerList callback={getUsers} action={chooseOpponent}/>
+                    <div className="button-container">
+                        <Button
+                            width="100%"
+                            onClick={() => challengeRandomUser()}
+                            disabled={users == null}
+                        >
+                            Challenge Random Player
+                        </Button>
+                    </div>
+                </BaseContainer>
+            </div>
         </>
     );
 };
