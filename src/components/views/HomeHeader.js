@@ -8,7 +8,7 @@ import React,{useEffect,useState} from 'react';
 import {connect} from "../../helpers/WebSocketFactory";
 import User from "../../models/User";
 import "styles/views/PopUp.scss";
-import "styles/ui/Invitation.scss";
+import ReceiveInvitation from "components/views/ReceiveInvitation";
 
 /**
  * This is an example of a Functional and stateless component (View) in React. Functional components are not classes and thus don't handle internal state changes.
@@ -26,7 +26,6 @@ const HomeHeader = props => {
     const [username, setUsername] = useState(null);
     const [status, setStatus] = useState(null);
     const [points, setPoints] = useState(null);
-    //const [profilePicture, setProfilePicture] = useState(null);
 
     useEffect(() => {
         async function fetchData() {
@@ -44,9 +43,7 @@ const HomeHeader = props => {
             }
         }
         fetchData();
-        connect();
     }, []);
-
 
     const logout = async () => {
         const response = await logoutUser(useHistory);
@@ -58,24 +55,6 @@ const HomeHeader = props => {
             onClick={() => toEdit(localStorage.getItem('id'))}>
             Edit Profile -{'>'}
         </Link>
-    }
-
-    const receiveInvitation = () => {
-        if (false) {
-            return (
-                <>
-                    <div class="invitation overlay">
-                    </div>
-                    <div class="invitation base-container">
-                        <p>Someone has challenged you to a match!</p>
-                        <div class="twoButtons button-container">
-                            <Button>Decline</Button>
-                            <Button>Accept</Button>
-                        </div>
-                    </div>
-                </>
-            );
-        }
     }
 
     const toEdit = (userId) => {
@@ -98,7 +77,6 @@ const HomeHeader = props => {
                     >
                         LOGOUT
                     </Button>
-
                 </div>
             )
         }
@@ -125,7 +103,7 @@ const HomeHeader = props => {
                 {username}
                 {dropDown()}
             </a>
-            {receiveInvitation()}
+            <ReceiveInvitation/>
         </header>
     );
 };

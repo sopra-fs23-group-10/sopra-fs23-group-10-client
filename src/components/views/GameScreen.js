@@ -6,7 +6,6 @@ import BaseContainer from "components/ui/BaseContainer";
 import GameHeader from "components/views/GameHeader";
 import "styles/views/Home.scss";
 import "styles/views/GameHeader.scss"
-import {connect} from "../../helpers/WebSocketFactory";
 import Player from "components/ui/Player";
 import Home from "./Home";
 

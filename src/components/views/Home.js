@@ -27,12 +27,6 @@ const Home = () => {
         setUsers(u);
     }
 
-    useEffect(() => {
-        if (localStorage.getItem('id')) {
-            connect();
-        }
-    }, []);
-
     const start = () => {
         setStartGame(true);
     }

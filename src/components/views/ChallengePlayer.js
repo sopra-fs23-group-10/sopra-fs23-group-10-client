@@ -8,7 +8,6 @@ import 'styles/views/PopUp.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import HomeHeader from "./HomeHeader";
 import {Button} from "../ui/Button";
-import {connect} from "../../helpers/WebSocketFactory";
 import { PlayerList } from 'components/ui/PlayerList';
 import 'styles/views/ChallengePlayer.scss';
 
@@ -26,7 +25,7 @@ const ChallengePlayer = props => {
         try {
             const response = await inviteUser(id, gameMode, "DUEL");
         } catch (error) {
-            console.log(`user ${id} is not online`);
+            alert(error);
         }
     }
 

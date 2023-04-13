@@ -173,6 +173,18 @@ export const inviteUser = async (invitedUserId, quizType, modeType) => {
   }
 };
 
+export const answerInvite = async (gameId, accepted) => {
+  try {
+    const authToken = localStorage.getItem('token');
+    const requestBody = JSON.stringify({accepted});
+    const response = await restApi.post(`/game/invitation/${gameId}`, requestBody, {headers: {token: authToken}});
+    alert(JSON.stringify(response.data));
+    return response.data;
+  } catch (error) {
+    throw new Error(`Something went wrong during invite response: \n${handleError(error)}`);
+  }
+};
+
 export const finishGame = async () => {
   try {
     const gameId = localStorage.getItem('gameId');
