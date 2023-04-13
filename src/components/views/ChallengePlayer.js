@@ -34,8 +34,10 @@ const ChallengePlayer = props => {
     }
 
     const challengeRandomUser = () => {
-        const rnd = Math.floor(Math.random() * users.length);
-        invite(users[rnd].id);
+        const id = localStorage.getItem('id');
+        const others = users.filter(user => user.id != id);
+        const rnd = Math.floor(Math.random() * others.length);
+        invite(others[rnd].id);
     }
 
     return (
@@ -52,7 +54,7 @@ const ChallengePlayer = props => {
                             onClick={() => challengeRandomUser()}
                             disabled={users == null}
                         >
-                            Challenge Random Player
+                            Random
                         </Button>
                     </div>
                 </BaseContainer>
