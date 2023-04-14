@@ -224,3 +224,14 @@ export const getIntermediateResults = async () => {
   }
 };
 
+export const getUser = async () => {
+  try {
+    const userId = localStorage.getItem('userId');
+    const authToken = localStorage.getItem('token');
+    const response = await restApi.get(`/users/${userId}`,{headers: {token: authToken}});
+    return response.data;
+  } catch (error) {
+    throw new Error(`Something went wrong during fetching intermediate results: \n${handleError(error)}`);
+  }
+};
+
