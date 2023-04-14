@@ -36,7 +36,7 @@ const Home = () => {
     }
 
     const choosePlayerMode = (pm) => {
-        console.log("set player mode");
+        if (pm === playerModes.duel && users.length < 2) return;
         setPlayerMode(pm);
         if (pm === playerModes.duel) {
             history.push("/challenge/" + gameMode.toLowerCase());

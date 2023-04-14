@@ -12,12 +12,12 @@ import {useHistory} from 'react-router-dom';
 
 
 const ReceiveInvitation = props => {
-    const history = useHistory;
+    const history = useHistory();
     const [invitation, setInvitation] = useState(null);
     const [username, setUsername] = useState("");
 
     useEffect(() => {
-        connect(handleInvite);
+        connect(handleInvite, handleAnswer);
     }, []);
 
     const handleInvite = async (msg) => {
@@ -36,12 +36,18 @@ const ReceiveInvitation = props => {
         }
     }
 
+    const handleAnswer = (msg) => {
+        console.log(handleAnswer);
+        console.log(msg);
+    }
+
     const reply = async (accepted) => {
         const response = await answerInvite(invitation.id, accepted);
         const answer = Object.values(response)[0];
         if (answer) {
             setInvitation(null);
-            history.push("/game")
+            history.push("/game");
+            localStorage.setItem("gameId", invitation.id);
         } else {
             setInvitation(null);
         }

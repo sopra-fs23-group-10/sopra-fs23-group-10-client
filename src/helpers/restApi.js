@@ -177,6 +177,7 @@ export const answerInvite = async (gameId, answer) => {
     const authToken = localStorage.getItem('token');
     const requestBody = JSON.stringify(answer);
     const response = await restApi.post(`/game/invitation/${gameId}`, requestBody, {headers: {token: authToken}});
+    console.log(response);
     return response.data;
   } catch (error) {
     throw new Error(`Something went wrong during invite response: \n${handleError(error)}`);
