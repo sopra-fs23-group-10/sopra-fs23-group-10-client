@@ -141,25 +141,6 @@ export const fetchOnlineUsers = async () => {
   }
 };
 
-export const sendAnswer = async (gameId, userId, questionId, answer, answeredTime) => {
-  try {
-    const requestBody = JSON.stringify({userId, questionId, answer, answeredTime})
-    const response = await restApi.put(`/game/question/${gameId}`, requestBody, {headers: {token: localStorage.getItem("token")}})
-    console.log('request to:', response.request.responseURL);
-    console.log('status code:', response.status);
-    console.log('status text:', response.statusText);
-    console.log('requested data:', response.data);
-    console.log(response);
-    return response;
-  }
-  catch (error) {
-    console.error(`Something went wrong while saving your answer in the server: \n${handleError(error)}`);
-    console.error("Details:", error);
-    alert("Something went wrong while saving your answer in the server! See the console for details.");
-  }
-}
-
-
 export const inviteUser = async (invitedUserId, quizType, modeType) => {
   try {
     const invitingUserId = localStorage.getItem('id');
@@ -181,6 +162,44 @@ export const answerInvite = async (gameId, answer) => {
     return response.data;
   } catch (error) {
     throw new Error(`Something went wrong during invite response: \n${handleError(error)}`);
+  }
+};
+
+export const getTopicSelection = async (gameId) => {
+  try{
+    const authToken = localStorage.getItem('token');
+    const response = await restApi.get(`/game/topics/${gameId}`, {headers: {token: authToken}})
+    return response.data;
+  } catch (error) {
+    throw new Error('Something went wrong while fetching a selection of topics: \n${handleError(error)}');
+  }
+}
+
+export const getAllTopics = async () => {
+  try{
+    const authToken = localStorage.getItem('token');
+    const response = await restApi.get("/game/topics/all", {headers: {token: authToken}})
+    return response.data;
+  } catch (error) {
+    throw new Error('Something went wrong while fetching all topics: \n${handleError(error)}');
+  }
+};
+
+export const sendAnswer = async (gameId, userId, questionId, answer, answeredTime) => {
+  try {
+    const requestBody = JSON.stringify({userId, questionId, answer, answeredTime})
+    const response = await restApi.put(`/game/question/${gameId}`, requestBody, {headers: {token: localStorage.getItem("token")}})
+    console.log('request to:', response.request.responseURL);
+    console.log('status code:', response.status);
+    console.log('status text:', response.statusText);
+    console.log('requested data:', response.data);
+    console.log(response);
+    return response;
+  }
+  catch (error) {
+    console.error(`Something went wrong while saving your answer in the server: \n${handleError(error)}`);
+    console.error("Details:", error);
+    alert("Something went wrong while saving your answer in the server! See the console for details.");
   }
 };
 
