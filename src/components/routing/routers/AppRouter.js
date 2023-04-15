@@ -13,6 +13,7 @@ import ChallengePlayer from "../../views/ChallengePlayer";
 import Ranking from "../../views/Ranking";
 import Rules from "../../views/Rules";
 import GameScreen from "../../views/GameScreen";
+import TopicSelection from "components/views/TopicSelection";
 
 
 /**
@@ -79,9 +80,12 @@ const AppRouter = () => {
           </HomeGuard>
         </Route>
         <Route path="/game">
-          <GameGuard>
+          {/* <GameGuard> */}
             <GameScreen/>
-          </GameGuard>
+          {/* </GameGuard> */}
+        </Route>
+        <Route parth="/game/topic-selection">
+          <TopicSelection/>
         </Route>
         <Route exact path="/">
           <Redirect to="/home"/>

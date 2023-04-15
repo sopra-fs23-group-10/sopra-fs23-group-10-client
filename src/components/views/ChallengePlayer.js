@@ -24,6 +24,7 @@ const ChallengePlayer = props => {
     const invite = async (id) => {
         try {
             const response = await inviteUser(id, gameMode.toUpperCase(), "DUEL");
+            console.log(response);
         } catch (error) {
             alert(error);
         }

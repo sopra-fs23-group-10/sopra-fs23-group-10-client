@@ -65,7 +65,7 @@ export const connect = (inviteCallback, answerCallback) => {
     stompClient.connect({'userId': localStorage.getItem('id')}, () => {
         currentRetries = 0; // Reset the retry count after successful connection
         
-        stompClient.subscribe(`/invitations/${id}`, (message) => {
+        stompClient.subscribe(`/invitation/${id}`, (message) => {
             inviteCallback(message.body);
             console.log(`Received message: ${message.body}`);
         });
