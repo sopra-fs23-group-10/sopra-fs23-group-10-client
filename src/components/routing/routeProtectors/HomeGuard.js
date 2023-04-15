@@ -11,9 +11,10 @@ import PropTypes from "prop-types";
  * @param props
  */
 export const HomeGuard = props => {
-  if (localStorage.getItem("gameId")) {
-    return <Redirect to="/game"/>;
-  } else if (localStorage.getItem("token")){
+  // if (localStorage.getItem("gameId")) {
+  //   return <Redirect to="/game"/>;
+  // } else 
+  if (localStorage.getItem("token")){
     return props.children;
   } else {
     return <Redirect to="/login"/>;
