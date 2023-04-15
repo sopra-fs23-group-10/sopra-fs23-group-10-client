@@ -1,9 +1,8 @@
-import React, {useState} from 'react';
+import React from 'react';
 import 'styles/views/Registration.scss';
 import BaseContainer from "components/ui/BaseContainer";
-import {FormField} from "components/ui/FormField";
 import HomeHeader from "./HomeHeader";
-import HeaderAuthentication from "./HeaderAuthentication";
+//import HeaderAuthentication from "./HeaderAuthentication";
 import {Button} from "../ui/Button";
 import {useHistory} from "react-router-dom";
 

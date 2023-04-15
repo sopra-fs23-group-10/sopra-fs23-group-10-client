@@ -1,5 +1,5 @@
 import React from 'react';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import {inviteUser} from 'helpers/restApi';
 //import {api, handleError} from 'helpers/api';
 import {useHistory, useParams, Link} from 'react-router-dom';
@@ -35,7 +35,7 @@ const ChallengePlayer = props => {
 
     const challengeRandomUser = () => {
         const id = localStorage.getItem('id');
-        const others = users.filter(user => user.id != id);
+        const others = users.filter(user => user.id !== id);
         const rnd = Math.floor(Math.random() * others.length);
         invite(others[rnd].id);
     }

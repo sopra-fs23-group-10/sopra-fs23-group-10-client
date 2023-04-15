@@ -217,7 +217,7 @@ export const getIntermediateResults = async () => {
   try {
     const gameId = localStorage.getItem('gameId');
     const authToken = localStorage.getItem('token');
-    const response = await restApi.put(`/game/intermediate/${gameId}`, {}, {headers: {token: authToken}});
+    const response = await restApi.get(`/game/intermediate/${gameId}`, {headers: {token: authToken}});
     return response.data;
   } catch (error) {
     throw new Error(`Something went wrong during fetching intermediate results: \n${handleError(error)}`);

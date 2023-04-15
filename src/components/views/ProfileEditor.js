@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {fetchUserById, handleError, updateUser} from 'helpers/restApi';
 import User from 'models/User';
-import {generatePath, useHistory, useParams} from 'react-router-dom';
+import {useHistory, useParams} from 'react-router-dom';
 import {Button} from 'components/ui/Button';
 import 'styles/views/UserProfile.scss';
 import BaseContainer from "components/ui/BaseContainer";
