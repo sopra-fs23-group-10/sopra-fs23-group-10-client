@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import {Button} from 'components/ui/Button';
 import {fetchUserById, answerInvite} from 'helpers/restApi';
 import "styles/views/HomeHeader.scss";
@@ -7,7 +6,6 @@ import {connect} from "../../helpers/WebSocketFactory";
 import "styles/views/PopUp.scss";
 import "styles/ui/Invitation.scss";
 import Invitation from "../../models/Invitation";
-import User from "../../models/User";
 import {useHistory} from 'react-router-dom';
 
 

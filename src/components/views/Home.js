@@ -1,9 +1,8 @@
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import BaseContainer from "components/ui/BaseContainer";
 import HomeHeader from "components/views/HomeHeader";
 import "styles/views/Home.scss";
-import {connect} from "../../helpers/WebSocketFactory";
 import {SelectionButton} from "components/ui/SelectionButton.js";
 import image from "images/image.png";
 import trivia from "images/trivia.png";

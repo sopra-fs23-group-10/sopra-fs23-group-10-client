@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-import {generatePath, Link} from 'react-router-dom';
 import "styles/ui/Player.scss";
 
 const Player = ({user, action}) => (

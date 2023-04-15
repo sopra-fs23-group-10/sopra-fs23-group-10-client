@@ -5,7 +5,6 @@ import 'styles/views/Registration.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import {FormField} from "components/ui/FormField";
 import { registerUser } from '../../helpers/restApi';
-import HomeHeader from "./HomeHeader";
 import HeaderAuthentication from "./HeaderAuthentication";
 
 const Registration = props => {
@@ -29,9 +28,8 @@ const Registration = props => {
         } catch (error) {
             console.log(error);
             console.log(error.response);
-            if (error.response.status == 409) { 
-                setMsg("Sorry, but this username is taken."); 
-            } else {
+            if (error.response.status === 409) { setMsg("Sorry, but this username is taken."); }
+            else {
                 alert(error);
             }
         }

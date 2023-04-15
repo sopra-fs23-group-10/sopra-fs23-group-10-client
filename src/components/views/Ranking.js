@@ -1,10 +1,7 @@
-import React, {useState} from 'react';
-//import {api, handleError} from 'helpers/api';
-import {useHistory, Link} from 'react-router-dom';
-//import {Button} from 'components/ui/Button';
+import React from 'react';
+import {useHistory} from 'react-router-dom';
 import 'styles/views/PopUp.scss';
 import BaseContainer from "components/ui/BaseContainer";
-import {FormField} from "components/ui/FormField";
 import HomeHeader from "./HomeHeader";
 import {Button} from "../ui/Button";
 
