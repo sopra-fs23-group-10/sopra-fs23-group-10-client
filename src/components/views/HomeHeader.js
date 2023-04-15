@@ -1,11 +1,10 @@
 import PropTypes from "prop-types";
 import {Button} from 'components/ui/Button';
-import {fetchUserById, fetchUsers, logoutUser} from 'helpers/restApi';
-import {useHistory, useParams} from 'react-router-dom';
+import {fetchUserById, logoutUser} from 'helpers/restApi';
+import {useHistory} from 'react-router-dom';
 import "styles/views/HomeHeader.scss";
 import {Link} from "react-router-dom";
 import React,{useEffect,useState} from 'react';
-import {connect} from "../../helpers/WebSocketFactory";
 import User from "../../models/User";
 import "styles/views/PopUp.scss";
 import ReceiveInvitation from "components/views/ReceiveInvitation";

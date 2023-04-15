@@ -3,10 +3,8 @@ import {Link, useHistory} from 'react-router-dom';
 import {Button} from 'components/ui/Button';
 import 'styles/views/Login.scss';
 import BaseContainer from "components/ui/BaseContainer";
-import PropTypes from "prop-types";
 import {FormField} from "components/ui/FormField";
 import { loginUser } from '../../helpers/restApi';
-import HomeHeader from "./HomeHeader";
 import HeaderAuthentication from "./HeaderAuthentication";
 
 /*
@@ -29,9 +27,9 @@ const Login = props => {
             history.push(`/home`);
         } catch (error) {
             console.log(error);
-            if (error.response.status == 404) {
+            if (error.response.status === 404) {
                 setMsg("Sorry, this username does not exist.");
-            } else if (error.response.status == 406) {
+            } else if (error.response.status === 406) {
                 setMsg("Sorry, this password is incorrect.");
             } else {
                 alert(error);
