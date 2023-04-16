@@ -13,7 +13,7 @@ import ChallengePlayer from "../../views/ChallengePlayer";
 import Ranking from "../../views/Ranking";
 import Rules from "../../views/Rules";
 import GameScreen from "../../views/GameScreen";
-import TopicSelection from "components/views/TopicSelection";
+import Score from "components/views/Score";
 
 
 /**
@@ -85,7 +85,7 @@ const AppRouter = () => {
           {/* </GameGuard> */}
         </Route>
         <Route path="/topic-selection">
-          <TopicSelection/>
+          <Score/>
         </Route>
         <Route exact path="/">
           <Redirect to="/home"/>
