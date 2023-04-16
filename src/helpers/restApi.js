@@ -171,7 +171,7 @@ export const getTopicSelection = async (gameId) => {
     const response = await restApi.get(`/game/topics/${gameId}`, {headers: {token: authToken}})
     return response.data;
   } catch (error) {
-    throw new Error('Something went wrong while fetching a selection of topics: \n${handleError(error)}');
+    throw new Error(`Something went wrong while fetching a selection of topics: \n${handleError(error)}`);
   }
 }
 

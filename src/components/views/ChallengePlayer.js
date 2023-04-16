@@ -25,7 +25,10 @@ const ChallengePlayer = props => {
         try {
             const response = await inviteUser(id, gameMode.toUpperCase(), "DUEL");
             console.log(response);
+            localStorage.setItem('gameId', response.id);
+            history.push('/topic-selection', {turn: false});
         } catch (error) {
+            history.push("/home");
             alert(error);
         }
     }

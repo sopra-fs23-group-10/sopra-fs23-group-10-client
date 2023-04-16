@@ -14,6 +14,7 @@ const TopicSelection = () => {
             try {
                 const response = await getTopicSelection(localStorage.getItem("gameId"));
                 setTopics(response.data);
+                console.log(response);
             } catch (error) {
                 alert(error);
                 history.push("/login");
@@ -22,17 +23,16 @@ const TopicSelection = () => {
         fetchData();
     }, []);
 
-    const topicItems = topics.map((topic) => 
-        // <div onClick={() => history.push('/game', {topic: topic})}>
-        <div>
-            <BaseContainer>
-                {topic}
-            </BaseContainer>
-        </div>
-    );
-
     const drawTopics = () => {
         if (topics) {
+            let topicItems = topics.map((topic) => 
+                <div onClick={() => history.push('/game', {topic: topic})}>
+                    <BaseContainer>
+                        {topic}
+                    </BaseContainer>
+                </div>
+            );
+
             return (
                 {topicItems}
             );
@@ -42,6 +42,7 @@ const TopicSelection = () => {
     return (
         <>
             <GameHeader height="100"/>
+            {drawTopics()}
         </>
     );
 }

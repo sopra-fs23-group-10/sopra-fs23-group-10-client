@@ -84,7 +84,7 @@ const AppRouter = () => {
             <GameScreen/>
           {/* </GameGuard> */}
         </Route>
-        <Route parth="/game/topic-selection">
+        <Route path="/topic-selection">
           <TopicSelection/>
         </Route>
         <Route exact path="/">
