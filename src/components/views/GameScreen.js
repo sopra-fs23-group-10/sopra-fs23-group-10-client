@@ -7,13 +7,14 @@ import { useHistory, useLocation } from "react-router-dom";
 import { getQuestion, sendAnswer } from "helpers/restApi";
 import Question from "../../models/Question";
 import BaseContainer from "components/ui/BaseContainer";
+import { Timer } from "components/ui/Timer";
 
 const GameScreen = () => {
     const [question, setQuestion] = useState(null);
     const location = useLocation();
     const history = useHistory();
-    const [startTime, setStartTime] = useState(0);
     const [answered, setAnswered] = useState(false);
+    const [time, setTime] = useState(0);
 
     useEffect( () => {
         async function fetchQuestion() {
@@ -22,7 +23,6 @@ const GameScreen = () => {
                 console.log(response);
                 const q = new Question(response);
                 setQuestion(q);
-                setStartTime(Date.now());
             } catch (error) {
                 alert(error);
                 history.push("/login");
@@ -33,7 +33,6 @@ const GameScreen = () => {
 
     const answer = async (str) => {
         try {
-            const time = Date.now() - startTime;
             const response = await sendAnswer(
                 localStorage.getItem('gameId'), 
                 localStorage.getItem('userId'), 
@@ -60,15 +59,31 @@ const GameScreen = () => {
                 <>
                     <BaseContainer>{question.question}</BaseContainer>
                     {answers}
+                    
                 </>
             );
         }
+    }
+
+    const timerDone = () => {
+        history.push({
+            pathname: '/topic-selection',
+            search: '?update=true',
+            state: {
+                turn: !location.state.turn, 
+            },
+        });
+    }
+
+    const getTime = (time) => {
+        setTime(time);
     }
 
     return (
         <>
             <GameHeader height="100"/>
             {drawQuestion()}
+            <Timer timeOut={() => timerDone()} getTime={() => getTime()}/>
         </>
     );
 }
