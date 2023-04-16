@@ -5,6 +5,7 @@
         display: grid;
         grid-template-columns: $base_padding 1fr;
         grid-auto-flow: column;
+        height: 20px;
     }
 
     &.label {
@@ -14,6 +15,7 @@
 
     &.bar {
         background-color: $secondary_color;
-        border-radius: 100%;
+        border-radius: 20px;
+        height:100%;
     }
 }

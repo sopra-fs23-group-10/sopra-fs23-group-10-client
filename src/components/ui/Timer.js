@@ -4,19 +4,15 @@ import { useEffect, useState } from 'react';
 
 export const Timer = props => {
     // const [startTime, setStartTime] = useState(0);
-    const timeLimit = 1000 * 30;
+    const timeLimit = 1000 * 240;
     const [remainingTime, setRemainingTime] = useState(timeLimit - 1000);
 
     let startTime = Date.now();
 
     useEffect(() => {
         console.log("USE EFFECT");
-        // setStartTime(Date.now());
-        // console.log("now: " + Date.now());
-        // if (startTime != 0) {
-            const interval = setInterval(() => getTime(), 1000);
-            return () => clearInterval(interval);
-        // }
+        const interval = setInterval(() => getTime(), 1000);
+        return () => clearInterval(interval);
     },[]);
 
     const getTime = () => {
@@ -30,13 +26,20 @@ export const Timer = props => {
         }
     }
 
+    const getSecs = () => {
+        let secs = Math.floor(remainingTime / 1000);
+        let mins = Math.floor(remainingTime / 1000 / 60);
+        secs -= mins * 60;
+        return secs;
+    }
+
     return (
         <div className="timer container">
             <div className="timer label">
-                0:{Math.floor(remainingTime / 1000)}
+                {Math.floor(remainingTime / 1000 / 60)}:{getSecs()}
             </div>
             <div style={{ width: '100%' }}>
-                <div style={{ width: `${(timeLimit/remainingTime) * 100}%`}} className="timer bar"></div>
+                <div style={{ width: `${(remainingTime/timeLimit) * 100}%`}} className="timer bar"></div>
             </div>
         </div>
     );
