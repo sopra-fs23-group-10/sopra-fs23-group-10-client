@@ -80,12 +80,14 @@ const AppRouter = () => {
           </HomeGuard>
         </Route>
         <Route path="/game">
-          {/* <GameGuard> */}
+          <GameGuard>
             <GameScreen/>
-          {/* </GameGuard> */}
+          </GameGuard>
         </Route>
         <Route path="/topic-selection">
-          <Score/>
+          <GameGuard>
+            <Score/>
+          </GameGuard>
         </Route>
         <Route exact path="/">
           <Redirect to="/home"/>

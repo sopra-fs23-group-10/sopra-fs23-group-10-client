@@ -185,6 +185,16 @@ export const getAllTopics = async () => {
   }
 };
 
+export const getQuestion = async () => {
+  try {
+    const authToken = localStorage.getItem('token');
+    const response = await restApi.post("/game/topics", {headers: {token: authToken}})
+    return response.data;
+  } catch (error) {
+    throw new Error('Something went wrong while fetching all topics: \n${handleError(error)}');
+  }
+}
+
 export const sendAnswer = async (gameId, userId, questionId, answer, answeredTime) => {
   try {
     const requestBody = JSON.stringify({userId, questionId, answer, answeredTime})
