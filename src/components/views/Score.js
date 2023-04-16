@@ -57,10 +57,22 @@ const Score = props => {
         return str.replace('_', ' & ');
     }
 
+    const toQuestion = (str) => {
+        history.push({
+            pathname: '/game',
+            search: '?update=true',
+            state: {
+                turn: location.state.turn, 
+                topic: str
+            },
+        });
+    }
+
+
     const drawTopics = () => {
         if (topics) {
             let topicItems = topics.map((topic) => 
-                <GameButton callback={() => history.push('/game', {topic: topic})} text={parseString(topic)}/>
+                <GameButton callback={() => toQuestion(topic)} text={parseString(topic)}/>
             );
 
             return (

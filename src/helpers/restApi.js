@@ -185,10 +185,12 @@ export const getAllTopics = async () => {
   }
 };
 
-export const getQuestion = async () => {
+export const getQuestion = async (gameId, topic) => {
   try {
     const authToken = localStorage.getItem('token');
-    const response = await restApi.post("/game/topics", {headers: {token: authToken}})
+    const requestBody = JSON.stringify({gameId: gameId, category: topic});
+    console.log(requestBody);
+    const response = await restApi.post("/game/topics", requestBody, {headers: {token: authToken}})
     return response.data;
   } catch (error) {
     throw new Error('Something went wrong while fetching all topics: \n${handleError(error)}');
