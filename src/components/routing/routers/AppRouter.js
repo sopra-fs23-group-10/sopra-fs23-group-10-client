@@ -1,5 +1,6 @@
 import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
 import {HomeGuard} from "components/routing/routeProtectors/HomeGuard";
+import {GameGuard} from "components/routing/routeProtectors/GameGuard";
 import HomeRouter from "components/routing/routers/HomeRouter";
 import {LoginGuard} from "components/routing/routeProtectors/LoginGuard";
 import Registration from "../../views/Registration";
@@ -12,6 +13,8 @@ import ChallengePlayer from "../../views/ChallengePlayer";
 import Ranking from "../../views/Ranking";
 import Rules from "../../views/Rules";
 import GameScreen from "../../views/GameScreen";
+import Score from "components/views/Score";
+
 
 /**
  * Main router of your application.
@@ -77,9 +80,14 @@ const AppRouter = () => {
           </HomeGuard>
         </Route>
         <Route path="/game">
-          <HomeGuard>
+          <GameGuard>
             <GameScreen/>
-          </HomeGuard>
+          </GameGuard>
+        </Route>
+        <Route path="/topic-selection">
+          <GameGuard>
+            <Score/>
+          </GameGuard>
         </Route>
         <Route exact path="/">
           <Redirect to="/home"/>

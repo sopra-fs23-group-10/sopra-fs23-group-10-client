@@ -1,0 +1,38 @@
+@import 'styles/theme.scss';
+
+.invitation {
+    position: absolute;
+    width:400px;
+    height: 250px;
+    left: calc(50% - 200px);
+    right: calc(50% - 200px);
+    top: calc(50% - 200px);
+    z-index: 10;
+    filter: drop-shadow(0px 0px 8px #00000032);
+
+    p {
+        text-align: center;
+    }
+
+    &.overlay {
+        position: absolute;
+        background-color: #00000032;
+        left: 0px;
+        top: 0px;
+        z-index: 5;
+        width: 100vw;
+        height: 100vh;
+    }
+
+    &.base-container {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: $base_padding 1fr auto;
+    }
+
+    .button-container {
+        width:100%;
+        justify-self: end;
+        grid-row:3;
+    }
+}

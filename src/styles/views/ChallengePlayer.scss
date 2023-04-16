@@ -1,0 +1,33 @@
+@import 'styles/theme';
+
+.challenge {
+    .container {
+        width:100% !important;
+        min-width: 100%;
+        &.base-container {
+            grid-column: 2;
+            margin:0px !important;
+        }
+    }
+
+    &.grid {
+        display: grid;
+        margin-top:$base_padding;
+        grid-template-columns: 1fr minmax(400px, 1fr) 1fr;
+        max-height: calc(100vh - #{$header_height} - #{$base_padding});
+    }
+
+    .back {
+        @extend .base-transition;
+        color: $off_white;
+        grid-column: 2;
+        text-transform: uppercase;
+        font-weight: 600;
+        margin-bottom: 10px;
+        width:80px;
+
+        &:hover {
+            color: $secondary_color;
+        }
+    }
+}

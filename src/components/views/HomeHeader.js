@@ -1,12 +1,13 @@
 import PropTypes from "prop-types";
 import {Button} from 'components/ui/Button';
-import {fetchUserById, fetchUsers, logoutUser} from 'helpers/restApi';
-import {useHistory, useParams} from 'react-router-dom';
+import {fetchUserById, logoutUser} from 'helpers/restApi';
+import {useHistory} from 'react-router-dom';
 import "styles/views/HomeHeader.scss";
 import {Link} from "react-router-dom";
 import React,{useEffect,useState} from 'react';
-import {connect} from "../../helpers/WebSocketFactory";
 import User from "../../models/User";
+import "styles/views/PopUp.scss";
+import ReceiveInvitation from "components/views/ReceiveInvitation";
 
 /**
  * This is an example of a Functional and stateless component (View) in React. Functional components are not classes and thus don't handle internal state changes.
@@ -24,7 +25,6 @@ const HomeHeader = props => {
     const [username, setUsername] = useState(null);
     const [status, setStatus] = useState(null);
     const [points, setPoints] = useState(null);
-    //const [profilePicture, setProfilePicture] = useState(null);
 
     useEffect(() => {
         async function fetchData() {
@@ -42,9 +42,7 @@ const HomeHeader = props => {
             }
         }
         fetchData();
-        connect();
     }, []);
-
 
     const logout = async () => {
         const response = await logoutUser(useHistory);
@@ -52,10 +50,10 @@ const HomeHeader = props => {
     }
 
     const edit = () => {
-            return <Link
-                onClick={() => toEdit(localStorage.getItem('id'))}>
-                Edit Profile ->
-            </Link>
+        return <Link
+            onClick={() => toEdit(localStorage.getItem('id'))}>
+            Edit Profile -{'>'}
+        </Link>
     }
 
     const toEdit = (userId) => {
@@ -78,7 +76,6 @@ const HomeHeader = props => {
                     >
                         LOGOUT
                     </Button>
-
                 </div>
             )
         }
@@ -105,7 +102,7 @@ const HomeHeader = props => {
                 {username}
                 {dropDown()}
             </a>
-
+            <ReceiveInvitation/>
         </header>
     );
 };

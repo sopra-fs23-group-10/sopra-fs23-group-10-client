@@ -5,7 +5,6 @@ import {getDomain} from "./getDomain";
 const BASE_URL = getDomain();
 
 
-
 function getWebSocketUrl() {
     const protocol = window.location.protocol;
     const domain = getDomain().split('//')[1];
@@ -33,7 +32,7 @@ const exponentialBackoff = (retries) => {
     return Math.min(30, (Math.pow(2, retries) - 1)) * 1000;
 };
 
-export const connect = () => {
+export const connect = (inviteCallback, answerCallback) => {
     if (currentRetries >= MAX_RETRIES) {
         console.error('Max retries reached, connection aborted');
         return;
@@ -51,7 +50,7 @@ export const connect = () => {
         console.error('WebSocket error:', error);
         currentRetries++;
         setTimeout(() => {
-            connect();
+            connect(inviteCallback);
         }, exponentialBackoff(currentRetries));
     };
 
@@ -59,15 +58,21 @@ export const connect = () => {
         console.error('WebSocket closed');
         currentRetries++;
         setTimeout(() => {
-            connect();
+            connect(inviteCallback);
         }, exponentialBackoff(currentRetries));
     };
 
     stompClient.connect({'userId': localStorage.getItem('id')}, () => {
         currentRetries = 0; // Reset the retry count after successful connection
-        stompClient.subscribe(`/invitations/${id}`, (message) => {
+        
+        stompClient.subscribe(`/invitation/${id}`, (message) => {
+            inviteCallback(message.body);
             console.log(`Received message: ${message.body}`);
-            alert("Server says: " + message.body);
+        });
+
+        stompClient.subscribe(`/invitation/answer/${id}`, (message) => {
+            answerCallback(message.body);
+            console.log(`Received message: ${message.body}`);
         });
 
         if (!listenersAdded) {

@@ -2,10 +2,11 @@
 
 .popup {
   &.container {
-    min-width: 500px;
+    width: 40%;
     max-width: 1000px;
-    width:40%;
+    min-width: 500px;
     color: $font_primary;
+    height: auto;
     &.secondary {
       margin-top: $base_padding;
     }
@@ -18,7 +19,6 @@
     max-width: 30em;
     font-size: 16px;
     font-weight: 300;
-    padding: 1.5em 37px;
     border-radius: 0.75em;
     background-color: $off_white;
     transition: opacity 0.5s ease, transform 0.5s ease;
@@ -53,12 +53,8 @@
     padding-top: $borderRadius;
   }
   &.title{
-    display: flex;
     height: 35px;
-    justify-content: space-between;
-    align-items: center;
-    padding-left: 15px;
-    margin-left: -4px;
+    text-align: center;
     width: 100%;
     margin-bottom: 20px;
     color: $font_primary;
@@ -82,14 +78,16 @@
     display:flex;
     justify-content: space-between;
   }
+  .button-container {
+    margin-top: $base_padding;
+  }
 }
 
 .twoButtons{
+  grid-gap: 20px;
   display:grid;
-  grid-template-columns: 50% 50%;
-  margin: auto;
+  grid-template-columns: 1fr 1fr;
   margin-top: 1em;
   font-weight: bold;
-  padding-top: $borderRadius;
 }
 
