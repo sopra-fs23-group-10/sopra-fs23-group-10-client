@@ -13,7 +13,8 @@ import ChallengePlayer from "../../views/ChallengePlayer";
 import Ranking from "../../views/Ranking";
 import Rules from "../../views/Rules";
 import GameScreen from "../../views/GameScreen";
-import Score from "components/views/Score";
+import Score from "../../views/Score";
+import TopicSelectionDuel from "../../views/TopicSelectionDuel";
 
 
 /**
@@ -88,6 +89,11 @@ const AppRouter = () => {
           <GameGuard>
             <Score/>
           </GameGuard>
+        </Route>
+        <Route path="/dueltopicselection">
+          <HomeGuard>
+            <TopicSelectionDuel/>
+          </HomeGuard>
         </Route>
         <Route exact path="/">
           <Redirect to="/home"/>
