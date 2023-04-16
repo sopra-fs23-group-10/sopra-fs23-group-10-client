@@ -1,4 +1,5 @@
 import GameHeader from "components/views/GameHeader";
+import { GameButton } from "components/ui/GameButton";
 import "styles/views/Home.scss";
 import "styles/views/GameHeader.scss"
 import { useEffect, useState } from 'react';
