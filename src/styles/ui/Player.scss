@@ -1,6 +1,7 @@
 @import 'styles/theme';
 
 .player {
+    cursor: pointer;
     &.container {
       border-radius: $borderRadius;
       display: flex;
@@ -15,11 +16,12 @@
       font-weight: 500;
       padding-right: 8px;
       justify-self: left;
+      color: black;
     }
     &.profile-picture {
         height: $base_padding !important;
         width: $base_padding !important;
-        background-color: $disabled_button;
+        background-color: lightgray;
         border-radius: 100%;
         justify-self: left;
     }

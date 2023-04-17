@@ -104,8 +104,8 @@ const HomeHeader = props => {
                     <p className="username">{username}</p>
                     <Identicon className="profile-picture" string={username}/>
                 </a>
-                {dropDown()}
             </div>
+            {dropDown()}
         </header>
     );
 };

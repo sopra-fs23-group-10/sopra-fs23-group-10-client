@@ -5,7 +5,7 @@
 
   &.container {
     display: grid;
-    grid-template-columns: 100px 1fr 200px;
+    grid-template-columns: 100px minmax(360px, 1fr) minmax(100px, 200px);
     align-items: center;
     padding-left: $base_padding;
     padding-right: $base_padding;
@@ -88,6 +88,7 @@
 
   .dropdown{
     position: absolute;
+    top: $header_height;
     padding: $base_padding;
     border-radius: $borderRadius;
     width: 300px;
@@ -96,7 +97,6 @@
     background-color: $off_white;
     color: $font_primary;
     margin-bottom: $base_padding;
-    margin-top: 10px;
     right:0;
     &.container {
       display:grid;
