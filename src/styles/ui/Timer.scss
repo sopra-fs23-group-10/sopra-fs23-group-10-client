@@ -1,0 +1,21 @@
+@import 'styles/theme.scss';
+
+.timer {
+    &.container {
+        display: grid;
+        grid-template-columns: $base_padding 1fr;
+        grid-auto-flow: column;
+        height: 20px;
+    }
+
+    &.label {
+        font-size: 20;
+        font-weight: 600;
+    }
+
+    &.bar {
+        background-color: $secondary_color;
+        border-radius: 20px;
+        height:100%;
+    }
+}

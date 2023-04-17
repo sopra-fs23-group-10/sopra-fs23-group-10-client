@@ -8,6 +8,7 @@ import React,{useEffect,useState} from 'react';
 import User from "../../models/User";
 import "styles/views/PopUp.scss";
 import ReceiveInvitation from "components/views/ReceiveInvitation";
+import Identicon from 'react-identicons';
 
 /**
  * This is an example of a Functional and stateless component (View) in React. Functional components are not classes and thus don't handle internal state changes.
@@ -50,9 +51,9 @@ const HomeHeader = props => {
     }
 
     const edit = () => {
-        return <Link
+        return <Link className="contentHover"
             onClick={() => toEdit(localStorage.getItem('id'))}>
-            Edit Profile -{'>'}
+            Edit Profile
         </Link>
     }
 
@@ -97,12 +98,14 @@ const HomeHeader = props => {
                     RULES
                 </Link>
             </div>
-            <a className="content fontbold profile"
-                onClick = {() => {setDropDown(!showProfile)}}>
-                {username}
-                {dropDown()}
-            </a>
-            <ReceiveInvitation/>
+            <div className="profile-container">
+                <a className="content fontbold profile"
+                    onClick = {() => {setDropDown(!showProfile)}}>
+                    <p className="username">{username}</p>
+                    <Identicon className="profile-picture" string={username}/>
+                </a>
+            </div>
+            {dropDown()}
         </header>
     );
 };

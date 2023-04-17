@@ -1,6 +1,7 @@
 @import 'styles/theme';
 
 .primary-button {
+  cursor: pointer;
   &:hover {
     transform: scale(1.04);
   }

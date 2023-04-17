@@ -1,0 +1,11 @@
+@import 'styles/theme.scss';
+
+.username {
+    color: $secondary_color;
+}
+
+.points {
+    font-family: $fontDisplay;
+    font-size: 100px;
+    color: $secondary_color;
+}

@@ -32,7 +32,7 @@ const exponentialBackoff = (retries) => {
     return Math.min(30, (Math.pow(2, retries) - 1)) * 1000;
 };
 
-export const connect = (inviteCallback) => {
+export const connect = (inviteCallback, answerCallback) => {
     if (currentRetries >= MAX_RETRIES) {
         console.error('Max retries reached, connection aborted');
         return;
@@ -64,9 +64,17 @@ export const connect = (inviteCallback) => {
 
     stompClient.connect({'userId': localStorage.getItem('id')}, () => {
         currentRetries = 0; // Reset the retry count after successful connection
-        stompClient.subscribe(`/invitations/${id}`, (message) => {
+        
+        stompClient.subscribe(`/invitation/${id}`, (message) => {
             inviteCallback(message.body);
             console.log(`Received message: ${message.body}`);
+            alert(message.body);
+        });
+
+        stompClient.subscribe(`/invitation/answer/${id}`, (message) => {
+            answerCallback(message.body);
+            console.log(`Received message: ${message.body}`);
+            alert(message.body);
         });
 
         if (!listenersAdded) {

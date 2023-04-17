@@ -9,6 +9,8 @@ import trivia from "images/trivia.png";
 import duel from "images/duel.png";
 import single from "images/single.png";
 import {PlayerList} from "../ui/PlayerList";
+import { Button } from 'components/ui/Button';
+import ReceiveInvitation from './ReceiveInvitation';
 
 const Home = () => {
 
@@ -21,6 +23,7 @@ const Home = () => {
     const [gameMode, setGameMode] = useState(gameModes.none);
     const [playerMode, setPlayerMode] = useState(playerModes.none)
     const [users, setUsers] = useState(null);
+    const [gameId, setGameId] = useState(-1);
 
     const getUsers = (u) => {
         setUsers(u);
@@ -35,11 +38,23 @@ const Home = () => {
     }
 
     const choosePlayerMode = (pm) => {
-        console.log("set player mode");
+        if (pm === playerModes.duel && users.length < 2) return;
         setPlayerMode(pm);
         if (pm === playerModes.duel) {
             history.push("/challenge/" + gameMode.toLowerCase());
         }
+    }
+
+    const goToGame = () => {
+        localStorage.setItem('gameId', gameId);
+        history.push({
+            pathname: '/topic-selection',
+            search: '?update=true',  // query string
+            state: {  // location state
+                turn: true, 
+                nr: 1,
+            },
+        });
     }
 
     const startGameMenu = () => {
@@ -99,6 +114,7 @@ const Home = () => {
 
     return (
         <div className="fill">
+            <ReceiveInvitation/>
             <HomeHeader/>
             <div className='home container'>
                 <BaseContainer className="home user-container">
@@ -109,6 +125,20 @@ const Home = () => {
                 </BaseContainer>
                 <div className='home start-game-container'>
                     {startGameMenu()}
+                </div>
+                <div className="invite-form">
+                    <input
+                        type="text"
+                        value={gameId}
+                        onChange={(e) => setGameId(e.target.value)}
+                        placeholder="Enter user ID"
+                    />
+                    <Button
+                        onClick={() => goToGame()}
+                        disabled={!gameId}
+                    >
+                        Join
+                    </Button>
                 </div>
             </div>
         </div>

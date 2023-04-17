@@ -1,0 +1,9 @@
+@import 'styles/theme.scss';
+
+.game-button {
+    cursor: pointer;
+    &:hover {
+        transform: translate(-6px, -6px);
+        filter: drop-shadow(6px 6px 0px $secondary_color);
+    }
+}

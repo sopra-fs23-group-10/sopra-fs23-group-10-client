@@ -10,12 +10,13 @@ import {useHistory} from 'react-router-dom';
 
 
 const ReceiveInvitation = props => {
-    const history = useHistory;
+    const history = useHistory();
     const [invitation, setInvitation] = useState(null);
     const [username, setUsername] = useState("");
 
     useEffect(() => {
-        connect(handleInvite);
+        console.log("CONNECT INVITATION");
+        connect(handleInvite, handleAnswer);
     }, []);
 
     const handleInvite = async (msg) => {
@@ -34,21 +35,38 @@ const ReceiveInvitation = props => {
         }
     }
 
+    const handleAnswer = (msg) => {
+        console.log(handleAnswer);
+        console.log(msg);
+    }
+
     const reply = async (accepted) => {
         const response = await answerInvite(invitation.id, accepted);
         const answer = Object.values(response)[0];
         if (answer) {
             setInvitation(null);
-            history.push("/game")
+            goToGame();
         } else {
             setInvitation(null);
         }
     }
 
+    const goToGame = () => {
+        localStorage.setItem('gameId', invitation.id);
+        history.push({
+            pathname: '/topic-selection',
+            search: '?update=true',  // query string
+            state: {  // location state
+                turn: true, 
+                nr: 1,
+            },
+        });
+    }
+
     const receiveInvitation = () => {
         if (invitation) {
             return (
-                <>
+                <div className='invitation'>
                     <div className="invitation overlay">
                     </div>
                     <div className="invitation base-container">
@@ -58,7 +76,7 @@ const ReceiveInvitation = props => {
                             <Button onClick={() => reply(true)}>Accept</Button>
                         </div>
                     </div>
-                </>
+                </div>
             );
         }
     }

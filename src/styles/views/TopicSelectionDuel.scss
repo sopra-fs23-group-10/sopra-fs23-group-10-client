@@ -1,0 +1,113 @@
+@import 'styles/theme';
+
+.ScreenGrid {
+  max-height: 100vh;
+  width: 60%;
+  margin: 0 auto;
+  margin-top: 50px;
+  display: grid;
+  grid-template-rows: 50% 50%;
+  grid-template-columns: 1fr;
+  grid-row-gap: 50px;
+  overflow: auto;
+  
+  .grid-1 {
+    grid-row: 1;
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 10% 90%;
+    grid-column-gap: 20px;
+    grid-row-gap: 10px;
+    min-height: fit-content;
+  }
+
+  .grid-2 {
+    grid-row: 2;
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 10% 90%;
+    grid-column-gap: 20px;
+    grid-row-gap: 10px;
+  }
+
+.title{
+  grid-row: 1;
+  font-family: $fontDefault;
+  color: $off_white;
+  font-size: 20px;
+  text-transform: uppercase;
+  font-weight: bold;
+  justify-content: space-between;
+  &.grid2{
+    grid-column-start:1;
+    grid-column-end:4;
+  }
+}
+
+.topic{
+  grid-row: 2;
+  font-family: $fontDefault;
+  color: black;
+  font-size: 20px;
+  font-weight: bold;
+  justify-content: space-between;
+  align-items: center;
+  place-items: center;
+}
+
+.player{
+  font-family: $fontDisplay;
+  color: $secondary_color;
+  font-size: 8vh;
+  transform: translate(7px, calc(0vh - 0px));
+  font-weight: bold;
+  align-items: center;
+  justify-content: space-between;
+}
+.points{
+  font-family: $fontDisplay;
+  color: $secondary_color;
+  font-size: 25vh;
+  font-weight: bold;
+  align-items: center;
+  justify-content: space-between;
+  transform: translate(0px, calc(-14vh - 0px));
+}
+
+.background-topic_waiting{
+  grid-row:2;
+  grid-column-start:1;
+  grid-column-end:4;
+  background-color: $off_white;
+  border-radius: $borderRadius;
+  flex-grow: 1;
+  width: 100%;
+  height: 100px;
+  margin: 0 auto;
+}
+
+.background-topicSelection{
+  grid-row:2;
+  display:grid;
+  background-color: $off_white;
+  border-radius: $borderRadius;
+  flex-grow: 1;
+  width: 100%;
+  height: 100px;
+  margin: 0 auto;
+}
+
+.background-points{
+  grid-row:2;
+  background-color: $off_white;
+  border-radius: $borderRadius;
+  flex-grow: 1;
+  width: 100%;
+  margin: 0 auto;
+  height:auto;
+}
+
+}
+
+
+

@@ -1,0 +1,11 @@
+@import 'styles/theme';
+
+.background {
+  max-width: $DESKTOP_WIDTH;
+  background-color: $off_white;
+  color: $font_primary;
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: $borderRadius;
+}
