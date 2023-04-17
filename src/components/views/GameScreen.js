@@ -83,7 +83,7 @@ const GameScreen = () => {
         <>
             <GameHeader height="100"/>
             {drawQuestion()}
-            <Timer timeOut={() => timerDone()} getTime={() => getTime()}/>
+            <Timer timeLimit={30} timeOut={() => timerDone()} getTime={() => getTime()}/>
         </>
     );
 }

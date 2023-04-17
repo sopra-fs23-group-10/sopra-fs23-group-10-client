@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { useEffect, useState } from 'react';
 
 export const Timer = props => {
-    const timeLimit = 1000 * 120;
+    const timeLimit = 1000 * props.timeLimit;
     const [remainingTime, setRemainingTime] = useState(timeLimit - 1000);
 
     let startTime = Date.now();
@@ -45,6 +45,7 @@ export const Timer = props => {
 
 
 Timer.propTypes = {
+    timeLimit: PropTypes.number,
     timeOut: PropTypes.func,
     getTime: PropTypes.func
 };
