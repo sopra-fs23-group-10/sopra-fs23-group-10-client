@@ -79,10 +79,11 @@
       grid-template-rows: 50% 50%;
       align-items:center;
       justify-content: space-between;
-      padding-left: 15px;
-      padding-bottom: 15px;
-      padding-top: 15px;
-      padding-right: 15px;
+      grid-gap: 10px;
+      padding-left: $base_padding;
+      padding-bottom: $base_padding;
+      padding-top: 30px;
+      padding-right: $base_padding;
     }
     .logout{
       grid-column-start:1;
@@ -93,7 +94,7 @@
       //grid-template-columns: 100px 1fr;
       color: black;
       font-family: $fontDefault;
-      font-size: 20px;
+      font-size: 18px;
       text-transform: uppercase;
       font-weight: bold;
     }
@@ -101,7 +102,7 @@
       //grid-template-columns: 100px 1fr;
       color: black;
       font-family: $fontDefault;
-      font-size: 20px;
+      font-size: 18px;
       text-transform: uppercase;
       font-weight: bold;
 
