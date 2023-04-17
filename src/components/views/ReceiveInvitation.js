@@ -66,7 +66,7 @@ const ReceiveInvitation = props => {
     const receiveInvitation = () => {
         if (invitation) {
             return (
-                <>
+                <div className='invitation'>
                     <div className="invitation overlay">
                     </div>
                     <div className="invitation base-container">
@@ -76,7 +76,7 @@ const ReceiveInvitation = props => {
                             <Button onClick={() => reply(true)}>Accept</Button>
                         </div>
                     </div>
-                </>
+                </div>
             );
         }
     }

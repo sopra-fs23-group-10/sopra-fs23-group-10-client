@@ -1,6 +1,6 @@
 import React from 'react';
 import {useState} from 'react';
-import {inviteUser} from 'helpers/restApi';
+import {inviteUser, answerInvite} from 'helpers/restApi';
 //import {api, handleError} from 'helpers/api';
 import {useHistory, useParams, Link} from 'react-router-dom';
 //import {Button} from 'components/ui/Button';
@@ -10,12 +10,16 @@ import HomeHeader from "./HomeHeader";
 import {Button} from "../ui/Button";
 import { PlayerList } from 'components/ui/PlayerList';
 import 'styles/views/ChallengePlayer.scss';
+import { Timer } from 'components/ui/Timer';
+import 'styles/ui/Invitation.scss';
 
 
 const ChallengePlayer = props => {
     const history = useHistory();
     const { gameMode } = useParams();
     const [users, setUsers] = useState(null);
+    const [inviteSent, setInviteSent] = useState(false);
+    const [time, setTime] = useState(0);
 
     const getUsers = async (u) => {
         setUsers(u);
@@ -26,15 +30,28 @@ const ChallengePlayer = props => {
             const response = await inviteUser(id, gameMode.toUpperCase(), "DUEL");
             console.log(response);
             localStorage.setItem('gameId', response.id);
-            history.push({
-                pathname: '/topic-selection',
-                search: '?update=true',  // query string
-                state: {  // location state
-                    turn: false, 
-                    nr: 1,
-                    finished: false,
-                },
-            });
+            // history.push({
+            //     pathname: '/topic-selection',
+            //     search: '?update=true',  // query string
+            //     state: {  // location state
+            //         turn: false, 
+            //         nr: 1,
+            //         finished: false,
+            //     },
+            // });
+            setInviteSent(true);
+        } catch (error) {
+            history.push("/home");
+            alert(error);
+        }
+    }
+
+    const cancelInvite = async () => {
+        try {
+            const response = await answerInvite(localStorage.getItem('gameId'), false);
+            console.log(response);
+            localStorage.removeItem('gameId');
+            setInviteSent(false);
         } catch (error) {
             history.push("/home");
             alert(error);
@@ -52,8 +69,30 @@ const ChallengePlayer = props => {
         invite(others[rnd].id);
     }
 
+    const getTime = (time) => {
+        setTime(time);
+    }
+
+    const sentInvitation = () => {
+        if (inviteSent) {
+            return (
+                <div className='invite-sent'>
+                    <div className="invitation overlay">
+                    </div>
+                    <div className="invitation base-container">
+                        <p>Invite has been sent. Waiting for answer...</p>
+                        <div className="button-container">
+                            <Timer timeLimit={90} timeOut={() => cancelInvite()} getTime={() => getTime()}/>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+    }
+
     return (
         <>
+            {sentInvitation()}
             <HomeHeader height="100"/>
             <div className='challenge popup grid'>
                 <Link to="/home" className='back'>✕ Cancel</Link>

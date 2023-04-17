@@ -137,7 +137,7 @@ const Home = () => {
                         onClick={() => goToGame()}
                         disabled={!gameId}
                     >
-                        Invite
+                        Join
                     </Button>
                 </div>
             </div>
