@@ -33,7 +33,7 @@ export const Timer = props => {
     return (
         <div className="timer container">
             <div className="timer label">
-                {Math.floor(remainingTime / 1000 / 60)}:{getSecs()}
+                {Math.floor(remainingTime / 1000 / 60)}:{getSecs().toString().padStart(2, '0')}
             </div>
             <div style={{ width: '100%' }}>
                 <div style={{ width: `${(remainingTime/timeLimit) * 100}%`}} className="timer bar"></div>
