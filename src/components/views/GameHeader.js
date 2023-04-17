@@ -21,7 +21,7 @@ const GameHeader = props => (
         <div className="gamecontentheader fontnormal" style={{textAlign: "left"}}>
             <p>
                 Score <br />
-                1/10
+                {props.questionId}/10
             </p>
         </div>
         <div className="content" style={{textAlign: "right"}}>
@@ -31,7 +31,8 @@ const GameHeader = props => (
 );
 
 GameHeader.propTypes = {
-    height: PropTypes.string
+    height: PropTypes.number,
+    questionId: PropTypes.string
 };
 
 

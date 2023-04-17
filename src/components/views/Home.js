@@ -52,6 +52,7 @@ const Home = () => {
             search: '?update=true',  // query string
             state: {  // location state
                 turn: true, 
+                nr: 1,
             },
         });
     }

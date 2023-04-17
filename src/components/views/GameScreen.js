@@ -56,21 +56,23 @@ const GameScreen = () => {
                 <GameButton callback={() => answer(str)} text={str}/>
             );
             return (
-                <>
+                <div className="question">
                     <BaseContainer>{question.question}</BaseContainer>
                     {answers}
-                    
-                </>
+                </div>
             );
         }
     }
 
     const timerDone = () => {
+        const nr = location.state.nr++;
         history.push({
             pathname: '/topic-selection',
             search: '?update=true',
             state: {
-                turn: !location.state.turn, 
+                turn: location.state.turn, //CHANGE TO TOGGLE WHEN WEBSOCKETS!
+                nr: nr,
+                finished: nr >= 10,
             },
         });
     }
@@ -81,7 +83,7 @@ const GameScreen = () => {
 
     return (
         <>
-            <GameHeader height="100"/>
+            <GameHeader questionId={location.state.nr} height="100"/>;
             {drawQuestion()}
             <Timer timeLimit={30} timeOut={() => timerDone()} getTime={() => getTime()}/>
         </>
