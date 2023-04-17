@@ -82,7 +82,7 @@ const ChallengePlayer = props => {
                     <div className="invitation base-container">
                         <p>Invite has been sent. Waiting for answer...</p>
                         <div className="button-container">
-                            <Timer timeLimit={90} timeOut={() => cancelInvite()} getTime={() => getTime()}/>
+                            <Timer timeLimit={2000} timeOut={() => cancelInvite()} getTime={() => getTime()}/>
                         </div>
                     </div>
                 </div>

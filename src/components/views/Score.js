@@ -1,13 +1,14 @@
 import GameHeader from "components/views/GameHeader";
-import "styles/views/Score.scss"
 import { getIntermediateResults, getTopicSelection, fetchUserById } from "helpers/restApi";
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { useHistory, useLocation } from "react-router-dom";
 import { GameButton } from "components/ui/GameButton";
 import { Points } from "components/ui/Points";
 import Result from "../../models/Result";
 import BaseContainer from "components/ui/BaseContainer";
 import { Timer } from "components/ui/Timer";
+import 'styles/views/TopicSelectionDuel.scss';
+
 
 
 const Score = props => {
@@ -89,16 +90,25 @@ const Score = props => {
 
     const drawTopics = () => {
         if (location.state.turn && topics) {
-            let topicItems = topics.map((topic) => 
-                <GameButton callback={() => toQuestion(topic)} text={parseString(topic)}/>
-            );
+           //let topicItems = topics.map((topic) =>
+           //    <div className="topic" style={{textAlign: "center"}}>
+           //        <GameButton callback={() => toQuestion(topic)} text={parseString(topic)}/>
+           //    </div>
+           //);
 
             return (
                 <>
-                    <div className="topics">
-                        {topicItems}
+                    <div className="grid-2">
+                        <div className="title grid2" style={{textAlign: "left"}}>
+                            Select a topic
+                        </div>
+                        {topics && topics.map((topic, index)=> (
+                            <div className={'topicSelection column-${index+1}'}>
+                                <GameButton callback={() => toQuestion(topic)} text={parseString(topic)}/>
+                            </div>
+                            ))}
                     </div>
-                    <Timer timeLimit={15} timeOut={() => rndTopic()} getTime={() => getTime()}/>
+                    <Timer timeLimit={2000} timeOut={() => rndTopic()} getTime={() => getTime()}/>
                 </>
             );
         } else if (!location.state.turn) {
@@ -112,9 +122,29 @@ const Score = props => {
         console.log(result);
         if (result && usernameInvited && usernameInviting) {
             return (
-                <div>
-                    <Points user={usernameInviting} points={result.invitingPlayerResult}/>
-                    <Points user={usernameInvited} points={result.invitedPlayerResult}/>
+                <div className="grid-1">
+                    <div className="title" style={{textAlign: "left"}}>
+                        Player 1
+                    </div>
+                    <div className="title" style={{textAlign: "right"}}>
+                        Player 2
+                    </div>
+                    <div className="background-points">
+                        <div className = "player" style={{textAlign: "center"}}>
+                            {usernameInviting}
+                        </div>
+                        <div className = "points" style={{textAlign: "center"}}>
+                            {result.invitingPlayerResult}
+                        </div>
+                    </div>
+                    <div className="background-points">
+                        <div className = "player" style={{textAlign: "center"}} >
+                            {usernameInvited}
+                        </div>
+                        <div className = "points" style={{textAlign: "center"}}>
+                            {result.invitedPlayerResult}
+                        </div>
+                    </div>
                 </div>
             );
         }
@@ -123,8 +153,10 @@ const Score = props => {
     return (
         <>
             <GameHeader questionId={location.state.nr} height="100"/>;
-            {drawResults()}
-            {drawTopics()}
+            <div className="ScreenGrid">
+                {drawResults()}
+                {drawTopics()}
+            </div>
         </>
     );
 }

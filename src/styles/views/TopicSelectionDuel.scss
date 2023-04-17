@@ -6,18 +6,18 @@
   margin: 0 auto;
   margin-top: 50px;
   display: grid;
-  grid-template-rows: 50% 50%;
+  grid-template-rows: 50% auto;
   grid-template-columns: 1fr;
   grid-row-gap: 50px;
-  overflow: auto;
+  overflow: visible;
 }
   .grid-1 {
     grid-row: 1;
     display:grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 10% 90%;
+    grid-template-rows: 20px 90%;
     grid-column-gap: 20px;
-    grid-row-gap: 10px;
+    grid-row-gap: 13px;
     min-height: fit-content;
   }
 
@@ -25,9 +25,9 @@
     grid-row: 2;
     display:grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 10% 90%;
+    grid-template-rows: 20px auto;
     grid-column-gap: 20px;
-    grid-row-gap: 10px;
+    grid-row-gap: 20px;
   }
 
 .title{
@@ -86,14 +86,12 @@
   margin: 0 auto;
 }
 
-.background-topicSelection{
+.topicSelection{
   grid-row:2;
   display:grid;
-  background-color: $off_white;
-  border-radius: $borderRadius;
-  flex-grow: 1;
+  //flex-grow: 1;
   width: 100%;
-  height: 100px;
+  height: 50px;
   margin: 0 auto;
 }
 
