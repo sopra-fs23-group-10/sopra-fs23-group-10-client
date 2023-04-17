@@ -22,35 +22,42 @@ const TopicSelectionDuel = props => {
                     <div className="title" style={{textAlign: "right"}}>
                         Player 2
                     </div>
-                    <div className="points-grid">
-                        <div className = "points-content player" style={{textAlign: "center"}}>
+                    <div className="background-points">
+                        <div className = "player" style={{textAlign: "center"}}>
                             Player 1
                         </div>
-                        <div className = "points-content points" style={{textAlign: "center"}}>
+                        <div className = "points" style={{textAlign: "center"}}>
                             0
                         </div>
                     </div>
-                    <div className="points-grid">
-                        <div className = "points-content player" style={{textAlign: "center"}}>
+                    <div className="background-points">
+                        <div className = "player" style={{textAlign: "center"}} >
                             Player 2
                         </div>
-                        <div className = "points-content points" style={{textAlign: "center"}}>
+                        <div className = "points" style={{textAlign: "center"}}>
                             0
                         </div>
                     </div>
                 </div>
+
                 <div className="grid-2">
-                    <div className="title" style={{textAlign: "left"}}>
+                    <div className="title grid2" style={{textAlign: "left"}}>
                         Select a topic
                     </div>
-                    <div className="topic" >
-                        Topic 1
+                    <div className="background-topicSelection">
+                        <div className="topic" style={{textAlign: "center"}}>
+                            Topic 1
+                        </div>
                     </div>
-                    <div className="topic" >
-                        Topic 2
+                    <div className="background-topicSelection">
+                        <div className="topic" style={{textAlign: "center"}} >
+                            Topic 2
+                        </div>
                     </div>
-                    <div className="topic" >
-                        Topic 3
+                    <div className="background-topicSelection">
+                        <div className="topic" style={{textAlign: "center"}}>
+                            Topic 3
+                        </div>
                     </div>
                 </div>
             </div>
