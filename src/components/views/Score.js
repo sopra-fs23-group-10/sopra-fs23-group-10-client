@@ -108,7 +108,7 @@ const Score = props => {
                             </div>
                             ))}
                     </div>
-                    <Timer timeLimit={2000} timeOut={() => rndTopic()} getTime={() => getTime()}/>
+                    <Timer timeLimit={15} timeOut={() => rndTopic()} getTime={() => getTime()}/>
                 </>
             );
         } else if (!location.state.turn) {
