@@ -2,8 +2,21 @@
 
 .game-button {
     cursor: pointer;
+    height:100px;
+    margin:0px;
+
     &:hover {
         transform: translate(-6px, -6px);
         filter: drop-shadow(6px 6px 0px $secondary_color);
     }
+    &.topicContent{
+        font-family: $fontDefault;
+        display: flex;
+        color: black;
+        font-size: 18px;
+        height: 100px;
+        justify-content: center;
+        align-items: center;
+    }
+
 }
