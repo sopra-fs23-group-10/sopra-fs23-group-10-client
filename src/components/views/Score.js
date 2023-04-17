@@ -6,6 +6,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { GameButton } from "components/ui/GameButton";
 import { Points } from "components/ui/Points";
 import Result from "../../models/Result";
+import BaseContainer from "components/ui/BaseContainer";
 
 
 const Score = props => {
@@ -70,7 +71,7 @@ const Score = props => {
 
 
     const drawTopics = () => {
-        if (topics) {
+        if (location.state.turn && topics) {
             let topicItems = topics.map((topic) => 
                 <GameButton callback={() => toQuestion(topic)} text={parseString(topic)}/>
             );
@@ -79,6 +80,10 @@ const Score = props => {
                 <>
                     {topicItems}
                 </>
+            );
+        } else if (!location.state.turn) {
+            return (
+                <BaseContainer>Your opponent is selecting a topic.</BaseContainer>
             );
         }
     }
