@@ -17,8 +17,8 @@
       justify-self: left;
     }
     &.profile-picture {
-        height: $base_padding;
-        width: $base_padding;
+        height: $base_padding !important;
+        width: $base_padding !important;
         background-color: $disabled_button;
         border-radius: 100%;
         justify-self: left;

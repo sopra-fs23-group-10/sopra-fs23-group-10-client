@@ -43,9 +43,34 @@
     }
   }
 
+  .profile-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width:100%;
+  }
   .profile {
     grid-column: 3;
     text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20px;
+    width: 80px;
+    cursor: pointer;
+    @extend .base-transition;
+
+    &:hover {
+      transform: scale(1.1);
+
+      p {
+        color: $secondary_color !important;
+      }
+    }
+
+    p {
+      color: $off_white;
+    }
   }
 
   .navigation {
