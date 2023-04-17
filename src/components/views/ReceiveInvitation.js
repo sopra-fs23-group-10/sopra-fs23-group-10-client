@@ -15,6 +15,7 @@ const ReceiveInvitation = props => {
     const [username, setUsername] = useState("");
 
     useEffect(() => {
+        console.log("CONNECT INVITATION");
         connect(handleInvite, handleAnswer);
     }, []);
 

@@ -10,6 +10,7 @@ import duel from "images/duel.png";
 import single from "images/single.png";
 import {PlayerList} from "../ui/PlayerList";
 import { Button } from 'components/ui/Button';
+import ReceiveInvitation from './ReceiveInvitation';
 
 const Home = () => {
 
@@ -112,6 +113,7 @@ const Home = () => {
 
     return (
         <div className="fill">
+            <ReceiveInvitation/>
             <HomeHeader/>
             <div className='home container'>
                 <BaseContainer className="home user-container">

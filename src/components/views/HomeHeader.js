@@ -102,7 +102,6 @@ const HomeHeader = props => {
                 {username}
                 {dropDown()}
             </a>
-            <ReceiveInvitation/>
         </header>
     );
 };
