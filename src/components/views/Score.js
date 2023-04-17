@@ -7,6 +7,7 @@ import { GameButton } from "components/ui/GameButton";
 import { Points } from "components/ui/Points";
 import Result from "../../models/Result";
 import BaseContainer from "components/ui/BaseContainer";
+import { Timer } from "components/ui/Timer";
 
 
 const Score = props => {
@@ -16,6 +17,7 @@ const Score = props => {
     const [result, setResult] = useState(null);
     const [usernameInviting, setUsernameInviting] = useState("");
     const [usernameInvited, setUsernameInvited] = useState("");
+    const [time, setTime] = useState(0);
 
     useEffect(() => {
         async function fetchTopics() {
@@ -69,6 +71,20 @@ const Score = props => {
         });
     }
 
+    const rndTopic = () => {
+        let rnd = getRandomInt(0, 3);
+        toQuestion(topics[rnd]); 
+    }
+    
+    function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
+    }
+
+    const getTime = (time) => {
+        setTime(time);
+    }
 
     const drawTopics = () => {
         if (location.state.turn && topics) {
@@ -79,6 +95,7 @@ const Score = props => {
             return (
                 <>
                     {topicItems}
+                    <Timer timeLimit={15} timeOut={() => rndTopic()} getTime={() => getTime()}/>
                 </>
             );
         } else if (!location.state.turn) {
