@@ -15,6 +15,7 @@ const ReceiveInvitation = props => {
     const [username, setUsername] = useState("");
 
     useEffect(() => {
+        console.log("CONNECT INVITATION");
         connect(handleInvite, handleAnswer);
     }, []);
 
@@ -44,11 +45,22 @@ const ReceiveInvitation = props => {
         const answer = Object.values(response)[0];
         if (answer) {
             setInvitation(null);
-            history.push("/game");
-            localStorage.setItem("gameId", invitation.id);
+            goToGame();
         } else {
             setInvitation(null);
         }
+    }
+
+    const goToGame = () => {
+        localStorage.setItem('gameId', invitation.id);
+        history.push({
+            pathname: '/topic-selection',
+            search: '?update=true',  // query string
+            state: {  // location state
+                turn: true, 
+                nr: 1,
+            },
+        });
     }
 
     const receiveInvitation = () => {

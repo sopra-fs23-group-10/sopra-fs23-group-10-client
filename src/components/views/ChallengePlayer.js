@@ -31,6 +31,8 @@ const ChallengePlayer = props => {
                 search: '?update=true',  // query string
                 state: {  // location state
                     turn: false, 
+                    nr: 1,
+                    finished: false,
                 },
             });
         } catch (error) {

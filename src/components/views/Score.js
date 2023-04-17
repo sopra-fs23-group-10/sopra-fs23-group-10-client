@@ -66,7 +66,8 @@ const Score = props => {
             search: '?update=true',
             state: {
                 turn: location.state.turn, 
-                topic: str
+                topic: str,
+                nr: location.state.nr,
             },
         });
     }
@@ -94,7 +95,9 @@ const Score = props => {
 
             return (
                 <>
-                    {topicItems}
+                    <div className="topics">
+                        {topicItems}
+                    </div>
                     <Timer timeLimit={15} timeOut={() => rndTopic()} getTime={() => getTime()}/>
                 </>
             );
@@ -119,7 +122,7 @@ const Score = props => {
 
     return (
         <>
-            <GameHeader height="100"/>
+            <GameHeader questionId={location.state.nr} height="100"/>;
             {drawResults()}
             {drawTopics()}
         </>
