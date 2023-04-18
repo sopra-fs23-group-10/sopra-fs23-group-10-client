@@ -66,7 +66,7 @@ const ReceiveInvitation = props => {
     const receiveInvitation = () => {
         if (invitation) {
             return (
-                <div className='invitation'>
+                <div className='invitation-received'>
                     <div className="invitation overlay">
                     </div>
                     <div className="invitation base-container">
