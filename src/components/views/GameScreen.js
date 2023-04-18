@@ -90,7 +90,7 @@ const GameScreen = () => {
             pathname: '/topic-selection',
             search: '?update=true',
             state: {
-                turn: location.state.turn, //CHANGE TO TOGGLE WHEN WEBSOCKETS!
+                turn: !location.state.turn,
                 nr: nr,
                 finished: nr >= 10,
             },

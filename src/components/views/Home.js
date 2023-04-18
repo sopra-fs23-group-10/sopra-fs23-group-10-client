@@ -26,6 +26,7 @@ const Home = () => {
     const [gameId, setGameId] = useState(-1);
 
     const getUsers = (u) => {
+        console.log(u);
         setUsers(u);
     }
 
@@ -114,8 +115,8 @@ const Home = () => {
 
     return (
         <div className="fill">
-            <ReceiveInvitation/>
             <HomeHeader/>
+            <ReceiveInvitation/>
             <div className='home container'>
                 <BaseContainer className="home user-container">
                     <div className='scroll-container'>

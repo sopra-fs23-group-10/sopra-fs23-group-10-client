@@ -7,6 +7,7 @@ import 'styles/views/UserProfile.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import HomeHeader from "./HomeHeader";
+import ReceiveInvitation from './ReceiveInvitation';
 
 
 const FormField = props => {
@@ -105,6 +106,7 @@ const UserProfile = props => {
 
     return (
         <>
+            <ReceiveInvitation/>
             <HomeHeader height="100"/>
             <BaseContainer>
                 {profileFields}

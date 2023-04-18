@@ -73,7 +73,6 @@ export const connect = (inviteCallback, answerCallback) => {
         stompClient.subscribe(`/invitations/answer/${id}`, (message) => {
             answerCallback(message.body);
             console.log(`Received message: ${message.body}`);
-            alert(message.body);
         });
 
         if (!listenersAdded) {
