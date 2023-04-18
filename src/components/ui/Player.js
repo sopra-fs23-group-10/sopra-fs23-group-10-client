@@ -7,7 +7,7 @@ const Player = ({user, action}) => (
         className="player container" onClick={action ? () => action(user.id) : null}>
         <Identicon className="player profile-picture" string={user.username}/>
         <div className="player username">{user.username}</div>
-        <div className="player rank">{user.points ? user.points : 100}</div>
+        <div className="player rank">{user.points}</div>
     </div>
 );
 
