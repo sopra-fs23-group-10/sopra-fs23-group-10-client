@@ -2,7 +2,7 @@ import {Button} from 'components/ui/Button';
 import {fetchUserById, answerInvite} from 'helpers/restApi';
 import "styles/views/HomeHeader.scss";
 import React,{useEffect,useState} from 'react';
-import {connect} from "../../helpers/WebSocketFactory";
+import {connectInvitations} from "../../helpers/WebSocketFactory";
 import "styles/views/PopUp.scss";
 import "styles/ui/Invitation.scss";
 import Invitation from "../../models/Invitation";
@@ -16,7 +16,7 @@ const ReceiveInvitation = props => {
 
     useEffect(() => {
         console.log("CONNECT INVITATION");
-        connect(handleInvite, handleAnswer);
+        connectInvitations(handleInvite, handleAnswer);
     }, []);
 
     const handleInvite = async (msg) => {

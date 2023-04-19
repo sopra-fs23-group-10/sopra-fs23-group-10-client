@@ -8,6 +8,8 @@ import Result from "../../models/Result";
 import BaseContainer from "components/ui/BaseContainer";
 import { Timer } from "components/ui/Timer";
 import 'styles/views/TopicSelectionDuel.scss';
+import {connectGame} from "../../helpers/WebSocketFactory";
+import Question from "models/Question";
 
 
 
@@ -21,6 +23,8 @@ const Score = props => {
     const [time, setTime] = useState(0);
 
     useEffect(() => {
+        connectGame(handleQuestion);
+
         async function fetchTopics() {
             try {
                 const response = await getTopicSelection(localStorage.getItem("gameId"));
@@ -61,16 +65,23 @@ const Score = props => {
         return str.replace('_', ' & ');
     }
 
-    const toQuestion = (str) => {
+    const toQuestion = (str, turn, question) => {
         history.push({
             pathname: '/game',
             search: '?update=true',
             state: {
-                turn: location.state.turn, 
+                turn: turn, 
                 topic: str,
                 nr: location.state.nr,
+                question: question
             },
         });
+    }
+
+    const timeOut = () => {
+        if (location.state.turn) {
+            rndTopic();
+        }
     }
 
     const rndTopic = () => {
@@ -88,14 +99,19 @@ const Score = props => {
         setTime(time);
     }
 
+    const handleQuestion = (msg) => {
+        if (!location.state.turn) {
+            console.log("HANDLE QUESTION");
+            console.log(msg);
+            const question = new Question(JSON.parse(msg));
+            toQuestion(question.category, false, question);
+        } else {
+            console.log(msg);
+        }
+    }
+
     const drawTopics = () => {
         if (location.state.turn && topics) {
-           //let topicItems = topics.map((topic) =>
-           //    <div className="topic" style={{textAlign: "center"}}>
-           //        <GameButton callback={() => toQuestion(topic)} text={parseString(topic)}/>
-           //    </div>
-           //);
-
             return (
                 <>
                     <div className="grid-2">
@@ -104,11 +120,10 @@ const Score = props => {
                         </div>
                         {topics && topics.map((topic, index)=> (
                             <div className={'topicSelection column-${index+1}'}>
-                                <GameButton callback={() => toQuestion(topic)} text={parseString(topic)}/>
+                                <GameButton callback={() => toQuestion(topic, true)} text={parseString(topic)}/>
                             </div>
                             ))}
                     </div>
-                    <Timer timeLimit={15} timeOut={() => rndTopic()} getTime={() => getTime()}/>
                 </>
             );
         } else if (!location.state.turn) {
@@ -156,6 +171,7 @@ const Score = props => {
             <div className="ScreenGrid">
                 {drawResults()}
                 {drawTopics()}
+                <Timer timeLimit={120} timeOut={timeOut} getTime={getTime}/>
             </div>
         </>
     );

@@ -15,7 +15,6 @@ export const Timer = props => {
 
     const getTime = () => {
         let currentTime = Date.now() - startTime;
-        props.getTime(currentTime);
         currentTime = timeLimit - currentTime;
         setRemainingTime(currentTime);
         if (currentTime <= 0) {
@@ -41,8 +40,6 @@ export const Timer = props => {
         </div>
     );
 }
-
-
 
 Timer.propTypes = {
     timeLimit: PropTypes.number,

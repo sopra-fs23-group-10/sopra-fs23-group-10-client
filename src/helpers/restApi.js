@@ -200,6 +200,7 @@ export const getQuestion = async (gameId, topic) => {
 export const sendAnswer = async (gameId, userId, questionId, answer, answeredTime) => {
   try {
     const requestBody = JSON.stringify({userId, questionId, answer, answeredTime})
+    console.log(requestBody);
     const response = await restApi.put(`/game/question/${gameId}`, requestBody, {headers: {token: localStorage.getItem("token")}})
     console.log('request to:', response.request.responseURL);
     console.log('status code:', response.status);
