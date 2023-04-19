@@ -20,7 +20,6 @@ import Identicon from 'react-identicons';
  */
 
 const HomeHeader = props => {
-
     const history = useHistory();
     //const [user, setUser] = useState(null);
     const [username, setUsername] = useState(null);
