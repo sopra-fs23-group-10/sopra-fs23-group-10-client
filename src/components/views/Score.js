@@ -1,5 +1,5 @@
 import GameHeader from "components/views/GameHeader";
-import { getIntermediateResults, getTopicSelection, fetchUserById } from "helpers/restApi";
+import { fetchUsersInGame, getTopicSelection, fetchUserById } from "helpers/restApi";
 import React, {useEffect, useState} from 'react';
 import { useHistory, useLocation } from "react-router-dom";
 import { GameButton } from "components/ui/GameButton";
@@ -38,11 +38,12 @@ const Score = props => {
 
         async function fetchGame() {
             try {
-                const response = await getIntermediateResults(localStorage.getItem("gameId"));
+                const response = await fetchUsersInGame(localStorage.getItem("gameId"));
                 const res = new Result(response);
                 setResult(res);
-                await getUser(response.invitingPlayerId, setUsernameInviting);
-                await getUser(response.invitedPlayerId, setUsernameInvited);
+                console.log(response.data);
+                await getUser(response.data.invitingPlayerId, setUsernameInviting);
+                await getUser(response.data.invitedPlayerId, setUsernameInvited);
             } catch (error) {
                 alert(error);
                 history.push("/login");

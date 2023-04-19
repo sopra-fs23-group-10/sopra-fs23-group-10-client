@@ -122,6 +122,17 @@ export const fetchUsers = async () => {
   }
 };
 
+export const fetchUsersInGame = async () => {
+  try {
+    const authToken = localStorage.getItem('token');
+    const id = localStorage.getItem('gameId');
+    const response = await restApi.get(`/games/${id}/users`, {headers: {token: authToken}});
+    return response;
+  } catch (error) {
+    alert(error);
+  }
+}
+
 export const fetchOnlineUsers = async () => {
   try {
     const authToken = localStorage.getItem('token');
