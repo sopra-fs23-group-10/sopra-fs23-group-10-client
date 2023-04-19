@@ -23,6 +23,7 @@ const Score = props => {
     const [time, setTime] = useState(0);
 
     useEffect(() => {
+        console.log("gameId: " + localStorage.getItem('gameId'));
         connectGame(handleQuestion);
 
         async function fetchTopics() {

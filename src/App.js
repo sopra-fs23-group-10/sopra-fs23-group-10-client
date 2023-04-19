@@ -1,5 +1,6 @@
 import AppRouter from "components/routing/routers/AppRouter";
 import bg from "images/BG.png";
+import { register } from "helpers/WebSocketFactory";
 
 /**
  * Happy coding!
@@ -9,6 +10,7 @@ import bg from "images/BG.png";
 const App = () => {
   return (
       <div className="background" style={{background: `url(${bg})`}}>
+        {register()}
         <AppRouter/>
       </div>
   );
