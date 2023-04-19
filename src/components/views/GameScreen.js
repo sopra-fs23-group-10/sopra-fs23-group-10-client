@@ -1,7 +1,8 @@
 import GameHeader from "components/views/GameHeader";
 import { GameButton } from "components/ui/GameButton";
-import "styles/views/Home.scss";
+//import "styles/views/Home.scss";
 import "styles/views/GameHeader.scss"
+import "styles/views/GameScreen.scss"
 import { useEffect, useState } from 'react';
 import { useHistory, useLocation } from "react-router-dom";
 import { getQuestion, sendAnswer } from "helpers/restApi";
@@ -50,16 +51,35 @@ const GameScreen = () => {
 
     const drawQuestion = () => {
         if (answered) {
-            return <BaseContainer>Answer sent!</BaseContainer>
+            return (
+                    <>
+                        <div className="background-question">
+                            <div className="question-content" style={{textAlign: "center"}}>
+                                Answer sent!
+                            </div>
+                        </div>
+                    </>
+
+                )
         } else if (question) {
-            let answers = question.allAnswers.map((str) => 
+            let answers = question.allAnswers.map((str) =>
                 <GameButton callback={() => answer(str)} text={str}/>
             );
             return (
-                <div className="question">
-                    <BaseContainer>{question.question}</BaseContainer>
-                    {answers}
-                </div>
+                <>
+                    <div className="background-question">
+                        <div className="question-content" style={{textAlign: "center"}}>
+                            {question.question}
+                        </div>
+                    </div>
+
+                    <div className ="QuestionGrid">
+                        <div className="answer-1">{answers[0]}</div>
+                        <div className="answer-2">{answers[1]}</div>
+                        <div className="answer-3">{answers[2]}</div>
+                        <div className="answer-4">{answers[3]}</div>
+                    </div>
+                </>
             );
         }
     }
@@ -70,7 +90,7 @@ const GameScreen = () => {
             pathname: '/topic-selection',
             search: '?update=true',
             state: {
-                turn: location.state.turn, //CHANGE TO TOGGLE WHEN WEBSOCKETS!
+                turn: !location.state.turn,
                 nr: nr,
                 finished: nr >= 10,
             },
@@ -84,8 +104,11 @@ const GameScreen = () => {
     return (
         <>
             <GameHeader questionId={location.state.nr} height="100"/>;
-            {drawQuestion()}
-            <Timer timeLimit={30} timeOut={() => timerDone()} getTime={() => getTime()}/>
+            <div className="GameScreenGrid">
+                {drawQuestion()}
+                <Timer timeLimit={2000} timeOut={() => timerDone()} getTime={() => getTime()}/>
+            </div>
+
         </>
     );
 }

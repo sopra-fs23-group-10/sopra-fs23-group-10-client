@@ -7,7 +7,7 @@ import "styles/views/PopUp.scss";
 import "styles/ui/Invitation.scss";
 import Invitation from "../../models/Invitation";
 import {useHistory} from 'react-router-dom';
-
+import PropTypes from "prop-types";
 
 const ReceiveInvitation = props => {
     const history = useHistory();
@@ -36,14 +36,16 @@ const ReceiveInvitation = props => {
     }
 
     const handleAnswer = (msg) => {
-        console.log(handleAnswer);
+        console.log("HANDLE ANSWER");
         console.log(msg);
+        setInvitation(null);
+        setUsername("");
+        if (props.onAnswer) props.onAnswer(msg);
     }
 
     const reply = async (accepted) => {
         const response = await answerInvite(invitation.id, accepted);
-        const answer = Object.values(response)[0];
-        if (answer) {
+        if (response[invitation.id]) {
             setInvitation(null);
             goToGame();
         } else {
@@ -59,6 +61,7 @@ const ReceiveInvitation = props => {
             state: {  // location state
                 turn: true, 
                 nr: 1,
+                finished: false
             },
         });
     }
@@ -66,7 +69,7 @@ const ReceiveInvitation = props => {
     const receiveInvitation = () => {
         if (invitation) {
             return (
-                <div className='invitation'>
+                <div className='invitation-received'>
                     <div className="invitation overlay">
                     </div>
                     <div className="invitation base-container">
@@ -84,6 +87,10 @@ const ReceiveInvitation = props => {
     return (
         <>{receiveInvitation()}</> 
     );
+};
+
+ReceiveInvitation.propTypes = {
+    onAnswer: PropTypes.func
 };
 
 export default ReceiveInvitation;

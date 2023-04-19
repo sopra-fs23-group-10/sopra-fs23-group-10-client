@@ -12,6 +12,7 @@ import { PlayerList } from 'components/ui/PlayerList';
 import 'styles/views/ChallengePlayer.scss';
 import { Timer } from 'components/ui/Timer';
 import 'styles/ui/Invitation.scss';
+import ReceiveInvitation from './ReceiveInvitation';
 
 
 const ChallengePlayer = props => {
@@ -30,15 +31,6 @@ const ChallengePlayer = props => {
             const response = await inviteUser(id, gameMode.toUpperCase(), "DUEL");
             console.log(response);
             localStorage.setItem('gameId', response.id);
-            // history.push({
-            //     pathname: '/topic-selection',
-            //     search: '?update=true',  // query string
-            //     state: {  // location state
-            //         turn: false, 
-            //         nr: 1,
-            //         finished: false,
-            //     },
-            // });
             setInviteSent(true);
         } catch (error) {
             history.push("/home");
@@ -59,6 +51,7 @@ const ChallengePlayer = props => {
     }
 
     const chooseOpponent = (id) => {
+        console.log("CHOOSE OPPONENT");
         invite(id);
     }
 
@@ -70,7 +63,28 @@ const ChallengePlayer = props => {
     }
 
     const getTime = (time) => {
+        console.log(time);
         setTime(time);
+    }
+
+    const answer = (msg) => {
+        console.log("HANDLE ANSWER INVITING");
+        console.log(msg);
+        const accepted = JSON.parse(msg)[localStorage.getItem('gameId')];
+        if (accepted) {
+            history.push({
+                pathname: '/topic-selection',
+                search: '?update=true',  // query string
+                state: {  // location state
+                    turn: false, 
+                    nr: 1,
+                    finished: false
+                },
+            });
+        } else {
+            localStorage.removeItem('gameId');
+            setInviteSent(false);
+        }
     }
 
     const sentInvitation = () => {
@@ -82,7 +96,7 @@ const ChallengePlayer = props => {
                     <div className="invitation base-container">
                         <p>Invite has been sent. Waiting for answer...</p>
                         <div className="button-container">
-                            <Timer timeLimit={90} timeOut={() => cancelInvite()} getTime={() => getTime()}/>
+                            <Timer timeLimit={90} timeOut={cancelInvite} getTime={getTime}/>
                         </div>
                     </div>
                 </div>
@@ -94,6 +108,7 @@ const ChallengePlayer = props => {
         <>
             {sentInvitation()}
             <HomeHeader height="100"/>
+            <ReceiveInvitation onAnswer={answer}/>
             <div className='challenge popup grid'>
                 <Link to="/home" className='back'>✕ Cancel</Link>
                 <BaseContainer className="popup container">

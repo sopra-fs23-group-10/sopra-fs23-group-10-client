@@ -6,12 +6,14 @@ import 'styles/views/PopUp.scss';
 import BaseContainer from "components/ui/BaseContainer";
 //import {FormField} from "components/ui/FormField";
 import HomeHeader from "./HomeHeader";
+import ReceiveInvitation from './ReceiveInvitation';
 
 
 const Rules = props => {
     const history = useHistory();
     return (
         <>
+            <ReceiveInvitation/>
             <HomeHeader height="100"/>
             <BaseContainer className="popup container">
                 <div className="rulesGrid">
