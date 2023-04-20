@@ -15,7 +15,7 @@ import Rules from "../../views/Rules";
 import GameScreen from "../../views/GameScreen";
 import Score from "../../views/Score";
 import TopicSelectionDuel from "../../views/TopicSelectionDuel";
-
+import EndGame from "../../views/EndGame";
 
 /**
  * Main router of your application.
@@ -28,78 +28,83 @@ import TopicSelectionDuel from "../../views/TopicSelectionDuel";
  */
 const AppRouter = () => {
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route path="/home">
-          <HomeGuard>
-            <HomeRouter base="/home"/>
-          </HomeGuard>
-        </Route>
-        <Route exact path="/users/:user_id">
-          <HomeGuard>
-            <UserProfile/>
-          </HomeGuard>
-        </Route>
-        <Route exact path="/challenge/:gameMode">
-          <HomeGuard>
-            <ChallengePlayer/>
-          </HomeGuard>
-        </Route>
-        <Route exact path="/users/edit/:user_id">
-          <HomeGuard>
-            <ProfileEditor/>
-          </HomeGuard>
-        </Route>
-        <Route exact path="/registration">
-          <LoginGuard>
-            <Registration/>
-          </LoginGuard>
-        </Route>
-        <Route exact path="/login">
-          <LoginGuard>
-            <Login/>
-          </LoginGuard>
-        </Route>
-        <Route exact path="/resetpassword">
-          <HomeGuard>
-            <ResetPassword/>
-          </HomeGuard>
-        </Route>
-        <Route exact path="/forgotpassword">
-          <LoginGuard>
-            <ForgotPassword/>
-          </LoginGuard>
-        </Route>
-        <Route path="/ranking">
-          <HomeGuard>
-            <Ranking/>
-          </HomeGuard>
-        </Route>
-        <Route path="/rules">
-          <HomeGuard>
-            <Rules/>
-          </HomeGuard>
-        </Route>
-        <Route path="/game">
-          <GameGuard>
-            <GameScreen/>
-          </GameGuard>
-        </Route>
-        <Route path="/topic-selection">
-          <GameGuard>
-            <Score/>
-          </GameGuard>
-        </Route>
-        <Route path="/dueltopicselection">
-          <HomeGuard>
-            <TopicSelectionDuel/>
-          </HomeGuard>
-        </Route>
-        <Route exact path="/">
-          <Redirect to="/home"/>
-        </Route>
-      </Switch>
-    </BrowserRouter>
+      <BrowserRouter>
+        <Switch>
+          <Route path="/home">
+            <HomeGuard>
+              <HomeRouter base="/home"/>
+            </HomeGuard>
+          </Route>
+          <Route exact path="/users/:user_id">
+            <HomeGuard>
+              <UserProfile/>
+            </HomeGuard>
+          </Route>
+          <Route exact path="/challenge/:gameMode">
+            <HomeGuard>
+              <ChallengePlayer/>
+            </HomeGuard>
+          </Route>
+          <Route exact path="/users/edit/:user_id">
+            <HomeGuard>
+              <ProfileEditor/>
+            </HomeGuard>
+          </Route>
+          <Route exact path="/registration">
+            <LoginGuard>
+              <Registration/>
+            </LoginGuard>
+          </Route>
+          <Route exact path="/login">
+            <LoginGuard>
+              <Login/>
+            </LoginGuard>
+          </Route>
+          <Route exact path="/resetpassword">
+            <HomeGuard>
+              <ResetPassword/>
+            </HomeGuard>
+          </Route>
+          <Route exact path="/forgotpassword">
+            <LoginGuard>
+              <ForgotPassword/>
+            </LoginGuard>
+          </Route>
+          <Route path="/ranking">
+            <HomeGuard>
+              <Ranking/>
+            </HomeGuard>
+          </Route>
+          <Route path="/rules">
+            <HomeGuard>
+              <Rules/>
+            </HomeGuard>
+          </Route>
+          <Route path="/game">
+            <GameGuard>
+              <GameScreen/>
+            </GameGuard>
+          </Route>
+          <Route path="/topic-selection">
+            <GameGuard>
+              <Score/>
+            </GameGuard>
+          </Route>
+          <Route path="/dueltopicselection">
+            <HomeGuard>
+              <TopicSelectionDuel/>
+            </HomeGuard>
+          </Route>
+          <Route path="/endgame">
+            <HomeGuard>
+              <EndGame/>
+            </HomeGuard>
+          </Route>
+          <Route exact path="/">
+            <Redirect to="/home"/>
+          </Route>
+        </Switch>
+      </BrowserRouter>
   );
 };
 
