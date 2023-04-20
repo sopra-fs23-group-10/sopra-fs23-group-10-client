@@ -143,7 +143,7 @@ const Score = props => {
                     </div>
                 </>
             );
-        } else if (!localStorage.getItem('selecting')) {
+        } else if (!localStorage.getItem('!selecting')) {
             return (
                 <div className="background-topic_waiting">
                     <div className="topic">
@@ -192,7 +192,7 @@ const Score = props => {
                 {drawResults()}
                 {drawTopics()}
                 <div className="timing-location">
-                    <Timer timeLimit={240} timeOut={timeOut} getTime={getTime}/>
+                    <Timer timeLimit={90} timeOut={timeOut} getTime={getTime}/>
                 </div>
             </div>
         </>
