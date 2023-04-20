@@ -41,8 +41,8 @@ const GameScreen = () => {
         if (answered) {
             return (
                     <>
-                        <div className="background-question">
-                            <div className="question-content" style={{textAlign: "center"}}>
+                        <div className="background-answerSent">
+                            <div className="answerSent-content" style={{textAlign: "center"}}>
                                 Answer sent!
                             </div>
                         </div>
