@@ -69,9 +69,7 @@ const Score = props => {
             }
         }
 
-        console.log('selecting: ' + localStorage.getItem('selecting'));
         if (localStorage.getItem('selecting') === "true") {
-            console.log("selecting hajdhfaehuifauih");
             fetchTopics();
         }
         fetchGame();
@@ -102,7 +100,7 @@ const Score = props => {
     }
 
     const timeOut = () => {
-        if (localStorage.getItem('selecting')) {
+        if (localStorage.getItem('selecting') == "true") {
             rndTopic();
         }
     }
@@ -128,7 +126,7 @@ const Score = props => {
     }
 
     const drawTopics = () => {
-        if (localStorage.getItem('selecting') && topics) {
+        if ((localStorage.getItem('selecting') == "true") && topics) {
             return (
                 <>
                     <div className="grid-2">
@@ -143,7 +141,7 @@ const Score = props => {
                     </div>
                 </>
             );
-        } else if (!localStorage.getItem('selecting')) {
+        } else if ((localStorage.getItem('selecting') == "false")) {
             return (
                 <BaseContainer>Your opponent is selecting a topic.</BaseContainer>
             );
