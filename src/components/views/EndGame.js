@@ -15,7 +15,6 @@ import BaseContainer from "../ui/BaseContainer";
 import Result from "../../models/Result";
 
 
-
 const EndGame = props => {
     const history = useHistory();
     const [result, setResult] = useState(null);
@@ -23,13 +22,12 @@ const EndGame = props => {
     const [usernameInvited, setUsernameInvited] = useState("");
 
     const { gameMode } = useParams();
-    const [users, setUsers] = useState(null);
     const [rematchSent, setRematchSent] = useState(false);
     const [time, setTime] = useState(0);
     const [previousGame, setPreviousGame] = useState(null);
 
     useEffect(() => {
-
+        console.log("END GAME");
         async function fetchGameResults(){
             try{
                 const response = await finishGame(localStorage.getItem("gameId"));
@@ -44,7 +42,7 @@ const EndGame = props => {
         }
         const getUser = async (id, callback) => {
             try{
-                const userData = await fetchUserById(users);
+                const userData = await fetchUserById(id);
                 callback(userData.username);
             } catch (error){
                 alert(error);
