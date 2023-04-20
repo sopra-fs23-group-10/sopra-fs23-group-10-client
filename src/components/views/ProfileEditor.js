@@ -66,8 +66,6 @@ const ProfileEditor = props => {
                 const user = new User(userData);
 
                 setUsername(user.username);
-
-                console.log('requested data:', userData);
             } catch (error) {
                 console.error(error.message);
                 alert("Something went wrong while fetching the user data! See the console for details.");

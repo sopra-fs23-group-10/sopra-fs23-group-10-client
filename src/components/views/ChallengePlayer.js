@@ -29,7 +29,6 @@ const ChallengePlayer = props => {
     const invite = async (id) => {
         try {
             const response = await inviteUser(id, gameMode.toUpperCase(), "DUEL");
-            console.log(response);
             localStorage.setItem('gameId', response.id);
             setInviteSent(true);
         } catch (error) {
@@ -41,7 +40,6 @@ const ChallengePlayer = props => {
     const cancelInvite = async () => {
         try {
             const response = await answerInvite(localStorage.getItem('gameId'), false);
-            console.log(response);
             localStorage.removeItem('gameId');
             setInviteSent(false);
         } catch (error) {
@@ -51,7 +49,6 @@ const ChallengePlayer = props => {
     }
 
     const chooseOpponent = (id) => {
-        console.log("CHOOSE OPPONENT");
         invite(id);
     }
 
@@ -63,24 +60,15 @@ const ChallengePlayer = props => {
     }
 
     const getTime = (time) => {
-        console.log(time);
         setTime(time);
     }
 
     const answer = (msg) => {
-        console.log("HANDLE ANSWER INVITING");
-        console.log(msg);
         const accepted = JSON.parse(msg)[localStorage.getItem('gameId')];
         if (accepted) {
-            history.push({
-                pathname: '/topic-selection',
-                search: '?update=true',  // query string
-                state: {  // location state
-                    turn: false, 
-                    nr: 1,
-                    finished: false
-                },
-            });
+            localStorage.setItem('question_nr', 1);
+            localStorage.setItem('selecting', false);
+            history.push('/topic-selection');
         } else {
             localStorage.removeItem('gameId');
             setInviteSent(false);

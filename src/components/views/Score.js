@@ -1,9 +1,8 @@
 import GameHeader from "components/views/GameHeader";
-import { fetchUsersInGame, getTopicSelection, fetchUserById } from "helpers/restApi";
+import { fetchUsersInGame, getTopicSelection, fetchUserById, getIntermediateResults, handleError, getQuestion } from "helpers/restApi";
 import React, {useEffect, useState} from 'react';
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import { GameButton } from "components/ui/GameButton";
-import { Points } from "components/ui/Points";
 import Result from "../../models/Result";
 import BaseContainer from "components/ui/BaseContainer";
 import { Timer } from "components/ui/Timer";
@@ -15,7 +14,6 @@ import Question from "models/Question";
 
 const Score = props => {
     const history = useHistory();
-    const location = useLocation();
     const [topics, setTopics] = useState(null);
     const [result, setResult] = useState(null);
     const [usernameInviting, setUsernameInviting] = useState("");
@@ -23,30 +21,42 @@ const Score = props => {
     const [time, setTime] = useState(0);
 
     useEffect(() => {
-        console.log("gameId: " + localStorage.getItem('gameId'));
         connectGame(handleQuestion);
-
         async function fetchTopics() {
+            console.log("selecting tooooopics")
             try {
                 const response = await getTopicSelection(localStorage.getItem("gameId"));
                 setTopics(response.topics);
             } catch (error) {
-                alert(error);
-                history.push("/login");
+                alert(`Something went wrong while fetching the topcis, ${handleError(error)}`);
             }
         }
 
         async function fetchGame() {
             try {
-                const response = await fetchUsersInGame(localStorage.getItem("gameId"));
-                const res = new Result(response);
-                setResult(res);
-                console.log(response.data);
-                await getUser(response.data.invitingPlayerId, setUsernameInviting);
-                await getUser(response.data.invitedPlayerId, setUsernameInvited);
+                if (localStorage.getItem('question_nr') <= 1) {
+                    const response = await fetchUsersInGame(localStorage.getItem("gameId"));
+                    let res = new Result(response.data);
+                    setResult(res);
+                    await getUser(response.data.invitedPlayerId, setUsernameInviting);
+                    await getUser(response.data.invitingPlayerId, setUsernameInvited);
+                } else {
+                    const response = await getIntermediateResults(localStorage.getItem("gameId"));
+                    let points1;
+                    let points2;
+                    for (let i = 0; i < response.data.length; i++) {
+                        points1 = response.data[i].invitedPlayerResult;
+                        points2 = response.data[i].invitingPlayerResult;
+                    }
+                    let res = new Result(response.data[0]);
+                    res.invitedPlayerId = points1;
+                    res.invitingPlayerId = points2;
+                    setResult(res);
+                    await getUser(response.data[0].invitedPlayerId, setUsernameInviting);
+                    await getUser(response.data[0].invitingPlayerId, setUsernameInvited);
+                }
             } catch (error) {
-                alert(error);
-                history.push("/login");
+                alert(`Something went wrong while fetching the result, ${handleError(error)}`);
             }
         }
 
@@ -59,42 +69,53 @@ const Score = props => {
             }
         }
 
-        if (location.state.turn) fetchTopics();
+        console.log('selecting: ' + localStorage.getItem('selecting'));
+        if (localStorage.getItem('selecting') === "true") {
+            console.log("selecting hajdhfaehuifauih");
+            fetchTopics();
+        }
         fetchGame();
     }, []);
+
+    const fetchQuestion = async (topic) => {
+        try {
+            const response = await getQuestion(localStorage.getItem('gameId'), topic);
+            const q = new Question(response);
+        } catch (error) {
+            alert(error);
+            history.push("/login");
+        }
+    }
 
     const parseString = (str) => {
         return str.replace('_', ' & ');
     }
 
-    const toQuestion = (str, turn, question) => {
+    const toQuestion = (question) => {
         history.push({
             pathname: '/game',
-            search: '?update=true',
+            search: "?update=true",
             state: {
-                turn: turn, 
-                topic: str,
-                nr: location.state.nr,
                 question: question
             },
         });
     }
 
     const timeOut = () => {
-        if (location.state.turn) {
+        if (localStorage.getItem('selecting')) {
             rndTopic();
         }
     }
 
     const rndTopic = () => {
         let rnd = getRandomInt(0, 3);
-        toQuestion(topics[rnd]); 
+        fetchQuestion(topics[rnd]); 
     }
     
     function getRandomInt(min, max) {
         min = Math.ceil(min);
         max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
+        return Math.floor(Math.random() * (max - min) + min);
     }
 
     const getTime = (time) => {
@@ -102,18 +123,12 @@ const Score = props => {
     }
 
     const handleQuestion = (msg) => {
-        if (!location.state.turn) {
-            console.log("HANDLE QUESTION");
-            console.log(msg);
-            const question = new Question(JSON.parse(msg));
-            toQuestion(question.category, false, question);
-        } else {
-            console.log(msg);
-        }
+        const question = new Question(JSON.parse(msg));
+        toQuestion(question);
     }
 
     const drawTopics = () => {
-        if (location.state.turn && topics) {
+        if (localStorage.getItem('selecting') && topics) {
             return (
                 <>
                     <div className="grid-2">
@@ -122,13 +137,13 @@ const Score = props => {
                         </div>
                         {topics && topics.map((topic, index)=> (
                             <div className={'topicSelection column-${index+1}'}>
-                                <GameButton callback={() => toQuestion(topic, true)} text={parseString(topic)}/>
+                                <GameButton callback={() => fetchQuestion(topic)} text={parseString(topic)}/>
                             </div>
-                            ))}
+                        ))}
                     </div>
                 </>
             );
-        } else if (!location.state.turn) {
+        } else if (!localStorage.getItem('selecting')) {
             return (
                 <BaseContainer>Your opponent is selecting a topic.</BaseContainer>
             );
@@ -136,7 +151,6 @@ const Score = props => {
     }
 
     const drawResults = () => {
-        console.log(result);
         if (result && usernameInvited && usernameInviting) {
             return (
                 <div className="grid-1">
@@ -169,11 +183,11 @@ const Score = props => {
 
     return (
         <>
-            <GameHeader questionId={location.state.nr} height="100"/>;
+            <><GameHeader questionId={localStorage.getItem('question_nr')} height="100"/></>
             <div className="ScreenGrid">
                 {drawResults()}
                 {drawTopics()}
-                <Timer timeLimit={120} timeOut={timeOut} getTime={getTime}/>
+                <Timer timeLimit={240} timeOut={timeOut} getTime={getTime}/>
             </div>
         </>
     );

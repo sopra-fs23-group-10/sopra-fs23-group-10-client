@@ -63,8 +63,6 @@ const UserProfile = props => {
                 setStatus(user.status);
                 setPoints(user.points);
                 setProfilePicture(user.profilePicture);
-
-                console.log('requested data:', userData);
             } catch (error) {
                 console.error(error.message);
                 alert("Something went wrong while fetching the user data! See the console for details.");
