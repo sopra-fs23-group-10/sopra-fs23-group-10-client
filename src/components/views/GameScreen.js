@@ -77,13 +77,13 @@ const GameScreen = () => {
     }
 
     const goToScore = () => {
-        let nr = localStorage.getItem('question_nr');
+        let nr = parseInt(localStorage.getItem('question_nr'));
         if (nr < 10) {
-            localStorage.setItem('question_nr', (parseInt(localStorage.getItem('question_nr')) + 1));
+            localStorage.setItem('question_nr', (nr + 1));
             localStorage.setItem('selecting', !(localStorage.getItem('selecting') === "true"));
             history.push('/topic-selection');
         } else {
-            // TODO: go to end of game
+            history.push('/end-of-game');
         }
     }
 
