@@ -130,7 +130,11 @@ const Score = props => {
             );
         } else if (!location.state.turn) {
             return (
-                <BaseContainer>Your opponent is selecting a topic.</BaseContainer>
+                <div className="background-topic_waiting">
+                    <div className="topic">
+                        Your opponent is selecting a topic.
+                    </div>
+                </div>
             );
         }
     }
@@ -150,15 +154,15 @@ const Score = props => {
                         <div className = "player" style={{textAlign: "center"}}>
                             {usernameInviting}
                         </div>
-                        <div className = "points" style={{textAlign: "center"}}>
-                            {result.invitingPlayerResult}
+                        <div className = "points-score" style={{textAlign: "center"}}>
+                            0
                         </div>
                     </div>
                     <div className="background-points">
                         <div className = "player" style={{textAlign: "center"}} >
                             {usernameInvited}
                         </div>
-                        <div className = "points" style={{textAlign: "center"}}>
+                        <div className = "points-score" style={{textAlign: "center"}}>
                             {result.invitedPlayerResult}
                         </div>
                     </div>
@@ -173,7 +177,10 @@ const Score = props => {
             <div className="ScreenGrid">
                 {drawResults()}
                 {drawTopics()}
-                <Timer timeLimit={120} timeOut={timeOut} getTime={getTime}/>
+                <div className="timing-location">
+                    <Timer timeLimit={90} timeOut={timeOut} getTime={getTime}/>
+                </div>
+
             </div>
         </>
     );

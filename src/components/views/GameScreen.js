@@ -56,10 +56,13 @@ const GameScreen = () => {
         if (answered) {
             return (
                     <>
-                        <div className="background-question">
-                            <div className="question-content" style={{textAlign: "center"}}>
+                        <div className="background-answerSent">
+                            <div className="answerSent-content" style={{textAlign: "center"}}>
                                 Answer sent!
                             </div>
+                        </div>
+                        <div className= "timing-location-answerSent">
+                            <Timer timeLimit={90} timeOut={() => timerDone()} getTime={() => getTime()}/>
                         </div>
                     </>
 
@@ -82,6 +85,7 @@ const GameScreen = () => {
                         <div className="answer-3">{answers[2]}</div>
                         <div className="answer-4">{answers[3]}</div>
                     </div>
+                    <Timer timeLimit={2000} timeOut={() => timerDone()} getTime={() => getTime()}/>
                 </>
             );
         }
@@ -109,7 +113,6 @@ const GameScreen = () => {
             <GameHeader questionId={location.state.nr} height="100"/>;
             <div className="GameScreenGrid">
                 {drawQuestion()}
-                <Timer timeLimit={20} timeOut={() => timerDone()} getTime={() => getTime()}/>
             </div>
 
         </>
