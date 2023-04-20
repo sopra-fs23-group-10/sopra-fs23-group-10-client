@@ -33,10 +33,10 @@ const EndGame = props => {
         async function fetchGameResults(){
             try{
                 const response = await finishGame(localStorage.getItem("gameId"));
-                const res = new Result(response);
+                const res = new Result(response[response.length-1]);
                 setResult(res);
-                await getUser(response.data.invitingPlayerId, setUsernameInviting);
-                await getUser(response.data.invitedPlayerId, setUsernameInvited);
+                await getUser(response.invitingPlayerId, setUsernameInviting);
+                await getUser(response.invitedPlayerId, setUsernameInvited);
             } catch(error){
                 alert(error);
                 history.push("/login")
@@ -147,7 +147,7 @@ const EndGame = props => {
                         <div className = "player" style={{textAlign: "center"}}>
                             Player 1
                         </div>
-                        <div className = "points" style={{textAlign: "center"}}>
+                        <div className = "points-endgame" style={{textAlign: "center"}}>
                             0
                         </div>
                     </div>
@@ -155,14 +155,14 @@ const EndGame = props => {
                         <div className = "player player-loser" style={{textAlign: "center"}} >
                             Player 2
                         </div>
-                        <div className = "points points-loser" style={{textAlign: "center"}}>
+                        <div className = "points-endgame points-loser" style={{textAlign: "center"}}>
                             0
                         </div>
                     </div>
                 </div>
                 <div className="background-rematchoption">
                     <div className="content">
-                        <div className="topic" style={{textAlign: "center"}}>
+                        <div className="topic endgame" style={{textAlign: "center"}}>
                             You lost!
                         </div>
                         <div className="twoButtons">
