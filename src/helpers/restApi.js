@@ -122,6 +122,17 @@ export const fetchUsers = async () => {
   }
 };
 
+export const fetchUsersInGame = async () => {
+  try {
+    const authToken = localStorage.getItem('token');
+    const id = localStorage.getItem('gameId');
+    const response = await restApi.get(`/games/${id}/users`, {headers: {token: authToken}});
+    return response;
+  } catch (error) {
+    alert(error);
+  }
+}
+
 export const fetchOnlineUsers = async () => {
   try {
     const authToken = localStorage.getItem('token');
@@ -200,6 +211,7 @@ export const getQuestion = async (gameId, topic) => {
 export const sendAnswer = async (gameId, userId, questionId, answer, answeredTime) => {
   try {
     const requestBody = JSON.stringify({userId, questionId, answer, answeredTime})
+    console.log(requestBody);
     const response = await restApi.put(`/game/question/${gameId}`, requestBody, {headers: {token: localStorage.getItem("token")}})
     console.log('request to:', response.request.responseURL);
     console.log('status code:', response.status);

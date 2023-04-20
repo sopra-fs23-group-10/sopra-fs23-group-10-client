@@ -30,13 +30,16 @@ const GameScreen = () => {
             }
         }
         if (location.state.turn) fetchQuestion();
+        else {
+            setQuestion(location.state.question);
+        }
     }, []);
 
     const answer = async (str) => {
         try {
             const response = await sendAnswer(
                 localStorage.getItem('gameId'), 
-                localStorage.getItem('userId'), 
+                localStorage.getItem('id'), 
                 question.id,
                 str,
                 time
@@ -60,7 +63,7 @@ const GameScreen = () => {
                         </div>
                     </>
 
-                )
+                );
         } else if (question) {
             let answers = question.allAnswers.map((str) =>
                 <GameButton callback={() => answer(str)} text={str}/>
@@ -106,7 +109,7 @@ const GameScreen = () => {
             <GameHeader questionId={location.state.nr} height="100"/>;
             <div className="GameScreenGrid">
                 {drawQuestion()}
-                <Timer timeLimit={2000} timeOut={() => timerDone()} getTime={() => getTime()}/>
+                <Timer timeLimit={20} timeOut={() => timerDone()} getTime={() => getTime()}/>
             </div>
 
         </>
