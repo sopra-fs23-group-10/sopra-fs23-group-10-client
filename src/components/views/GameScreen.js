@@ -4,7 +4,7 @@ import { GameButton } from "components/ui/GameButton";
 import "styles/views/GameHeader.scss"
 import "styles/views/GameScreen.scss"
 import { useEffect, useState } from 'react';
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import { getQuestion, sendAnswer } from "helpers/restApi";
 import Question from "../../models/Question";
 import BaseContainer from "components/ui/BaseContainer";
@@ -18,21 +18,7 @@ const GameScreen = () => {
     const [time, setTime] = useState(0);
 
     useEffect( () => {
-        async function fetchQuestion() {
-            try {
-                const response = await getQuestion(localStorage.getItem('gameId'), location.state.topic);
-                console.log(response);
-                const q = new Question(response);
-                setQuestion(q);
-            } catch (error) {
-                alert(error);
-                history.push("/login");
-            }
-        }
-        if (location.state.turn) fetchQuestion();
-        else {
-            setQuestion(location.state.question);
-        }
+        setQuestion(location.state.question);
     }, []);
 
     const answer = async (str) => {
@@ -44,7 +30,6 @@ const GameScreen = () => {
                 str,
                 time
             );
-            console.log(response);
             setAnswered(true);
         } catch (error) {
             alert(error);
@@ -88,28 +73,31 @@ const GameScreen = () => {
     }
 
     const timerDone = () => {
-        const nr = location.state.nr++;
-        history.push({
-            pathname: '/topic-selection',
-            search: '?update=true',
-            state: {
-                turn: !location.state.turn,
-                nr: nr,
-                finished: nr >= 10,
-            },
-        });
+        goToScore();
+    }
+
+    const goToScore = () => {
+        let nr = parseInt(localStorage.getItem('question_nr'));
+        if (nr < 10) {
+            localStorage.setItem('question_nr', (nr + 1));
+            localStorage.setItem('selecting', !(localStorage.getItem('selecting') === "true"));
+            history.push('/topic-selection');
+        } else {
+            history.push('/end-of-game');
+        }
     }
 
     const getTime = (time) => {
         setTime(time);
     }
 
+
     return (
         <>
-            <GameHeader questionId={location.state.nr} height="100"/>;
+            <GameHeader questionId={localStorage.getItem('question_nr')} height="100"/>
             <div className="GameScreenGrid">
                 {drawQuestion()}
-                <Timer timeLimit={20} timeOut={() => timerDone()} getTime={() => getTime()}/>
+                <Timer timeLimit={10} timeOut={timerDone} getTime={getTime}/>
             </div>
 
         </>

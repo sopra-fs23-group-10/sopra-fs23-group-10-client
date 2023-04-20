@@ -26,7 +26,6 @@ const Login = props => {
             const response = await loginUser(username, password);
             history.push(`/home`);
         } catch (error) {
-            console.log(error);
             if (error.response.status === 404) {
                 setMsg("Sorry, this username does not exist.");
             } else if (error.response.status === 406) {

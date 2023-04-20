@@ -33,7 +33,6 @@ const exponentialBackoff = (retries) => {
 };
 
 export const openSocket = () => {
-    console.log("<<<<<<OPEN SOCKET>>>>>>>>");
     if (currentRetries >= MAX_RETRIES) {
         console.error('Max retries reached, connection aborted');
         return;

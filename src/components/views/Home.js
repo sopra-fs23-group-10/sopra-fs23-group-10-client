@@ -26,7 +26,6 @@ const Home = () => {
     const [gameId, setGameId] = useState(-1);
 
     const getUsers = (u) => {
-        console.log(u);
         setUsers(u);
     }
 
