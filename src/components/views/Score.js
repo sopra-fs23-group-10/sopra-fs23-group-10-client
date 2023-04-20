@@ -194,7 +194,6 @@ const Score = props => {
                 <div className="timing-location">
                     <Timer timeLimit={240} timeOut={timeOut} getTime={getTime}/>
                 </div>
-
             </div>
         </>
     );
