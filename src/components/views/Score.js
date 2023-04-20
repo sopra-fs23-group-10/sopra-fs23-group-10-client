@@ -52,8 +52,8 @@ const Score = props => {
                     res.invitedPlayerId = points1;
                     res.invitingPlayerId = points2;
                     setResult(res);
-                    await getUser(response.data[0].invitedPlayerId, setUsernameInviting);
-                    await getUser(response.data[0].invitingPlayerId, setUsernameInvited);
+                    await getUser(response.data[0].invitedPlayerId, setUsernameInvited);
+                    await getUser(response.data[0].invitingPlayerId, setUsernameInviting);
                 }
             } catch (error) {
                 alert(`Something went wrong while fetching the result, ${handleError(error)}`);
