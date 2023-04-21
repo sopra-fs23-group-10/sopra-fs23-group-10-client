@@ -40,11 +40,8 @@ FormField.propTypes = {
 
 
 const ProfileEditor = props => {
-
     const history = useHistory();
-
     const [username, setUsername] = useState(null);
-
     let { user_id } = useParams();
 
     const commitChanges = async () => {

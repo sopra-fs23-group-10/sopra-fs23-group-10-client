@@ -14,7 +14,7 @@ import Ranking from "../../views/Ranking";
 import Rules from "../../views/Rules";
 import GameScreen from "../../views/GameScreen";
 import Score from "../../views/Score";
-import TopicSelectionDuel from "../../views/TopicSelectionDuel";
+import TopicSelectionSingle from "../../views/TopicSelectionSingle";
 import EndGame from "../../views/EndGame";
 
 /**
@@ -45,7 +45,7 @@ const AppRouter = () => {
               <ChallengePlayer/>
             </HomeGuard>
           </Route>
-          <Route exact path="/users/edit/:user_id">
+          <Route path="/users/edit/:user_id">
             <HomeGuard>
               <ProfileEditor/>
             </HomeGuard>
@@ -90,9 +90,9 @@ const AppRouter = () => {
               <Score/>
             </GameGuard>
           </Route>
-          <Route path="/dueltopicselection">
+          <Route path="/singletopicselection">
             <HomeGuard>
-              <TopicSelectionDuel/>
+              <TopicSelectionSingle/>
             </HomeGuard>
           </Route>
           <Route path="/endgame">

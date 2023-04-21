@@ -6,7 +6,7 @@ import { GameButton } from "components/ui/GameButton";
 import Result from "../../models/Result";
 import BaseContainer from "components/ui/BaseContainer";
 import { Timer } from "components/ui/Timer";
-import 'styles/views/TopicSelectionDuel.scss';
+import 'styles/views/Score.scss';
 import {connectGame} from "../../helpers/WebSocketFactory";
 import Question from "models/Question";
 
@@ -143,7 +143,11 @@ const Score = props => {
             );
         } else if ((localStorage.getItem('selecting') == "false")) {
             return (
-                <BaseContainer>Your opponent is selecting a topic.</BaseContainer>
+                <div className="background-topic-waiting">
+                    <div className="topic">
+                        Your opponent is selecting a topic.
+                    </div>
+                </div>
             );
         }
     }
@@ -162,7 +166,7 @@ const Score = props => {
                         <div className = "player" style={{textAlign: "center"}}>
                             {usernameInviting}
                         </div>
-                        <div className = "points" style={{textAlign: "center"}}>
+                        <div className = "points-score" style={{textAlign: "center"}}>
                             {result.invitingPlayerResult}
                         </div>
                     </div>
@@ -170,7 +174,7 @@ const Score = props => {
                         <div className = "player" style={{textAlign: "center"}} >
                             {usernameInvited}
                         </div>
-                        <div className = "points" style={{textAlign: "center"}}>
+                        <div className = "points-score" style={{textAlign: "center"}}>
                             {result.invitedPlayerResult}
                         </div>
                     </div>
@@ -185,7 +189,10 @@ const Score = props => {
             <div className="ScreenGrid">
                 {drawResults()}
                 {drawTopics()}
-                <Timer timeLimit={240} timeOut={timeOut} getTime={getTime}/>
+                <div className = "timing-location">
+                    <Timer timeLimit={240} timeOut={timeOut} getTime={getTime}/>
+                </div>
+
             </div>
         </>
     );
