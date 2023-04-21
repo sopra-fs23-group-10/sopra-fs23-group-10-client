@@ -34,7 +34,7 @@ const Score = props => {
 
         async function fetchGame() {
             try {
-                if (localStorage.getItem('question_nr') <= 1) {
+                if (parseInt(localStorage.getItem('question_nr')) <= 1) {
                     const response = await fetchUsersInGame(localStorage.getItem("gameId"));
                     let res = new Result(response.data);
                     setResult(res);
