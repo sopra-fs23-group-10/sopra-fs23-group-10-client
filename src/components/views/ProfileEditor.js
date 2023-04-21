@@ -29,7 +29,6 @@ const FormField = props => {
         </div>
     );
 };
-
 FormField.propTypes = {
     label: PropTypes.string,
     value: PropTypes.string,
@@ -38,8 +37,9 @@ FormField.propTypes = {
     onChange: PropTypes.func
 };
 
-
 const ProfileEditor = props => {
+
+
     const history = useHistory();
     const [username, setUsername] = useState(null);
     let { user_id } = useParams();
