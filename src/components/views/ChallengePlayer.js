@@ -13,7 +13,7 @@ import 'styles/views/ChallengePlayer.scss';
 import { Timer } from 'components/ui/Timer';
 import 'styles/ui/Invitation.scss';
 import ReceiveInvitation from './ReceiveInvitation';
-
+import { subscribe, unsubscribe } from 'helpers/events';
 
 const ChallengePlayer = props => {
     const history = useHistory();
@@ -23,7 +23,11 @@ const ChallengePlayer = props => {
     const [time, setTime] = useState(0);
 
     const getUsers = async (u) => {
+        subscribe('timeOut', () => cancelInvite());
         setUsers(u);
+        return () => {
+            unsubscribe('timeOut', () => cancelInvite());
+        }
     }
 
     const invite = async (id) => {
@@ -84,7 +88,7 @@ const ChallengePlayer = props => {
                     <div className="invitation base-container">
                         <p>Invite has been sent. Waiting for answer...</p>
                         <div className="button-container">
-                            <Timer timeLimit={90} timeOut={cancelInvite} getTime={getTime}/>
+                            <Timer timeLimit={10} getTime={getTime}/>
                         </div>
                     </div>
                 </div>

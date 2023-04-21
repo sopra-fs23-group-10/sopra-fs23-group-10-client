@@ -9,7 +9,7 @@ import { Timer } from "components/ui/Timer";
 import 'styles/views/TopicSelectionDuel.scss';
 import {connectGame} from "../../helpers/WebSocketFactory";
 import Question from "models/Question";
-
+import { subscribe, unsubscribe } from "helpers/events";
 
 
 const Score = props => {
@@ -23,6 +23,7 @@ const Score = props => {
 
     useEffect(() => {
         connectGame(handleQuestion);
+        subscribe('timeOut', () => handleTimeOut());
         async function fetchTopics() {
             try {
                 const response = await getTopicSelection(localStorage.getItem("gameId"));
@@ -41,7 +42,9 @@ const Score = props => {
                     await getUser(response.data.invitedPlayerId, setUsernameInviting);
                     await getUser(response.data.invitingPlayerId, setUsernameInvited);
                 } else {
+                    console.log("get result!");
                     const response = await getIntermediateResults(localStorage.getItem("gameId"));
+                    console.log(response);
                     let points1;
                     let points2;
                     for (let i = 0; i < response.data.length; i++) {
@@ -69,11 +72,14 @@ const Score = props => {
             }
         }
 
-        if (localStorage.getItem('selecting') === "true") {
+        if (localStorage.getItem('selecting') === "true" && !topics) {
             fetchTopics();
         }
         fetchGame();
-    }, []);
+        return () => {
+            unsubscribe('timeOut', () => handleTimeOut());
+        }
+    }, [topics]);
 
     const fetchQuestion = async (topic) => {
         try {
@@ -99,13 +105,13 @@ const Score = props => {
         });
     }
 
-    const timeOut = (topics) => {
+    const handleTimeOut = () => {
         if (localStorage.getItem('selecting') === "true") {
-            rndTopic(topics);
+            rndTopic();
         }
     }
 
-    const rndTopic = (topics) => {
+    const rndTopic = () => {
         let rnd = getRandomInt(0, 3);
         fetchQuestion(topics[rnd]); 
     }
@@ -178,7 +184,7 @@ const Score = props => {
     const drawTimer = () => {
         if (topics || localStorage.getItem('selecting') === 'false') {
             return (
-                <Timer timeLimit={10} timeOut={() => timeOut(topics)}/>
+                <Timer timeLimit={10}/>
             );
         }
     }

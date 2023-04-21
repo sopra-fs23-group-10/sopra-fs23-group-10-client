@@ -9,6 +9,7 @@ import { getQuestion, sendAnswer } from "helpers/restApi";
 import Question from "../../models/Question";
 import BaseContainer from "components/ui/BaseContainer";
 import { Timer } from "components/ui/Timer";
+import { subscribe, unsubscribe } from "helpers/events";
 
 const GameScreen = () => {
     const [question, setQuestion] = useState(null);
@@ -16,17 +17,22 @@ const GameScreen = () => {
     const history = useHistory();
     const [answered, setAnswered] = useState(false);
     const [time, setTime] = useState(0);
+    const answerTime = 15;
 
     useEffect( () => {
+        subscribe('timeOut', () => timeOut());
         setQuestion(location.state.question);
-    }, []);
+        return () => {
+            unsubscribe('timeOut', () => timeOut());
+        }
+    }, [answered, question, time]);
 
-    const answer = async (str) => {
+    const answer = async (str, id, time) => {
         try {
             const response = await sendAnswer(
                 localStorage.getItem('gameId'), 
                 localStorage.getItem('id'), 
-                question.id,
+                id,
                 str,
                 time
             );
@@ -51,7 +57,7 @@ const GameScreen = () => {
                 );
         } else if (question) {
             let answers = question.allAnswers.map((str) =>
-                <GameButton callback={() => answer(str)} text={str}/>
+                <GameButton callback={() => answer(str, question.id, time)} text={str}/>
             );
             return (
                 <>
@@ -72,8 +78,12 @@ const GameScreen = () => {
         }
     }
 
-    const timerDone = () => {
-        answer("stupid answer");
+    const timeOut = () => {
+        console.log("timer done, answered: " + answered);
+        console.log("send wrong answer");
+        if (!answered) {
+            answer("stupid answer", question.id, time);
+        }
         goToScore();
     }
 
@@ -92,15 +102,13 @@ const GameScreen = () => {
         setTime(time);
     }
 
-
     return (
         <>
             <GameHeader questionId={localStorage.getItem('question_nr')} height="100"/>
             <div className="GameScreenGrid">
                 {drawQuestion()}
-                <Timer timeLimit={10} timeOut={() => timerDone()} getTime={() => getTime()}/>
+                <Timer timeLimit={answerTime} getTime={getTime}/>
             </div>
-
         </>
     );
 }

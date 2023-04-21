@@ -185,16 +185,6 @@ export const getTopicSelection = async (gameId) => {
     throw new Error(`Something went wrong while fetching a selection of topics: \n${handleError(error)}`);
   }
 }
-/*
-export const getAllTopics = async () => {
-  try{
-    const authToken = localStorage.getItem('token');
-    const response = await restApi.get("/game/topics/all", {headers: {token: authToken}})
-    return response.data;
-  } catch (error) {
-    throw new Error('Something went wrong while fetching all topics: \n${handleError(error)}');
-  }
-};*/
 
 export const getQuestion = async (gameId, topic) => {
   try {
@@ -204,7 +194,7 @@ export const getQuestion = async (gameId, topic) => {
     const response = await restApi.post("/game/topics", requestBody, {headers: {token: authToken}})
     return response.data;
   } catch (error) {
-    throw new Error('Something went wrong while fetching all topics: \n${handleError(error)}');
+    throw new Error(`Something went wrong while fetching a question: \n${handleError(error)}`);
   }
 }
 
