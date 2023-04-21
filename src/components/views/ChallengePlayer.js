@@ -1,5 +1,5 @@
 import React from 'react';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {inviteUser, answerInvite} from 'helpers/restApi';
 //import {api, handleError} from 'helpers/api';
 import {useHistory, useParams, Link} from 'react-router-dom';
@@ -13,7 +13,6 @@ import 'styles/views/ChallengePlayer.scss';
 import { Timer } from 'components/ui/Timer';
 import 'styles/ui/Invitation.scss';
 import ReceiveInvitation from './ReceiveInvitation';
-import { subscribe, unsubscribe } from 'helpers/events';
 
 const ChallengePlayer = props => {
     const history = useHistory();
@@ -23,11 +22,7 @@ const ChallengePlayer = props => {
     const [time, setTime] = useState(0);
 
     const getUsers = async (u) => {
-        subscribe('timeOut', () => cancelInvite());
         setUsers(u);
-        return () => {
-            unsubscribe('timeOut', () => cancelInvite());
-        }
     }
 
     const invite = async (id) => {
@@ -67,7 +62,7 @@ const ChallengePlayer = props => {
         setTime(time);
     }
 
-    const answer = (msg) => {
+    const handleAnswer = (msg) => {
         const accepted = JSON.parse(msg)[localStorage.getItem('gameId')];
         if (accepted) {
             localStorage.setItem('question_nr', 1);
@@ -88,7 +83,7 @@ const ChallengePlayer = props => {
                     <div className="invitation base-container">
                         <p>Invite has been sent. Waiting for answer...</p>
                         <div className="button-container">
-                            <Timer timeLimit={10} getTime={getTime}/>
+                            <Timer timeLimit={10} timeOut={cancelInvite} getTime={getTime}/>
                         </div>
                     </div>
                 </div>
@@ -100,7 +95,7 @@ const ChallengePlayer = props => {
         <>
             {sentInvitation()}
             <HomeHeader height="100"/>
-            <ReceiveInvitation onAnswer={answer}/>
+            <ReceiveInvitation onAnswer={handleAnswer}/>
             <div className='challenge popup grid'>
                 <Link to="/home" className='back'>✕ Cancel</Link>
                 <BaseContainer className="popup container">

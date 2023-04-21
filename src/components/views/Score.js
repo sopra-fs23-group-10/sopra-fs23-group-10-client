@@ -9,7 +9,6 @@ import { Timer } from "components/ui/Timer";
 import 'styles/views/TopicSelectionDuel.scss';
 import {connectGame} from "../../helpers/WebSocketFactory";
 import Question from "models/Question";
-import { subscribe, unsubscribe } from "helpers/events";
 
 
 const Score = props => {
@@ -23,7 +22,6 @@ const Score = props => {
 
     useEffect(() => {
         connectGame(handleQuestion);
-        subscribe('timeOut', () => handleTimeOut());
         async function fetchTopics() {
             try {
                 const response = await getTopicSelection(localStorage.getItem("gameId"));
@@ -76,9 +74,6 @@ const Score = props => {
             fetchTopics();
         }
         fetchGame();
-        return () => {
-            unsubscribe('timeOut', () => handleTimeOut());
-        }
     }, [topics]);
 
     const fetchQuestion = async (topic) => {
@@ -184,7 +179,7 @@ const Score = props => {
     const drawTimer = () => {
         if (topics || localStorage.getItem('selecting') === 'false') {
             return (
-                <Timer timeLimit={10}/>
+                <Timer timeOut={handleTimeOut} timeLimit={10}/>
             );
         }
     }

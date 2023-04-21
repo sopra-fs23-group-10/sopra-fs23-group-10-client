@@ -1,7 +1,6 @@
 import "styles/ui/Timer.scss";
 import PropTypes from "prop-types";
 import { useEffect, useState } from 'react';
-import { publish } from "helpers/events";
 
 export const Timer = props => {
     const timeLimit = 1000 * props.timeLimit;
@@ -20,6 +19,7 @@ export const Timer = props => {
         if (currentTime <= 0) {
             console.log("timer is zero!");
             currentTime = 0;
+            if (props.timeOut) props.timeOut();
             timeOut();
         }
         if (props.getTime) props.getTime(currentTime);
@@ -39,7 +39,8 @@ export const Timer = props => {
     }
 
     const timeOut = () => {
-        publish('timeOut');
+        const event = new CustomEvent("timeOut", { detail: null });
+        document.dispatchEvent(event);
     }
 
     return (

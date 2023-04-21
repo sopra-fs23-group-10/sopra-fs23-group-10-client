@@ -78,8 +78,7 @@ const EndGame = props => {
         setTime(time);
     }
 
-    const answer = (msg) => {
-        console.log("HANDLE ANSWER INVITING");
+    const handleAnswer = (msg) => {
         console.log(msg);
         const accepted = JSON.parse(msg)[localStorage.getItem('gameId')];
         if (accepted) {
@@ -115,12 +114,19 @@ const EndGame = props => {
         }
     }
 
+    const goToHome = () => {
+        localStorage.removeItem('gameId');
+        localStorage.removeItem('selecting');
+        localStorage.removeItem('question_nr');
+        history.push("/home");
+    }
+
     const RematchButton = () => {
         return (
             <>
                 {sentRematch()}
                 <HomeHeader height = "100" />
-                <ReceiveInvitation onAnswer={answer}/>
+                <ReceiveInvitation onAnswer={handleAnswer}/>
                 <div className ='challenge pop up grid'>
                     <Link to="/home" className = 'back'> x Cancel</Link>
                     <BaseContainer className = "popup container">
@@ -176,7 +182,7 @@ const EndGame = props => {
                             <Button
                                 width="80%"
                                 style={{margin: "auto"}}
-                                onClick={() => history.push('/home')}
+                                onClick={() => goToHome()}
                             >
                                RETURN HOME
                             </Button>

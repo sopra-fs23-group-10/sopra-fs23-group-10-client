@@ -9,30 +9,35 @@ import { getQuestion, sendAnswer } from "helpers/restApi";
 import Question from "../../models/Question";
 import BaseContainer from "components/ui/BaseContainer";
 import { Timer } from "components/ui/Timer";
-import { subscribe, unsubscribe } from "helpers/events";
 
 const GameScreen = () => {
-    const [question, setQuestion] = useState(null);
     const location = useLocation();
     const history = useHistory();
+    const [question, setQuestion] = useState(null);
     const [answered, setAnswered] = useState(false);
     const [time, setTime] = useState(0);
     const answerTime = 15;
 
     useEffect( () => {
-        subscribe('timeOut', () => timeOut());
-        setQuestion(location.state.question);
-        return () => {
-            unsubscribe('timeOut', () => timeOut());
+        function timeOut() {
+            if (!answered) {
+                console.log("send wrong answer");
+                answer("stupid answer");
+            }
+            goToScore();
         }
-    }, [answered, question, time]);
 
-    const answer = async (str, id, time) => {
+        setQuestion(location.state.question);
+        document.addEventListener("timeOut", timeOut); // <---- you're closing over handleScroll
+        return () => document.removeEventListener("timeOut", timeOut);
+    });
+
+    const answer = async (str) => {
         try {
             const response = await sendAnswer(
                 localStorage.getItem('gameId'), 
                 localStorage.getItem('id'), 
-                id,
+                question.id,
                 str,
                 time
             );
@@ -57,7 +62,7 @@ const GameScreen = () => {
                 );
         } else if (question) {
             let answers = question.allAnswers.map((str) =>
-                <GameButton callback={() => answer(str, question.id, time)} text={str}/>
+                <GameButton callback={() => answer(str)} text={str}/>
             );
             return (
                 <>
@@ -78,15 +83,6 @@ const GameScreen = () => {
         }
     }
 
-    const timeOut = () => {
-        console.log("timer done, answered: " + answered);
-        console.log("send wrong answer");
-        if (!answered) {
-            answer("stupid answer", question.id, time);
-        }
-        goToScore();
-    }
-
     const goToScore = () => {
         let nr = parseInt(localStorage.getItem('question_nr'));
         if (nr < 4) {
@@ -99,6 +95,7 @@ const GameScreen = () => {
     }
 
     const getTime = (time) => {
+        console.log(time);
         setTime(time);
     }
 
