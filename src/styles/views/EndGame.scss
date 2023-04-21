@@ -52,7 +52,7 @@
       font-size: calc(8vh * 0.6);
     }
   }
-  .points{
+  .points-endgame{
     font-family: $fontDisplay;
     color: $secondary_color;
     font-size: 25vh;
@@ -110,10 +110,10 @@
     align-items: center;
     height: 100%;
   }
-    .topic{
+    .topic endgame{
       font-family: $fontDefault;
       color: black;
-      font-size: 20px;
+      font-size: 18px;
       font-weight: bold;
       justify-content: space-between;
       align-items: center;

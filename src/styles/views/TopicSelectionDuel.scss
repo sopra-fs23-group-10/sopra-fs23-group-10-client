@@ -29,6 +29,10 @@
     grid-row-gap: 20px;
   }
 
+  .timing-location{
+    grid-row: 5;
+  }
+
 .title{
   grid-row: 1;
   font-family: $fontDefault;
@@ -44,14 +48,13 @@
 }
 
 .topic{
-  grid-row: 2;
   font-family: $fontDefault;
+  display: flex;
   color: black;
-  font-size: 20px;
-  font-weight: bold;
-  justify-content: space-between;
+  font-size: 18px;
+  height: 100px;
+  justify-content: center;
   align-items: center;
-  place-items: center;
 }
 
 .player{
@@ -63,7 +66,7 @@
   align-items: center;
   justify-content: space-between;
 }
-.points{
+.points-score{
   font-family: $fontDisplay;
   color: $secondary_color;
   font-size: 25vh;
