@@ -47,7 +47,7 @@ const GameScreen = () => {
                             </div>
                         </div>
                         <div className= "timing-location-answerSent">
-                            <Timer timeLimit={90} timeOut={() => timerDone()} getTime={() => getTime()}/>
+                            <Timer timeLimit={30} timeOut={() => timerDone()} getTime={() => getTime()}/>
                         </div>
                     </>
 
@@ -82,12 +82,12 @@ const GameScreen = () => {
 
     const goToScore = () => {
         let nr = parseInt(localStorage.getItem('question_nr'));
-        if (nr < 2) {
+        if (nr < 4) {
             localStorage.setItem('question_nr', (nr + 1));
             localStorage.setItem('selecting', !(localStorage.getItem('selecting') === "true"));
             history.push('/topic-selection');
         } else {
-            history.push('/end-of-game');
+            history.push('/endgame');
         }
     }
 
@@ -101,7 +101,6 @@ const GameScreen = () => {
             <GameHeader questionId={localStorage.getItem('question_nr')} height="100"/>
             <div className="GameScreenGrid">
                 {drawQuestion()}
-                <Timer timeLimit={10} timeOut={timerDone} getTime={getTime}/>
             </div>
 
         </>
