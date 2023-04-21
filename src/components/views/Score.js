@@ -52,8 +52,8 @@ const Score = props => {
                     res.invitedPlayerId = points1;
                     res.invitingPlayerId = points2;
                     setResult(res);
-                    await getUser(response.data[0].invitedPlayerId, setUsernameInvited);
-                    await getUser(response.data[0].invitingPlayerId, setUsernameInviting);
+                    await getUser(response.data[0].invitedPlayerId, setUsernameInviting);
+                    await getUser(response.data[0].invitingPlayerId, setUsernameInvited);
                 }
             } catch (error) {
                 alert(`Something went wrong while fetching the result, ${handleError(error)}`);
@@ -69,9 +69,7 @@ const Score = props => {
             }
         }
 
-        console.log('selecting: ' + localStorage.getItem('selecting'));
         if (localStorage.getItem('selecting') === "true") {
-            console.log("selecting hajdhfaehuifauih");
             fetchTopics();
         }
         fetchGame();
@@ -102,7 +100,7 @@ const Score = props => {
     }
 
     const timeOut = () => {
-        if (localStorage.getItem('selecting')) {
+        if (localStorage.getItem('selecting') == "true") {
             rndTopic();
         }
     }
@@ -128,7 +126,7 @@ const Score = props => {
     }
 
     const drawTopics = () => {
-        if (localStorage.getItem('selecting') && topics) {
+        if ((localStorage.getItem('selecting') == "true") && topics) {
             return (
                 <>
                     <div className="grid-2">
@@ -143,13 +141,9 @@ const Score = props => {
                     </div>
                 </>
             );
-        } else if (!localStorage.getItem('!selecting')) {
+        } else if ((localStorage.getItem('selecting') == "false")) {
             return (
-                <div className="background-topic_waiting">
-                    <div className="topic">
-                        Your opponent is selecting a topic.
-                    </div>
-                </div>
+                <BaseContainer>Your opponent is selecting a topic.</BaseContainer>
             );
         }
     }
@@ -168,7 +162,7 @@ const Score = props => {
                         <div className = "player" style={{textAlign: "center"}}>
                             {usernameInviting}
                         </div>
-                        <div className = "points-score" style={{textAlign: "center"}}>
+                        <div className = "points" style={{textAlign: "center"}}>
                             {result.invitingPlayerResult}
                         </div>
                     </div>
@@ -176,7 +170,7 @@ const Score = props => {
                         <div className = "player" style={{textAlign: "center"}} >
                             {usernameInvited}
                         </div>
-                        <div className = "points-score" style={{textAlign: "center"}}>
+                        <div className = "points" style={{textAlign: "center"}}>
                             {result.invitedPlayerResult}
                         </div>
                     </div>
@@ -191,9 +185,7 @@ const Score = props => {
             <div className="ScreenGrid">
                 {drawResults()}
                 {drawTopics()}
-                <div className="timing-location">
-                    <Timer timeLimit={90} timeOut={timeOut} getTime={getTime}/>
-                </div>
+                <Timer timeLimit={240} timeOut={timeOut} getTime={getTime}/>
             </div>
         </>
     );
