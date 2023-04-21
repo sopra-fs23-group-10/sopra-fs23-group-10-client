@@ -4,9 +4,10 @@
   height: 100px;
   &.container {
     display:grid;
-    grid-template-columns: 30% 20% 50%;
+    gap: $base_padding;
+    grid-template-columns: minmax(auto, 300px) minmax(auto, 300px) 1fr auto 200px;
     align-items:center;
-    padding-bottom: 0px;
+    padding: 0px $base_padding 0px $base_padding;
   }
   .logo {
     color: $off_white;
@@ -24,8 +25,6 @@
     font-size: 20px;
     flex:1;
     justify-content: space-between;
-    padding-left: $borderRadius;
-    padding-right: $borderRadius;
   }
   
   .gamecontentheader{

@@ -110,7 +110,7 @@ export const connectInvitations = (inviteCallback, answerCallback) => {
     });
 };
 
-export const connectGame = (questionCallback) => {
+export const connectQuestion = (questionCallback) => {
     let stompClient = openSocket();
 
     const id = localStorage.getItem('gameId');
@@ -120,6 +120,21 @@ export const connectGame = (questionCallback) => {
         
         stompClient.subscribe(`/games/${id}/questions`, (message) => {
             questionCallback(message.body);
+            console.log(`Received message: ${message.body}`);
+        });
+    });
+};
+
+export const connectGame = (gameCallback) => {
+    let stompClient = openSocket();
+
+    const id = localStorage.getItem('gameId');
+
+    stompClient.connect({'gameId': localStorage.getItem('gameId')}, () => {
+        currentRetries = 0; // Reset the retry count after successful connection
+        
+        stompClient.subscribe(`/games/${id}`, (message) => {
+            gameCallback(message.body);
             console.log(`Received message: ${message.body}`);
         });
     });

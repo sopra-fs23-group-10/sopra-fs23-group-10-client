@@ -246,3 +246,13 @@ export const getUser = async () => {
   }
 };
 
+export const cancelGame = async (id) => {
+  try {
+    const authToken = localStorage.getItem('token');
+    const response = await restApi.delete(`/games/${id}/deletions`, {headers: {token: authToken}});
+    return response.data;
+  } catch (error) {
+    throw new Error(`Something went wrong while cancelling the game: \n${handleError(error)}`);
+  }
+}
+

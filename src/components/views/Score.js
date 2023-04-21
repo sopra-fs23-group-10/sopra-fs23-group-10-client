@@ -7,7 +7,7 @@ import Result from "../../models/Result";
 import BaseContainer from "components/ui/BaseContainer";
 import { Timer } from "components/ui/Timer";
 import 'styles/views/TopicSelectionDuel.scss';
-import {connectGame} from "../../helpers/WebSocketFactory";
+import {connectQuestion} from "../../helpers/WebSocketFactory";
 import Question from "models/Question";
 
 
@@ -21,7 +21,7 @@ const Score = props => {
     const topicsData = useRef(null);
 
     useEffect(() => {
-        connectGame(handleQuestion);
+        connectQuestion(handleQuestion);
         async function fetchTopics() {
             try {
                 const response = await getTopicSelection(localStorage.getItem("gameId"));

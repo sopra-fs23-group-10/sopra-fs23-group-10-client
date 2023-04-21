@@ -5,25 +5,36 @@ import { useEffect, useState } from 'react';
 export const Timer = props => {
     const timeLimit = 1000 * props.timeLimit;
     const [remainingTime, setRemainingTime] = useState(timeLimit - 1000);
+    const [paused, setPaused] = useState(false);
 
     let startTime = Date.now();
 
     useEffect(() => {
+        function handlePause() {
+            setPaused(true);
+        }
+
         const interval = setInterval(() => getTime(), 1000);
-        return () => clearInterval(interval);
-    },[]);
+        document.addEventListener('pause', handlePause);
+        return () => {
+            clearInterval(interval);
+            document.removeEventListener("timeOut", timeOut);
+        }   
+    }, [paused]);
 
     const getTime = () => {
-        let currentTime = Date.now() - startTime;
-        currentTime = (props.currentTime ? props.currentTime : timeLimit) - currentTime;
-        if (currentTime <= 0) {
-            console.log("timer is zero!");
-            currentTime = 0;
-            if (props.timeOut) props.timeOut();
-            timeOut();
+        if (!paused) {
+            let currentTime = Date.now() - startTime;
+            currentTime = (props.currentTime ? props.currentTime : timeLimit) - currentTime;
+            if (currentTime <= 0) {
+                console.log("timer is zero!");
+                currentTime = 0;
+                if (props.timeOut) props.timeOut();
+                timeOut();
+            }
+            if (props.getTime) props.getTime(currentTime);
+            setRemainingTime(currentTime);
         }
-        if (props.getTime) props.getTime(currentTime);
-        setRemainingTime(currentTime);
     }
 
     const getSecs = () => {

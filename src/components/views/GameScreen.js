@@ -28,7 +28,7 @@ const GameScreen = () => {
         }
 
         setQuestion(location.state.question);
-        document.addEventListener("timeOut", timeOut); // <---- you're closing over handleScroll
+        document.addEventListener("timeOut", timeOut);
         return () => document.removeEventListener("timeOut", timeOut);
     });
 

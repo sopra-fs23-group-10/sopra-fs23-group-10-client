@@ -45,18 +45,6 @@ const Home = () => {
         }
     }
 
-    const goToGame = () => {
-        localStorage.setItem('gameId', gameId);
-        history.push({
-            pathname: '/topic-selection',
-            search: '?update=true',  // query string
-            state: {  // location state
-                turn: true, 
-                nr: 1,
-            },
-        });
-    }
-
     const startGameMenu = () => {
         if (users) {
             if (!startGame) {
@@ -125,20 +113,6 @@ const Home = () => {
                 </BaseContainer>
                 <div className='home start-game-container'>
                     {startGameMenu()}
-                </div>
-                <div className="invite-form">
-                    <input
-                        type="text"
-                        value={gameId}
-                        onChange={(e) => setGameId(e.target.value)}
-                        placeholder="Enter user ID"
-                    />
-                    <Button
-                        onClick={() => goToGame()}
-                        disabled={!gameId}
-                    >
-                        Join
-                    </Button>
                 </div>
             </div>
         </div>
