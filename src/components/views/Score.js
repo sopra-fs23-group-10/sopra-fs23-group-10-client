@@ -185,7 +185,7 @@ const Score = props => {
             <div className="ScreenGrid">
                 {drawResults()}
                 {drawTopics()}
-                <Timer timeLimit={240} timeOut={timeOut} getTime={getTime}/>
+                <Timer timeLimit={10} timeOut={timeOut} getTime={getTime}/>
             </div>
         </>
     );

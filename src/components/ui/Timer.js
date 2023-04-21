@@ -16,10 +16,11 @@ export const Timer = props => {
     const getTime = () => {
         let currentTime = Date.now() - startTime;
         currentTime = timeLimit - currentTime;
-        setRemainingTime(currentTime);
         if (currentTime <= 0) {
+            currentTime = 0;
             props.timeOut();
         }
+        setRemainingTime(currentTime);
     }
 
     const getSecs = () => {
@@ -29,10 +30,15 @@ export const Timer = props => {
         return secs;
     }
 
+    const getMins = () => {
+        let mins = Math.floor(remainingTime / 1000 / 60);
+        return mins
+    }
+
     return (
         <div className="timer container">
             <div className="timer label">
-                {Math.floor(remainingTime / 1000 / 60)}:{getSecs().toString().padStart(2, '0')}
+                {getMins().toString().padStart(2, '0')}:{getSecs().toString().padStart(2, '0')}
             </div>
             <div style={{ width: '100%' }}>
                 <div style={{ width: `${(remainingTime/timeLimit) * 100}%`}} className="timer bar"></div>

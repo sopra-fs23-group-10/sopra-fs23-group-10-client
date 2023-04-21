@@ -3,7 +3,8 @@
 .timer {
     &.container {
         display: grid;
-        grid-template-columns: $base_padding 1fr;
+        grid-template-columns: auto 1fr;
+        gap: 20px;
         grid-auto-flow: column;
         height: 20px;
     }
