@@ -70,7 +70,7 @@ export const register = () => {
     stompClient.connect({'userId': localStorage.getItem('id')}, () => {
         currentRetries = 0; // Reset the retry count after successful connection
 
-        if (!listenersAdded) {
+        if (!listenersAdded && localStorage.getItem('id')) {
             const socket = socketFactory();
             socket.onopen = () => {
                 stompClient.send('/register', {}, localStorage.getItem('id'));
