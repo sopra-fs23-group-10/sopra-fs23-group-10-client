@@ -1,6 +1,6 @@
 import GameHeader from "components/views/GameHeader";
 import { fetchUsersInGame, getTopicSelection, fetchUserById, getIntermediateResults, handleError, getQuestion } from "helpers/restApi";
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { GameButton } from "components/ui/GameButton";
 import Result from "../../models/Result";
@@ -19,11 +19,11 @@ const Score = props => {
     const [usernameInviting, setUsernameInviting] = useState("");
     const [usernameInvited, setUsernameInvited] = useState("");
     const [time, setTime] = useState(0);
+    const topicsData = useRef(null);
 
     useEffect(() => {
         connectGame(handleQuestion);
         async function fetchTopics() {
-            console.log("selecting tooooopics")
             try {
                 const response = await getTopicSelection(localStorage.getItem("gameId"));
                 setTopics(response.topics);
@@ -99,13 +99,13 @@ const Score = props => {
         });
     }
 
-    const timeOut = () => {
-        if (localStorage.getItem('selecting') == "true") {
-            rndTopic();
+    const timeOut = (topics) => {
+        if (localStorage.getItem('selecting') === "true") {
+            rndTopic(topics);
         }
     }
 
-    const rndTopic = () => {
+    const rndTopic = (topics) => {
         let rnd = getRandomInt(0, 3);
         fetchQuestion(topics[rnd]); 
     }
@@ -114,10 +114,6 @@ const Score = props => {
         min = Math.ceil(min);
         max = Math.floor(max);
         return Math.floor(Math.random() * (max - min) + min);
-    }
-
-    const getTime = (time) => {
-        setTime(time);
     }
 
     const handleQuestion = (msg) => {
@@ -133,8 +129,8 @@ const Score = props => {
                         <div className="title grid2" style={{textAlign: "left"}}>
                             Select a topic
                         </div>
-                        {topics && topics.map((topic, index)=> (
-                            <div className={'topicSelection column-${index+1}'}>
+                        {topics.map((topic)=> (
+                            <div key={topic} className={'topicSelection column-${index+1}'}>
                                 <GameButton callback={() => fetchQuestion(topic)} text={parseString(topic)}/>
                             </div>
                         ))}
@@ -179,13 +175,21 @@ const Score = props => {
         }
     }
 
+    const drawTimer = () => {
+        if (topics || localStorage.getItem('selecting') === 'false') {
+            return (
+                <Timer timeLimit={10} timeOut={() => timeOut(topics)}/>
+            );
+        }
+    }
+
     return (
         <>
-            <><GameHeader questionId={localStorage.getItem('question_nr')} height="100"/></>
+            <GameHeader questionId={localStorage.getItem('question_nr')} height="100"/>
             <div className="ScreenGrid">
                 {drawResults()}
                 {drawTopics()}
-                <Timer timeLimit={10} timeOut={timeOut} getTime={getTime}/>
+                {drawTimer()}
             </div>
         </>
     );

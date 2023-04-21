@@ -46,9 +46,6 @@ const GameScreen = () => {
                                 Answer sent!
                             </div>
                         </div>
-                        <div className= "timing-location-answerSent">
-                            <Timer timeLimit={30} timeOut={() => timerDone()} getTime={() => getTime()}/>
-                        </div>
                     </>
 
                 );
@@ -70,13 +67,13 @@ const GameScreen = () => {
                         <div className="answer-3">{answers[2]}</div>
                         <div className="answer-4">{answers[3]}</div>
                     </div>
-                    <Timer timeLimit={2000} timeOut={() => timerDone()} getTime={() => getTime()}/>
                 </>
             );
         }
     }
 
     const timerDone = () => {
+        answer("stupid answer");
         goToScore();
     }
 
@@ -101,6 +98,7 @@ const GameScreen = () => {
             <GameHeader questionId={localStorage.getItem('question_nr')} height="100"/>
             <div className="GameScreenGrid">
                 {drawQuestion()}
+                <Timer timeLimit={10} timeOut={() => timerDone()} getTime={() => getTime()}/>
             </div>
 
         </>

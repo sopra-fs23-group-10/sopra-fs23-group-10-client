@@ -20,6 +20,7 @@ export const Timer = props => {
             currentTime = 0;
             props.timeOut();
         }
+        if (props.getTime) props.getTime(currentTime);
         setRemainingTime(currentTime);
     }
 
