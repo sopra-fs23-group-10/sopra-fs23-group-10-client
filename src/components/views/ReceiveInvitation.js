@@ -41,8 +41,8 @@ const ReceiveInvitation = props => {
     }
 
     const reply = async (accepted) => {
-        const response = await answerInvite(invitation.id, accepted);
-        if (response[invitation.id]) {
+        const response = await answerInvite(invitation.gameId, accepted);
+        if (response[invitation.gameId]) {
             setInvitation(null);
             goToGame();
         } else {
@@ -51,7 +51,7 @@ const ReceiveInvitation = props => {
     }
 
     const goToGame = () => {
-        localStorage.setItem('gameId', invitation.id);
+        localStorage.setItem('gameId', invitation.gameId);
         localStorage.setItem('question_nr', 1);
         localStorage.setItem('selecting', true);
         history.push('/topic-selection');

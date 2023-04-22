@@ -37,7 +37,7 @@ const GameScreen = () => {
             const response = await sendAnswer(
                 localStorage.getItem('gameId'), 
                 localStorage.getItem('id'), 
-                question.id,
+                question.questionId,
                 str,
                 time
             );
@@ -85,7 +85,7 @@ const GameScreen = () => {
 
     const goToScore = () => {
         let nr = parseInt(localStorage.getItem('question_nr'));
-        if (nr < 4) {
+        if (nr < 2) {
             localStorage.setItem('question_nr', (nr + 1));
             localStorage.setItem('selecting', !(localStorage.getItem('selecting') === "true"));
             history.push('/topic-selection');

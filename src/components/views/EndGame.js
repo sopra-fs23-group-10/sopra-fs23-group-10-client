@@ -31,20 +31,23 @@ const EndGame = props => {
     useEffect(() => {
 
         async function fetchGameResults(){
-            try{
+            try {
                 const response = await finishGame(localStorage.getItem("gameId"));
                 const res = new Result(response[response.length-1]);
                 setResult(res);
-                await getUser(response.invitingPlayerId, setUsernameInviting);
-                await getUser(response.invitedPlayerId, setUsernameInvited);
-            } catch(error){
+
+                await getUser(res.invitingPlayerId, setUsernameInviting);
+                await getUser(res.invitedPlayerId, setUsernameInvited);
+            } catch(error) {
                 alert(error);
-                history.push("/login")
+                history.push("/login");
             }
         }
+
         const getUser = async (id, callback) => {
+            console.log("fetchUserById: " + id);
             try{
-                const userData = await fetchUserById(users);
+                const userData = await fetchUserById(id);
                 callback(userData.username);
             } catch (error){
                 alert(error);
