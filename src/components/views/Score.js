@@ -37,8 +37,8 @@ const Score = props => {
                     const response = await fetchUsersInGame(localStorage.getItem("gameId"));
                     let res = new Result(response.data);
                     setResult(res);
-                    await getUser(response.data.invitedPlayerId, setUsernameInviting);
-                    await getUser(response.data.invitingPlayerId, setUsernameInvited);
+                    await getUser(response.data.invitedPlayerId, setUsernameInvited);
+                    await getUser(response.data.invitingPlayerId, setUsernameInviting);
                 } else {
                     console.log("get result!");
                     const response = await getIntermediateResults(localStorage.getItem("gameId"));
@@ -53,8 +53,8 @@ const Score = props => {
                     res.invitedPlayerId = points1;
                     res.invitingPlayerId = points2;
                     setResult(res);
-                    await getUser(response.data[0].invitedPlayerId, setUsernameInviting);
-                    await getUser(response.data[0].invitingPlayerId, setUsernameInvited);
+                    await getUser(response.data[0].invitedPlayerId, setUsernameInvited);
+                    await getUser(response.data[0].invitingPlayerId, setUsernameInviting);
                 }
             } catch (error) {
                 alert(`Something went wrong while fetching the result, ${handleError(error)}`);
