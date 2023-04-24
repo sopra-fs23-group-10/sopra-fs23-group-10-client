@@ -2,8 +2,9 @@
 
 .game-button {
     cursor: pointer;
-    height:100px;
+    height:auto;
     margin:0px;
+    width: 100%;
 
     &:hover {
         transform: translate(-6px, -6px);
