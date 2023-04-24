@@ -87,7 +87,7 @@ const GameScreen = () => {
         let nr = parseInt(localStorage.getItem('question_nr'));
         if (nr < 2) {
             localStorage.setItem('question_nr', (nr + 1));
-            localStorage.setItem('selecting', !(localStorage.getItem('selecting') === "true"));
+            localStorage.setItem('selecting', (localStorage.getItem('selecting') === 'true' ? 'true' : 'false'));
             history.push('/topic-selection');
         } else {
             history.push('/endgame');
