@@ -29,6 +29,8 @@ const EndGame = props => {
     const [time, setTime] = useState(0);
 
     useEffect(() => {
+        if (selecting != 'selecting') connectResult(handleResult);
+
         async function endGame(){
             try {
                 console.log("gameId: " + localStorage.getItem('gameId'));
@@ -45,8 +47,9 @@ const EndGame = props => {
             }
         }
 
-        if (selecting == 'selecting') endGame();
-        else connectResult(handleResult);
+        if (selecting == 'selecting') {
+            setTimeout(() => {  endGame(); }, 2000);
+        }
     }, []);
 
     const getUser = async (id, callback) => {
@@ -59,11 +62,8 @@ const EndGame = props => {
     }
 
     const handleResult = async (msg) => {
-        console.log("handleResult");
-        console.log(msg);
-        const allResults = JSON.parse(msg);
-        const res = new Result(allResults[allResults.length-1]);
-        console.log(res);
+        let response = JSON.parse(msg);
+        let res = new Result(response[response.length-1]);
         setResult(res);
 
         await getUser(res.invitingPlayerId, setUsernameInviting);
@@ -72,7 +72,8 @@ const EndGame = props => {
 
     const rematch = async () => {
         try {
-            const response = await inviteUser(result.invitedPlayerId, gameMode.toUpperCase(), "DUEL");
+            let id = localStorage.getItem('id') == result.invitedPlayerId ? result.invitingPlayerId : result.invitedPlayerId;
+            const response = await inviteUser(id, gameMode.toUpperCase(), "DUEL");
             localStorage.setItem('gameId', response.id);
             setRematchSent(true);
         } catch (error) {
@@ -135,7 +136,6 @@ const EndGame = props => {
 
     const goToHome = () => {
         localStorage.removeItem('gameId');
-        localStorage.removeItem('selecting');
         localStorage.removeItem('question_nr');
         history.push("/home");
     }
@@ -210,12 +210,14 @@ const EndGame = props => {
                     </div>
                 </>
             );
+        } else {
+            return <BaseContainer>Calculating result...</BaseContainer>
         }
     }
 
     return (
         <>
-            <GameHeader height="100"/>
+            <GameHeader questionId={localStorage.getItem("question_nr")} height="100"/>
             <div className= "ScreenGrid">
                 {endPointsScreen()}
             </div>

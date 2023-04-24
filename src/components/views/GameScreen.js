@@ -86,7 +86,7 @@ const GameScreen = () => {
 
     const goToScore = () => {
         let nr = parseInt(localStorage.getItem('question_nr'));
-        if (nr < 2) {
+        if (nr < 1) {
             localStorage.setItem('question_nr', (nr + 1));
             history.push('/topic-selection/' + (selecting == 'selecting' ? 'waiting' : 'selecting'));
         } else {

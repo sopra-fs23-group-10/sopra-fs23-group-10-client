@@ -60,7 +60,7 @@ export const Timer = props => {
                 {getMins().toString().padStart(2, '0')}:{getSecs().toString().padStart(2, '0')}
             </div>
             <div style={{ width: '100%' }}>
-                <div style={{ width: `${(remainingTime/timeLimit) * 100}%`, background:props.color}} className="timer bar"></div>
+                <div style={{ width: `${(remainingTime/timeLimit) * 100}%`}} className="timer bar"></div>
             </div>
         </div>
     );
@@ -71,5 +71,4 @@ Timer.propTypes = {
     currentTime: PropTypes.number,
     timeOut: PropTypes.func,
     getTime: PropTypes.func,
-    color: PropTypes.string
 };
