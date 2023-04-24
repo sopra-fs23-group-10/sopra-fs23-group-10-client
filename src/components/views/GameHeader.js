@@ -5,8 +5,9 @@ import { Button } from "components/ui/Button";
 import { cancelGame } from "helpers/restApi";
 import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { connectGame } from "helpers/WebSocketFactory";
+import { connectGame, connectResult } from "helpers/WebSocketFactory";
 import 'styles/ui/Invitation.scss';
+import Result from "models/Result";
 
 /**
  * This is an example of a Functional and stateless component (View) in React. Functional components are not classes and thus don't handle internal state changes.
@@ -20,10 +21,11 @@ const GameHeader = props => {
     const history = useHistory();
     const [cancelled, setCancelled] = useState(false);
     const [sentCancellation, setSentCancellation] = useState(false);
+    const [result, setResult] = useState(null);
 
     useEffect(() => {
         connectGame(handleGameCancelled);
-    }, []);
+    }, [result]);
 
     const cancel = async () => {
         setSentCancellation(true);
@@ -45,7 +47,6 @@ const GameHeader = props => {
 
     const ok = () => {
         localStorage.removeItem('gameId');
-        localStorage.removeItem('selecting');
         localStorage.removeItem('question_nr');
         history.push("/home");
     }
@@ -92,7 +93,7 @@ const GameHeader = props => {
 
 GameHeader.propTypes = {
     height: PropTypes.number,
-    questionId: PropTypes.string
+    questionId: PropTypes.string,
 };
 
 export default GameHeader;

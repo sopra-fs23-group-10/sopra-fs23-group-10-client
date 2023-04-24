@@ -20,7 +20,6 @@ export const HomeGuard = props => {
   if (localStorage.getItem('gameId')) {
     cancel(localStorage.getItem('gameId'));
     localStorage.removeItem('gameId');
-    localStorage.removeItem('selecting');
     localStorage.removeItem('question_nr');
     return props.children;
   } else if (localStorage.getItem("token")){

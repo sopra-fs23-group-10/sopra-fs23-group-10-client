@@ -57,17 +57,10 @@ const ReceiveInvitation = props => {
         console.log('gameId: ' + invitation.gameId);
         localStorage.removeItem('gameId');
         localStorage.removeItem('question_nr');
-        localStorage.removeItem('selecting');
 
         localStorage.setItem('gameId', invitation.gameId);
         localStorage.setItem('question_nr', 1);
-        // localStorage.setItem('selecting', 'true');
-        // console.log("invitation selecting: " + localStorage.getItem('selecting'));
-        // await Promise.all([
-        //     localStorage.getItem('gameId'),
-        //     localStorage.getItem('question_nr'),
-        //     localStorage.getItem('selecting')
-        // ]);
+
         history.push('/topic-selection/selecting');
     }
 
