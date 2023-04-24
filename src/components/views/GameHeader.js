@@ -26,10 +26,6 @@ const GameHeader = props => {
     useEffect(() => {
         connectGame(handleGameCancelled);
 
-        const handleBackButton = (event) =>{
-            event.preventDefault();
-        };
-
         window.history.pushState(null, null, window.location.pathname);
         window.addEventListener("popstate", onBackButtonEvent);
 
