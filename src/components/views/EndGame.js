@@ -38,6 +38,7 @@ const EndGame = props => {
 
                 await getUser(res.invitingPlayerId, setUsernameInviting);
                 await getUser(res.invitedPlayerId, setUsernameInvited);
+
             } catch(error) {
                 alert(error);
                 history.push("/login");
@@ -57,9 +58,9 @@ const EndGame = props => {
     }, []);
 
 
-    const rematch = async (id) => {
+    const rematch = async () => {
         try {
-            const response = await inviteUser(id, gameMode.toUpperCase(), "DUEL");
+            const response = await inviteUser(result.invitedPlayerId, gameMode.toUpperCase(), "DUEL");
             localStorage.setItem('gameId', response.id);
             setRematchSent(true);
         } catch (error) {
@@ -141,58 +142,68 @@ const EndGame = props => {
         )
     }
 
+    const endPointsScreen = () => {
+        if (result && usernameInvited && usernameInviting) {
+            return (
+                <>
+                    <div className="grid-1">
+                        <div className="title" style={{textAlign: "left"}}>
+                            Player 1
+                        </div>
+                        <div className="title" style={{textAlign: "right"}}>
+                            Player 2
+                        </div>
+                        <div className="background-points-winner">
+                            <div className = "player" style={{textAlign: "center"}}>
+                                {usernameInviting}
+                            </div>
+                            <div className = "points-endgame" style={{textAlign: "center"}}>
+                                {result.invitingPlayerResult}
+                            </div>
+                        </div>
+                        <div className="background-points-loser">
+                            <div className = "player player-loser" style={{textAlign: "center"}} >
+                                {usernameInvited}
+                            </div>
+                            <div className = "points-endgame points-loser" style={{textAlign: "center"}}>
+                                {result.invitedPlayerResult}
+                            </div>
+                        </div>
+                    </div>
+                    <div className="background-rematchoption">
+                        <div className="content">
+                            <div className="topic endgame" style={{textAlign: "center"}}>
+                                You lost!
+                            </div>
+                            <div className="twoButtons">
+                                <Button
+                                    width="80%"
+                                    style={{margin: "auto"}}
+                                    onClick={RematchButton}
+                                >
+                                    REMATCH
+                                </Button>
+                                <Button
+                                    width="80%"
+                                    style={{margin: "auto"}}
+                                    onClick={() => goToHome()}
+                                >
+                                    RETURN HOME
+                                </Button>
+                            </div>
+                        </div>
+                    </div>
+                </>
+            );
+        }
+        }
+
     return (
         <>
             <GameHeader height="100"/>
             <div className= "ScreenGrid">
-                <div className="grid-1">
-                    <div className="title" style={{textAlign: "left"}}>
-                        Player 1
-                    </div>
-                    <div className="title" style={{textAlign: "right"}}>
-                        Player 2
-                    </div>
-                    <div className="background-points-winner">
-                        <div className = "player" style={{textAlign: "center"}}>
-                            Player 1
-                        </div>
-                        <div className = "points-endgame" style={{textAlign: "center"}}>
-                            0
-                        </div>
-                    </div>
-                    <div className="background-points-loser">
-                        <div className = "player player-loser" style={{textAlign: "center"}} >
-                            Player 2
-                        </div>
-                        <div className = "points-endgame points-loser" style={{textAlign: "center"}}>
-                            0
-                        </div>
-                    </div>
-                </div>
-                <div className="background-rematchoption">
-                    <div className="content">
-                        <div className="topic endgame" style={{textAlign: "center"}}>
-                            You lost!
-                        </div>
-                        <div className="twoButtons">
-                            <Button
-                                width="80%"
-                                style={{margin: "auto"}}
-                                onClick={RematchButton}
-                            >
-                                REMATCH
-                            </Button>
-                            <Button
-                                width="80%"
-                                style={{margin: "auto"}}
-                                onClick={() => goToHome()}
-                            >
-                               RETURN HOME
-                            </Button>
-                        </div>
-                    </div>
-                </div>
-                </div>
+                {endPointsScreen()}
+            </div>
         </>
     );
 

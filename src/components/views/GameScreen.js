@@ -16,7 +16,7 @@ const GameScreen = () => {
     const [question, setQuestion] = useState(null);
     const [answered, setAnswered] = useState(false);
     const [time, setTime] = useState(0);
-    const answerTime = 15;
+    const answerTime = 30;
 
     useEffect( () => {
         function timeOut() {
