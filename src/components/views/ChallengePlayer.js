@@ -84,7 +84,10 @@ const ChallengePlayer = props => {
                     <div className="invitation overlay">
                     </div>
                     <div className="invitation base-container">
-                        <p>Invite has been sent. Waiting for answer...</p>
+                        <a href="/home" style={{textAlign: "right"}}> Cancel Invitation</a>
+                        <div className="p" style={{textAlign: "center"}}>
+                            Invite has been sent. Waiting for answer...
+                        </div>
                         <div className="button-container">
                             <Timer timeLimit={10} timeOut={cancelInvite} getTime={getTime}/>
                         </div>

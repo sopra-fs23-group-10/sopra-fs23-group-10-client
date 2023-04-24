@@ -1,7 +1,7 @@
 import React from 'react';
 //import {api, handleError} from 'helpers/api';
 //import {useHistory, useParams} from 'react-router-dom';
-import 'styles/views/TopicSelectionDuel.scss';
+//import 'styles/views/TopicSelectionSingle.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import GameHeader from "./GameHeader";
 import {Button} from "../ui/Button";
@@ -9,7 +9,7 @@ import 'styles/views/PopUp.scss';
 
 
 
-const TopicSelectionDuel = props => {
+const TopicSelectionSingle = props => {
 
     return (
         <>
@@ -66,11 +66,4 @@ const TopicSelectionDuel = props => {
 
 };
 
-export default TopicSelectionDuel;
-
-//<BaseContainer className="popup container">
-//    Test
-//</BaseContainer>
-//<BaseContainer className="popup container">
-//    Test2
-//</BaseContainer>
+export default TopicSelectionSingle;
