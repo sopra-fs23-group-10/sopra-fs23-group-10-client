@@ -68,7 +68,7 @@ const ChallengePlayer = props => {
         const accepted = JSON.parse(msg)[localStorage.getItem('gameId')];
         if (accepted) {
             localStorage.setItem('question_nr', 1);
-            localStorage.setItem('selecting', false);
+            localStorage.setItem('selecting', 'false');
             history.push('/topic-selection');
         } else {
             localStorage.removeItem('gameId');

@@ -72,7 +72,8 @@ const Score = props => {
             }
         }
 
-        if (localStorage.getItem('selecting') === "true" && !topics) {
+        console.log(localStorage);
+        if (localStorage.getItem('selecting') === 'true' && !topics) {
             fetchTopics();
         }
         fetchGame();
