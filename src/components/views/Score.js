@@ -1,7 +1,7 @@
 import GameHeader from "components/views/GameHeader";
 import { fetchUsersInGame, getTopicSelection, fetchUserById, getIntermediateResults, handleError, getQuestion } from "helpers/restApi";
 import React, {useEffect, useState, useRef} from 'react';
-import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useHistory, Prompt } from "react-router-dom";
 import { GameButton } from "components/ui/GameButton";
 import Result from "../../models/Result";
 import BaseContainer from "components/ui/BaseContainer";

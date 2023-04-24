@@ -27,7 +27,7 @@ const Registration = props => {
             history.push(`/home`);
         } catch (error) {
             console.log(error);
-            if (error.response.status === 409) { setMsg("Sorry, but this username is taken."); }
+            if (error.response.status === 409) { setMsg("Sorry, but the username or email is taken."); }
             else {
                 alert(error);
             }
