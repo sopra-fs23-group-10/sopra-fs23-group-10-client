@@ -33,19 +33,24 @@ const EndGame = props => {
             try {
                 console.log("gameId: " + localStorage.getItem('gameId'));
                 const response = await finishGame(localStorage.getItem('gameId'));
+                const res = new Result(response[response.length-1]);
+                console.log(res);
+                setResult(res);
+        
+                await getUser(res.invitingPlayerId, setUsernameInviting);
+                await getUser(res.invitedPlayerId, setUsernameInvited);
             } catch(error) {
                 alert(error);
                 history.push("/login");
             }
         }
 
-        connectResult(handleResult);
         if (selecting == 'selecting') endGame();
+        else connectResult(handleResult);
     }, []);
 
     const getUser = async (id, callback) => {
-        console.log("fetchUserById: " + id);
-        try{
+        try {
             const userData = await fetchUserById(id);
             callback(userData.username);
         } catch (error){
