@@ -88,7 +88,7 @@ const ChallengePlayer = props => {
                             Invite has been sent. Waiting for answer...
                         </div>
                         <div className="button-container">
-                            <Timer timeLimit={10} timeOut={cancelInvite} getTime={getTime}/>
+                            <Timer timeLimit={200} timeOut={cancelInvite} getTime={getTime}/>
                         </div>
                     </div>
                 </div>

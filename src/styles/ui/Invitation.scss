@@ -3,7 +3,7 @@
 .invitation {
     position: absolute;
     width:400px;
-    height: 200px;
+    height: auto;
     left: calc(50% - 200px);
     right: calc(50% - 200px);
     top: calc(50% - 200px);
@@ -27,12 +27,12 @@
     &.base-container {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: $base_padding 1fr auto;
+        grid-template-rows: repeat(3, auto);
+        grid-gap: $base_padding;
     }
 
     .button-container {
         width:100%;
         justify-self: end;
-        grid-row:3;
     }
 }
