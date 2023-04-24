@@ -5,10 +5,11 @@ import { useHistory, useLocation, useParams } from "react-router-dom";
 import { GameButton } from "components/ui/GameButton";
 import Result from "../../models/Result";
 import BaseContainer from "components/ui/BaseContainer";
-import { Timer } from "components/ui/Timer";
-import 'styles/views/TopicSelectionDuel.scss';
 import {connectQuestion} from "../../helpers/WebSocketFactory";
+import 'styles/views/Score.scss';
+import {connectGame} from "../../helpers/WebSocketFactory";
 import Question from "models/Question";
+import {Timer} from "../ui/Timer";
 
 
 const Score = props => {
@@ -37,8 +38,8 @@ const Score = props => {
                     const response = await fetchUsersInGame(localStorage.getItem("gameId"));
                     let res = new Result(response.data);
                     setResult(res);
-                    await getUser(response.data.invitedPlayerId, setUsernameInviting);
-                    await getUser(response.data.invitingPlayerId, setUsernameInvited);
+                    await getUser(response.data.invitedPlayerId, setUsernameInvited);
+                    await getUser(response.data.invitingPlayerId, setUsernameInviting);
                 } else {
                     console.log("get result!");
                     const response = await getIntermediateResults(localStorage.getItem("gameId"));
@@ -53,8 +54,8 @@ const Score = props => {
                     res.invitedPlayerId = points1;
                     res.invitingPlayerId = points2;
                     setResult(res);
-                    await getUser(response.data[0].invitedPlayerId, setUsernameInviting);
-                    await getUser(response.data[0].invitingPlayerId, setUsernameInvited);
+                    await getUser(response.data[0].invitedPlayerId, setUsernameInvited);
+                    await getUser(response.data[0].invitingPlayerId, setUsernameInviting);
                 }
             } catch (error) {
                 alert(`Something went wrong while fetching the result, ${handleError(error)}`);
@@ -140,7 +141,11 @@ const Score = props => {
             );
         } else if ((localStorage.getItem('selecting') == "false")) {
             return (
-                <BaseContainer>Your opponent is selecting a topic.</BaseContainer>
+                <div className="background-topic-waiting">
+                    <div className="topic">
+                        Your opponent is selecting a topic.
+                    </div>
+                </div>
             );
         }
     }
@@ -159,7 +164,7 @@ const Score = props => {
                         <div className = "player" style={{textAlign: "center"}}>
                             {usernameInviting}
                         </div>
-                        <div className = "points" style={{textAlign: "center"}}>
+                        <div className = "points-score" style={{textAlign: "center"}}>
                             {result.invitingPlayerResult}
                         </div>
                     </div>
@@ -167,7 +172,7 @@ const Score = props => {
                         <div className = "player" style={{textAlign: "center"}} >
                             {usernameInvited}
                         </div>
-                        <div className = "points" style={{textAlign: "center"}}>
+                        <div className = "points-score" style={{textAlign: "center"}}>
                             {result.invitedPlayerResult}
                         </div>
                     </div>

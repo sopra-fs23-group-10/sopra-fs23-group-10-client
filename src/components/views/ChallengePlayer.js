@@ -28,7 +28,8 @@ const ChallengePlayer = props => {
     const invite = async (id) => {
         try {
             const response = await inviteUser(id, gameMode.toUpperCase(), "DUEL");
-            localStorage.setItem('gameId', response.id);
+            localStorage.setItem('gameId', response.gameId);
+            console.log("Invite response.id: " + response.gameId);
             setInviteSent(true);
         } catch (error) {
             history.push("/home");
@@ -38,6 +39,8 @@ const ChallengePlayer = props => {
 
     const cancelInvite = async () => {
         try {
+            console.log("cancelInvite response.id: " + localStorage.getItem('gameId'));
+
             const response = await answerInvite(localStorage.getItem('gameId'), false);
             localStorage.removeItem('gameId');
             setInviteSent(false);
@@ -81,7 +84,10 @@ const ChallengePlayer = props => {
                     <div className="invitation overlay">
                     </div>
                     <div className="invitation base-container">
-                        <p>Invite has been sent. Waiting for answer...</p>
+                        <a href="/home" style={{textAlign: "right"}}> Cancel Invitation</a>
+                        <div className="p" style={{textAlign: "center"}}>
+                            Invite has been sent. Waiting for answer...
+                        </div>
                         <div className="button-container">
                             <Timer timeLimit={10} timeOut={cancelInvite} getTime={getTime}/>
                         </div>

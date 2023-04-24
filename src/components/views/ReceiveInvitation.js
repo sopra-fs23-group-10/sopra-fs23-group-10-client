@@ -8,11 +8,14 @@ import "styles/ui/Invitation.scss";
 import Invitation from "../../models/Invitation";
 import {useHistory} from 'react-router-dom';
 import PropTypes from "prop-types";
+import {Timer} from "../ui/Timer";
 
 const ReceiveInvitation = props => {
     const history = useHistory();
     const [invitation, setInvitation] = useState(null);
     const [username, setUsername] = useState("");
+    const [time, setTime] = useState(0);
+    const [timerExpired, setTimerExpired] = useState(false);
 
     useEffect(() => {
         connectInvitations(handleInvite, handleAnswer);
@@ -21,8 +24,9 @@ const ReceiveInvitation = props => {
     const handleInvite = async (msg) => {
         let obj = JSON.parse(msg);
         let inv = new Invitation(obj)
-        getInvitingUser(inv.invitingUserId);
+        await getInvitingUser(inv.invitingUserId);
         setInvitation(inv);
+        console.log(obj);
     }
 
     const getInvitingUser = async(id) => {
@@ -41,8 +45,9 @@ const ReceiveInvitation = props => {
     }
 
     const reply = async (accepted) => {
-        const response = await answerInvite(invitation.id, accepted);
-        if (response[invitation.id]) {
+        setTimerExpired(true);
+        const response = await answerInvite(invitation.gameId, accepted);
+        if (response[invitation.gameId]) {
             setInvitation(null);
             goToGame();
         } else {
@@ -50,33 +55,50 @@ const ReceiveInvitation = props => {
         }
     }
 
-    const goToGame = () => {
-        localStorage.setItem('gameId', invitation.id);
+    const goToGame = async () => {
+        localStorage.setItem('gameId', invitation.gameId);
         localStorage.setItem('question_nr', 1);
         localStorage.setItem('selecting', true);
+        await Promise.all([
+            localStorage.getItem('gameId'),
+            localStorage.getItem('question_nr'),
+            localStorage.getItem('selecting')
+        ]);
         history.push('/topic-selection');
     }
 
+    const getTime = (time) => {
+        setTime(time);
+    }
+
     const receiveInvitation = () => {
-        if (invitation) {
+        if (invitation && !timerExpired) {
             return (
-                <div className='invitation-received'>
-                    <div className="invitation overlay">
-                    </div>
+                <div className="invitation-received">
+                    <div className="invitation overlay"></div>
                     <div className="invitation base-container">
-                        <p>{username} has challenged you to a {invitation.quizType === "IMAGE" ? "image" : "trivia"} quiz!</p>
+                        <p>
+                            {username} has challenged you to a{" "}
+                            {invitation.quizType === "IMAGE" ? "image" : "trivia"} quiz!
+                        </p>
                         <div className="twoButtons button-container">
                             <Button onClick={() => reply(false)}>Decline</Button>
                             <Button onClick={() => reply(true)}>Accept</Button>
+                            <Timer
+                                timeLimit={10}
+                                timeOut={() => reply(false)}
+                                getTime={getTime}
+                            />
                         </div>
                     </div>
                 </div>
             );
         }
-    }
+    };
+
 
     return (
-        <>{receiveInvitation()}</> 
+        <>{receiveInvitation()}</>
     );
 };
 

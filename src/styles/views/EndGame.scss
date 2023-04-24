@@ -105,6 +105,7 @@
   }
   .content {
     display: flex;
+    padding: $base_padding;
     flex-direction: column;
     justify-content: center;
     align-items: center;
