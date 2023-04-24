@@ -1,5 +1,6 @@
-import {Redirect} from "react-router-dom";
+import {Redirect, useHistory, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
+import { cancelGame } from "helpers/restApi";
 
 /**
  * routeProtectors interfaces can tell the router whether or not it should allow navigation to a requested route.
@@ -11,10 +12,18 @@ import PropTypes from "prop-types";
  * @param props
  */
 export const HomeGuard = props => {
-  // if (localStorage.getItem("gameId")) {
-  //   return <Redirect to="/game"/>;
-  // } else 
-  if (localStorage.getItem("token")){
+
+  const cancel = async (id) => {
+    await cancelGame(id);
+  }
+
+  if (localStorage.getItem('gameId')) {
+    cancel(localStorage.getItem('gameId'));
+    localStorage.removeItem('gameId');
+    localStorage.removeItem('selecting');
+    localStorage.removeItem('question_nr');
+    return props.children;
+  } else if (localStorage.getItem("token")){
     return props.children;
   } else {
     return <Redirect to="/login"/>;

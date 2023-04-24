@@ -39,19 +39,18 @@ const ReceiveInvitation = props => {
     }
 
     const handleAnswer = (msg) => {
+        console.log("handle answer");
         setInvitation(null);
         setUsername("");
         if (props.onAnswer) props.onAnswer(msg);
     }
 
     const reply = async (accepted) => {
-        setTimerExpired(true);
         const response = await answerInvite(invitation.gameId, accepted);
+        setInvitation(null);
+        setUsername("");
         if (response[invitation.gameId]) {
-            setInvitation(null);
             goToGame();
-        } else {
-            setInvitation(null);
         }
     }
 
@@ -72,7 +71,7 @@ const ReceiveInvitation = props => {
     }
 
     const receiveInvitation = () => {
-        if (invitation && !timerExpired) {
+        if (invitation) {
             return (
                 <div className="invitation-received">
                     <div className="invitation overlay"></div>
