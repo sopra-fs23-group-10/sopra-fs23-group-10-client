@@ -1,69 +1,85 @@
-import React from 'react';
-//import {api, handleError} from 'helpers/api';
-//import {useHistory, useParams} from 'react-router-dom';
-//import 'styles/views/TopicSelectionSingle.scss';
-import BaseContainer from "components/ui/BaseContainer";
-import GameHeader from "./GameHeader";
-import {Button} from "../ui/Button";
-import 'styles/views/PopUp.scss';
+import GameHeader from "components/views/GameHeader";
+import { fetchUsersInGame, getTopicSelection, fetchUserById, getIntermediateResults, handleError, getQuestion } from "helpers/restApi";
+import React, {useEffect, useState, useRef} from 'react';
+import { useHistory, Prompt } from "react-router-dom";
+import { GameButton } from "components/ui/GameButton";
+import Result from "../../models/Result";
+import 'styles/views/TopicSelectionSingle.scss';
+import {connectQuestion} from "../../helpers/WebSocketFactory";
+//import 'styles/views/Score.scss';
+import {Timer} from "../ui/Timer";
+import HomeHeader from "./HomeHeader";
 
 
 
 const TopicSelectionSingle = props => {
+    const history = useHistory();
+    const [topics, setTopics] = useState(null);
+    const topicsData = useRef(null);
 
-    return (
-        <>
-            <GameHeader height="100"/>
-            <div className= "ScreenGrid">
-                <div className="grid-1">
-                    <div className="title" style={{textAlign: "left"}}>
-                        Player 1
-                    </div>
-                    <div className="title" style={{textAlign: "right"}}>
-                        Player 2
-                    </div>
-                    <div className="background-points">
-                        <div className = "player" style={{textAlign: "center"}}>
-                            Player 1
-                        </div>
-                        <div className = "points" style={{textAlign: "center"}}>
-                            0
-                        </div>
-                    </div>
-                    <div className="background-points">
-                        <div className = "player" style={{textAlign: "center"}} >
-                            Player 2
-                        </div>
-                        <div className = "points" style={{textAlign: "center"}}>
-                            0
-                        </div>
-                    </div>
-                </div>
+    useEffect(() => {
+        //connectQuestion(handleQuestion);
+        async function fetchTopics() {
+            try {
+                const response = await getTopicSelection(localStorage.getItem("gameId"));
+                setTopics(response.topics);
+            } catch (error) {
+                alert(`Something went wrong while fetching the topcis, ${handleError(error)}`);
+            }
+        }
 
-                <div className="grid-2">
-                    <div className="title grid2" style={{textAlign: "left"}}>
+        if (localStorage.getItem('selecting') === "true" && !topics) {
+            fetchTopics();
+        }
+        //fetchGame();
+    }, [topics]);
+
+    const parseString = (str) => {
+        return str.replace('_', ' & ');
+    }
+    //const rndTopic = () => {
+    //    let rnd = getRandomInt(0, 10);
+    //    fetchQuestion(topics[rnd]);
+    //}
+
+    const drawTopic = () => {
+        if ((localStorage.getItem('selecting') == "true") && topics) {
+            return (
+                <>
+                    <div className="title spread" style={{textAlign: "left"}}>
                         Select a topic
                     </div>
-                    <div className="background-topicSelection">
-                        <div className="topic" style={{textAlign: "center"}}>
-                            Topic 1
+                    {topics.map((topic) => (
+                        <div key={topic} className={'topicSelection column-${index+1}'}>
+                            <GameButton text={parseString(topic)}/>
                         </div>
-                    </div>
-                    <div className="background-topicSelection">
-                        <div className="topic" style={{textAlign: "center"}} >
-                            Topic 2
-                        </div>
-                    </div>
-                    <div className="background-topicSelection">
-                        <div className="topic" style={{textAlign: "center"}}>
-                            Topic 3
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </>
-    );
+                    ))}
+                </>
+            );
+        }
+    }
 
-};
+    //const handleTimeOut = () => {
+    //    if (localStorage.getItem('selecting') === "true") {
+    //        rndTopic();
+    //    }
+    //}
+    //const drawTimer = () => {
+    //    if (topics || localStorage.getItem('selecting') === 'false') {
+    //        return (
+    //            <Timer timeOut={handleTimeOut} timeLimit={15}/>
+    //        );
+    //    }
+    //}
+
+        return (
+            <>
+                <HomeHeader height="100"/>
+                <div className="ScreenGrid-SingTopicSelection">
+                    {drawTopic()}
+                </div>
+            </>
+        );
+}
 
 export default TopicSelectionSingle;

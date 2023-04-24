@@ -43,6 +43,9 @@ const Home = () => {
         if (pm === playerModes.duel) {
             history.push("/challenge/" + gameMode.toLowerCase());
         }
+        if (pm === playerModes.single){
+            history.push("/single-topic-selection/" + gameMode.toLowerCase());
+        }
     }
 
     const startGameMenu = () => {
