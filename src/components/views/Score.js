@@ -185,7 +185,7 @@ const Score = props => {
     const drawTimer = () => {
         if (topics || localStorage.getItem('selecting') === 'false') {
             return (
-                <Timer timeOut={handleTimeOut} timeLimit={240}/>
+                <Timer timeOut={handleTimeOut} timeLimit={2000}/>
             );
         }
     }
