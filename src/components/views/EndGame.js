@@ -154,7 +154,7 @@ const EndGame = props => {
                     </div>
                     <div className="background-points-winner">
                         <div className = "player" style={{textAlign: "center"}}>
-                            Player 1
+                            {usernameInviting}
                         </div>
                         <div className = "points-endgame" style={{textAlign: "center"}}>
                             0
@@ -162,7 +162,7 @@ const EndGame = props => {
                     </div>
                     <div className="background-points-loser">
                         <div className = "player player-loser" style={{textAlign: "center"}} >
-                            Player 2
+                            {usernameInvited}
                         </div>
                         <div className = "points-endgame points-loser" style={{textAlign: "center"}}>
                             0
