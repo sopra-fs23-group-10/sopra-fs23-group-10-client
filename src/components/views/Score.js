@@ -196,9 +196,6 @@ const Score = props => {
                 {drawResults()}
                 {drawTopics()}
                 {drawTimer()}
-                <div className = "timing-location">
-                    <Timer timeLimit={240} timeOut={timeOut} getTime={getTime}/>
-                </div>
             </div>
         </>
     );
