@@ -55,6 +55,7 @@ const ReceiveInvitation = props => {
     }
 
     const goToGame = async () => {
+        console.log('gameId: ' + invitation.gameId);
         localStorage.setItem('gameId', invitation.gameId);
         localStorage.setItem('question_nr', 1);
         localStorage.setItem('selecting', true);

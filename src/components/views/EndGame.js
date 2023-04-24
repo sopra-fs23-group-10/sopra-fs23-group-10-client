@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {useState} from 'react';
-import {inviteUser, answerInvite, fetchUserById, fetchUsersInGame, finishGame} from 'helpers/restApi';
-import {useHistory, useParams, Link, useLocation} from 'react-router-dom';
+import {inviteUser, answerInvite, fetchUserById, finishGame} from 'helpers/restApi';
+import {useHistory, useParams, Link} from 'react-router-dom';
 import 'styles/views/EndGame.scss';
 import GameHeader from "./GameHeader";
 import HomeHeader from "./HomeHeader";
@@ -13,6 +13,7 @@ import 'styles/ui/Invitation.scss';
 import ReceiveInvitation from './ReceiveInvitation';
 import BaseContainer from "../ui/BaseContainer";
 import Result from "../../models/Result";
+import { connectResult } from 'helpers/WebSocketFactory';
 
 
 
@@ -30,10 +31,12 @@ const EndGame = props => {
 
     useEffect(() => {
 
-        async function fetchGameResults(){
+        async function endGame(){
             try {
-                const response = await finishGame(localStorage.getItem("gameId"));
+                console.log("gameId: " + localStorage.getItem('gameId'));
+                const response = await finishGame(localStorage.getItem('gameId'));
                 const res = new Result(response[response.length-1]);
+                console.log(res);
                 setResult(res);
 
                 await getUser(res.invitingPlayerId, setUsernameInviting);
@@ -45,18 +48,31 @@ const EndGame = props => {
             }
         }
 
-        const getUser = async (id, callback) => {
-            console.log("fetchUserById: " + id);
-            try{
-                const userData = await fetchUserById(id);
-                callback(userData.username);
-            } catch (error){
-                alert(error);
-            }
-        }
-            fetchGameResults();
+        if (localStorage.getItem('selecting') === 'true') endGame();
+        else connectResult(handleResult);
     }, []);
 
+    const getUser = async (id, callback) => {
+        console.log("fetchUserById: " + id);
+        try{
+            const userData = await fetchUserById(id);
+            callback(userData.username);
+        } catch (error){
+            alert(error);
+        }
+    }
+
+    const handleResult = async (msg) => {
+        console.log("handleResult");
+        console.log(msg);
+        const allResults = JSON.parse(msg);
+        const res = new Result(allResults[allResults.length-1]);
+        console.log(res);
+        setResult(res);
+
+        await getUser(res.invitingPlayerId, setUsernameInviting);
+        await getUser(res.invitedPlayerId, setUsernameInvited);
+    }
 
     const rematch = async () => {
         try {
@@ -70,7 +86,7 @@ const EndGame = props => {
 
     const cancelRematch = async () => {
         try {
-            const response = await answerInvite (localStorage.getItem('gameId'), false);
+            const response = await answerInvite(localStorage.getItem('gameId'), false);
             localStorage.removeItem('gameId');
             setRematchSent(false);
         } catch (error) {
@@ -115,6 +131,17 @@ const EndGame = props => {
                     </div>
                 </div>
             );
+        }
+    }
+
+    const resultText = () => {
+        if (result.invitedPlayerResult == result.invitingPlayerResult) {
+            return "It's a draw!"
+        } else if (result.invitedPlayerId == localStorage.getItem('id') && result.invitedPlayerResult > result.invitingPlayerResult
+            || result.invitingPlayerId == localStorage.getItem('id') && result.invitingPlayerResult > result.invitedPlayerId) {
+            return "You won!"
+        } else {
+            return "You lost!"
         }
     }
 
@@ -173,7 +200,7 @@ const EndGame = props => {
                     <div className="background-rematchoption">
                         <div className="content">
                             <div className="topic endgame" style={{textAlign: "center"}}>
-                                You lost!
+                                {resultText()}
                             </div>
                             <div className="twoButtons">
                                 <Button
@@ -196,7 +223,7 @@ const EndGame = props => {
                 </>
             );
         }
-        }
+    }
 
     return (
         <>

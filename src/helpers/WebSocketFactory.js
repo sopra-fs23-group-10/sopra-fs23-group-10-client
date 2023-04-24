@@ -139,3 +139,18 @@ export const connectGame = (gameCallback) => {
         });
     });
 };
+
+export const connectResult = (resultCallback) => {
+    let stompClient = openSocket();
+
+    const id = localStorage.getItem('gameId');
+
+    stompClient.connect({'gameId': localStorage.getItem('gameId')}, () => {
+        currentRetries = 0; // Reset the retry count after successful connection
+        
+        stompClient.subscribe(`/game/result/${id}`, (message) => {
+            resultCallback(message.body);
+            console.log(`Received message: ${message.body}`);
+        });
+    });
+};

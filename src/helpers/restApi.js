@@ -107,11 +107,6 @@ export const fetchUsers = async () => {
   try {
     const authToken = localStorage.getItem('token');
     const response = await restApi.get('/users', {headers: {token: authToken}});
-    console.log('request to:', response.request.responseURL);
-    console.log('status code:', response.status);
-    console.log('status text:', response.statusText);
-    console.log('requested data:', response.data);
-    console.log(response);
     return response;
   } catch (error) {
     console.error(`Something went wrong while fetching the users: \n${handleError(error)}`);
@@ -137,11 +132,6 @@ export const fetchOnlineUsers = async () => {
   try {
     const authToken = localStorage.getItem('token');
     const response = await restApi.get('/users/online', {headers: {token: authToken}});
-    console.log('request to:', response.request.responseURL);
-    console.log('status code:', response.status);
-    console.log('status text:', response.statusText);
-    console.log('requested data:', response.data);
-    console.log(response);
     return response;
   } catch (error) {
     console.error(`Something went wrong while fetching the users: \n${handleError(error)}`);
@@ -169,7 +159,6 @@ export const answerInvite = async (gameId, answer) => {
     const authToken = localStorage.getItem('token');
     const requestBody = JSON.stringify(answer);
     const response = await restApi.post(`/game/invitation/${gameId}`, requestBody, {headers: {token: authToken}});
-    console.log(response);
     return response.data;
   } catch (error) {
     throw new Error(`Something went wrong during invite response: \n${handleError(error)}`);
@@ -190,7 +179,6 @@ export const getQuestion = async (gameId, topic) => {
   try {
     const authToken = localStorage.getItem('token');
     const requestBody = JSON.stringify({gameId: gameId, category: topic});
-    console.log(requestBody);
     const response = await restApi.post("/game/topics", requestBody, {headers: {token: authToken}})
     return response.data;
   } catch (error) {
@@ -201,7 +189,6 @@ export const getQuestion = async (gameId, topic) => {
 export const sendAnswer = async (gameId, userId, questionId, answer, answeredTime) => {
   try {
     const requestBody = JSON.stringify({userId, questionId, answer, answeredTime})
-    console.log(requestBody);
     const response = await restApi.put(`/game/question/${gameId}`, requestBody, {headers: {token: localStorage.getItem("token")}})
     return response;
   }
@@ -228,7 +215,6 @@ export const getIntermediateResults = async () => {
     const gameId = localStorage.getItem('gameId');
     const authToken = localStorage.getItem('token');
     const response = await restApi.get(`/game/intermediate/${gameId}`, {headers: {token: authToken}});
-    console.log(response);
     return response;
   } catch (error) {
     throw new Error(`Something went wrong during fetching intermediate results: \n${handleError(error)}`);

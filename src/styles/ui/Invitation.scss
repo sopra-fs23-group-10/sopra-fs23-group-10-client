@@ -27,7 +27,7 @@
     &.base-container {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: repeat(3, auto);
+        grid-auto-flow: row;
         grid-gap: $base_padding;
     }
 
