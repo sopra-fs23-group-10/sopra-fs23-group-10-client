@@ -91,14 +91,14 @@ const AppRouter = () => {
             </GameGuard>
           </Route>
           <Route path="/dueltopicselection">
-            <HomeGuard>
+            <GameGuard>
               <TopicSelectionDuel/>
-            </HomeGuard>
+            </GameGuard>
           </Route>
           <Route path="/endgame">
-            <HomeGuard>
+            <GameGuard>
               <EndGame/>
-            </HomeGuard>
+            </GameGuard>
           </Route>
           <Route exact path="/">
             <Redirect to="/home"/>
