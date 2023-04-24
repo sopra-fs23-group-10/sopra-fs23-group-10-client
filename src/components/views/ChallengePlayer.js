@@ -40,7 +40,6 @@ const ChallengePlayer = props => {
     const cancelInvite = async () => {
         try {
             console.log("cancelInvite response.id: " + localStorage.getItem('gameId'));
-
             const response = await answerInvite(localStorage.getItem('gameId'), false);
             localStorage.removeItem('gameId');
             setInviteSent(false);
@@ -56,7 +55,8 @@ const ChallengePlayer = props => {
 
     const challengeRandomUser = () => {
         const id = localStorage.getItem('id');
-        const others = users.filter(user => user.id !== id);
+        const others = users.filter(user => user.id != parseInt(id));
+        console.log(others);
         const rnd = Math.floor(Math.random() * others.length);
         invite(others[rnd].id);
     }
@@ -84,7 +84,7 @@ const ChallengePlayer = props => {
                     <div className="invitation overlay">
                     </div>
                     <div className="invitation base-container">
-                        <a href="/home" style={{textAlign: "right"}}> Cancel Invitation</a>
+                        <a onClick={cancelInvite} style={{textAlign: "right"}}> Cancel Invitation</a>
                         <div className="p" style={{textAlign: "center"}}>
                             Invite has been sent. Waiting for answer...
                         </div>
