@@ -80,12 +80,12 @@ const AppRouter = () => {
               <Rules/>
             </HomeGuard>
           </Route>
-          <Route path="/game">
+          <Route path="/game/:selecting">
             <GameGuard>
               <GameScreen/>
             </GameGuard>
           </Route>
-          <Route path="/topic-selection">
+          <Route path="/topic-selection/:selecting">
             <GameGuard>
               <Score/>
             </GameGuard>
@@ -95,7 +95,7 @@ const AppRouter = () => {
               <TopicSelectionSingle/>
             </HomeGuard>
           </Route>
-          <Route path="/endgame">
+          <Route path="/endgame/:selecting">
             <GameGuard>
               <EndGame/>
             </GameGuard>

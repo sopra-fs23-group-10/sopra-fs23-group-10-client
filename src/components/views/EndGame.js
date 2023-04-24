@@ -23,33 +23,24 @@ const EndGame = props => {
     const [usernameInviting, setUsernameInviting] = useState("");
     const [usernameInvited, setUsernameInvited] = useState("");
 
-    const { gameMode } = useParams();
+    const { gameMode, selecting } = useParams();
     const [users, setUsers] = useState(null);
     const [rematchSent, setRematchSent] = useState(false);
     const [time, setTime] = useState(0);
-    const [previousGame, setPreviousGame] = useState(null);
 
     useEffect(() => {
-
         async function endGame(){
             try {
                 console.log("gameId: " + localStorage.getItem('gameId'));
                 const response = await finishGame(localStorage.getItem('gameId'));
-                const res = new Result(response[response.length-1]);
-                console.log(res);
-                setResult(res);
-
-                await getUser(res.invitingPlayerId, setUsernameInviting);
-                await getUser(res.invitedPlayerId, setUsernameInvited);
-
             } catch(error) {
                 alert(error);
                 history.push("/login");
             }
         }
 
-        if (localStorage.getItem('selecting') === 'true') endGame();
-        else connectResult(handleResult);
+        connectResult(handleResult);
+        if (selecting == 'selecting') endGame();
     }, []);
 
     const getUser = async (id, callback) => {
@@ -102,15 +93,7 @@ const EndGame = props => {
         console.log(msg);
         const accepted = JSON.parse(msg)[localStorage.getItem('gameId')];
         if (accepted) {
-            history.push({
-                pathname: '/topic-selection',
-                search: '?update=true',  // query string
-                state: {  // location state
-                    turn: false,
-                    nr: 1,
-                    finished: false
-                },
-            });
+            history.push('topic-selection/waiting');
         } else {
             localStorage.removeItem('gameId');
             setRematchSent(false);

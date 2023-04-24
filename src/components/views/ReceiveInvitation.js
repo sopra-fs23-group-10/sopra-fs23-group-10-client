@@ -15,7 +15,6 @@ const ReceiveInvitation = props => {
     const [invitation, setInvitation] = useState(null);
     const [username, setUsername] = useState("");
     const [time, setTime] = useState(0);
-    const [timerExpired, setTimerExpired] = useState(false);
 
     useEffect(() => {
         connectInvitations(handleInvite, handleAnswer);
@@ -62,14 +61,14 @@ const ReceiveInvitation = props => {
 
         localStorage.setItem('gameId', invitation.gameId);
         localStorage.setItem('question_nr', 1);
-        localStorage.setItem('selecting', 'true');
-        console.log("invitation selecting: " + localStorage.getItem('selecting'));
+        // localStorage.setItem('selecting', 'true');
+        // console.log("invitation selecting: " + localStorage.getItem('selecting'));
         // await Promise.all([
         //     localStorage.getItem('gameId'),
         //     localStorage.getItem('question_nr'),
         //     localStorage.getItem('selecting')
         // ]);
-        history.push('/topic-selection');
+        history.push('/topic-selection/selecting');
     }
 
     const getTime = (time) => {

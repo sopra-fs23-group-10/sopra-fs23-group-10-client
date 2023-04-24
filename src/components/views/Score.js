@@ -1,7 +1,7 @@
 import GameHeader from "components/views/GameHeader";
 import { fetchUsersInGame, getTopicSelection, fetchUserById, getIntermediateResults, handleError, getQuestion } from "helpers/restApi";
 import React, {useEffect, useState, useRef} from 'react';
-import { useHistory, Prompt } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { GameButton } from "components/ui/GameButton";
 import Result from "../../models/Result";
 import BaseContainer from "components/ui/BaseContainer";
@@ -18,12 +18,12 @@ const Score = props => {
     const [result, setResult] = useState(null);
     const [usernameInviting, setUsernameInviting] = useState("");
     const [usernameInvited, setUsernameInvited] = useState("");
-    const [time, setTime] = useState(0);
-    const topicsData = useRef(null);
+    let { selecting } = useParams();
 
     useEffect(() => {
         connectQuestion(handleQuestion);
         async function fetchTopics() {
+            console.log('fetch topics');
             try {
                 const response = await getTopicSelection(localStorage.getItem("gameId"));
                 setTopics(response.topics);
@@ -72,8 +72,8 @@ const Score = props => {
             }
         }
 
-        console.log(localStorage);
-        if (localStorage.getItem('selecting') === 'true' && !topics) {
+        console.log('selecting: ' + selecting + ', ' + (selecting == 'selecting'));
+        if (selecting == 'selecting' && !topics) {
             fetchTopics();
         }
         fetchGame();
@@ -95,7 +95,7 @@ const Score = props => {
 
     const toQuestion = (question) => {
         history.push({
-            pathname: '/game',
+            pathname: '/game/' + selecting,
             search: "?update=true",
             state: {
                 question: question
@@ -104,7 +104,7 @@ const Score = props => {
     }
 
     const handleTimeOut = () => {
-        if (localStorage.getItem('selecting') === "true") {
+        if (selecting == 'selecting') {
             rndTopic();
         }
     }
@@ -126,7 +126,7 @@ const Score = props => {
     }
 
     const drawTopics = () => {
-        if ((localStorage.getItem('selecting') == "true") && topics) {
+        if (selecting == 'selecting' && topics) {
             return (
                 <>
                     <div className="grid-2">
@@ -141,7 +141,7 @@ const Score = props => {
                     </div>
                 </>
             );
-        } else if ((localStorage.getItem('selecting') == "false")) {
+        } else if (selecting == 'waiting') {
             return (
                 <div className="background-topic-waiting">
                     <div className="topic">
