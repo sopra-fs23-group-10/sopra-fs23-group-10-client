@@ -44,15 +44,16 @@ const Score = props => {
                     console.log("get result!");
                     const response = await getIntermediateResults(localStorage.getItem("gameId"));
                     console.log(response);
-                    let points1;
-                    let points2;
+                    let points1 = 0;
+                    let points2 = 0;
                     for (let i = 0; i < response.data.length; i++) {
-                        points1 = response.data[i].invitedPlayerResult;
-                        points2 = response.data[i].invitingPlayerResult;
+                        console.log(response.data[i].invitedPlayerResult);
+                        points1 += response.data[i].invitedPlayerResult;
+                        points2 += response.data[i].invitingPlayerResult;
                     }
                     let res = new Result(response.data[0]);
-                    res.invitedPlayerId = points1;
-                    res.invitingPlayerId = points2;
+                    res.invitedPlayerResult = points1;
+                    res.invitingPlayerResult = points2;
                     setResult(res);
                     await getUser(response.data[0].invitedPlayerId, setUsernameInvited);
                     await getUser(response.data[0].invitingPlayerId, setUsernameInviting);
@@ -184,7 +185,7 @@ const Score = props => {
     const drawTimer = () => {
         if (topics || localStorage.getItem('selecting') === 'false') {
             return (
-                <Timer timeOut={handleTimeOut} timeLimit={10}/>
+                <Timer timeOut={handleTimeOut} timeLimit={240}/>
             );
         }
     }
