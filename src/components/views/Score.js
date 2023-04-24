@@ -5,11 +5,11 @@ import { useHistory, useLocation, useParams } from "react-router-dom";
 import { GameButton } from "components/ui/GameButton";
 import Result from "../../models/Result";
 import BaseContainer from "components/ui/BaseContainer";
-import 'styles/views/TopicSelectionDuel.scss';
 import {connectQuestion} from "../../helpers/WebSocketFactory";
 import 'styles/views/Score.scss';
 import {connectGame} from "../../helpers/WebSocketFactory";
 import Question from "models/Question";
+import {Timer} from "../ui/Timer";
 
 
 const Score = props => {
