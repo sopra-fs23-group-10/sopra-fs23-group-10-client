@@ -214,6 +214,16 @@ export const finishGame = async () => {
     const gameId = localStorage.getItem('gameId');
     const authToken = localStorage.getItem('token');
     const response = await restApi.delete(`/game/finish/${gameId}`, {headers: {token: authToken}});
+  } catch (error) {
+    throw new Error(`Something went wrong during fetching final results: \n${handleError(error)}`);
+  }
+};
+
+export const getFinalResults = async () => {
+  try {
+    const gameId = localStorage.getItem('gameId');
+    const authToken = localStorage.getItem('token');
+    const response = await restApi.get(`/game/finish/${gameId}`, {headers: {token: authToken}});
     return response.data;
   } catch (error) {
     throw new Error(`Something went wrong during fetching final results: \n${handleError(error)}`);

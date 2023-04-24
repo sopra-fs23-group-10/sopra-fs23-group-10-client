@@ -1,20 +1,16 @@
 import React, {useEffect} from 'react';
 import {useState} from 'react';
-import {inviteUser, answerInvite, fetchUserById, finishGame} from 'helpers/restApi';
+import {inviteUser, answerInvite, fetchUserById, finishGame, getFinalResults} from 'helpers/restApi';
 import {useHistory, useParams, Link} from 'react-router-dom';
 import 'styles/views/EndGame.scss';
 import GameHeader from "./GameHeader";
-import HomeHeader from "./HomeHeader";
 import {Button} from "../ui/Button";
 import 'styles/views/PopUp.scss';
-import { PlayerList } from 'components/ui/PlayerList';
 import { Timer } from 'components/ui/Timer';
 import 'styles/ui/Invitation.scss';
 import ReceiveInvitation from './ReceiveInvitation';
 import BaseContainer from "../ui/BaseContainer";
 import Result from "../../models/Result";
-import { connectResult } from 'helpers/WebSocketFactory';
-
 
 
 const EndGame = props => {
@@ -22,9 +18,7 @@ const EndGame = props => {
     const [result, setResult] = useState(null);
     const [usernameInviting, setUsernameInviting] = useState("");
     const [usernameInvited, setUsernameInvited] = useState("");
-
     const { gameMode, selecting } = useParams();
-    const [users, setUsers] = useState(null);
     const [rematchSent, setRematchSent] = useState(false);
     const [time, setTime] = useState(0);
 
@@ -43,11 +37,21 @@ const EndGame = props => {
             }
         }
 
-        if (selecting != 'selecting' && !result) connectResult(handleResult);
+        // if (selecting != 'selecting' && !result) connectResult(handleResult);
 
         async function endGame(){
+            console.log("ENGAME");
             try {
-                const response = await finishGame(localStorage.getItem('gameId'));
+                await finishGame(localStorage.getItem('gameId'));
+            } catch(error) {
+                alert(error);
+                history.push("/login");
+            }
+        }
+
+        async function getResults(){
+            try {
+                const response = await getFinalResults(localStorage.getItem('gameId'));
                 const res = new Result(response[response.length-1]);
                 setResult(res);
         
@@ -60,8 +64,10 @@ const EndGame = props => {
         }
 
         if (selecting == 'selecting' && !result) {
-            setTimeout(() => {  endGame(); }, 2000);
+            setTimeout(() => {  endGame(); }, 5000);
         }
+
+        getResults();
 
         document.addEventListener("reply", handleAnswer);
         return () => {
