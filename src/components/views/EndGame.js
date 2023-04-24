@@ -191,7 +191,7 @@ const EndGame = props => {
                         </div>
                         ) : (
                             <div className="background-points-loser">
-                                <div className = "player" style={{textAlign: "center"}}>
+                                <div className = "player player-loser" style={{textAlign: "center"}}>
                                     {usernameInviting}
                                 </div>
                                 <div className = "points-endgame points-loser" style={{textAlign: "center"}}>
@@ -201,7 +201,7 @@ const EndGame = props => {
                         ) }
                         {result.invitingPlayerResult < result.invitedPlayerResult ? (
                         <div className="background-points-winner">
-                            <div className = "player player-loser" style={{textAlign: "center"}} >
+                            <div className = "player" style={{textAlign: "center"}} >
                                 {usernameInvited}
                             </div>
                             <div className = "points-endgame" style={{textAlign: "center"}}>
@@ -210,7 +210,7 @@ const EndGame = props => {
                         </div>
                         ) : (
                             <div className="background-points-loser">
-                                <div className = "player" style={{textAlign: "center"}}>
+                                <div className = "player player-loser" style={{textAlign: "center"}}>
                                     {usernameInvited}
                                 </div>
                                 <div className = "points-endgame points-loser" style={{textAlign: "center"}}>

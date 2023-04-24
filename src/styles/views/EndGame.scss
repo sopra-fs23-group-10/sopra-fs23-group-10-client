@@ -50,6 +50,7 @@
     justify-content: space-between;
     &.player-loser{
       font-size: calc(8vh * 0.6);
+      transform: translate(0px, calc(-8vh - 0px));
     }
   }
   .points-endgame{
@@ -61,7 +62,7 @@
     justify-content: space-between;
     transform: translate(0px, calc(-14vh - 0px));
     &.points-loser{
-      font-size: calc(25vh * 0.6);
+      font-size: calc(20vh * 0.6);
       transform: translate(0px, calc(-8vh - 0px));
     }
   }

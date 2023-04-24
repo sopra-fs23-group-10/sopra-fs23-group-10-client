@@ -1,14 +1,16 @@
 @import 'styles/theme';
 
-.ScreenGrid {
+.ScreenGrid-Score{
   max-height: 100vh;
+  height: auto;
   width: 60%;
   margin: 0 auto;
   margin-top: 50px;
   display: grid;
-  grid-template-rows: 50% auto;
+  grid-template-rows: 50% auto auto;
   grid-template-columns: 1fr;
   grid-row-gap: 50px;
+  grid-auto-flow: row;
 
   .grid-1 {
     grid-row: 1;
@@ -69,15 +71,15 @@
 .points-score{
   font-family: $fontDisplay;
   color: $secondary_color;
-  font-size: 25vh;
+  font-size: 20vh;
   font-weight: bold;
   align-items: center;
   justify-content: space-between;
-  transform: translate(0px, calc(-14vh - 0px));
+  transform: translate(0px, calc(-13vh - 0px));
 }
 
 .background-topic-waiting{
-  grid-row:3;
+  grid-row:2;
   grid-column-start:1;
   grid-column-end:4;
   background-color: $off_white;
