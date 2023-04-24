@@ -29,14 +29,26 @@ const EndGame = props => {
     const [time, setTime] = useState(0);
 
     useEffect(() => {
-        if (selecting != 'selecting') connectResult(handleResult);
+        function handleAnswer(e) {
+            const accepted = JSON.parse(e.detail)[localStorage.getItem('gameId')];
+            if (rematchSent) {
+                if (accepted) {
+                    console.log("ACCEPTED");
+                    localStorage.setItem('question_nr', 1);
+                    history.push(`/topic-selection/${gameMode}/waiting`);
+                } else {
+                    localStorage.removeItem('gameId');
+                    setRematchSent(false);
+                }
+            }
+        }
+
+        if (selecting != 'selecting' && !result) connectResult(handleResult);
 
         async function endGame(){
             try {
-                console.log("gameId: " + localStorage.getItem('gameId'));
                 const response = await finishGame(localStorage.getItem('gameId'));
                 const res = new Result(response[response.length-1]);
-                console.log(res);
                 setResult(res);
         
                 await getUser(res.invitingPlayerId, setUsernameInviting);
@@ -47,10 +59,15 @@ const EndGame = props => {
             }
         }
 
-        if (selecting == 'selecting') {
+        if (selecting == 'selecting' && !result) {
             setTimeout(() => {  endGame(); }, 2000);
         }
-    }, []);
+
+        document.addEventListener("reply", handleAnswer);
+        return () => {
+            document.removeEventListener("reply", handleAnswer);
+        }   
+    });
 
     const getUser = async (id, callback) => {
         try {
@@ -74,10 +91,11 @@ const EndGame = props => {
         try {
             let id = localStorage.getItem('id') == result.invitedPlayerId ? result.invitingPlayerId : result.invitedPlayerId;
             const response = await inviteUser(id, gameMode.toUpperCase(), "DUEL");
-            localStorage.setItem('gameId', response.id);
+            localStorage.setItem('gameId', response.gameId);
             setRematchSent(true);
         } catch (error) {
-            history.push("/home");
+            console.log(error);
+            // history.push("/home");
         }
     }
 
@@ -93,17 +111,6 @@ const EndGame = props => {
 
     const getTime = (time) => {
         setTime(time);
-    }
-
-    const handleAnswer = (msg) => {
-        console.log(msg);
-        const accepted = JSON.parse(msg)[localStorage.getItem('gameId')];
-        if (accepted) {
-            history.push('topic-selection/waiting');
-        } else {
-            localStorage.removeItem('gameId');
-            setRematchSent(false);
-        }
     }
 
     const sentRematch = () => {
@@ -138,23 +145,6 @@ const EndGame = props => {
         localStorage.removeItem('gameId');
         localStorage.removeItem('question_nr');
         history.push("/home");
-    }
-
-    const RematchButton = () => {
-        return (
-            <>
-                {sentRematch()}
-                <HomeHeader height = "100" />
-                <ReceiveInvitation onAnswer={handleAnswer}/>
-                <div className ='challenge pop up grid'>
-                    <Link to="/home" className = 'back'> x Cancel</Link>
-                    <BaseContainer className = "popup container">
-                        <h3 className='popup title'> Challenge Player</h3>
-                        <PlayerList action ={rematch}/>
-                    </BaseContainer>
-                </div>
-            </>
-        )
     }
 
     const endPointsScreen = () => {
@@ -216,7 +206,7 @@ const EndGame = props => {
                                 <Button
                                     width="80%"
                                     style={{margin: "auto"}}
-                                    onClick={RematchButton}
+                                    onClick={() => rematch()}
                                 >
                                     REMATCH
                                 </Button>
@@ -237,10 +227,20 @@ const EndGame = props => {
         }
     }
 
+    const drawRematch = () => {
+        return (
+            <>
+                {sentRematch()}
+                <ReceiveInvitation/>
+            </>
+        )
+    }
+
     return (
         <>
+            {drawRematch()}
             <GameHeader questionId={localStorage.getItem("question_nr")} height="100"/>
-            <div className= "ScreenGrid">
+            <div className="ScreenGrid">
                 {endPointsScreen()}
             </div>
         </>

@@ -18,6 +18,7 @@ const GameScreen = () => {
     const [time, setTime] = useState(0);
     const answerTime = 10;
     const { selecting } = useParams();
+    const { gameMode } = useParams();
 
     useEffect( () => {
         function timeOut() {
@@ -88,9 +89,9 @@ const GameScreen = () => {
         let nr = parseInt(localStorage.getItem('question_nr'));
         if (nr < 1) {
             localStorage.setItem('question_nr', (nr + 1));
-            history.push('/topic-selection/' + (selecting == 'selecting' ? 'waiting' : 'selecting'));
+            history.push('/topic-selection/' + gameMode + "/" + (selecting == 'selecting' ? 'waiting' : 'selecting'));
         } else {
-            history.push('/endgame/' + selecting);
+            history.push('/endgame/' + gameMode + "/" + selecting);
         }
     }
 

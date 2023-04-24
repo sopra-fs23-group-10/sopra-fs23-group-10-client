@@ -18,7 +18,7 @@ const Score = props => {
     const [result, setResult] = useState(null);
     const [usernameInviting, setUsernameInviting] = useState("");
     const [usernameInvited, setUsernameInvited] = useState("");
-    let { selecting } = useParams();
+    let { selecting, gameMode } = useParams();
 
     useEffect(() => {
         connectQuestion(handleQuestion);
@@ -95,7 +95,7 @@ const Score = props => {
 
     const toQuestion = (question) => {
         history.push({
-            pathname: '/game/' + selecting,
+            pathname: '/game/' + gameMode + "/" + selecting,
             search: "?update=true",
             state: {
                 question: question

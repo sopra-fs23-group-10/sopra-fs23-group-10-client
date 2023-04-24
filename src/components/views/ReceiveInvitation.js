@@ -25,7 +25,6 @@ const ReceiveInvitation = props => {
         let inv = new Invitation(obj)
         await getInvitingUser(inv.invitingUserId);
         setInvitation(inv);
-        console.log(obj);
     }
 
     const getInvitingUser = async(id) => {
@@ -38,14 +37,15 @@ const ReceiveInvitation = props => {
     }
 
     const handleAnswer = (msg) => {
-        console.log("handle answer");
         setInvitation(null);
         setUsername("");
         if (props.onAnswer) props.onAnswer(msg);
+        throwReply(msg);
     }
 
     const reply = async (accepted) => {
         const response = await answerInvite(invitation.gameId, accepted);
+        console.log(response);
         setInvitation(null);
         setUsername("");
         if (response[invitation.gameId]) {
@@ -54,18 +54,24 @@ const ReceiveInvitation = props => {
     }
 
     const goToGame = async () => {
-        console.log('gameId: ' + invitation.gameId);
+        console.log('GO TO GAME');
         localStorage.removeItem('gameId');
         localStorage.removeItem('question_nr');
 
         localStorage.setItem('gameId', invitation.gameId);
         localStorage.setItem('question_nr', 1);
 
-        history.push('/topic-selection/selecting');
+        history.push(`/topic-selection/${invitation.quizType.toLowerCase()}/selecting`);
     }
 
     const getTime = (time) => {
         setTime(time);
+    }
+
+    const throwReply = (msg) => {
+        console.log("throw reply");
+        const event = new CustomEvent("reply", { detail: msg });
+        document.dispatchEvent(event);
     }
 
     const receiveInvitation = () => {
