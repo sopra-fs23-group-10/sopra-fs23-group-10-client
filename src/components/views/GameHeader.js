@@ -5,7 +5,7 @@ import { Button } from "components/ui/Button";
 import { cancelGame } from "helpers/restApi";
 import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { connectGame, connectResult } from "helpers/WebSocketFactory";
+import { connectGame } from "helpers/WebSocketFactory";
 import 'styles/ui/Invitation.scss';
 import Result from "models/Result";
 
