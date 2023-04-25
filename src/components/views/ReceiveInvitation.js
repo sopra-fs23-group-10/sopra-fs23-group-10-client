@@ -9,6 +9,7 @@ import Invitation from "../../models/Invitation";
 import {useHistory} from 'react-router-dom';
 import PropTypes from "prop-types";
 import {Timer} from "../ui/Timer";
+import { handleError } from 'helpers/restApi';
 
 const ReceiveInvitation = props => {
     const history = useHistory();
@@ -18,17 +19,35 @@ const ReceiveInvitation = props => {
 
     useEffect(() => {
         connectInvitations(handleInvite, handleAnswer);
-        window.addEventListener('beforeunload', reply(false));
+        window.addEventListener('beforeunload', handleReload);
         return () => {
-            window.removeEventListener('beforeunload', reply(false));
+            window.removeEventListener('beforeunload', handleReload);
         }   
-    }, []);
+    }, [invitation]);
 
     const handleInvite = async (msg) => {
         let obj = JSON.parse(msg);
         let inv = new Invitation(obj)
+        localStorage.setItem('gameId', inv.gameId);
         await getInvitingUser(inv.invitingUserId);
         setInvitation(inv);
+    }
+
+    const handleReload = async () => {
+        console.log("handle reload: " + localStorage.getItem('gameId'));
+        if (localStorage.getItem('gameId')) {
+            try {
+                localStorage.removeItem('startTime');
+                const response = await answerInvite(localStorage.getItem('gameId'), false);
+                console.log(response);
+                const event = new CustomEvent("sendReply", { detail: false });
+                document.dispatchEvent(event);
+            } catch (error) {
+                handleError(error);
+                console.log(error);
+                alert(error);
+            }
+        }
     }
 
     const getInvitingUser = async(id) => {
@@ -48,7 +67,6 @@ const ReceiveInvitation = props => {
     }
 
     const reply = async (accepted) => {
-        console.log(reply);
         const response = await answerInvite(invitation.gameId, accepted);
         console.log(response);
         setInvitation(null);
@@ -65,8 +83,8 @@ const ReceiveInvitation = props => {
         localStorage.removeItem('question_nr');
         localStorage.removeItem('startTime');
 
-        localStorage.setItem('gameId', invitation.gameId);
         localStorage.setItem('question_nr', 1);
+        localStorage.setItem('gameId', invitation.gameId);
 
         history.push(`/topic-selection/${invitation.quizType.toLowerCase()}/selecting`);
     }

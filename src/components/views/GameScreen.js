@@ -100,7 +100,7 @@ const GameScreen = () => {
         localStorage.removeItem('answered');
         localStorage.removeItem('question');
         localStorage.removeItem('startTime');
-        if (nr < 3) {
+        if (nr < 1) {
             localStorage.setItem('question_nr', (nr + 1));
             history.push('/topic-selection/' + gameMode + "/" + (selecting == 'selecting' ? 'waiting' : 'selecting'));
         } else {
