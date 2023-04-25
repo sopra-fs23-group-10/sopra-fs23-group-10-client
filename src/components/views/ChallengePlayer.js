@@ -21,12 +21,26 @@ const ChallengePlayer = props => {
     const [inviteSent, setInviteSent] = useState(false);
     const [time, setTime] = useState(0);
 
-    // useEffect(() => {
-    //     document.addEventListener("reply", handleAnswer);
-    //     return () => {
-    //         document.removeEventListener("reply", handleAnswer);
-    //     } 
-    // })
+    useEffect(() => {
+        function handleAnswer(e) {
+            console.log("handle answer!! " + inviteSent);
+            if (inviteSent) {
+                const accepted = JSON.parse(e.detail)[localStorage.getItem('gameId')];
+                if (accepted) {
+                    localStorage.setItem('question_nr', 1);
+                    history.push(`/topic-selection/${gameMode}/waiting`);
+                } else {
+                    localStorage.removeItem('gameId');
+                    setInviteSent(false);
+                }
+            }
+        }
+
+        document.addEventListener("reply", handleAnswer);
+        return () => {
+            document.removeEventListener("reply", handleAnswer);
+        } 
+    })
 
     const getUsers = async (u) => {
         setUsers(u);
@@ -69,19 +83,6 @@ const ChallengePlayer = props => {
         setTime(time);
     }
 
-    const handleAnswer = (e) => {
-        console.log("handle answer!!");
-            // const accepted = JSON.parse(e.detail)[localStorage.getItem('gameId')];
-            const accepted = JSON.parse(e)[localStorage.getItem('gameId')];
-            if (accepted) {
-                localStorage.setItem('question_nr', 1);
-                history.push(`/topic-selection/${gameMode}/waiting`);
-            } else {
-                localStorage.removeItem('gameId');
-                setInviteSent(false);
-            }
-    }
-
     const sentInvitation = () => {
         if (inviteSent) {
             return (
@@ -106,7 +107,7 @@ const ChallengePlayer = props => {
         <>
             {sentInvitation()}
             <HomeHeader height="100"/>
-            <ReceiveInvitation onAnswer={handleAnswer}/>
+            <ReceiveInvitation/>
             <div className='challenge popup grid'>
                 <Link to="/home" className='back'>✕ Cancel</Link>
                 <BaseContainer className="popup container">
