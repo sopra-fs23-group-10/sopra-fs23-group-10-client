@@ -40,6 +40,7 @@ const ReceiveInvitation = props => {
         setInvitation(null);
         setUsername("");
         throwReply(msg);
+        if (props.onAnswer) props.handleAnswer(msg);
     }
 
     const reply = async (accepted) => {
@@ -104,6 +105,10 @@ const ReceiveInvitation = props => {
     return (
         <>{receiveInvitation()}</>
     );
+};
+
+Timer.propTypes = {
+    onAnswer: PropTypes.func,
 };
 
 export default ReceiveInvitation;
