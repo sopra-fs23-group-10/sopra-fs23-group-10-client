@@ -100,7 +100,9 @@ const GameHeader = props => {
             <div className="content" style={{textAlign: "right", gridColumn:4}}>
                 Music
             </div>
-            <Button width="100%" onClick={() => cancel()} style={{gridColumn:5}}>Cancel Game</Button>
+            {props.showCancelButton (
+                <Button width="100%" onClick={() => cancel()} style={{gridColumn:5}}>Cancel Game</Button>
+            )}
             {gameCancelled()}
         </header>
     );
@@ -109,6 +111,7 @@ const GameHeader = props => {
 GameHeader.propTypes = {
     height: PropTypes.number,
     questionId: PropTypes.string,
+    showCancelButton: PropTypes.bool
 };
 
 export default GameHeader;

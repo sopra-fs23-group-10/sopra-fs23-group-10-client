@@ -234,7 +234,7 @@ const EndGame = props => {
     return (
         <>
             {drawRematch()}
-            <GameHeader questionId={localStorage.getItem("question_nr")} height="100"/>
+            <GameHeader questionId={localStorage.getItem("question_nr")} showCancelButton={false} height="100"/>
             <div className="ScreenGrid">
                 {endPointsScreen()}
             </div>
