@@ -40,7 +40,7 @@ const EndGame = props => {
         }
 
         function handleSentReply(e) {
-            if (selecting == 'selecting') endGame();
+            //if (selecting == 'selecting') endGame();
         }
 
         async function getResults(){
