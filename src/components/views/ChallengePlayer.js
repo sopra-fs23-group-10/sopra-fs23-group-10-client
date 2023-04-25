@@ -36,9 +36,9 @@ const ChallengePlayer = props => {
             }
         }
 
-        document.addEventListener("reply", handleAnswer);
+        document.addEventListener("receiveReply", handleAnswer);
         return () => {
-            document.removeEventListener("reply", handleAnswer);
+            document.removeEventListener("reveiceReply", handleAnswer);
         } 
     })
 
