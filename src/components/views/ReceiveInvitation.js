@@ -40,7 +40,7 @@ const ReceiveInvitation = props => {
         setInvitation(null);
         setUsername("");
         throwReply(msg);
-        if (props.onAnswer) props.handleAnswer(msg);
+        if (props.onAnswer) props.onAnswer(msg);
     }
 
     const reply = async (accepted) => {
@@ -52,6 +52,8 @@ const ReceiveInvitation = props => {
         if (response[invitation.gameId]) {
             goToGame();
         }
+        const event = new CustomEvent("sendReply", { detail: accepted });
+        document.dispatchEvent(event);
     }
 
     const goToGame = async () => {
@@ -69,8 +71,8 @@ const ReceiveInvitation = props => {
     }
 
     const throwReply = (msg) => {
-        console.log("throw reply");
-        const event = new CustomEvent("reply", { detail: msg });
+        console.log("receiveReply");
+        const event = new CustomEvent("receiveReply", { detail: msg });
         document.dispatchEvent(event);
     }
 

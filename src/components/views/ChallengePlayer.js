@@ -21,12 +21,12 @@ const ChallengePlayer = props => {
     const [inviteSent, setInviteSent] = useState(false);
     const [time, setTime] = useState(0);
 
-    useEffect(() => {
-        document.addEventListener("reply", handleAnswer);
-        return () => {
-            document.removeEventListener("reply", handleAnswer);
-        } 
-    })
+    // useEffect(() => {
+    //     document.addEventListener("reply", handleAnswer);
+    //     return () => {
+    //         document.removeEventListener("reply", handleAnswer);
+    //     } 
+    // })
 
     const getUsers = async (u) => {
         setUsers(u);
@@ -70,8 +70,9 @@ const ChallengePlayer = props => {
     }
 
     const handleAnswer = (e) => {
-        if (inviteSent) {
-            const accepted = JSON.parse(e.detail)[localStorage.getItem('gameId')];
+        console.log("handle answer!!");
+            // const accepted = JSON.parse(e.detail)[localStorage.getItem('gameId')];
+            const accepted = JSON.parse(e)[localStorage.getItem('gameId')];
             if (accepted) {
                 localStorage.setItem('question_nr', 1);
                 history.push(`/topic-selection/${gameMode}/waiting`);
@@ -79,7 +80,6 @@ const ChallengePlayer = props => {
                 localStorage.removeItem('gameId');
                 setInviteSent(false);
             }
-        }
     }
 
     const sentInvitation = () => {
@@ -106,7 +106,7 @@ const ChallengePlayer = props => {
         <>
             {sentInvitation()}
             <HomeHeader height="100"/>
-            <ReceiveInvitation/>
+            <ReceiveInvitation onAnswer={handleAnswer}/>
             <div className='challenge popup grid'>
                 <Link to="/home" className='back'>✕ Cancel</Link>
                 <BaseContainer className="popup container">
