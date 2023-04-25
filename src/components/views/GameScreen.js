@@ -32,13 +32,18 @@ const GameScreen = () => {
         if (!question && localStorage.getItem('answered')) {
             console.log("ANSWERED");
             setAnswered(true);
-            setQuestion(JSON.parse(localStorage.getItem(question)));
         }
 
         if (!question) setQuestion(JSON.parse(localStorage.getItem('question')));
         document.addEventListener("timeOut", timeOut);
         return () => document.removeEventListener("timeOut", timeOut);
     });
+
+    const chooseAnswer = async (str) => {
+        setAnswered(true);
+        localStorage.setItem('answered', true);
+        answer(str);
+    }
 
     const answer = async (str) => {
         try {
@@ -49,13 +54,11 @@ const GameScreen = () => {
                 str,
                 time
             );
-            setAnswered(true);
-            localStorage.setItem('answered', true);
         } catch (error) {
             alert(error);
             history.push("/login");
         }
-    }
+    } 
 
     const drawQuestion = () => {
         if (answered) {
@@ -71,7 +74,7 @@ const GameScreen = () => {
                 );
         } else if (question) {
             let answers = question.allAnswers.map((str) =>
-                <GameButton callback={() => answer(str)} text={str}/>
+                <GameButton callback={() => chooseAnswer(str)} text={str}/>
             );
             return (
                 <>

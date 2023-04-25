@@ -1,31 +1,32 @@
 import "styles/ui/Timer.scss";
 import PropTypes from "prop-types";
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Component } from 'react';
 
 export const Timer = props => {
     const timeLimit = 1000 * props.timeLimit;
     const [remainingTime, setRemainingTime] = useState(timeLimit - 1000);
-    const [paused, setPaused] = useState(false);
 
     let startTime = localStorage.getItem('startTime') ? parseInt(localStorage.getItem('startTime')) : Date.now();
     localStorage.setItem('startTime', startTime);
 
     useEffect(() => {
         function handlePause() {
-            setPaused(true);
+            localStorage.setItem('paused', true);
         }
 
         getTime();
         const interval = setInterval(() => getTime(), 1000);
         document.addEventListener('pause', handlePause);
         return () => {
+            localStorage.removeItem('paused');
+            localStorage.removeItem('startTime');
             clearInterval(interval);
-            document.removeEventListener("timeOut", timeOut);
+            document.removeEventListener('pause', handlePause);
         }   
-    }, [paused]);
+    }, []);
 
     const getTime = () => {
-        if (!paused) {
+        if (localStorage.getItem('paused') != 'true') {
             let currentTime = Date.now() - startTime;
             currentTime = (props.currentTime ? props.currentTime : timeLimit) - currentTime;
             if (currentTime <= 0) {

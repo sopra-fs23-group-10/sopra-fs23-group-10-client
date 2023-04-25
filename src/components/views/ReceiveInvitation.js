@@ -18,6 +18,10 @@ const ReceiveInvitation = props => {
 
     useEffect(() => {
         connectInvitations(handleInvite, handleAnswer);
+        window.addEventListener('beforeunload', reply(false));
+        return () => {
+            window.removeEventListener('beforeunload', reply(false));
+        }   
     }, []);
 
     const handleInvite = async (msg) => {

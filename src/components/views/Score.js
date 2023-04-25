@@ -110,8 +110,14 @@ const Score = props => {
     }
 
     const rndTopic = () => {
-        let rnd = getRandomInt(0, 3);
-        fetchQuestion(topics[rnd]); 
+        if (topics) {
+            let rnd = getRandomInt(0, 3);
+            fetchQuestion(topics[rnd]); 
+        } else if (localStorage.getItem('topics')) {
+            let newTopics = JSON.parse(localStorage.getItem('topics'));
+            let rnd = getRandomInt(0, 3);
+            fetchQuestion(newTopics[rnd]); 
+        }
     }
     
     function getRandomInt(min, max) {
