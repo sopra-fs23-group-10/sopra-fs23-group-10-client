@@ -24,7 +24,7 @@ const EndGame = props => {
     const [endedGame, setEndedGame] = useState(false);
 
     useEffect(() => {
-        function handleAnswer(e) {
+        function handleReceiveReply(e) {
             const accepted = JSON.parse(e.detail)[localStorage.getItem('gameId')];
             if (rematchSent) {
                 if (accepted) {
@@ -36,6 +36,10 @@ const EndGame = props => {
                 }
                 setRematchSent(false);
             }
+        }
+
+        function handleSentReply(e) {
+            if (selecting == 'selecting') endGame();
         }
 
         async function getResults(){
@@ -54,9 +58,11 @@ const EndGame = props => {
 
         if (!result && !endedGame) getResults();
 
-        document.addEventListener("reply", handleAnswer);
+        document.addEventListener("receiveReply", handleReceiveReply);
+        document.addEventListener("sentReply", handleSentReply);
         return () => {
-            document.removeEventListener("reply", handleAnswer);
+            document.removeEventListener("receiveReply", handleReceiveReply);
+            document.addEventListener("sentReply", handleSentReply);
         }   
     });
 

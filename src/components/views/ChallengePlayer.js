@@ -22,6 +22,20 @@ const ChallengePlayer = props => {
     const [time, setTime] = useState(0);
 
     useEffect(() => {
+        function handleAnswer(e) {
+            console.log("handle answer!! " + inviteSent);
+            if (inviteSent) {
+                const accepted = JSON.parse(e.detail)[localStorage.getItem('gameId')];
+                if (accepted) {
+                    localStorage.setItem('question_nr', 1);
+                    history.push(`/topic-selection/${gameMode}/waiting`);
+                } else {
+                    localStorage.removeItem('gameId');
+                    setInviteSent(false);
+                }
+            }
+        }
+
         document.addEventListener("reply", handleAnswer);
         return () => {
             document.removeEventListener("reply", handleAnswer);
@@ -67,19 +81,6 @@ const ChallengePlayer = props => {
 
     const getTime = (time) => {
         setTime(time);
-    }
-
-    const handleAnswer = (e) => {
-        if (inviteSent) {
-            const accepted = JSON.parse(e.detail)[localStorage.getItem('gameId')];
-            if (accepted) {
-                localStorage.setItem('question_nr', 1);
-                history.push(`/topic-selection/${gameMode}/waiting`);
-            } else {
-                localStorage.removeItem('gameId');
-                setInviteSent(false);
-            }
-        }
     }
 
     const sentInvitation = () => {
