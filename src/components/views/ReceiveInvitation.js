@@ -115,7 +115,7 @@ const ReceiveInvitation = props => {
                         </div>
                         <div>
                             <Timer
-                                timeLimit={200}
+                                timeLimit={60}
                                 timeOut={() => reply(false)}
                                 getTime={getTime}
                             />
