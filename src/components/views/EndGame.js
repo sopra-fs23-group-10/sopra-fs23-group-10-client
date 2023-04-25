@@ -63,9 +63,20 @@ const EndGame = props => {
         document.addEventListener("sentReply", handleSentReply);
         return () => {
             document.removeEventListener("receiveReply", handleReceiveReply);
-            document.addEventListener("sentReply", handleSentReply);
+            document.removeEventListener("sentReply", handleSentReply);
         }   
     });
+
+    async function endGame(){
+        if (!endedGame) {
+            try {
+                await finishGame(localStorage.getItem('gameId'));
+            } catch(error) {
+                alert(error);
+                history.push("/login");
+            }
+        }
+    }
 
     const getUser = async (id, callback) => {
         try {
@@ -78,6 +89,7 @@ const EndGame = props => {
 
     const rematch = async () => {
         try {
+            if (selecting == 'selecting') endGame();
             let id = localStorage.getItem('id') == result.invitedPlayerId ? result.invitingPlayerId : result.invitedPlayerId;
             const response = await inviteUser(id, gameMode.toUpperCase(), "DUEL");
             localStorage.setItem('gameId', response.gameId);
@@ -133,6 +145,7 @@ const EndGame = props => {
     }
 
     const returnToHome = () => {
+        if (selecting == 'selecting') endGame();
         home();
     }
 

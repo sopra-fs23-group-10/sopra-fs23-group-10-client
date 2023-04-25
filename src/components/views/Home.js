@@ -23,7 +23,6 @@ const Home = () => {
     const [gameMode, setGameMode] = useState(gameModes.none);
     const [playerMode, setPlayerMode] = useState(playerModes.none)
     const [users, setUsers] = useState(null);
-    const [gameId, setGameId] = useState(-1);
 
     const getUsers = (u) => {
         setUsers(u);
@@ -67,7 +66,7 @@ const Home = () => {
                                 >
                             </SelectionButton>
                         </div>
-                        <div class="selection-container" onClick={() => chooseGameMode(gameModes.image)}>
+                        <div class="selection-container">
                             <SelectionButton 
                                 class="game"
                                 title={"Image\nQuiz"}

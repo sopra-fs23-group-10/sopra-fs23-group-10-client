@@ -79,6 +79,7 @@ const ReceiveInvitation = props => {
     }
 
     const goToGame = async () => {
+        console.log("go to topics from game");
         localStorage.removeItem('gameId');
         localStorage.removeItem('question_nr');
         localStorage.removeItem('startTime');

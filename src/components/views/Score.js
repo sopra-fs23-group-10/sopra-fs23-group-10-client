@@ -4,10 +4,8 @@ import React, {useEffect, useState, useRef} from 'react';
 import { useHistory, useParams } from "react-router-dom";
 import { GameButton } from "components/ui/GameButton";
 import Result from "../../models/Result";
-import BaseContainer from "components/ui/BaseContainer";
 import {connectQuestion} from "../../helpers/WebSocketFactory";
 import 'styles/views/Score.scss';
-import {connectGame} from "../../helpers/WebSocketFactory";
 import Question from "models/Question";
 import {Timer} from "../ui/Timer";
 
@@ -19,18 +17,10 @@ const Score = props => {
     const [usernameInvited, setUsernameInvited] = useState("");
     const [topics, setTopics] = useState(null);
     let { selecting, gameMode } = useParams();
+    const [topicsFetched, setTopicsFetched] = useState(false);
 
     useEffect(() => {
         connectQuestion(handleQuestion);
-        async function fetchTopics() {
-            try {
-                const response = await getTopicSelection(localStorage.getItem("gameId"));
-                setTopics(response.topics);
-                localStorage.setItem('topics', JSON.stringify(response.topics));
-            } catch (error) {
-                alert(`Something went wrong while fetching the topcis, ${handleError(error)}`);
-            }
-        }
 
         async function fetchGame() {
             try {
@@ -71,15 +61,27 @@ const Score = props => {
             }
         }
 
-        if (selecting == 'selecting' && !topics && !localStorage.getItem('topics')) {
-            fetchTopics();
-        } else if (selecting == 'selecting' && !topics && localStorage.getItem('topics')) {
-            console.log("TOPICS");
-            setTopics(JSON.parse(localStorage.getItem('topics')));
+        if (selecting == 'selecting' && !topics) {
+            if (!localStorage.getItem('topics')) {
+                fetchTopics();
+            } else {
+                setTopics(JSON.parse(localStorage.getItem('topics')));
+            }
         }
 
-        fetchGame();
+        if (!result) fetchGame();
     }, [topics]);
+
+    async function fetchTopics() {
+        console.log("fetch topics");
+        try {
+            const response = await getTopicSelection(localStorage.getItem("gameId"));
+            setTopics(response.topics);
+            localStorage.setItem('topics', JSON.stringify(response.topics));
+        } catch (error) {
+            alert(`Something went wrong while fetching the topcis, ${handleError(error)}`);
+        }
+    }
 
     const fetchQuestion = async (topic) => {
         try {
@@ -110,10 +112,11 @@ const Score = props => {
     }
 
     const rndTopic = () => {
-        if (topics) {
-            let rnd = getRandomInt(0, 3);
-            fetchQuestion(topics[rnd]); 
-        } else if (localStorage.getItem('topics')) {
+        // if (topics) {
+        //     let rnd = getRandomInt(0, 3);
+        //     fetchQuestion(topics[rnd]); 
+        // } else 
+        if (localStorage.getItem('topics')) {
             let newTopics = JSON.parse(localStorage.getItem('topics'));
             let rnd = getRandomInt(0, 3);
             fetchQuestion(newTopics[rnd]); 
@@ -132,36 +135,36 @@ const Score = props => {
     }
 
     const drawTopics = () => {
-        console.log(topics);
-        if (selecting == 'selecting' && topics) {
-            return (
-                <>
-                    <div className="grid-2">
-                        <div className="title grid2" style={{textAlign: "left"}}>
-                            Select a topic
-                        </div>
-                        {topics.map((topic)=> (
-                            <div key={topic} className={'topicSelection column-${index+1}'}>
-                                <GameButton callback={() => fetchQuestion(topic)} text={parseString(topic)}/>
+        if (selecting == 'selecting') {
+            if (topics) {
+                return (
+                    <>
+                        <div className="grid-2">
+                            <div className="title grid2" style={{textAlign: "left"}}>
+                                Select a topic
                             </div>
-                        ))}
+                            {topics.map((topic)=> (
+                                <div key={topic} className={'topicSelection column-${index+1}'}>
+                                    <GameButton callback={() => fetchQuestion(topic)} text={parseString(topic)}/>
+                                </div>
+                            ))}
+                        </div>
+                    </>
+                );
+            } else {
+                return (
+                    <div className="background-topic-waiting">
+                        <div className="topic">
+                            Yoo, stuff went to else.
+                        </div>
                     </div>
-                </>
-            );
-        } else if (selecting == 'waiting') {
+                );
+            }
+        } else {
             return (
                 <div className="background-topic-waiting">
                     <div className="topic">
                         Your opponent is selecting a topic.
-                    </div>
-                </div>
-            );
-        }
-        else {
-            return (
-                <div className="background-topic-waiting">
-                    <div className="topic">
-                        Yoo, stuff went to else.
                     </div>
                 </div>
             );
