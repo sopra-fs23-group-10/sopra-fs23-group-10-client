@@ -7,7 +7,6 @@ import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { connectGame } from "helpers/WebSocketFactory";
 import 'styles/ui/Invitation.scss';
-import Result from "models/Result";
 
 /**
  * This is an example of a Functional and stateless component (View) in React. Functional components are not classes and thus don't handle internal state changes.

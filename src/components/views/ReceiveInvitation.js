@@ -44,6 +44,7 @@ const ReceiveInvitation = props => {
     }
 
     const reply = async (accepted) => {
+        console.log(reply);
         const response = await answerInvite(invitation.gameId, accepted);
         console.log(response);
         setInvitation(null);
@@ -54,7 +55,6 @@ const ReceiveInvitation = props => {
     }
 
     const goToGame = async () => {
-        console.log('GO TO GAME');
         localStorage.removeItem('gameId');
         localStorage.removeItem('question_nr');
 
