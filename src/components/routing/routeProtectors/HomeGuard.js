@@ -12,7 +12,6 @@ import { cancelGame } from "helpers/restApi";
  * @param props
  */
 export const HomeGuard = props => {
-
   const cancel = async (id) => {
     await cancelGame(id);
   }
@@ -21,6 +20,9 @@ export const HomeGuard = props => {
     cancel(localStorage.getItem('gameId'));
     localStorage.removeItem('gameId');
     localStorage.removeItem('question_nr');
+    localStorage.removeItem('topics');
+    localStorage.removeItem('answered');
+    localStorage.removeItem('startTime');
     return props.children;
   } else if (localStorage.getItem("token")){
     return props.children;

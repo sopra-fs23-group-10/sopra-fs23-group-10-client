@@ -30,6 +30,7 @@ const EndGame = props => {
                 if (accepted) {
                     console.log("ACCEPTED");
                     localStorage.setItem('question_nr', 1);
+                    localStorage.removeItem('startTime');
                     history.push(`/topic-selection/${gameMode}/waiting`);
                 } else {
                     localStorage.removeItem('gameId');

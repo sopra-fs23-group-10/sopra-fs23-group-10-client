@@ -14,19 +14,19 @@ import {Timer} from "../ui/Timer";
 
 const Score = props => {
     const history = useHistory();
-    const [topics, setTopics] = useState(null);
     const [result, setResult] = useState(null);
     const [usernameInviting, setUsernameInviting] = useState("");
     const [usernameInvited, setUsernameInvited] = useState("");
+    const [topics, setTopics] = useState(null);
     let { selecting, gameMode } = useParams();
 
     useEffect(() => {
         connectQuestion(handleQuestion);
         async function fetchTopics() {
-            console.log('fetch topics');
             try {
                 const response = await getTopicSelection(localStorage.getItem("gameId"));
                 setTopics(response.topics);
+                localStorage.setItem('topics', JSON.stringify(response.topics));
             } catch (error) {
                 alert(`Something went wrong while fetching the topcis, ${handleError(error)}`);
             }
@@ -41,7 +41,6 @@ const Score = props => {
                     await getUser(response.data.invitedPlayerId, setUsernameInvited);
                     await getUser(response.data.invitingPlayerId, setUsernameInviting);
                 } else {
-                    console.log("get result!");
                     const response = await getIntermediateResults(localStorage.getItem("gameId"));
                     console.log(response);
                     let points1 = 0;
@@ -72,10 +71,13 @@ const Score = props => {
             }
         }
 
-        console.log('selecting: ' + selecting + ', ' + (selecting == 'selecting'));
-        if (selecting == 'selecting' && !topics) {
+        if (selecting == 'selecting' && !topics && !localStorage.getItem('topics')) {
             fetchTopics();
+        } else if (selecting == 'selecting' && !topics && localStorage.getItem('topics')) {
+            console.log("TOPICS");
+            setTopics(JSON.parse(localStorage.getItem('topics')));
         }
+
         fetchGame();
     }, [topics]);
 
@@ -85,6 +87,7 @@ const Score = props => {
             const q = new Question(response);
         } catch (error) {
             alert(error);
+            localStorage.removeItem('topics');
             history.push("/login");
         }
     }
@@ -94,13 +97,10 @@ const Score = props => {
     }
 
     const toQuestion = (question) => {
-        history.push({
-            pathname: '/game/' + gameMode + "/" + selecting,
-            search: "?update=true",
-            state: {
-                question: question
-            },
-        });
+        localStorage.removeItem('topics');
+        localStorage.removeItem('startTime');
+        localStorage.setItem('question', JSON.stringify(question));
+        history.push('/game/' + gameMode + "/" + selecting);
     }
 
     const handleTimeOut = () => {
@@ -126,6 +126,7 @@ const Score = props => {
     }
 
     const drawTopics = () => {
+        console.log(topics);
         if (selecting == 'selecting' && topics) {
             return (
                 <>
@@ -184,7 +185,7 @@ const Score = props => {
     }
 
     const drawTimer = () => {
-        if (topics || selecting != 'selecting') {
+        if (localStorage.getItem('topics') || selecting != 'selecting') {
             return (
                 <Timer timeOut={handleTimeOut} timeLimit={240}/>
             );

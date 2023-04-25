@@ -59,6 +59,7 @@ const ReceiveInvitation = props => {
     const goToGame = async () => {
         localStorage.removeItem('gameId');
         localStorage.removeItem('question_nr');
+        localStorage.removeItem('startTime');
 
         localStorage.setItem('gameId', invitation.gameId);
         localStorage.setItem('question_nr', 1);

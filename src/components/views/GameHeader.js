@@ -47,6 +47,9 @@ const GameHeader = props => {
     const ok = () => {
         localStorage.removeItem('gameId');
         localStorage.removeItem('question_nr');
+        localStorage.removeItem('topics');
+        localStorage.removeItem('answered');
+        localStorage.removeItem('startTime');
         history.push("/home");
     }
 

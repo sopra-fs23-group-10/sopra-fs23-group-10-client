@@ -7,13 +7,15 @@ export const Timer = props => {
     const [remainingTime, setRemainingTime] = useState(timeLimit - 1000);
     const [paused, setPaused] = useState(false);
 
-    let startTime = Date.now();
+    let startTime = localStorage.getItem('startTime') ? parseInt(localStorage.getItem('startTime')) : Date.now();
+    localStorage.setItem('startTime', startTime);
 
     useEffect(() => {
         function handlePause() {
             setPaused(true);
         }
 
+        getTime();
         const interval = setInterval(() => getTime(), 1000);
         document.addEventListener('pause', handlePause);
         return () => {

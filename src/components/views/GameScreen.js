@@ -29,7 +29,13 @@ const GameScreen = () => {
             goToScore();
         }
 
-        setQuestion(location.state.question);
+        if (!question && localStorage.getItem('answered')) {
+            console.log("ANSWERED");
+            setAnswered(true);
+            setQuestion(JSON.parse(localStorage.getItem(question)));
+        }
+
+        if (!question) setQuestion(JSON.parse(localStorage.getItem('question')));
         document.addEventListener("timeOut", timeOut);
         return () => document.removeEventListener("timeOut", timeOut);
     });
@@ -44,6 +50,7 @@ const GameScreen = () => {
                 time
             );
             setAnswered(true);
+            localStorage.setItem('answered', true);
         } catch (error) {
             alert(error);
             history.push("/login");
@@ -87,7 +94,10 @@ const GameScreen = () => {
 
     const goToScore = () => {
         let nr = parseInt(localStorage.getItem('question_nr'));
-        if (nr < 1) {
+        localStorage.removeItem('answered');
+        localStorage.removeItem('question');
+        localStorage.removeItem('startTime');
+        if (nr < 3) {
             localStorage.setItem('question_nr', (nr + 1));
             history.push('/topic-selection/' + gameMode + "/" + (selecting == 'selecting' ? 'waiting' : 'selecting'));
         } else {
