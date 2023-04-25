@@ -21,6 +21,7 @@ const EndGame = props => {
     const { gameMode, selecting } = useParams();
     const [rematchSent, setRematchSent] = useState(false);
     const [time, setTime] = useState(0);
+    const [endedGame, setEndedGame] = useState(false);
 
     useEffect(() => {
         function handleAnswer(e) {
@@ -51,7 +52,7 @@ const EndGame = props => {
             }
         }
 
-        if (!result) getResults();
+        if (!result && !endedGame) getResults();
 
         document.addEventListener("reply", handleAnswer);
         return () => {
@@ -70,12 +71,14 @@ const EndGame = props => {
 
     const rematch = async () => {
         try {
-            endGame();
+            if (selecting == 'selecting') endGame();
             let id = localStorage.getItem('id') == result.invitedPlayerId ? result.invitingPlayerId : result.invitedPlayerId;
             const response = await inviteUser(id, gameMode.toUpperCase(), "DUEL");
             localStorage.setItem('gameId', response.gameId);
             setRematchSent(true);
+            setEndedGame(true);
         } catch (error) {
+            alert(error);
             history.push("/home");
         }
     }
@@ -86,6 +89,7 @@ const EndGame = props => {
             localStorage.removeItem('gameId');
             setRematchSent(false);
         } catch (error) {
+            alert(error);
             history.push("/home");
         }
     }
@@ -112,11 +116,13 @@ const EndGame = props => {
     }
 
     async function endGame(){
-        try {
-            await finishGame(localStorage.getItem('gameId'));
-        } catch(error) {
-            alert(error);
-            history.push("/login");
+        if (!endedGame) {
+            try {
+                await finishGame(localStorage.getItem('gameId'));
+            } catch(error) {
+                alert(error);
+                history.push("/login");
+            }
         }
     }
 
@@ -131,8 +137,12 @@ const EndGame = props => {
         }
     }
 
-    const goToHome = () => {
+    const returnToHome = () => {
         if (selecting == 'selecting') endGame();
+        home();
+    }
+
+    const home = () => {
         localStorage.removeItem('gameId');
         localStorage.removeItem('question_nr');
         history.push("/home");
@@ -182,7 +192,7 @@ const EndGame = props => {
                                 <Button
                                     width="80%"
                                     style={{margin: "auto"}}
-                                    onClick={() => goToHome()}
+                                    onClick={() => returnToHome()}
                                 >
                                     RETURN HOME
                                 </Button>
