@@ -157,6 +157,15 @@ const Score = props => {
                 </div>
             );
         }
+        else {
+            return (
+                <div className="background-topic-waiting">
+                    <div className="topic">
+                        Yoo, stuff went to else.
+                    </div>
+                </div>
+            );
+        }
     }
 
     const drawResults = () => {
