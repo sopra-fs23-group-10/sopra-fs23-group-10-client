@@ -17,8 +17,10 @@ const Ranking = props => {
                 <div className ="title" style={{textAlign: "center"}}>
                     <p>
                         <strong> STAR PLAYERS </strong> <br />
+                        <br />
+                        this feature will follow in the second sprint<br />
+ 
                     </p>
-
                 </div>
                 <div className="button-container">
                     <Button

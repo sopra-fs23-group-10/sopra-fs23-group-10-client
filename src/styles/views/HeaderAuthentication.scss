@@ -2,12 +2,12 @@
 
 .header {
   font-family: $fontDisplay;
-  font-size: 50px;
+  font-size: 80px;
   height: $header_height;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
+  overflow: visible;
   &.container {
     @include center;
   }

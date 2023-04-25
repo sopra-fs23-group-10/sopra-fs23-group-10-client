@@ -24,7 +24,20 @@ const GameHeader = props => {
 
     useEffect(() => {
         connectGame(handleGameCancelled);
-    }, [result]);
+
+        window.history.pushState(null, null, window.location.pathname);
+        window.addEventListener("popstate", onBackButtonEvent);
+
+        return()=> {
+            window.removeEventListener("popstate", onBackButtonEvent);
+        }
+    }, []);
+
+
+    const onBackButtonEvent = (e) => {
+        e.preventDefault();
+        window.history.pushState(null, null, window.location.pathname);
+    }
 
     const cancel = async () => {
         setSentCancellation(true);

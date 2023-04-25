@@ -57,7 +57,8 @@ const HomeHeader = props => {
     }
 
     const toEdit = (userId) => {
-        history.push('edit/'+userId)
+        //history.push('edit/'+userId)
+        history.push('/home')
     }
     const [showProfile, setDropDown] = useState(false);
     const dropDown = () =>{

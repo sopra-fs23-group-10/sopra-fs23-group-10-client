@@ -187,7 +187,7 @@ const Score = props => {
     const drawTimer = () => {
         if (localStorage.getItem('topics') || selecting != 'selecting') {
             return (
-                <Timer timeOut={handleTimeOut} timeLimit={240}/>
+                <Timer timeOut={handleTimeOut} timeLimit={15}/>
             );
         }
     }
@@ -195,7 +195,7 @@ const Score = props => {
     return (
         <>
             <GameHeader questionId={localStorage.getItem('question_nr')} height="100"/>
-            <div className="ScreenGrid">
+            <div className="ScreenGrid-Score">
                 {drawResults()}
                 {drawTopics()}
                 {drawTimer()}
