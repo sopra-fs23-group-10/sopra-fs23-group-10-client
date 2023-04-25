@@ -39,7 +39,6 @@ const ReceiveInvitation = props => {
     const handleAnswer = (msg) => {
         setInvitation(null);
         setUsername("");
-        if (props.onAnswer) props.onAnswer(msg);
         throwReply(msg);
     }
 
@@ -105,10 +104,6 @@ const ReceiveInvitation = props => {
     return (
         <>{receiveInvitation()}</>
     );
-};
-
-ReceiveInvitation.propTypes = {
-    onAnswer: PropTypes.func
 };
 
 export default ReceiveInvitation;
