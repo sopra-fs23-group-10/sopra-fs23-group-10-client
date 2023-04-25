@@ -23,7 +23,6 @@ const ChallengePlayer = props => {
 
     useEffect(() => {
         function handleAnswer(e) {
-            console.log("handle answer!! " + inviteSent);
             if (inviteSent) {
                 const accepted = JSON.parse(e.detail)[localStorage.getItem('gameId')];
                 if (accepted) {
@@ -39,9 +38,9 @@ const ChallengePlayer = props => {
 
         document.addEventListener("receiveReply", handleAnswer);
         return () => {
-            document.removeEventListener("reveiceReply", handleAnswer);
+            document.removeEventListener("receiveReply", handleAnswer);
         } 
-    })
+    }, [inviteSent])
 
     const getUsers = async (u) => {
         setUsers(u);
