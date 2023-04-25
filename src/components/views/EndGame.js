@@ -103,7 +103,7 @@ const EndGame = props => {
                     <div className = "invitation base-container">
                         <p> Rematch has been sent. Waiting for answer...</p>
                         <div className="button-container">
-                            <Timer timeLimit={90} timeOut={cancelRematch} getTime={getTime}/>
+                            <Timer timeLimit={200} timeOut={cancelRematch} getTime={getTime}/>
                         </div>
                     </div>
                 </div>
