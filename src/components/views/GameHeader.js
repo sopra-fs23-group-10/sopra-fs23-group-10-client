@@ -83,6 +83,17 @@ const GameHeader = props => {
         }
     }
 
+    const cancelButton = () => {
+        if (props.showCancelButton == true){
+            return (
+                <>
+                    <Button width="100%" onClick={() => cancel()} style={{gridColumn:5}}>Cancel Game</Button>
+                    {gameCancelled()}
+                </>
+            )
+        }
+    }
+
     return (
         <header className="gameheader container">
             <div className="gamecontentheader fontnormal" style={{textAlign: "left"}}>
@@ -100,10 +111,7 @@ const GameHeader = props => {
             <div className="content" style={{textAlign: "right", gridColumn:4}}>
                 Music
             </div>
-            {props.showCancelButton (
-                <Button width="100%" onClick={() => cancel()} style={{gridColumn:5}}>Cancel Game</Button>
-            )}
-            {gameCancelled()}
+            {cancelButton()}
         </header>
     );
 }
