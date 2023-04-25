@@ -32,20 +32,8 @@ const EndGame = props => {
                     history.push(`/topic-selection/${gameMode}/waiting`);
                 } else {
                     localStorage.removeItem('gameId');
-                    setRematchSent(false);
                 }
-            }
-        }
-
-        // if (selecting != 'selecting' && !result) connectResult(handleResult);
-
-        async function endGame(){
-            console.log("ENGAME");
-            try {
-                await finishGame(localStorage.getItem('gameId'));
-            } catch(error) {
-                alert(error);
-                history.push("/login");
+                setRematchSent(false);
             }
         }
 
@@ -63,11 +51,7 @@ const EndGame = props => {
             }
         }
 
-        if (selecting == 'selecting' && !result) {
-            setTimeout(() => {  endGame(); }, 5000);
-        }
-
-        getResults();
+        if (!result) getResults();
 
         document.addEventListener("reply", handleAnswer);
         return () => {
@@ -84,24 +68,15 @@ const EndGame = props => {
         }
     }
 
-    const handleResult = async (msg) => {
-        let response = JSON.parse(msg);
-        let res = new Result(response[response.length-1]);
-        setResult(res);
-
-        await getUser(res.invitingPlayerId, setUsernameInviting);
-        await getUser(res.invitedPlayerId, setUsernameInvited);
-    }
-
     const rematch = async () => {
         try {
+            endGame();
             let id = localStorage.getItem('id') == result.invitedPlayerId ? result.invitingPlayerId : result.invitedPlayerId;
             const response = await inviteUser(id, gameMode.toUpperCase(), "DUEL");
             localStorage.setItem('gameId', response.gameId);
             setRematchSent(true);
         } catch (error) {
-            console.log(error);
-            // history.push("/home");
+            history.push("/home");
         }
     }
 
@@ -136,6 +111,15 @@ const EndGame = props => {
         }
     }
 
+    async function endGame(){
+        try {
+            await finishGame(localStorage.getItem('gameId'));
+        } catch(error) {
+            alert(error);
+            history.push("/login");
+        }
+    }
+
     const resultText = () => {
         if (result.invitedPlayerResult == result.invitingPlayerResult) {
             return "It's a draw!"
@@ -148,6 +132,7 @@ const EndGame = props => {
     }
 
     const goToHome = () => {
+        if (selecting == 'selecting') endGame();
         localStorage.removeItem('gameId');
         localStorage.removeItem('question_nr');
         history.push("/home");
