@@ -19,14 +19,12 @@ const GameScreen = () => {
     useEffect( () => {
         function timeOut() {
             if (!answered) {
-                console.log("send wrong answer");
                 answer("stupid answer");
             }
             goToScore();
         }
 
         if (!question && localStorage.getItem('answered')) {
-            console.log("ANSWERED");
             setAnswered(true);
         }
 
@@ -97,7 +95,6 @@ const GameScreen = () => {
 
     const handleEndResult = (e) => {
         if (selecting != 'selecting') {
-            console.log(e.detail)
             localStorage.setItem('result', JSON.stringify(e.detail));
             history.push('/endgame/' + gameMode + "/waiting");
         }
@@ -108,7 +105,7 @@ const GameScreen = () => {
         localStorage.removeItem('answered');
         localStorage.removeItem('question');
         localStorage.removeItem('startTime');
-        if (nr < 1) {
+        if (nr < 10) {
             localStorage.setItem('question_nr', (nr + 1));
             history.push('/topic-selection/' + gameMode + "/" + (selecting == 'selecting' ? 'waiting' : 'selecting'));
         } else if (selecting == 'selecting') {

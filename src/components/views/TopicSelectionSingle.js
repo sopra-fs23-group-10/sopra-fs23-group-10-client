@@ -27,7 +27,6 @@ const TopicSelectionSingle = props => {
     let { selecting } = useParams();
 
     useEffect(() => {
-        //connectQuestion(handleQuestion);
         async function fetchTopics() {
             try {
                 const response = await getAllTopics();
@@ -36,21 +35,12 @@ const TopicSelectionSingle = props => {
                 alert(`Something went wrong while fetching the topcis, ${handleError(error)}`);
             }
         }
-
-        //console.log('selecting: ' + selecting + ', ' + (selecting == 'selecting'));
-        //if (selecting == 'selecting' && !topics) {
         fetchTopics();
-        //}
-        //fetchGame();
     }, [topics]);
 
     const parseString = (str) => {
         return str.replace('_', ' & ');
     }
-    //const rndTopic = () => {
-    //    let rnd = getRandomInt(0, 10);
-    //    fetchQuestion(topics[rnd]);
-    //}
 
     const TopicSel = () => {
         if (topics) {

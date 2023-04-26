@@ -30,7 +30,6 @@ export const Timer = props => {
             let currentTime = Date.now() - startTime;
             currentTime = (props.currentTime ? props.currentTime : timeLimit) - currentTime;
             if (currentTime <= 0) {
-                console.log("timer is zero!");
                 currentTime = 0;
                 if (props.timeOut) props.timeOut();
                 timeOut();

@@ -4,7 +4,7 @@ import React, {useEffect, useState } from 'react';
 import { useHistory, useParams } from "react-router-dom";
 import { GameButton } from "components/ui/GameButton";
 import Result from "../../models/Result";
-import {connectQuestion} from "../../helpers/WebSocketFactory";
+import {connectQuestion, disconnectQuestion} from "../../helpers/WebSocketFactory";
 import 'styles/views/Score.scss';
 import Question from "models/Question";
 import {Timer} from "../ui/Timer";
@@ -31,11 +31,9 @@ const Score = props => {
                     await getUser(response.data.invitingPlayerId, setUsernameInviting);
                 } else {
                     const response = await getIntermediateResults(localStorage.getItem("gameId"));
-                    console.log(response);
                     let points1 = 0;
                     let points2 = 0;
                     for (let r of response.data) {
-                        console.log(r.invitedPlayerResult);
                         points1 += r.invitedPlayerResult;
                         points2 += r.invitingPlayerResult;
                     }
@@ -69,10 +67,10 @@ const Score = props => {
         }
 
         if (!result) fetchGame();
+        return () => { disconnectQuestion(); }
     }, [topics]);
 
     async function fetchTopics() {
-        console.log("fetch topics");
         try {
             const response = await getTopicSelection(localStorage.getItem("gameId"));
             setTopics(response.topics);

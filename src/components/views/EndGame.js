@@ -26,7 +26,6 @@ const EndGame = props => {
             const accepted = JSON.parse(e.detail)[localStorage.getItem('gameId')];
             if (rematchSent) {
                 if (accepted) {
-                    console.log("ACCEPTED");
                     localStorage.setItem('question_nr', 1);
                     localStorage.removeItem('startTime');
                     history.push(`/topic-selection/${gameMode}/waiting`);
@@ -109,7 +108,6 @@ const EndGame = props => {
             localStorage.removeItem('gameId');
             setRematchSent(false);
         } catch (error) {
-            console.log("to home, cancel rematch")
             alert(error);
             history.push("/home");
         }
@@ -148,7 +146,6 @@ const EndGame = props => {
     }
 
     const home = () => {
-        console.log("to home, home")
         localStorage.removeItem('gameId');
         localStorage.removeItem('question_nr');
         localStorage.removeItem('result');

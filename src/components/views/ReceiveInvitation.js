@@ -32,12 +32,10 @@ const ReceiveInvitation = props => {
     }
 
     const handleReload = async () => {
-        console.log("handle reload: " + localStorage.getItem('gameId'));
         if (localStorage.getItem('gameId')) {
             try {
                 localStorage.removeItem('startTime');
                 const response = await answerInvite(localStorage.getItem('gameId'), false);
-                console.log(response);
                 const event = new CustomEvent("sendReply", { detail: false });
                 document.dispatchEvent(event);
             } catch (error) {
@@ -66,7 +64,6 @@ const ReceiveInvitation = props => {
 
     const reply = async (accepted) => {
         const response = await answerInvite(invitation.gameId, accepted);
-        console.log(response);
         setInvitation(null);
         setUsername("");
         if (response[invitation.gameId]) {
@@ -77,7 +74,6 @@ const ReceiveInvitation = props => {
     }
 
     const goToGame = async () => {
-        console.log("go to topics from game");
         localStorage.removeItem('gameId');
         localStorage.removeItem('question_nr');
         localStorage.removeItem('startTime');
@@ -89,7 +85,6 @@ const ReceiveInvitation = props => {
     }
 
     const throwReply = (msg) => {
-        console.log("receiveReply");
         const event = new CustomEvent("receiveReply", { detail: msg });
         document.dispatchEvent(event);
     }

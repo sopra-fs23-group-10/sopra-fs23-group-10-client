@@ -4,7 +4,7 @@ import "styles/views/GameHeader.scss";
 import { Button } from "components/ui/Button";
 import { cancelGame } from "helpers/restApi";
 import { useHistory } from "react-router-dom";
-import { connectGame, connectResult } from "helpers/WebSocketFactory";
+import { connectGame, connectResult, disconnectGame, disconnectResult } from "helpers/WebSocketFactory";
 import 'styles/ui/Invitation.scss';
 
 
@@ -22,6 +22,8 @@ const GameHeader = props => {
 
         return()=> {
             window.removeEventListener("popstate", onBackButtonEvent);
+            disconnectGame();
+            disconnectResult();
         }
     }, []);
     
@@ -41,7 +43,6 @@ const GameHeader = props => {
         setSentCancellation(true);
         try {
             const response = await cancelGame(localStorage.getItem('gameId'));
-            console.log(response);
         } catch (error) {
             console.log(error);
             history.push("/home");
@@ -49,7 +50,6 @@ const GameHeader = props => {
     }
 
     const handleGameCancelled = (msg) => {
-        console.log(msg);
         setCancelled(true);
         const event = new CustomEvent('pause', { detail: null });
         document.dispatchEvent(event);
