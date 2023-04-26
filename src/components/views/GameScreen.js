@@ -94,9 +94,16 @@ const GameScreen = () => {
         }
     }
 
+    const cleanup = () => {
+        localStorage.removeItem('answered');
+        localStorage.removeItem('question');
+        localStorage.removeItem('startTime');
+    }
+
     const handleEndResult = (e) => {
         let nr = parseInt(localStorage.getItem('question_nr'));
         if (selecting != 'selecting' && nr >= nQuestions) {
+            cleanup();
             localStorage.setItem('result', JSON.stringify(e.detail));
             history.push('/endgame/' + gameMode + "/waiting");
         }
@@ -104,9 +111,7 @@ const GameScreen = () => {
 
     const goToScore = () => {
         let nr = parseInt(localStorage.getItem('question_nr'));
-        localStorage.removeItem('answered');
-        localStorage.removeItem('question');
-        localStorage.removeItem('startTime');
+        cleanup();
         if (nr < nQuestions) {
             localStorage.setItem('question_nr', (nr + 1));
             history.push('/topic-selection/' + gameMode + "/" + (selecting == 'selecting' ? 'waiting' : 'selecting'));
