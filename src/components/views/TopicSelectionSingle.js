@@ -1,30 +1,17 @@
-import GameHeader from "components/views/GameHeader";
 import {
-    fetchUsersInGame,
-    getTopicSelection,
-    fetchUserById,
-    getIntermediateResults,
     handleError,
-    getQuestion,
     getAllTopics
 } from "helpers/restApi";
 import React, {useEffect, useState, useRef} from 'react';
-import {useHistory, Prompt, useParams} from "react-router-dom";
 import { GameButton } from "components/ui/GameButton";
-import Result from "../../models/Result";
 import 'styles/views/TopicSelectionSingle.scss';
-import {connectQuestion} from "../../helpers/WebSocketFactory";
-//import 'styles/views/Score.scss';
-import {Timer} from "../ui/Timer";
 import HomeHeader from "./HomeHeader";
 
 
 
 const TopicSelectionSingle = props => {
-    const history = useHistory();
     const [topics, setTopics] = useState(null);
-    const topicsData = useRef(null);
-    let { selecting } = useParams();
+
 
     useEffect(() => {
         async function fetchTopics() {
@@ -35,7 +22,9 @@ const TopicSelectionSingle = props => {
                 alert(`Something went wrong while fetching the topcis, ${handleError(error)}`);
             }
         }
+
         fetchTopics();
+
     }, [topics]);
 
     const parseString = (str) => {
@@ -68,19 +57,6 @@ const TopicSelectionSingle = props => {
             );
         }
     }
-
-    //const handleTimeOut = () => {
-    //    if (localStorage.getItem('selecting') === "true") {
-    //        rndTopic();
-    //    }
-    //}
-    //const drawTimer = () => {
-    //    if (topics || localStorage.getItem('selecting') === 'false') {
-    //        return (
-    //            <Timer timeOut={handleTimeOut} timeLimit={15}/>
-    //        );
-    //    }
-    //}
 
     return (
         <>
