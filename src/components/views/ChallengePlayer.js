@@ -1,9 +1,6 @@
-import React from 'react';
-import {useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {inviteUser, answerInvite} from 'helpers/restApi';
-//import {api, handleError} from 'helpers/api';
 import {useHistory, useParams, Link} from 'react-router-dom';
-//import {Button} from 'components/ui/Button';
 import 'styles/views/PopUp.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import HomeHeader from "./HomeHeader";
@@ -19,7 +16,6 @@ const ChallengePlayer = props => {
     const { gameMode } = useParams();
     const [users, setUsers] = useState(null);
     const [inviteSent, setInviteSent] = useState(false);
-    const [time, setTime] = useState(0);
 
     useEffect(() => {
         function handleAnswer(e) {
@@ -59,7 +55,7 @@ const ChallengePlayer = props => {
 
     const cancelInvite = async () => {
         try {
-            const response = await answerInvite(localStorage.getItem('gameId'), false);
+            await answerInvite(localStorage.getItem('gameId'), false);
             localStorage.removeItem('gameId');
             setInviteSent(false);
         } catch (error) {
@@ -79,10 +75,6 @@ const ChallengePlayer = props => {
         invite(others[rnd].id);
     }
 
-    const getTime = (time) => {
-        setTime(time);
-    }
-
     const sentInvitation = () => {
         if (inviteSent) {
             return (
@@ -95,7 +87,7 @@ const ChallengePlayer = props => {
                             Invite has been sent. Waiting for answer...
                         </div>
                         <div className="button-container">
-                            <Timer timeLimit={60} timeOut={cancelInvite} getTime={getTime}/>
+                            <Timer timeLimit={60} timeOut={cancelInvite}/>
                         </div>
                     </div>
                 </div>

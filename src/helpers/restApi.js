@@ -213,7 +213,7 @@ export const finishGame = async () => {
   try {
     const gameId = localStorage.getItem('gameId');
     const authToken = localStorage.getItem('token');
-    const response = await restApi.delete(`/game/finish/${gameId}`, {headers: {token: authToken}});
+    await restApi.delete(`/game/finish/${gameId}`, {headers: {token: authToken}});
   } catch (error) {
     throw new Error(`Something went wrong during fetching final results: \n${handleError(error)}`);
   }

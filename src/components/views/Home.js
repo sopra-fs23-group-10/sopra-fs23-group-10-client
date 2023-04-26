@@ -9,7 +9,6 @@ import trivia from "images/trivia.png";
 import duel from "images/duel.png";
 import single from "images/single.png";
 import {PlayerList} from "../ui/PlayerList";
-import { Button } from 'components/ui/Button';
 import ReceiveInvitation from './ReceiveInvitation';
 
 const Home = () => {
@@ -21,7 +20,6 @@ const Home = () => {
 
     const [startGame, setStartGame] = useState(false);
     const [gameMode, setGameMode] = useState(gameModes.none);
-    const [playerMode, setPlayerMode] = useState(playerModes.none)
     const [users, setUsers] = useState(null);
 
     const getUsers = (u) => {
@@ -38,7 +36,6 @@ const Home = () => {
 
     const choosePlayerMode = (pm) => {
         if (pm === playerModes.duel && users.length < 2) return;
-        setPlayerMode(pm);
         if (pm === playerModes.duel) {
             history.push("/challenge/" + gameMode.toLowerCase());
         }

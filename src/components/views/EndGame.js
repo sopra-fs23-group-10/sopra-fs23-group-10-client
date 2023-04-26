@@ -1,7 +1,6 @@
-import React, {useEffect} from 'react';
-import {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {inviteUser, answerInvite, fetchUserById, finishGame, getFinalResults} from 'helpers/restApi';
-import {useHistory, useParams, Link} from 'react-router-dom';
+import {useHistory, useParams} from 'react-router-dom';
 import 'styles/views/EndGame.scss';
 import GameHeader from "./GameHeader";
 import {Button} from "../ui/Button";
@@ -20,7 +19,6 @@ const EndGame = props => {
     const [usernameInvited, setUsernameInvited] = useState("");
     const { gameMode, selecting } = useParams();
     const [rematchSent, setRematchSent] = useState(false);
-    const [time, setTime] = useState(0);
     const [endedGame, setEndedGame] = useState(false);
 
     useEffect(() => {
@@ -60,9 +58,7 @@ const EndGame = props => {
             if (selecting == 'selecting') {
                 if (!endedGame) getResults();
             } else {
-                console.log(localStorage.getItem('result'));
                 let res = JSON.parse(localStorage.getItem('result'));
-                console.log(res);
                 setResult(res);
                 getUsers(res);
             }
@@ -102,7 +98,6 @@ const EndGame = props => {
             setRematchSent(true);
             setEndedGame(true);
         } catch (error) {
-            console.log("to home, rematch")
             alert(error);
             history.push("/home");
         }
@@ -110,7 +105,7 @@ const EndGame = props => {
 
     const cancelRematch = async () => {
         try {
-            const response = await answerInvite(localStorage.getItem('gameId'), false);
+            await answerInvite(localStorage.getItem('gameId'), false);
             localStorage.removeItem('gameId');
             setRematchSent(false);
         } catch (error) {
@@ -118,10 +113,6 @@ const EndGame = props => {
             alert(error);
             history.push("/home");
         }
-    }
-
-    const getTime = (time) => {
-        setTime(time);
     }
 
     const sentRematch = () => {
@@ -133,7 +124,7 @@ const EndGame = props => {
                     <div className = "invitation base-container">
                         <p> Rematch has been sent. Waiting for answer...</p>
                         <div className="button-container">
-                            <Timer timeLimit={60} timeOut={cancelRematch} getTime={getTime}/>
+                            <Timer timeLimit={60} timeOut={cancelRematch}/>
                         </div>
                     </div>
                 </div>

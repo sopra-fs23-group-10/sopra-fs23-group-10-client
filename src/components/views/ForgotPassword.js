@@ -2,7 +2,6 @@ import React from 'react';
 import 'styles/views/Registration.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import HomeHeader from "./HomeHeader";
-//import HeaderAuthentication from "./HeaderAuthentication";
 import {Button} from "../ui/Button";
 import {useHistory} from "react-router-dom";
 
@@ -22,7 +21,6 @@ const ResetPassword = props => {
                     <Button
                         width="80%"
                         style={{margin: "auto"}}
-                        //onClick={() => history.push('/home')}
                     >
                         RESET
                     </Button>

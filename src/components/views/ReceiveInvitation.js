@@ -1,5 +1,5 @@
 import {Button} from 'components/ui/Button';
-import {fetchUserById, answerInvite} from 'helpers/restApi';
+import {fetchUserById, answerInvite, handleError} from 'helpers/restApi';
 import "styles/views/HomeHeader.scss";
 import React,{useEffect,useState} from 'react';
 import {connectInvitations} from "../../helpers/WebSocketFactory";
@@ -9,13 +9,11 @@ import Invitation from "../../models/Invitation";
 import {useHistory} from 'react-router-dom';
 import PropTypes from "prop-types";
 import {Timer} from "../ui/Timer";
-import { handleError } from 'helpers/restApi';
 
 const ReceiveInvitation = props => {
     const history = useHistory();
     const [invitation, setInvitation] = useState(null);
     const [username, setUsername] = useState("");
-    const [time, setTime] = useState(0);
 
     useEffect(() => {
         connectInvitations(handleInvite, handleAnswer);
@@ -90,10 +88,6 @@ const ReceiveInvitation = props => {
         history.push(`/topic-selection/${invitation.quizType.toLowerCase()}/selecting`);
     }
 
-    const getTime = (time) => {
-        setTime(time);
-    }
-
     const throwReply = (msg) => {
         console.log("receiveReply");
         const event = new CustomEvent("receiveReply", { detail: msg });
@@ -118,7 +112,6 @@ const ReceiveInvitation = props => {
                             <Timer
                                 timeLimit={60}
                                 timeOut={() => reply(false)}
-                                getTime={getTime}
                             />
                         </div>
                     </div>

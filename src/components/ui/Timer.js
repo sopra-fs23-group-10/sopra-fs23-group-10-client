@@ -1,6 +1,6 @@
 import "styles/ui/Timer.scss";
 import PropTypes from "prop-types";
-import { useEffect, useState, Component } from 'react';
+import { useEffect, useState } from 'react';
 
 export const Timer = props => {
     const timeLimit = 1000 * props.timeLimit;

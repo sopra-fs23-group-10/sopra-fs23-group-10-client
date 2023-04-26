@@ -1,6 +1,6 @@
 import GameHeader from "components/views/GameHeader";
 import { fetchUsersInGame, getTopicSelection, fetchUserById, getIntermediateResults, handleError, getQuestion } from "helpers/restApi";
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState } from 'react';
 import { useHistory, useParams } from "react-router-dom";
 import { GameButton } from "components/ui/GameButton";
 import Result from "../../models/Result";
@@ -34,10 +34,10 @@ const Score = props => {
                     console.log(response);
                     let points1 = 0;
                     let points2 = 0;
-                    for (let i = 0; i < response.data.length; i++) {
-                        console.log(response.data[i].invitedPlayerResult);
-                        points1 += response.data[i].invitedPlayerResult;
-                        points2 += response.data[i].invitingPlayerResult;
+                    for (let r of response.data) {
+                        console.log(r.invitedPlayerResult);
+                        points1 += r.invitedPlayerResult;
+                        points2 += r.invitingPlayerResult;
                     }
                     let res = new Result(response.data[0]);
                     res.invitedPlayerResult = points1;
@@ -84,8 +84,7 @@ const Score = props => {
 
     const fetchQuestion = async (topic) => {
         try {
-            const response = await getQuestion(localStorage.getItem('gameId'), topic);
-            const q = new Question(response);
+            await getQuestion(localStorage.getItem('gameId'), topic);
         } catch (error) {
             alert(error);
             localStorage.removeItem('topics');

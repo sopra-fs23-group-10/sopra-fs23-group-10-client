@@ -23,7 +23,7 @@ const Registration = props => {
                 setMsg("Please enter a valid email address."); 
                 return;
             }
-            const response = await registerUser(username, password, email);
+            await registerUser(username, password, email);
             history.push(`/home`);
         } catch (error) {
             console.log(error);
@@ -41,7 +41,6 @@ const Registration = props => {
     }
 
     const validateEmailFormat = (email) => {
-        //const emailPattern = new RegExp('[a-zA-Z0-9.]+@[a-zA-Z]+.[a-zA-Z]+');
         const emailPattern = new RegExp('^[a-z0-9.]+@[a-z]+.[a-z]+$');
         return emailPattern.test(email);
     }
