@@ -15,6 +15,7 @@ const GameScreen = () => {
     const answerTime = 10;
     const { selecting } = useParams();
     const { gameMode } = useParams();
+    const nQuestions = 4;
 
     useEffect( () => {
         function timeOut() {
@@ -94,7 +95,8 @@ const GameScreen = () => {
     }
 
     const handleEndResult = (e) => {
-        if (selecting != 'selecting') {
+        let nr = parseInt(localStorage.getItem('question_nr'));
+        if (selecting != 'selecting' && nr >= nQuestions) {
             localStorage.setItem('result', JSON.stringify(e.detail));
             history.push('/endgame/' + gameMode + "/waiting");
         }
@@ -105,7 +107,7 @@ const GameScreen = () => {
         localStorage.removeItem('answered');
         localStorage.removeItem('question');
         localStorage.removeItem('startTime');
-        if (nr < 10) {
+        if (nr < nQuestions) {
             localStorage.setItem('question_nr', (nr + 1));
             history.push('/topic-selection/' + gameMode + "/" + (selecting == 'selecting' ? 'waiting' : 'selecting'));
         } else if (selecting == 'selecting') {
