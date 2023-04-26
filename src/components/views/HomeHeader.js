@@ -48,20 +48,23 @@ const HomeHeader = props => {
     const dropDown = () =>{
         if(showProfile){
             return(
-                <div className="dropdown container">
-                    <div className="contentNoHover" style={{textAlign: "left"}}>
-                        Points: {points}
+                <>
+                    <div onClick={() => {setDropDown(false)}} className="profile-background"></div>
+                    <div className="dropdown container">
+                        <div className="contentNoHover" style={{textAlign: "left"}}>
+                            Points: {points}
+                        </div>
+                        <div className="contentHover disabled" style={{textAlign: "right"}}>
+                            {edit()}
+                        </div>
+                        <Button className ="logout"
+                            width="100%"
+                            onClick={() => logout()}
+                        >
+                            LOGOUT
+                        </Button>
                     </div>
-                    <div className="contentHover disabled" style={{textAlign: "right"}}>
-                        {edit()}
-                    </div>
-                    <Button className ="logout"
-                        width="100%"
-                        onClick={() => logout()}
-                    >
-                        LOGOUT
-                    </Button>
-                </div>
+                </>
             )
         }
     }
@@ -98,9 +101,4 @@ HomeHeader.propTypes = {
     height: PropTypes.string
 };
 
-
-
-/**
- * Don't forget to export your component!
- */
 export default HomeHeader;

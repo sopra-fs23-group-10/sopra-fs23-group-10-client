@@ -12,6 +12,7 @@
   }
 
   .logo {
+    z-index: 1;
     color: $off_white;
     font-family: $fontDisplay;
     font-size: 50px;
@@ -75,6 +76,7 @@
   }
 
   .navigation {
+    z-index:1;
     grid-column: 2;
 
     > * {
@@ -144,6 +146,15 @@
     opacity: 0.3;
     color: black;
   }
+}
+
+.profile-background {
+  z-index: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
 }
 
 
