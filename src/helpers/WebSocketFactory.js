@@ -20,8 +20,13 @@ export const openSocket = () => {
     let stompClient = Stomp.over(function (){
         return new WebSocket(`${getWebSocketUrl()}`);
     });
+
     stompClient.debug = (message) => {
-        console.log(message);
+        if (!message.includes("PING") &&
+          !message.includes("PONG") &&
+          !message.includes("Received")) {
+            console.log(message);
+        }
     };
 
     stompClient.onWebSocketError = (error) => {
