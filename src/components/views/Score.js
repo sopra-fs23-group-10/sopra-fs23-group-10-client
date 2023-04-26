@@ -17,7 +17,6 @@ const Score = props => {
     const [usernameInvited, setUsernameInvited] = useState("");
     const [topics, setTopics] = useState(null);
     let { selecting, gameMode } = useParams();
-    const [topicsFetched, setTopicsFetched] = useState(false);
 
     useEffect(() => {
         connectQuestion(handleQuestion);
@@ -155,7 +154,7 @@ const Score = props => {
                 return (
                     <div className="background-topic-waiting">
                         <div className="topic">
-                            Yoo, stuff went to else.
+                            Waiting for topics...
                         </div>
                     </div>
                 );
