@@ -16,6 +16,7 @@ const Score = props => {
     const [usernameInviting, setUsernameInviting] = useState("");
     const [usernameInvited, setUsernameInvited] = useState("");
     const [topics, setTopics] = useState(null);
+    const [topicSent, setTopicSent] = useState(false);
     let { selecting, gameMode } = useParams();
 
     useEffect(() => {
@@ -81,12 +82,15 @@ const Score = props => {
     }
 
     const fetchQuestion = async (topic) => {
-        try {
-            await getQuestion(localStorage.getItem('gameId'), topic);
-        } catch (error) {
-            alert(error);
-            localStorage.removeItem('topics');
-            history.push("/login");
+        if (!topicSent) {
+            try {
+                await getQuestion(localStorage.getItem('gameId'), topic);
+                setTopicSent(true);
+            } catch (error) {
+                alert(error);
+                localStorage.removeItem('topics');
+                history.push("/login");
+            }
         }
     }
 
@@ -108,10 +112,6 @@ const Score = props => {
     }
 
     const rndTopic = () => {
-        // if (topics) {
-        //     let rnd = getRandomInt(0, 3);
-        //     fetchQuestion(topics[rnd]); 
-        // } else 
         if (localStorage.getItem('topics')) {
             let newTopics = JSON.parse(localStorage.getItem('topics'));
             let rnd = getRandomInt(0, 3);
