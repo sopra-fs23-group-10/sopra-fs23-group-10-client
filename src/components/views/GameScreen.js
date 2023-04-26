@@ -36,7 +36,11 @@ const GameScreen = () => {
 
         if (!question) setQuestion(JSON.parse(localStorage.getItem('question')));
         document.addEventListener("timeOut", timeOut);
-        return () => document.removeEventListener("timeOut", timeOut);
+        document.addEventListener("receivedResult", handleEndResult);
+        return () => {
+            document.removeEventListener("timeOut", timeOut);
+            document.removeEventListener("receivedResult", handleEndResult);
+        }
     });
 
     const chooseAnswer = async (str) => {
@@ -95,6 +99,14 @@ const GameScreen = () => {
         }
     }
 
+    const handleEndResult = (e) => {
+        if (selecting != 'selecting') {
+            console.log(e.detail)
+            localStorage.setItem('result', JSON.stringify(e.detail));
+            history.push('/endgame/' + gameMode + "/waiting");
+        }
+    }
+
     const goToScore = () => {
         let nr = parseInt(localStorage.getItem('question_nr'));
         localStorage.removeItem('answered');
@@ -103,7 +115,7 @@ const GameScreen = () => {
         if (nr < 1) {
             localStorage.setItem('question_nr', (nr + 1));
             history.push('/topic-selection/' + gameMode + "/" + (selecting == 'selecting' ? 'waiting' : 'selecting'));
-        } else {
+        } else if (selecting == 'selecting') {
             history.push('/endgame/' + gameMode + "/" + selecting);
         }
     }

@@ -5,7 +5,7 @@ import { Button } from "components/ui/Button";
 import { cancelGame } from "helpers/restApi";
 import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { connectGame } from "helpers/WebSocketFactory";
+import { connectGame, connectResult } from "helpers/WebSocketFactory";
 import 'styles/ui/Invitation.scss';
 
 /**
@@ -24,6 +24,7 @@ const GameHeader = props => {
 
     useEffect(() => {
         connectGame(handleGameCancelled);
+        connectResult(handleResult);
 
         window.history.pushState(null, null, window.location.pathname);
         window.addEventListener("popstate", onBackButtonEvent);
@@ -32,7 +33,16 @@ const GameHeader = props => {
             window.removeEventListener("popstate", onBackButtonEvent);
         }
     }, []);
-
+    
+    const handleResult = (msg) => {
+        console.log("handle result!");
+        console.log(msg);
+        let obj = JSON.parse(msg);
+        let res = obj[obj.length-1];
+        console.log(res);
+        const event = new CustomEvent("receivedResult", { detail: res });
+        document.dispatchEvent(event);
+    }
 
     const onBackButtonEvent = (e) => {
         e.preventDefault();
@@ -63,6 +73,7 @@ const GameHeader = props => {
         localStorage.removeItem('topics');
         localStorage.removeItem('answered');
         localStorage.removeItem('startTime');
+        localStorage.removeItem('result');
         history.push("/home");
     }
 

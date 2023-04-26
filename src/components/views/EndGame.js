@@ -32,38 +32,45 @@ const EndGame = props => {
                     localStorage.setItem('question_nr', 1);
                     localStorage.removeItem('startTime');
                     history.push(`/topic-selection/${gameMode}/waiting`);
-                } else {
-                    localStorage.removeItem('gameId');
-                }
+                } 
                 setRematchSent(false);
             }
         }
-
-        function handleSentReply(e) {
-            //if (selecting == 'selecting') endGame();
-        }
-
+        
         async function getResults(){
             try {
                 const response = await getFinalResults(localStorage.getItem('gameId'));
                 const res = new Result(response[response.length-1]);
-                setResult(res);
-        
-                await getUser(res.invitingPlayerId, setUsernameInviting);
-                await getUser(res.invitedPlayerId, setUsernameInvited);
+                setResult(res, () => {
+                    endGame();
+                });
+                getUsers(res);
             } catch(error) {
                 alert(error);
                 history.push("/login");
             }
         }
 
-        if (!result && !endedGame) getResults();
+        async function getUsers(res) {
+            await getUser(res.invitingPlayerId, setUsernameInviting);
+            await getUser(res.invitedPlayerId, setUsernameInvited);
+        }
+
+        if (!result) {
+            if (selecting == 'selecting') {
+                if (!endedGame) getResults();
+            } else {
+                console.log(localStorage.getItem('result'));
+                let res = JSON.parse(localStorage.getItem('result'));
+                console.log(res);
+                setResult(res);
+                getUsers(res);
+            }
+        }
 
         document.addEventListener("receiveReply", handleReceiveReply);
-        document.addEventListener("sentReply", handleSentReply);
         return () => {
             document.removeEventListener("receiveReply", handleReceiveReply);
-            document.removeEventListener("sentReply", handleSentReply);
         }   
     });
 
@@ -89,13 +96,13 @@ const EndGame = props => {
 
     const rematch = async () => {
         try {
-            if (selecting == 'selecting') endGame();
             let id = localStorage.getItem('id') == result.invitedPlayerId ? result.invitingPlayerId : result.invitedPlayerId;
             const response = await inviteUser(id, gameMode.toUpperCase(), "DUEL");
             localStorage.setItem('gameId', response.gameId);
             setRematchSent(true);
             setEndedGame(true);
         } catch (error) {
+            console.log("to home, rematch")
             alert(error);
             history.push("/home");
         }
@@ -107,6 +114,7 @@ const EndGame = props => {
             localStorage.removeItem('gameId');
             setRematchSent(false);
         } catch (error) {
+            console.log("to home, cancel rematch")
             alert(error);
             history.push("/home");
         }
@@ -125,7 +133,7 @@ const EndGame = props => {
                     <div className = "invitation base-container">
                         <p> Rematch has been sent. Waiting for answer...</p>
                         <div className="button-container">
-                            <Timer timeLimit={200} timeOut={cancelRematch} getTime={getTime}/>
+                            <Timer timeLimit={60} timeOut={cancelRematch} getTime={getTime}/>
                         </div>
                     </div>
                 </div>
@@ -145,13 +153,14 @@ const EndGame = props => {
     }
 
     const returnToHome = () => {
-        if (selecting == 'selecting') endGame();
         home();
     }
 
     const home = () => {
+        console.log("to home, home")
         localStorage.removeItem('gameId');
         localStorage.removeItem('question_nr');
+        localStorage.removeItem('result');
         history.push("/home");
     }
 

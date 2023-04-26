@@ -17,7 +17,6 @@ const Score = props => {
     const [usernameInvited, setUsernameInvited] = useState("");
     const [topics, setTopics] = useState(null);
     let { selecting, gameMode } = useParams();
-    const [topicsFetched, setTopicsFetched] = useState(false);
 
     useEffect(() => {
         connectQuestion(handleQuestion);
