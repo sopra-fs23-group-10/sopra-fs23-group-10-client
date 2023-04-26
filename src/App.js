@@ -1,6 +1,7 @@
 import AppRouter from "components/routing/routers/AppRouter";
 import bg from "images/BG.png";
 import { register } from "helpers/WebSocketFactory";
+import {useEffect} from "react";
 
 /**
  * Happy coding!
@@ -8,9 +9,12 @@ import { register } from "helpers/WebSocketFactory";
  * Overhauled by Kyrill Hux
  */
 const App = () => {
-  return (
+    useEffect(() => {
+      register();
+    }, []);
+
+    return (
       <div className="background" style={{background: `url(${bg})`}}>
-        {register()}
         <AppRouter/>
       </div>
   );

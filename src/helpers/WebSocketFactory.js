@@ -1,25 +1,34 @@
 import {Stomp} from "@stomp/stompjs";
 import axios from "axios";
 import {getDomain} from "./getDomain";
+import question from "../models/Question";
 
 const BASE_URL = getDomain();
+let activeSubscriptions = new Map();
 
+const connectAndSubscribe = (stompClient, subscriptionPath, callback) => {
+    stompClient.connect({'userId': localStorage.getItem('id')}, () => {
+        currentRetries = 0;
+        const subscription = stompClient.subscribe(subscriptionPath, (message) => {
+            callback(message.body);
+            console.log(`Received message: ${message.body}`);
+        });
+        activeSubscriptions.set(subscriptionPath, subscription);
+    });
+};
+
+const reconnectSubscriptions = (stompClient) => {
+    activeSubscriptions.forEach((subscription, path) => {
+        subscription.unsubscribe();
+        connectAndSubscribe(stompClient, path, subscription.callback);
+    });
+};
 
 function getWebSocketUrl() {
     const protocol = window.location.protocol;
     const domain = getDomain().split('//')[1];
     return `${protocol === "https:" ? "wss:" : "ws:"}//${domain}/ws`;
 }
-
-/*
-function getWebSocketUrl() {
-    const protocol = window.location.protocol;
-    const domain = getDomain().split('//')[1];
-    const ws = protocol === "https:" ? "wss:" : "ws:"
-    return `${ws}//${domain}/${ws}`;
-}
- */
-
 
 export const socketFactory = () => {
     return new WebSocket(`${getWebSocketUrl()}`);}
@@ -57,7 +66,8 @@ export const openSocket = () => {
         console.error('WebSocket closed');
         currentRetries++;
         setTimeout(() => {
-            openSocket();
+            const newStompClient = openSocket();
+            reconnectSubscriptions(newStompClient);
         }, exponentialBackoff(currentRetries));
     };
 
@@ -68,7 +78,7 @@ export const register = () => {
     let stompClient = openSocket();
 
     stompClient.connect({'userId': localStorage.getItem('id')}, () => {
-        currentRetries = 0; // Reset the retry count after successful connection
+        currentRetries = 0;
 
         if (!listenersAdded && localStorage.getItem('id')) {
             const socket = socketFactory();
@@ -92,65 +102,27 @@ export const register = () => {
 
 export const connectInvitations = (inviteCallback, answerCallback) => {
     let stompClient = openSocket();
-
     const id = localStorage.getItem('id');
+    connectAndSubscribe(stompClient, `/invitations/answer/${id}`, answerCallback);
 
-    stompClient.connect({'userId': localStorage.getItem('id')}, () => {
-        currentRetries = 0; // Reset the retry count after successful connection
-        
-        stompClient.subscribe(`/invitations/${id}`, (message) => {
-            inviteCallback(message.body);
-            console.log(`Received message: ${message.body}`);
-        });
-
-        stompClient.subscribe(`/invitations/answer/${id}`, (message) => {
-            answerCallback(message.body);
-            console.log(`Received message: ${message.body}`);
-        });
-    });
+    stompClient = openSocket();
+    connectAndSubscribe(stompClient, `/invitations/${id}`, inviteCallback);
 };
 
 export const connectQuestion = (questionCallback) => {
     let stompClient = openSocket();
-
     const id = localStorage.getItem('gameId');
-
-    stompClient.connect({'gameId': localStorage.getItem('gameId')}, () => {
-        currentRetries = 0; // Reset the retry count after successful connection
-        
-        stompClient.subscribe(`/games/${id}/questions`, (message) => {
-            questionCallback(message.body);
-            console.log(`Received message: ${message.body}`);
-        });
-    });
+    connectAndSubscribe(stompClient, `/games/${id}/questions`, questionCallback);
 };
 
 export const connectGame = (gameCallback) => {
     let stompClient = openSocket();
-
     const id = localStorage.getItem('gameId');
-
-    stompClient.connect({'gameId': localStorage.getItem('gameId')}, () => {
-        currentRetries = 0; // Reset the retry count after successful connection
-        
-        stompClient.subscribe(`/games/${id}`, (message) => {
-            gameCallback(message.body);
-            console.log(`Received message: ${message.body}`);
-        });
-    });
+    connectAndSubscribe(stompClient, `/games/${id}`, gameCallback);
 };
 
 export const connectResult = (resultCallback) => {
     let stompClient = openSocket();
-
     const id = localStorage.getItem('gameId');
-
-    stompClient.connect({'gameId': localStorage.getItem('gameId')}, () => {
-        currentRetries = 0; // Reset the retry count after successful connection
-        
-        stompClient.subscribe(`/game/result/${id}`, (message) => {
-            resultCallback(message.body);
-            console.log(`Received message: ${message.body}`);
-        });
-    });
+    connectAndSubscribe(stompClient, `/game/result/${id}`, resultCallback);
 };

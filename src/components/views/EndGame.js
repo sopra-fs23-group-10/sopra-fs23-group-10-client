@@ -40,7 +40,7 @@ const EndGame = props => {
         }
 
         function handleSentReply(e) {
-            if (selecting == 'selecting') endGame();
+            //if (selecting == 'selecting') endGame();
         }
 
         async function getResults(){
@@ -247,7 +247,7 @@ const EndGame = props => {
     return (
         <>
             {drawRematch()}
-            <GameHeader questionId={localStorage.getItem("question_nr")} height="100"/>
+            <GameHeader questionId={localStorage.getItem("question_nr")} showCancelButton={false} height="100"/>
             <div className="ScreenGrid">
                 {endPointsScreen()}
             </div>
