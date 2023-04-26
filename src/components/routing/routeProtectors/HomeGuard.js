@@ -1,4 +1,4 @@
-import {Redirect, useHistory, useNavigate } from "react-router-dom";
+import {Redirect} from "react-router-dom";
 import PropTypes from "prop-types";
 import { cancelGame } from "helpers/restApi";
 

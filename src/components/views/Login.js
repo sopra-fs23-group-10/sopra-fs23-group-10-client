@@ -23,7 +23,7 @@ const Login = props => {
     const doLogin = async () => {
         try {
             setMsg("");
-            const response = await loginUser(username, password);
+            await loginUser(username, password);
             history.push(`/home`);
         } catch (error) {
             if (error.response.status === 404) {

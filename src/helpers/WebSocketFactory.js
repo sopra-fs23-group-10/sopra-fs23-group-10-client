@@ -81,8 +81,11 @@ export const connectInvitations = (inviteCallback, answerCallback) => {
     });
 };
 
+let stompClientQuestion;
+
 export const connectQuestion = (questionCallback) => {
     let stompClient = openSocket();
+    stompClientQuestion = stompClient;
 
     const id = localStorage.getItem('gameId');
 
@@ -94,8 +97,16 @@ export const connectQuestion = (questionCallback) => {
     });
 };
 
+export const disconnectQuestion = () => {
+    stompClientQuestion.disconnect(() => {console.log("disconnected question!")});
+};
+
+
+let stompClientGame;
+
 export const connectGame = (gameCallback) => {
     let stompClient = openSocket();
+    stompClientGame = stompClient;
     const id = localStorage.getItem('gameId');
 
     stompClient.connect({'gameId': localStorage.getItem('gameId')}, () => {
@@ -106,8 +117,16 @@ export const connectGame = (gameCallback) => {
     });
 };
 
+export const disconnectGame = () => {
+    stompClientGame.disconnect(() => {console.log("disconnected game")});
+};
+
+
+let stompClientResult;
+
 export const connectResult = (resultCallback) => {
     let stompClient = openSocket();
+    stompClientResult = stompClient;
     const id = localStorage.getItem('gameId');
 
     stompClient.connect({'gameId': localStorage.getItem('gameId')}, () => {
@@ -116,4 +135,8 @@ export const connectResult = (resultCallback) => {
             console.log(`Received message: ${message.body}`);
         });
     });
+};
+
+export const disconnectResult = () => {
+    stompClientResult.disconnect(() => {console.log("disconnected game")});
 };

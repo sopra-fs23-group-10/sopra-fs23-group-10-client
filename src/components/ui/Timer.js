@@ -1,6 +1,6 @@
 import "styles/ui/Timer.scss";
 import PropTypes from "prop-types";
-import { useEffect, useState, Component } from 'react';
+import { useEffect, useState } from 'react';
 
 export const Timer = props => {
     const timeLimit = 1000 * props.timeLimit;
@@ -30,7 +30,6 @@ export const Timer = props => {
             let currentTime = Date.now() - startTime;
             currentTime = (props.currentTime ? props.currentTime : timeLimit) - currentTime;
             if (currentTime <= 0) {
-                console.log("timer is zero!");
                 currentTime = 0;
                 if (props.timeOut) props.timeOut();
                 timeOut();

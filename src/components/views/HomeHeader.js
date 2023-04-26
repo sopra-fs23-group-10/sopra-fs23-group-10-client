@@ -1,29 +1,17 @@
 import PropTypes from "prop-types";
 import {Button} from 'components/ui/Button';
 import {fetchUserById, logoutUser} from 'helpers/restApi';
-import {useHistory} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import "styles/views/HomeHeader.scss";
-import {Link} from "react-router-dom";
 import React,{useEffect,useState} from 'react';
 import User from "../../models/User";
 import "styles/views/PopUp.scss";
-import ReceiveInvitation from "components/views/ReceiveInvitation";
 import Identicon from 'react-identicons';
-
-/**
- * This is an example of a Functional and stateless component (View) in React. Functional components are not classes and thus don't handle internal state changes.
- * Conceptually, components are like JavaScript functions. They accept arbitrary inputs (called “props”) and return React elements describing what should appear on the screen.
- * They are reusable pieces, and think about each piece in isolation.
- * Functional components have to return always something. However, they don't need a "render()" method.
- * https://reactjs.org/docs/components-and-props.html
- * @FunctionalComponent
- */
 
 const HomeHeader = props => {
     const history = useHistory();
-    //const [user, setUser] = useState(null);
     const [username, setUsername] = useState(null);
-    const [status, setStatus] = useState(null);
+
     const [points, setPoints] = useState(null);
 
     useEffect(() => {
@@ -34,9 +22,7 @@ const HomeHeader = props => {
                 const user = new User(userData);
 
                 setUsername(user.username);
-                setStatus(user.status);
                 setPoints(user.points);
-                //setProfilePicture(user.profilePicture);
             } catch (error) {
                 history.push("/login");
             }
@@ -45,7 +31,7 @@ const HomeHeader = props => {
     }, []);
 
     const logout = async () => {
-        const response = await logoutUser(useHistory);
+        await logoutUser(useHistory);
         history.push('/login');
     }
 

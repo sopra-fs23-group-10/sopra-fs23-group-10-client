@@ -1,17 +1,13 @@
 import GameHeader from "components/views/GameHeader";
 import { GameButton } from "components/ui/GameButton";
-//import "styles/views/Home.scss";
 import "styles/views/GameHeader.scss"
 import "styles/views/GameScreen.scss"
 import { useEffect, useState } from 'react';
-import { useHistory, useLocation, useParams } from "react-router-dom";
-import { getQuestion, sendAnswer } from "helpers/restApi";
-import Question from "../../models/Question";
-import BaseContainer from "components/ui/BaseContainer";
+import { useHistory, useParams } from "react-router-dom";
+import { sendAnswer } from "helpers/restApi";
 import { Timer } from "components/ui/Timer";
 
 const GameScreen = () => {
-    const location = useLocation();
     const history = useHistory();
     const [question, setQuestion] = useState(null);
     const [answered, setAnswered] = useState(false);
@@ -23,14 +19,12 @@ const GameScreen = () => {
     useEffect( () => {
         function timeOut() {
             if (!answered) {
-                console.log("send wrong answer");
                 answer("stupid answer");
             }
             goToScore();
         }
 
         if (!question && localStorage.getItem('answered')) {
-            console.log("ANSWERED");
             setAnswered(true);
         }
 
@@ -51,7 +45,7 @@ const GameScreen = () => {
 
     const answer = async (str) => {
         try {
-            const response = await sendAnswer(
+            await sendAnswer(
                 localStorage.getItem('gameId'), 
                 localStorage.getItem('id'), 
                 question.questionId,
@@ -78,7 +72,7 @@ const GameScreen = () => {
                 );
         } else if (question) {
             let answers = question.allAnswers.map((str) =>
-                <GameButton callback={() => chooseAnswer(str)} text={str}/>
+                <GameButton key={str} callback={() => chooseAnswer(str)} text={str}/>
             );
             return (
                 <>
@@ -101,7 +95,6 @@ const GameScreen = () => {
 
     const handleEndResult = (e) => {
         if (selecting != 'selecting') {
-            console.log(e.detail)
             localStorage.setItem('result', JSON.stringify(e.detail));
             history.push('/endgame/' + gameMode + "/waiting");
         }
