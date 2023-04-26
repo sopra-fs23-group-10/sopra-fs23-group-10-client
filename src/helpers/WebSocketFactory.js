@@ -64,8 +64,11 @@ export const register = () => {
     axios.defaults.baseURL = BASE_URL;
 }
 
+let stompClientInvitations;
+
 export const connectInvitations = (inviteCallback, answerCallback) => {
     let stompClient = openSocket();
+    stompClientInvitations = stompClient;
     const id = localStorage.getItem('id');
 
     stompClient.connect({'userId': localStorage.getItem('id')}, () => {
@@ -79,6 +82,10 @@ export const connectInvitations = (inviteCallback, answerCallback) => {
             console.log(`Received message: ${message.body}`);
         });
     });
+};
+
+export const disconnectInvitations = () => {
+    stompClientInvitations.disconnect(() => {console.log("disconnected invitations!")});
 };
 
 let stompClientQuestion;
@@ -138,5 +145,5 @@ export const connectResult = (resultCallback) => {
 };
 
 export const disconnectResult = () => {
-    stompClientResult.disconnect(() => {console.log("disconnected game")});
+    stompClientResult.disconnect(() => {console.log("disconnected result")});
 };
