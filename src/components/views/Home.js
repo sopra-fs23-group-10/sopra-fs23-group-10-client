@@ -68,6 +68,7 @@ const Home = () => {
                                 class="game"
                                 title={"Image\nQuiz"}
                                 url={image}
+                                inactive={true}
                                 >
                             </SelectionButton>
                         </div>
