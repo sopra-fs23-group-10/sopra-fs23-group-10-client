@@ -155,7 +155,7 @@ const Score = props => {
                 return (
                     <div className="background-topic-waiting">
                         <div className="topic">
-                            Yoo, stuff went to else.
+                            Waiting for topics...
                         </div>
                     </div>
                 );
