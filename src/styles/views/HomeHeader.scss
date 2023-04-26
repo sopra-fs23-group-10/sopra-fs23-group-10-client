@@ -84,6 +84,11 @@
       line-height: $header_height;
       margin-left: $base_padding;
     }
+
+    .disabled{
+      opacity: 0.5;
+      color: $off_white;
+    }
   }
 }
 
@@ -117,7 +122,6 @@
       grid-row: 2;
     }
     .contentNoHover {
-      //grid-template-columns: 100px 1fr;
       color: black;
       font-family: $fontDefault;
       font-size: 18px;
@@ -125,7 +129,6 @@
       font-weight: bold;
     }
     .contentHover {
-      //grid-template-columns: 100px 1fr;
       color: black;
       font-family: $fontDefault;
       font-size: 18px;

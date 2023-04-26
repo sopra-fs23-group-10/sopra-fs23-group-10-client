@@ -77,7 +77,7 @@ const HomeHeader = props => {
                 <Link className="content fontbold" to="/ranking">
                     RANKING
                 </Link>
-                <div className="content fontbold" to="/ranking">
+                <div className="content fontbold disabled">
                     MUSIC
                 </div>
                 <Link className="content fontbold" to="/rules">
