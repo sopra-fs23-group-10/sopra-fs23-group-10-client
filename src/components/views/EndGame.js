@@ -131,13 +131,24 @@ const EndGame = props => {
     }
 
     const resultText = () => {
-        if (result.invitedPlayerResult == result.invitingPlayerResult) {
-            return "It's a draw!"
-        } else if (result.invitedPlayerId == localStorage.getItem('id') && result.invitedPlayerResult > result.invitingPlayerResult
-            || result.invitingPlayerId == localStorage.getItem('id') && result.invitingPlayerResult > result.invitedPlayerId) {
-            return "You won!"
+        if (result) {
+            if (parseInt(result.invitedPlayerResult) == parseInt(result.invitingPlayerResult)) {
+                return "It's a draw!"
+            } else if ((parseInt(result.invitedPlayerId) == parseInt(localStorage.getItem('id')) && 
+                        parseInt(result.invitedPlayerResult) > parseInt(result.invitingPlayerResult)) || 
+                        (parseInt(result.invitingPlayerId) == parseInt(localStorage.getItem('id')) && 
+                        parseInt(result.invitingPlayerResult) > parseInt(result.invitedPlayerId))) {
+                return "You won!"
+            } else if ((parseInt(result.invitedPlayerId) == parseInt(localStorage.getItem('id')) && 
+                        parseInt(result.invitedPlayerResult) < parseInt(result.invitingPlayerResult)) || 
+                        (parseInt(result.invitingPlayerId) == parseInt(localStorage.getItem('id')) && 
+                        parseInt(result.invitingPlayerResult) < parseInt(result.invitedPlayerId))) {
+                return "You lost!"
+            } else {
+                return "Something else"
+            }
         } else {
-            return "You lost!"
+            return "Waiting..."
         }
     }
 
