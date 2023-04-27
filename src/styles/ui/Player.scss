@@ -3,20 +3,21 @@
 .player {
     cursor: pointer;
     &.container {
-      border-radius: $borderRadius;
+      border-radius: $base_padding;
       display: flex;
       align-items: center;
       gap: 10px;
+      padding: 5px;
+      padding-right: 10px;
       &:hover {
         @extend .base-transition;
-        transform: scale(1.03);
+        color: $secondary_color;
+        background-color: rgb(228, 228, 228);
       }
     }
     &.username {
-      font-weight: 500;
       padding-right: 8px;
       justify-self: left;
-      color: black;
     }
     &.profile-picture {
         height: $base_padding !important;
