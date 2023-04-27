@@ -36,34 +36,35 @@ const HomeHeader = props => {
     }
 
     const edit = () => {
-        return <Link className="contentHover"
-            onClick={() => toEdit(localStorage.getItem('id'))}>
+        return <div className="contentNoHover">
             Edit Profile
-        </Link>
+        </div>
     }
 
     const toEdit = (userId) => {
-        //history.push('edit/'+userId)
         history.push('/home')
     }
     const [showProfile, setDropDown] = useState(false);
     const dropDown = () =>{
         if(showProfile){
             return(
-                <div className="dropdown container">
-                    <div className="contentNoHover" style={{textAlign: "left"}}>
-                        Points: {points}
+                <>
+                    <div onClick={() => {setDropDown(false)}} className="profile-background"></div>
+                    <div className="dropdown container">
+                        <div className="contentNoHover" style={{textAlign: "left"}}>
+                            Points: {points}
+                        </div>
+                        <div className="contentHover disabled" style={{textAlign: "right"}}>
+                            {edit()}
+                        </div>
+                        <Button className ="logout"
+                            width="100%"
+                            onClick={() => logout()}
+                        >
+                            LOGOUT
+                        </Button>
                     </div>
-                    <div className="contentHover" style={{textAlign: "right"}}>
-                        {edit()}
-                    </div>
-                    <Button className ="logout"
-                        width="100%"
-                        onClick={() => logout()}
-                    >
-                        LOGOUT
-                    </Button>
-                </div>
+                </>
             )
         }
     }
@@ -77,7 +78,7 @@ const HomeHeader = props => {
                 <Link className="content fontbold" to="/ranking">
                     RANKING
                 </Link>
-                <div className="content fontbold" to="/ranking">
+                <div className="content fontbold disabled">
                     MUSIC
                 </div>
                 <Link className="content fontbold" to="/rules">
@@ -100,9 +101,4 @@ HomeHeader.propTypes = {
     height: PropTypes.string
 };
 
-
-
-/**
- * Don't forget to export your component!
- */
 export default HomeHeader;

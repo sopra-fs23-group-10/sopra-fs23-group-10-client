@@ -12,6 +12,7 @@
   }
 
   .logo {
+    z-index: 1;
     color: $off_white;
     font-family: $fontDisplay;
     font-size: 50px;
@@ -75,6 +76,7 @@
   }
 
   .navigation {
+    z-index:1;
     grid-column: 2;
 
     > * {
@@ -84,59 +86,75 @@
       line-height: $header_height;
       margin-left: $base_padding;
     }
+
+    .disabled{
+      opacity: 0.5;
+      color: $off_white;
+    }
   }
 }
 
-  .dropdown{
-    position: absolute;
-    top: $header_height;
-    padding: $base_padding;
-    border-radius: $borderRadius;
-    width: 300px;
-    height: 150px;
-    margin-right:$base_padding;
-    background-color: $off_white;
-    color: $font_primary;
-    margin-bottom: $base_padding;
-    right:0;
-    &.container {
-      display:grid;
-      grid-template-columns: 50% 50%;
-      grid-template-rows: 50% 50%;
-      align-items:center;
-      justify-content: space-between;
-      grid-gap: 10px;
-      padding-left: $base_padding;
-      padding-bottom: $base_padding;
-      padding-top: 30px;
-      padding-right: $base_padding;
-    }
-    .logout{
-      grid-column-start:1;
-      grid-column-end:3;
-      grid-row: 2;
-    }
-    .contentNoHover {
-      //grid-template-columns: 100px 1fr;
-      color: black;
-      font-family: $fontDefault;
-      font-size: 18px;
-      text-transform: uppercase;
-      font-weight: bold;
-    }
-    .contentHover {
-      //grid-template-columns: 100px 1fr;
-      color: black;
-      font-family: $fontDefault;
-      font-size: 18px;
-      text-transform: uppercase;
-      font-weight: bold;
+.dropdown {
+  position: absolute;
+  top: $header_height;
+  padding: $base_padding;
+  border-radius: $borderRadius;
+  width: 300px;
+  height: 150px;
+  margin-right:$base_padding;
+  background-color: $off_white;
+  color: $font_primary;
+  margin-bottom: $base_padding;
+  right:0;
+  &.container {
+    display:grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 50% 50%;
+    align-items:center;
+    justify-content: space-between;
+    grid-gap: 10px;
+    padding-left: $base_padding;
+    padding-bottom: $base_padding;
+    padding-top: 30px;
+    padding-right: $base_padding;
+  }
+  .logout{
+    grid-column-start:1;
+    grid-column-end:3;
+    grid-row: 2;
+  }
+  .contentNoHover {
+    color: black;
+    font-family: $fontDefault;
+    font-size: 18px;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+  .contentHover {
+    color: black;
+    font-family: $fontDefault;
+    font-size: 18px;
+    text-transform: uppercase;
+    font-weight: bold;
 
-      &:hover {
+    &:hover {
       @extends .base-transition;
       color: $secondary_color;
     }
+  } 
+  .disabled {
+    opacity: 0.3;
+    color: black;
   }
+}
+
+.profile-background {
+  z-index: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
 }
 
 

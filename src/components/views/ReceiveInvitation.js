@@ -2,7 +2,7 @@ import {Button} from 'components/ui/Button';
 import {fetchUserById, answerInvite, handleError} from 'helpers/restApi';
 import "styles/views/HomeHeader.scss";
 import React,{useEffect,useState} from 'react';
-import {connectInvitations} from "../../helpers/WebSocketFactory";
+import {connectInvitations, disconnectInvitations} from "../../helpers/WebSocketFactory";
 import "styles/views/PopUp.scss";
 import "styles/ui/Invitation.scss";
 import Invitation from "../../models/Invitation";
@@ -20,6 +20,7 @@ const ReceiveInvitation = props => {
         window.addEventListener('beforeunload', handleReload);
         return () => {
             window.removeEventListener('beforeunload', handleReload);
+            disconnectInvitations();
         }   
     }, [invitation]);
 
