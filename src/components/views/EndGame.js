@@ -132,6 +132,11 @@ const EndGame = props => {
 
     const resultText = () => {
         if (result) {
+            console.log("user id: " + localStorage.getItem('id'));
+            console.log("invitedPlayerId: " + result.invitedPlayerId);
+            console.log("invitingPlayerId: " + result.invitingPlayerId);
+            console.log("invitedPlayerResult: " + result.invitedPlayerResult);
+            console.log("nvitingPlayerResult: " + result.invitingPlayerResult);
             if (parseInt(result.invitedPlayerResult) == parseInt(result.invitingPlayerResult)) {
                 return "It's a draw!"
             } else if ((parseInt(result.invitedPlayerId) == parseInt(localStorage.getItem('id')) && 
