@@ -42,7 +42,7 @@ const TopicSelectionSingle = props => {
             return (
                 <>
                     <div className="title spread" style={{ textAlign: "left" }}>
-                        Select a topic
+                        Select a topic <br />--> <strong> This feature will follow in the second sprint, buttons are not clickable</strong>
                     </div>
                     {topicRows.map((row, index) => (
                         <div className="topic-row" key={index} style={{ marginBottom: "20px" }}>

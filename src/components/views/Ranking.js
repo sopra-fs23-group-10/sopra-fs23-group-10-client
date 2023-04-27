@@ -18,7 +18,7 @@ const Ranking = props => {
                     <p>
                         <strong> STAR PLAYERS </strong> <br />
                         <br />
-                        this feature will follow in the second sprint<br />
+                        This feature will follow in the second sprint<br />
  
                     </p>
                 </div>
