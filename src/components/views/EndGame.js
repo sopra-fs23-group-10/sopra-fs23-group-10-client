@@ -143,7 +143,11 @@ const EndGame = props => {
             console.log("invitedPlayerId: " + result.invitedPlayerId);
             console.log("invitingPlayerId: " + result.invitingPlayerId);
             console.log("invitedPlayerResult: " + result.invitedPlayerResult);
+            console.log("invitedPlayerResult: " + typeof result.invitedPlayerResult);
+            console.log("invitedPlayerResult: " + parseInt(result.invitedPlayerResult));
             console.log("nvitingPlayerResult: " + result.invitingPlayerResult);
+            console.log("nvitingPlayerResult: " + typeof result.invitingPlayerResult);
+            console.log("invitedPlayerResult: " + parseInt(result.invitingPlayerResult));
             console.log("won: " + isWon());
             console.log("is invited player: " + (result.invitedPlayerId == parseInt(localStorage.getItem('id'))));
             console.log("is inviting player: " + (result.invitingPlayerId == parseInt(localStorage.getItem('id'))));
