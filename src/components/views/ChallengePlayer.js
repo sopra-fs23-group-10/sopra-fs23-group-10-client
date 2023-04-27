@@ -105,9 +105,7 @@ const ChallengePlayer = props => {
                 <BaseContainer className="popup container">
                     <div className="rulesGrid">
                         <div className ="title_location" style={{textAlign: "center"}}>
-                            <div className="title">
-                                <strong>  Challenge Player </strong>
-                            </div>
+                            <h3> Challenge Player </h3>
                         </div>
                         <div className="content_location">
                             <PlayerList callback={getUsers} action={chooseOpponent}/>
