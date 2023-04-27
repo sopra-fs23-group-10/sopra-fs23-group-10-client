@@ -6,10 +6,10 @@
     flex-direction: column;
     gap:10px;
     margin: 0px;
-    margin-top: 20px;
     padding: 0px;
-    height:auto;
-    max-height: 100%;
+    padding-top:20px;
+    height:100%;
+    overflow:auto;
 
     .title {
         text-align: center;
