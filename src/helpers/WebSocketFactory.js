@@ -37,7 +37,7 @@ export const openSocket = () => {
     };
 
     stompClient.onWebSocketClose = () => {
-        console.error('WebSocket closed');
+        console.log('One of the WebSockets has closed');
         setTimeout(() => {
             openSocket();
         });
