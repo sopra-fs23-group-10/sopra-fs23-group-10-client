@@ -131,7 +131,7 @@ const EndGame = props => {
     }
 
     const isWon = () => {
-        return (result.invitedPlayerId == parseInt(localStorage.getItem('id')) && 
+        return ((result.invitedPlayerId == parseInt(localStorage.getItem('id')) && 
         parseInt(result.invitedPlayerResult) > parseInt(result.invitingPlayerResult)) || 
         (result.invitingPlayerId == parseInt(localStorage.getItem('id')) && 
         parseInt(result.invitingPlayerResult) > parseInt(result.invitedPlayerId)))
