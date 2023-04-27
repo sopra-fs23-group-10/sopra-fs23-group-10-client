@@ -132,9 +132,9 @@ const EndGame = props => {
 
     const isWon = () => {
         return ((result.invitedPlayerId == parseInt(localStorage.getItem('id')) && 
-        parseInt(result.invitedPlayerResult) > parseInt(result.invitingPlayerResult)) || 
+        result.invitedPlayerResult > result.invitingPlayerResult) || 
         (result.invitingPlayerId == parseInt(localStorage.getItem('id')) && 
-        parseInt(result.invitingPlayerResult) > parseInt(result.invitedPlayerId)))
+        result.invitingPlayerResult > result.invitedPlayerId))
     }
 
     const resultText = () => {
@@ -147,9 +147,9 @@ const EndGame = props => {
             console.log("won: " + isWon());
             console.log("is invited player: " + (result.invitedPlayerId == parseInt(localStorage.getItem('id'))));
             console.log("is inviting player: " + (result.invitingPlayerId == parseInt(localStorage.getItem('id'))));
-            console.log("invited player won: " + (parseInt(result.invitedPlayerResult) > parseInt(result.invitingPlayerResult)));
-            console.log("inviting player won: " + (parseInt(result.invitingPlayerResult) > parseInt(result.invitedPlayerId)));
-            if (parseInt(result.invitedPlayerResult) == parseInt(result.invitingPlayerResult)) {
+            console.log("invited player won: " + (result.invitedPlayerResult > result.invitingPlayerResult));
+            console.log("inviting player won: " + (result.invitingPlayerResult > result.invitedPlayerId));
+            if (result.invitedPlayerResult == result.invitingPlayerResult) {
                 return "It's a draw!"
             } else if (isWon()) {
                 return "You won!"
