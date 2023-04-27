@@ -115,12 +115,20 @@
   }
   .fade {
     height: 20px;
-    background: linear-gradient(0deg, $off_white 0%, $off_white 100%);
+    background: linear-gradient(0deg, $off_white 0%, #faf6f800 100%);
     grid-row:2;
     width:100%;
     z-index: 2;
     grid-column:1;
     align-self: end;
+  }
+  .fade-top {
+    height: 20px;
+    background: linear-gradient(0deg, #faf6f800 0%, $off_white 100%);
+    grid-row:2;
+    width:100%;
+    z-index: 2;
+    grid-column:1;
   }
 
 
