@@ -103,16 +103,23 @@ const ChallengePlayer = props => {
             <div className='challenge popup grid'>
                 <Link to="/home" className='back'>✕ Cancel</Link>
                 <BaseContainer className="popup container">
-                    <h3 className='popup title'>Challenge Player</h3>
-                    <PlayerList callback={getUsers} action={chooseOpponent}/>
-                    <div className="button-container">
-                        <Button
-                            width="100%"
-                            onClick={() => challengeRandomUser()}
-                            disabled={users == null}
-                        >
-                            Random
-                        </Button>
+                    <div className="rulesGrid">
+                        <div className ="title_location" style={{textAlign: "center"}}>
+                            <h3> Challenge Player </h3>
+                        </div>
+                        <div className="content_location">
+                            <PlayerList callback={getUsers} action={chooseOpponent}/>
+                        </div>
+                        <div className='fade'></div>
+                        <div className="button_location">
+                            <Button
+                                width="100%"
+                                onClick={() => challengeRandomUser()}
+                                disabled={users == null}
+                            >
+                                Random
+                            </Button>
+                        </div>
                     </div>
                 </BaseContainer>
             </div>

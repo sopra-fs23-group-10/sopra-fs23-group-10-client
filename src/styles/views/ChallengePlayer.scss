@@ -4,6 +4,7 @@
     .container {
         width:100% !important;
         min-width: 100%;
+        height:auto;
         &.base-container {
             grid-column: 2;
             margin:0px !important;
@@ -14,6 +15,7 @@
         display: grid;
         margin-top:$base_padding;
         grid-template-columns: 1fr minmax(400px, 1fr) 1fr;
+        height: auto;
         max-height: calc(100vh - #{$header_height} - #{$base_padding});
     }
 
