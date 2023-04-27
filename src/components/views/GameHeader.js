@@ -105,7 +105,7 @@ const GameHeader = props => {
             <div className="gamecontentheader fontnormal" style={{textAlign: "left"}}>
                 <p>
                     Score <br />
-                    {props.questionId}/10
+                    {props.questionId}/4
                 </p>
             </div>
             <div className="content" style={{textAlign: "right", gridColumn:4}}>
