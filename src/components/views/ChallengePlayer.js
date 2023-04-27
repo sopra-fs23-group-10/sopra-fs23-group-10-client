@@ -110,6 +110,7 @@ const ChallengePlayer = props => {
                         <div className="content_location">
                             <PlayerList callback={getUsers} action={chooseOpponent}/>
                         </div>
+                        <div className='fade'></div>
                         <div className="button_location">
                             <Button
                                 width="100%"
