@@ -130,6 +130,13 @@ const EndGame = props => {
         }
     }
 
+    const isWon = () => {
+        return ((parseInt(result.invitedPlayerId) == parseInt(localStorage.getItem('id')) && 
+        parseInt(result.invitedPlayerResult) > parseInt(result.invitingPlayerResult)) || 
+        (parseInt(result.invitingPlayerId) == parseInt(localStorage.getItem('id')) && 
+        parseInt(result.invitingPlayerResult) > parseInt(result.invitedPlayerId)))
+    }
+
     const resultText = () => {
         if (result) {
             console.log("user id: " + localStorage.getItem('id'));
@@ -137,20 +144,17 @@ const EndGame = props => {
             console.log("invitingPlayerId: " + result.invitingPlayerId);
             console.log("invitedPlayerResult: " + result.invitedPlayerResult);
             console.log("nvitingPlayerResult: " + result.invitingPlayerResult);
+            console.log("won: " + isWon());
+            console.log("is invited player: " + parseInt(result.invitedPlayerId) == parseInt(localStorage.getItem('id')));
+            console.log("is inviting player: " + parseInt(result.invitingPlayerId) == parseInt(localStorage.getItem('id')));
+            console.log("invited player won: " + parseInt(result.invitedPlayerResult) > parseInt(result.invitingPlayerResult));
+            console.log("inviting player won: " + parseInt(result.invitingPlayerResult) > parseInt(result.invitedPlayerId));
             if (parseInt(result.invitedPlayerResult) == parseInt(result.invitingPlayerResult)) {
                 return "It's a draw!"
-            } else if ((parseInt(result.invitedPlayerId) == parseInt(localStorage.getItem('id')) && 
-                        parseInt(result.invitedPlayerResult) > parseInt(result.invitingPlayerResult)) || 
-                        (parseInt(result.invitingPlayerId) == parseInt(localStorage.getItem('id')) && 
-                        parseInt(result.invitingPlayerResult) > parseInt(result.invitedPlayerId))) {
+            } else if (isWon()) {
                 return "You won!"
-            } else if ((parseInt(result.invitedPlayerId) == parseInt(localStorage.getItem('id')) && 
-                        parseInt(result.invitedPlayerResult) < parseInt(result.invitingPlayerResult)) || 
-                        (parseInt(result.invitingPlayerId) == parseInt(localStorage.getItem('id')) && 
-                        parseInt(result.invitingPlayerResult) < parseInt(result.invitedPlayerId))) {
-                return "You lost!"
             } else {
-                return "Something else"
+                return "You lost!"
             }
         } else {
             return "Waiting..."
