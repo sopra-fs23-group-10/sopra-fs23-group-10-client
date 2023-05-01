@@ -8,6 +8,8 @@ import {connectQuestion, disconnectQuestion} from "../../helpers/WebSocketFactor
 import 'styles/views/Score.scss';
 import Question from "models/Question";
 import {Timer} from "../ui/Timer";
+import BaseContainer from "components/ui/BaseContainer";
+import { Button } from "components/ui/Button";
 
 
 const Score = props => {
@@ -17,7 +19,7 @@ const Score = props => {
     const [usernameInvited, setUsernameInvited] = useState("");
     const [topics, setTopics] = useState(null);
     const [topicSent, setTopicSent] = useState(false);
-    let { selecting, gameMode } = useParams();
+    let { selecting, gameMode, playerMode } = useParams();
 
     useEffect(() => {
         connectQuestion(handleQuestion);
@@ -59,7 +61,7 @@ const Score = props => {
             }
         }
 
-        if (selecting == 'selecting' && !topics) {
+        if (selecting == 'selecting' && !topics && playerMode == 'duel') {
             if (!localStorage.getItem('topics')) {
                 fetchTopics();
             } else {
@@ -84,7 +86,8 @@ const Score = props => {
     const fetchQuestion = async (topic) => {
         if (!topicSent) {
             try {
-                await getQuestion(localStorage.getItem('gameId'), topic);
+                const response = await getQuestion(localStorage.getItem('gameId'), topic);
+                if (playerMode == 'single' && response) toQuestion(response);
                 setTopicSent(true);
             } catch (error) {
                 alert(error);
@@ -102,7 +105,7 @@ const Score = props => {
         localStorage.removeItem('topics');
         localStorage.removeItem('startTime');
         localStorage.setItem('question', JSON.stringify(question));
-        history.push('/game/' + gameMode + "/" + selecting);
+        history.push('/game/' + playerMode + '/' + gameMode + "/" + selecting);
     }
 
     const handleTimeOut = () => {
@@ -130,39 +133,52 @@ const Score = props => {
         toQuestion(question);
     }
 
+    const getQuestionSingle = () => {
+        fetchQuestion(localStorage.getItem('topic'));
+    }
+
     const drawTopics = () => {
-        if (selecting == 'selecting') {
-            if (topics) {
-                return (
-                    <>
-                        <div className="grid-2">
-                            <div className="title grid2" style={{textAlign: "left"}}>
-                                Select a topic
-                            </div>
-                            {topics.map((topic)=> (
-                                <div key={topic} className={'topicSelection column-${index+1}'}>
-                                    <GameButton callback={() => fetchQuestion(topic)} text={parseString(topic)}/>
+        if (playerMode == 'duel') {
+            if (selecting == 'selecting') {
+                if (topics) {
+                    return (
+                        <>
+                            <div className="grid-2">
+                                <div className="title grid2" style={{textAlign: "left"}}>
+                                    Select a topic
                                 </div>
-                            ))}
+                                {topics.map((topic)=> (
+                                    <div key={topic} className={'topicSelection column-${index+1}'}>
+                                        <GameButton callback={() => fetchQuestion(topic)} text={parseString(topic)}/>
+                                    </div>
+                                ))}
+                            </div>
+                        </>
+                    );
+                } else {
+                    return (
+                        <div className="background-topic-waiting">
+                            <div className="topic">
+                                Waiting for topics...
+                            </div>
                         </div>
-                    </>
-                );
+                    );
+                }
             } else {
                 return (
                     <div className="background-topic-waiting">
                         <div className="topic">
-                            Waiting for topics...
+                            Your opponent is selecting a topic.
                         </div>
                     </div>
                 );
             }
         } else {
             return (
-                <div className="background-topic-waiting">
-                    <div className="topic">
-                        Your opponent is selecting a topic.
-                    </div>
-                </div>
+                <BaseContainer>
+                    <p>Are you ready for the next question?</p>
+                    <Button onClick={() => getQuestionSingle()}>Continue</Button>
+                </BaseContainer>
             );
         }
     }
@@ -208,7 +224,7 @@ const Score = props => {
 
     return (
         <>
-            <GameHeader questionId={localStorage.getItem('question_nr')} showCancelButton={true} height="100"/>
+            <GameHeader playerMode={playerMode} questionId={localStorage.getItem('question_nr')} showCancelButton={true} height="100"/>
             <div className="ScreenGrid-Score">
                 {drawResults()}
                 {drawTopics()}

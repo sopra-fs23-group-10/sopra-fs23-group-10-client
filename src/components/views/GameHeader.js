@@ -41,9 +41,10 @@ const GameHeader = props => {
     }
 
     const cancel = async () => {
+        console.log("cancel: " + localStorage.getItem('gameId'));
         setSentCancellation(true);
         try {
-            const response = await cancelGame(localStorage.getItem('gameId'));
+            await cancelGame(localStorage.getItem('gameId'));
         } catch (error) {
             console.log(error);
             history.push("/home");
@@ -51,6 +52,7 @@ const GameHeader = props => {
     }
 
     const handleGameCancelled = (msg) => {
+        console.log("game cancelled");
         setCancelled(true);
         const event = new CustomEvent('pause', { detail: null });
         document.dispatchEvent(event);
@@ -63,6 +65,7 @@ const GameHeader = props => {
         localStorage.removeItem('answered');
         localStorage.removeItem('startTime');
         localStorage.removeItem('result');
+        localStorage.removeItem('topic');
         history.push("/home");
     }
 
@@ -98,7 +101,7 @@ const GameHeader = props => {
         <header className="gameheader container">
             <div className="gamecontentheader fontnormal" style={{textAlign: "left"}}>
                 <p>
-                    DuelMode <br />
+                    {props.playerMode.charAt(0).toUpperCase() + props.playerMode.slice(1)} Mode <br />
                     Trivia Quiz
                 </p>
             </div>
@@ -117,6 +120,7 @@ const GameHeader = props => {
 }
 
 GameHeader.propTypes = {
+    playerMode: PropTypes.string,
     height: PropTypes.number,
     questionId: PropTypes.string,
     showCancelButton: PropTypes.bool

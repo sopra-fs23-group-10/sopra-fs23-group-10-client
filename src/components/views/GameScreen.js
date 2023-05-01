@@ -14,7 +14,7 @@ const GameScreen = () => {
     const [time, setTime] = useState(0);
     const answerTime = 10;
     const { selecting } = useParams();
-    const { gameMode } = useParams();
+    const { gameMode, playerMode } = useParams();
     const nQuestions = 4;
 
     useEffect( () => {
@@ -46,13 +46,14 @@ const GameScreen = () => {
 
     const answer = async (str) => {
         try {
-            await sendAnswer(
+            const response = await sendAnswer(
                 localStorage.getItem('gameId'), 
                 localStorage.getItem('id'), 
                 question.questionId,
                 str,
                 time
             );
+            if (response && playerMode == "single") goToScore();
         } catch (error) {
             alert(error);
             history.push("/login");
@@ -105,7 +106,7 @@ const GameScreen = () => {
         if (selecting != 'selecting' && nr >= nQuestions) {
             cleanup();
             localStorage.setItem('result', JSON.stringify(e.detail));
-            history.push('/endgame/' + gameMode + "/waiting");
+            history.push('/endgame/duel/' + gameMode + "/waiting");
         }
     }
 
@@ -114,9 +115,9 @@ const GameScreen = () => {
         cleanup();
         if (nr < nQuestions) {
             localStorage.setItem('question_nr', (nr + 1));
-            history.push('/topic-selection/' + gameMode + "/" + (selecting == 'selecting' ? 'waiting' : 'selecting'));
+            history.push('/topic-selection/' + playerMode + '/' + gameMode + "/" + (selecting == 'selecting' && playerMode != 'single' ? 'waiting' : 'selecting'));
         } else if (selecting == 'selecting') {
-            history.push('/endgame/' + gameMode + "/" + selecting);
+            history.push('/endgame/' + playerMode + '/' + gameMode + "/" + selecting);
         }
     }
 
@@ -126,7 +127,7 @@ const GameScreen = () => {
 
     return (
         <>
-            <GameHeader questionId={localStorage.getItem('question_nr')} showCancelButton={true} height="100"/>
+            <GameHeader playerMode={playerMode} questionId={localStorage.getItem('question_nr')} showCancelButton={true} height="100"/>
             <div className="GameScreenGrid">
                 {drawQuestion()}
                 <Timer timeLimit={answerTime} getTime={getTime}/>

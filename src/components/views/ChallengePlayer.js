@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {inviteUser, answerInvite} from 'helpers/restApi';
+import {createGame, answerInvite} from 'helpers/restApi';
 import {useHistory, useParams, Link} from 'react-router-dom';
 import 'styles/views/PopUp.scss';
 import BaseContainer from "components/ui/BaseContainer";
@@ -24,7 +24,7 @@ const ChallengePlayer = props => {
                 if (accepted) {
                     localStorage.setItem('question_nr', 1);
                     localStorage.removeItem('startTime');
-                    history.push(`/topic-selection/${gameMode}/waiting`);
+                    history.push(`/topic-selection/duel/${gameMode}/waiting`);
                 } else {
                     localStorage.removeItem('gameId');
                     setInviteSent(false);
@@ -44,7 +44,7 @@ const ChallengePlayer = props => {
 
     const invite = async (id) => {
         try {
-            const response = await inviteUser(id, gameMode.toUpperCase(), "DUEL");
+            const response = await createGame(id, gameMode.toUpperCase(), "DUEL");
             localStorage.setItem('gameId', response.gameId);
             setInviteSent(true);
         } catch (error) {

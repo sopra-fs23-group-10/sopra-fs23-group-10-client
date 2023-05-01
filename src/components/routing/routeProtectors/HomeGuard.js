@@ -24,6 +24,7 @@ export const HomeGuard = props => {
     localStorage.removeItem('answered');
     localStorage.removeItem('startTime');
     localStorage.removeItem('result');
+    localStorage.removeItem('topic');
     return props.children;
   } else if (localStorage.getItem("token")){
     return props.children;

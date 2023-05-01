@@ -142,7 +142,7 @@ export const fetchOnlineUsers = async () => {
   }
 };
 
-export const inviteUser = async (invitedUserId, quizType, modeType) => {
+export const createGame = async (invitedUserId, quizType, modeType) => {
   try {
     const invitingUserId = localStorage.getItem('id');
     const authToken = localStorage.getItem('token');

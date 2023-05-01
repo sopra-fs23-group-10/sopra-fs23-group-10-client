@@ -82,7 +82,7 @@ const ReceiveInvitation = props => {
         localStorage.setItem('question_nr', 1);
         localStorage.setItem('gameId', invitation.gameId);
 
-        history.push(`/topic-selection/${invitation.quizType.toLowerCase()}/selecting`);
+        history.push(`/topic-selection/duel/${invitation.quizType.toLowerCase()}/selecting`);
     }
 
     const throwReply = (msg) => {
