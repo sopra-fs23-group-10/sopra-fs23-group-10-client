@@ -175,25 +175,54 @@ const Score = props => {
             }
         } else {
             return (
-                <BaseContainer>
-                    <p>Are you ready for the next question?</p>
-                    <Button onClick={() => getQuestionSingle()}>Continue</Button>
-                </BaseContainer>
+                <div className="background-topic-waiting">
+                    <div className="topic">
+                        <div style={{ display: 'block' }}>
+                            <p>Are you ready for the next question?</p>
+                            <Button width="100%" onClick={() => getQuestionSingle()}>Continue</Button>
+                        </div>
+                    </div>
+                </div>
             );
         }
     }
 
     const drawResults = () => {
-        if (result && usernameInvited && usernameInviting) {
-            return (
-                <div className="grid-1">
-                    <div className="title" style={{textAlign: "left"}}>
-                        Player 1
-                    </div>
-                    <div className="title" style={{textAlign: "right"}}>
-                        Player 2
-                    </div>
-                    <div className="background-points">
+        if (playerMode == 'duel') {
+            if (selecting == 'selecting') {
+                if (result && usernameInvited && usernameInviting) {
+                    return (
+                        <div className="grid-1">
+                            <div className="title" style={{textAlign: "left"}}>
+                                Player 1
+                            </div>
+                            <div className="title" style={{textAlign: "right"}}>
+                                Player 2
+                            </div>
+                            <div className="background-points">
+                                <div className = "player" style={{textAlign: "center"}}>
+                                    {usernameInviting}
+                                </div>
+                                <div className = "points-score" style={{textAlign: "center"}}>
+                                    {result.invitingPlayerResult}
+                                </div>
+                            </div>
+                            <div className="background-points">
+                                <div className = "player" style={{textAlign: "center"}} >
+                                    {usernameInvited}
+                                </div>
+                                <div className = "points-score" style={{textAlign: "center"}}>
+                                    {result.invitedPlayerResult}
+                                </div>
+                            </div>
+                        </div>
+                    );
+                }
+            }
+        } else if (result && usernameInviting){
+            return(
+                <div>
+                    <div className="background-points" style={{ width: '100%', height: '100%', position: 'relative' }}>
                         <div className = "player" style={{textAlign: "center"}}>
                             {usernameInviting}
                         </div>
@@ -201,16 +230,8 @@ const Score = props => {
                             {result.invitingPlayerResult}
                         </div>
                     </div>
-                    <div className="background-points">
-                        <div className = "player" style={{textAlign: "center"}} >
-                            {usernameInvited}
-                        </div>
-                        <div className = "points-score" style={{textAlign: "center"}}>
-                            {result.invitedPlayerResult}
-                        </div>
-                    </div>
                 </div>
-            );
+            )
         }
     }
 
