@@ -198,18 +198,83 @@ const EndGame = props => {
     }
 
     const endPointsScreen = () => {
-        if (result && usernameInvited && usernameInviting) {
+        if (playerMode == 'duel'){
+            if (selecting == 'selecting'){
+                if (result && usernameInvited && usernameInviting) {
+                    return (
+                        <>
+                            <div className="grid-1">
+                                <div className="title" style={{textAlign: "left"}}>
+                                    Player 1
+                                </div>
+                                <div className="title" style={{textAlign: "right"}}>
+                                    Player 2
+                                </div>
+                                {result.invitingPlayerResult > result.invitedPlayerResult ? (
+                                    <div className="background-points-winner">
+                                        <div className = "player" style={{textAlign: "center"}}>
+                                            {usernameInviting}
+                                        </div>
+                                        <div className = "points-endgame" style={{textAlign: "center"}}>
+                                            {result.invitingPlayerResult}
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className="background-points-loser">
+                                        <div className = "player player-loser" style={{textAlign: "center"}}>
+                                            {usernameInviting}
+                                        </div>
+                                        <div className = "points-endgame points-loser" style={{textAlign: "center"}}>
+                                            {result.invitingPlayerResult}
+                                        </div>
+                                    </div>
+                                ) }
+                                {result.invitingPlayerResult < result.invitedPlayerResult ? (
+                                    <div className="background-points-winner">
+                                        <div className = "player" style={{textAlign: "center"}} >
+                                            {usernameInvited}
+                                        </div>
+                                        <div className = "points-endgame" style={{textAlign: "center"}}>
+                                            {result.invitedPlayerResult}
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className="background-points-loser">
+                                        <div className = "player player-loser" style={{textAlign: "center"}}>
+                                            {usernameInvited}
+                                        </div>
+                                        <div className = "points-endgame points-loser" style={{textAlign: "center"}}>
+                                            {result.invitedPlayerResult}
+                                        </div>
+                                    </div>
+                                ) }
+                            </div>
+                            <div className="background-rematchoption">
+                                <div className="content">
+                                    <div className="topic endgame" style={{textAlign: "center"}}>
+                                        {resultText()}
+                                    </div>
+                                    <div className="twoButtons">
+                                        {repeatButton()}
+                                        <Button
+                                            width="80%"
+                                            style={{margin: "auto"}}
+                                            onClick={() => returnToHome()}
+                                        >
+                                            RETURN HOME
+                                        </Button>
+                                    </div>
+                                </div>
+                            </div>
+                        </>
+                    );
+                }
+            }
+        } else if(result && usernameInviting){
             return (
                 <>
-                    <div className="grid-1">
-                        <div className="title" style={{textAlign: "left"}}>
-                            Player 1
-                        </div>
-                        <div className="title" style={{textAlign: "right"}}>
-                            Player 2
-                        </div>
-                        {result.invitingPlayerResult > result.invitedPlayerResult ? (
-                        <div className="background-points-winner">
+                    <div className="grid-1" style={{ position: 'relative'}} >
+                        <div className="background-points-winner" style={{ width: '100%', height: '100%', position: 'absolute' }}>
                             <div className = "player" style={{textAlign: "center"}}>
                                 {usernameInviting}
                             </div>
@@ -217,41 +282,12 @@ const EndGame = props => {
                                 {result.invitingPlayerResult}
                             </div>
                         </div>
-                        ) : (
-                            <div className="background-points-loser">
-                                <div className = "player player-loser" style={{textAlign: "center"}}>
-                                    {usernameInviting}
-                                </div>
-                                <div className = "points-endgame points-loser" style={{textAlign: "center"}}>
-                                    {result.invitingPlayerResult}
-                                </div>
-                            </div>
-                        ) }
-                        {result.invitingPlayerResult < result.invitedPlayerResult ? (
-                        <div className="background-points-winner">
-                            <div className = "player" style={{textAlign: "center"}} >
-                                {usernameInvited}
-                            </div>
-                            <div className = "points-endgame" style={{textAlign: "center"}}>
-                                {result.invitedPlayerResult}
-                            </div>
-                        </div>
-                        ) : (
-                            <div className="background-points-loser">
-                                <div className = "player player-loser" style={{textAlign: "center"}}>
-                                    {usernameInvited}
-                                </div>
-                                <div className = "points-endgame points-loser" style={{textAlign: "center"}}>
-                                    {result.invitedPlayerResult}
-                                </div>
-                            </div>
-                        ) }
                     </div>
-                    <div className="background-rematchoption">
+                    <>
+                        <div style={{ paddingTop: '40px' }}></div>
+                    </>
+                    <div className="background-rematchoption" >
                         <div className="content">
-                            <div className="topic endgame" style={{textAlign: "center"}}>
-                                {resultText()}
-                            </div>
                             <div className="twoButtons">
                                 {repeatButton()}
                                 <Button
@@ -265,7 +301,7 @@ const EndGame = props => {
                         </div>
                     </div>
                 </>
-            );
+                )
         } else {
             return <BaseContainer>Calculating result...</BaseContainer>
         }
