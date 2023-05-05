@@ -196,6 +196,17 @@ export const getQuestion = async (gameId, topic) => {
   }
 }
 
+export const getImageQuestion = async (gameId) => {
+  try {
+    const authToken = localStorage.getItem('token');
+    const requestBody = JSON.stringify({gameId: gameId});
+    const response = await restApi.post("/games/images", requestBody, {headers: {token: authToken}})
+    return response.data;
+  } catch (error) {
+    throw new Error(`Something went wrong while fetching a question: \n${handleError(error)}`);
+  }
+}
+
 export const sendAnswer = async (gameId, userId, questionId, answer, answeredTime) => {
   try {
     const requestBody = JSON.stringify({userId, questionId, answer, answeredTime})
