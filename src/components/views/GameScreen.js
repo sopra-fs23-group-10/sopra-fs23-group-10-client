@@ -63,6 +63,8 @@ const GameScreen = () => {
             localStorage.setItem('correctAnswer', response.data.correctAnswer);
             setCorrectAnswer(response.data.correctAnswer);
             if (response && playerMode == "single") {
+                const event = new CustomEvent('pause', { detail: null });
+                document.dispatchEvent(event);
                 setTimeout(() => {
                     goToScore();
                 }, 3000);
