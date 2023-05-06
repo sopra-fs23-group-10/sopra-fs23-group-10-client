@@ -1,0 +1,31 @@
+@import 'styles/theme';
+
+.round-result {
+
+    &.container {
+        display: grid;
+        grid-template-columns: auto auto 1fr auto;
+        grid-template-rows: auto;
+        grid-gap: 20px;
+        padding: 10px 20px 10px 20px;
+        margin: 0px;
+    }
+
+    .index {
+        grid-column: 1;
+        align-self: center;
+        color: $disabled_button;
+    }
+
+    .points {
+        grid-column: 2;
+        align-self: center;
+    }
+
+    .icon {
+        grid-column: 4;
+        color: $secondary_color;
+        width:20px;
+        height: 20px;
+    }
+}

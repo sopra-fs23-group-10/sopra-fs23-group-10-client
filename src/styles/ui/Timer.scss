@@ -2,7 +2,7 @@
 
 .timer {
     &.container {
-        grid-row:3;
+        // grid-row:3;
         display: grid;
         grid-template-columns: auto 1fr;
         gap: 20px;

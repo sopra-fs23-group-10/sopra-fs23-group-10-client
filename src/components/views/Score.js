@@ -10,11 +10,13 @@ import Question from "models/Question";
 import {Timer} from "../ui/Timer";
 import BaseContainer from "components/ui/BaseContainer";
 import { Button } from "components/ui/Button";
+import { RoundResult } from "components/ui/RoundResult";
 
 
 const Score = props => {
     const history = useHistory();
     const [result, setResult] = useState(null);
+    const [results, setResults] = useState(null);
     const [usernameInviting, setUsernameInviting] = useState("");
     const [usernameInvited, setUsernameInvited] = useState("");
     const [topics, setTopics] = useState(null);
@@ -34,6 +36,7 @@ const Score = props => {
                     await getUser(response.data.invitingPlayerId, setUsernameInviting);
                 } else {
                     const response = await getIntermediateResults(localStorage.getItem("gameId"));
+                    setResults(response.data);
                     let points1 = 0;
                     let points2 = 0;
                     for (let r of response.data) {
@@ -183,10 +186,10 @@ const Score = props => {
         }
     }
 
-    const drawResults = () => {
+    const drawTotalResult = () => {
         if (result && usernameInvited && usernameInviting) {
             return (
-                <div className="grid-1">
+                <div className="grid grid-1">
                     <div className="title" style={{textAlign: "left"}}>
                         Player 1
                     </div>
@@ -214,6 +217,40 @@ const Score = props => {
         }
     }
 
+    const drawResults = () => {
+        if (results && usernameInvited && usernameInviting) {
+            return (
+                <div className="result-list-container grid grid-0">
+                        {results.map((result, index) => {
+                            return (
+                                <div style={{gridRow:index+1, gridColumn:1}}>
+                                    <RoundResult
+                                        style={{gridRow:index+1, gridColumn:1}}
+                                        index={index+1}
+                                        key={index}
+                                        points={result.invitingPlayerResult}
+                                    />
+                                </div>
+                            );
+                        })}
+                        {results.map((result, index) => {
+                            return (
+                                <div style={{gridRow:index+1, gridColumn:2}}>
+                                    <RoundResult
+                                        index={index+1}
+                                        key={index}
+                                        points={result.invitedPlayerResult}
+                                    />
+                                </div>
+                            );
+                        })}
+                </div>
+            );
+        } else {
+            return <div></div>
+        }
+    }
+
     const drawTimer = () => {
         if (localStorage.getItem('topics') || selecting != 'selecting') {
             return (
@@ -227,6 +264,7 @@ const Score = props => {
             <GameHeader playerMode={playerMode} questionId={localStorage.getItem('question_nr')} showCancelButton={true} height="100"/>
             <div className="ScreenGrid-Score">
                 {drawResults()}
+                {drawTotalResult()}
                 {drawTopics()}
                 {drawTimer()}
             </div>
