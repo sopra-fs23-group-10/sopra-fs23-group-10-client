@@ -21,7 +21,8 @@ export const HomeGuard = props => {
     localStorage.removeItem('gameId');
     localStorage.removeItem('question_nr');
     localStorage.removeItem('topics');
-    localStorage.removeItem('answered');
+    localStorage.removeItem('sentAnswer');
+    localStorage.removeItem('correctAnswer');
     localStorage.removeItem('startTime');
     localStorage.removeItem('result');
     localStorage.removeItem('topic');

@@ -8,6 +8,7 @@ import image from "images/image.png";
 import trivia from "images/trivia.png";
 import duel from "images/duel.png";
 import single from "images/single.png";
+import star from "images/star.png";
 import {PlayerList} from "../ui/PlayerList";
 import ReceiveInvitation from './ReceiveInvitation';
 
@@ -48,9 +49,12 @@ const Home = () => {
         if (users) {
             if (!startGame) {
                 return (
-                    <button onClick={() => start()} className='home start-game-button'>
-                        <p className='home start-game'>Start Game</p>
-                    </button>
+                    <div className='home start-container'>
+                        <img className='star' src={star}></img>
+                        <button onClick={() => start()} className='home start-game-button'>
+                            <p className='home start-game'>Start Game</p>
+                        </button>
+                    </div>
                 );
             } else if (gameMode === gameModes.none) {
                 return (    

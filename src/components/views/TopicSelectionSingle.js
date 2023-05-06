@@ -90,7 +90,7 @@ const TopicSelectionSingle = props => {
                         <div className="topic-row" key={index} style={{ marginBottom: "20px" }}>
                             {row.map((topic) => (
                                 <div className="topicSelection" key={topic}>
-                                    <GameButton callback={() => fetchQuestion(topic)} text={parseString(topic)} />
+                                    <GameButton callback={() => fetchQuestion(topic)}>{parseString(topic)}</GameButton>
                                 </div>
                             ))}
                         </div>

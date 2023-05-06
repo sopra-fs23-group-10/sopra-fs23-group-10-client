@@ -149,7 +149,7 @@ const Score = props => {
                                 </div>
                                 {topics.map((topic)=> (
                                     <div key={topic} className={'topicSelection column-${index+1}'}>
-                                        <GameButton callback={() => fetchQuestion(topic)} text={parseString(topic)}/>
+                                        <GameButton callback={() => fetchQuestion(topic)}>{parseString(topic)}</GameButton>
                                     </div>
                                 ))}
                             </div>

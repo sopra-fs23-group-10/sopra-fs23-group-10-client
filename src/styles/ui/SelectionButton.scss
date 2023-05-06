@@ -20,19 +20,17 @@
         width:250px;
         height:250px;
         cursor: pointer;
-        animation: 0.2s ease-in-out 0s 1 scale;
-        transition: transform 0.3s ease;
+        animation:bobbing 1s infinite ease-in-out;
 
         &:hover {
-            transform: scale(1.1);
+            animation: boing 0.5s ease 1;
         }
     }
 
     &.inactive {
         opacity: 0.5;
-        &:hover {
-            transform: scale(1.0);
-        }
+        pointer-events: none;
+        animation: none;
     }
     .title {
         color: $secondary_color;

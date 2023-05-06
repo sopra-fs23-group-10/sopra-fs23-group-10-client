@@ -49,13 +49,16 @@
     overflow: auto;
   }
   &.start-game-button {
+    z-index: 5;
+    position: relative;
     cursor: pointer;
     height:170px;
     width:400px;
     overflow: hidden;
     background-color: transparent;
     border-style: none;
-    transform: translate(0, -70px);
+    margin-top: -70px;
+    animation: bobbing 1s infinite ease-in-out;
   }
   &.start-game {
     font-family: $fontDisplay;
@@ -65,10 +68,18 @@
     line-height:160px;
     height:400px;
     transform: translate(0px, -130px);
+  }
 
+  &.start-container {
     &:hover {
-      transform: translate(-4px, -134px);
-      filter: drop-shadow(4px 4px 0px $secondary_color);
+      .star {
+        animation: boing 0.3s ease 1;
+      }
+
+      .start-game {
+        transform: translate(-4px, -134px);
+        filter: drop-shadow(4px 4px 0px $background_orange);
+      }
     }
   }
 }
