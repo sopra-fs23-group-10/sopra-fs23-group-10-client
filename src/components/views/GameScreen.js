@@ -7,6 +7,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { sendAnswer } from "helpers/restApi";
 import { Timer } from "components/ui/Timer";
 import star from "images/star.png";
+import { element } from "prop-types";
 
 const GameScreen = () => {
     const history = useHistory();
@@ -14,17 +15,21 @@ const GameScreen = () => {
     const [sentAnswer, setSentAnswer] = useState(null);
     const [correctAnswer, setCorrectAnswer] = useState(null);
     const [time, setTime] = useState(0);
-    const answerTime = 30;
+    const answerTime = 10;
     const { selecting } = useParams();
     const { gameMode, playerMode } = useParams();
     const nQuestions = 4;
 
-    useEffect( () => {
+    useEffect(() => {
         function timeOut() {
-            if (sentAnswer == null) {
-                answer("stupid answer");
+            if (sentAnswer) {
+                setCorrectAnswer(localStorage.getItem('correctAnswer'));
+                setTimeout(() => {
+                    goToScore();
+                }, 3000);
+            } else {
+                answer("stupid answer", false);
             }
-            goToScore();
         }
 
         if (!question && localStorage.getItem('sentAnswer')) {
@@ -45,13 +50,13 @@ const GameScreen = () => {
     });
 
     const chooseAnswer = async (str) => {
-        setSentAnswer(str);
-        localStorage.setItem('sentAnswer', str);
-        answer(str);
+        answer(str, playerMode == 'duel');
     }
 
-    const answer = async (str) => {
+    const answer = async (str, wait) => {
         try {
+            setSentAnswer(str);
+            localStorage.setItem('sentAnswer', str);
             const response = await sendAnswer(
                 localStorage.getItem('gameId'), 
                 localStorage.getItem('id'), 
@@ -61,8 +66,8 @@ const GameScreen = () => {
             );
             console.log(response);
             localStorage.setItem('correctAnswer', response.data.correctAnswer);
-            setCorrectAnswer(response.data.correctAnswer);
-            if (response && playerMode == "single") {
+            if (response && !wait) {
+                setCorrectAnswer(response.data.correctAnswer);
                 const event = new CustomEvent('pause', { detail: null });
                 document.dispatchEvent(event);
                 setTimeout(() => {
@@ -76,7 +81,7 @@ const GameScreen = () => {
     } 
 
     const drawQuestion = () => {
-        if (sentAnswer && correctAnswer) {
+        if (correctAnswer) {
             console.log("correct answer = " + correctAnswer);
             let accent = (str) => {
                 if (str == correctAnswer) return <img className="star accent" src={star}></img>;
@@ -96,32 +101,42 @@ const GameScreen = () => {
                 }
             );
             return (
+                <div className ="QuestionGrid">
+                    {answers}
+                </div>
+            );
+        } else if (question) {
+            let content;
+            if (sentAnswer) {
+                content = (
+                    <div className="background-answerSent">
+                        <div className="answerSent-content" style={{textAlign: "center"}}>
+                            Answer sent!
+                        </div>
+                    </div>
+                );
+            } else {
+                let answers = question.allAnswers.map((str) =>
+                    <GameButton key={str} callback={() => chooseAnswer(str)}>{str}</GameButton>
+                );
+                content = (
                     <>
-                        <div className="background-answerSent">
-                            <div className="answerSent-content" style={{textAlign: "center"}}>
-                                Answer sent!
+                        <div className="background-question">
+                            <div className="question-content" style={{textAlign: "center"}}>
+                                {question.question}
                             </div>
                         </div>
+
                         <div className ="QuestionGrid">
                             {answers}
                         </div>
                     </>
                 );
-        } else if (question) {
-            let answers = question.allAnswers.map((str) =>
-                <GameButton key={str} callback={() => chooseAnswer(str)}>{str}</GameButton>
-            );
+            }
             return (
                 <>
-                    <div className="background-question">
-                        <div className="question-content" style={{textAlign: "center"}}>
-                            {question.question}
-                        </div>
-                    </div>
-
-                    <div className ="QuestionGrid">
-                        {answers}
-                    </div>
+                    {content}
+                    <Timer timeLimit={answerTime} getTime={getTime}/>
                 </>
             );
         }
@@ -158,8 +173,14 @@ const GameScreen = () => {
         setTime(time);
     }
 
+    const resultText = () => {
+        if (sentAnswer == correctAnswer) return "Correct!"
+        else if (sentAnswer == "stupid answer") return "Time out!"
+        else return "False!"
+    }
+
     const showResult = () => {
-        if (correctAnswer) return <div className="result">{correctAnswer == sentAnswer ? "Correct!" : "False!"}</div>
+        if (correctAnswer) return <div className="result">{resultText()}</div>
     }
 
     return (
@@ -168,7 +189,6 @@ const GameScreen = () => {
             <div className="GameScreenGrid">
                 {showResult()}
                 {drawQuestion()}
-                <Timer timeLimit={answerTime} getTime={getTime}/>
             </div>
         </>
     );
