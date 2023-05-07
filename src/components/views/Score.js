@@ -190,7 +190,7 @@ const Score = props => {
         }
     }
 
-    const drawResults = () => {
+    const drawResultsTest = () => {
         if (playerMode == 'duel') {
             if (selecting == 'selecting') {
                 if (result && usernameInvited && usernameInviting) {
@@ -226,7 +226,10 @@ const Score = props => {
             return(
                 <div>
                     <div className="background-points" style={{ width: '100%', height: '100%', position: 'relative' }}>
-
+                    </div>
+                </div>)
+        }
+    }
     const drawTotalResult = () => {
         if (result && usernameInvited && usernameInviting) {
             return (
