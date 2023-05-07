@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {fetchUserById} from 'helpers/restApi';
 import User from 'models/User';
-import {useHistory, useParams} from 'react-router-dom';
+import {Link, useHistory, useParams} from 'react-router-dom';
 import {Button} from 'components/ui/Button';
 import 'styles/views/UserProfile.scss';
 import BaseContainer from "components/ui/BaseContainer";
@@ -76,18 +76,9 @@ const UserProfile = props => {
             <div>
                 <FormField
                     label="Username:"
+                    visible = {true}
                     value={username}
                     onChange={un => setUsername(un)}
-                />
-                <FormField
-                    label="Online Status:"
-                    value={status}
-                    disabled
-                />
-                <FormField
-                    label="Total Points:"
-                    value={points}
-                    disabled
                 />
             </div>
         );
@@ -99,28 +90,27 @@ const UserProfile = props => {
             <HomeHeader height="100"/>
             <BaseContainer className="popup container">
                 <div className="user-profile container">
-                    <h2>Profile of {username}:</h2>
-                    <Identicon className="profile-picture" string={username}/>
-                    {profileFields}
+                    <div className = "title-location" style={{ gridColumn: '1 / span 2', textAlign: 'center' }} >
+                        <div className="title"> <strong> EDIT PROFILE </strong></div>
+                    </div>
+                    <div className="picture-location">
+                        <Identicon className="profile-picture" string={username} size={128}/>
+                    </div>
+                    <div className="form-location">
+                        {profileFields}
+                    </div>
+
                 </div>
+                <Link to="/resetpassword" style={{textAlign: "right"}}>Change Password</Link>
 
-
-
-                <div className= "twoButtons">
                     <Button
                         width="100%"
-                        hidden={localStorage.getItem('id') !== user_id}
-                        onClick={() => history.push('/users/edit/' + user_id)}
-                    >
-                        Edit profile
-                    </Button>
-                    <Button
-                        width="100%"
+                        style={{marginTop: "12px"}}
                         onClick={() => history.push('/home')}
                     >
-                        Back to dashboard
+                        Done
                     </Button>
-                </div>
+
 
             </BaseContainer>
         </>

@@ -24,7 +24,7 @@ const Registration = props => {
                 return;
             }
             await registerUser(username, password, email);
-            history.push(`/home`);
+            history.push(`/rules`);
         } catch (error) {
             console.log(error);
             if (error.response.status === 409) { setMsg("Sorry, but the username or email is taken."); }
