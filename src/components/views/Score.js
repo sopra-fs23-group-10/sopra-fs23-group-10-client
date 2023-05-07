@@ -190,12 +190,12 @@ const Score = props => {
         }
     }
 
-    const drawResultsTest = () => {
-        if (playerMode == 'duel') {
-            if (selecting == 'selecting') {
+    const drawTotalResult = () => {
+        if (playerMode == 'duel'){
+            if (selecting == 'selecting'){
                 if (result && usernameInvited && usernameInviting) {
                     return (
-                        <div className="grid-1">
+                        <div className="grid grid-1">
                             <div className="title" style={{textAlign: "left"}}>
                                 Player 1
                             </div>
@@ -203,6 +203,7 @@ const Score = props => {
                                 Player 2
                             </div>
                             <div className="background-points">
+
                                 <div className = "player" style={{textAlign: "center"}}>
                                     {usernameInviting}
                                 </div>
@@ -210,38 +211,14 @@ const Score = props => {
                                     {result.invitingPlayerResult}
                                 </div>
                             </div>
-                            <div className="background-points">
-                                <div className = "player" style={{textAlign: "center"}} >
-                                    {usernameInvited}
-                                </div>
-                                <div className = "points-score" style={{textAlign: "center"}}>
-                                    {result.invitedPlayerResult}
-                                </div>
-                            </div>
                         </div>
-                    );
+                    )
                 }
             }
         } else if (result && usernameInviting){
             return(
                 <div>
                     <div className="background-points" style={{ width: '100%', height: '100%', position: 'relative' }}>
-                    </div>
-                </div>)
-        }
-    }
-    const drawTotalResult = () => {
-        if (result && usernameInvited && usernameInviting) {
-            return (
-                <div className="grid grid-1">
-                    <div className="title" style={{textAlign: "left"}}>
-                        Player 1
-                    </div>
-                    <div className="title" style={{textAlign: "right"}}>
-                        Player 2
-                    </div>
-                    <div className="background-points">
-
                         <div className = "player" style={{textAlign: "center"}}>
                             {usernameInviting}
                         </div>
@@ -249,8 +226,7 @@ const Score = props => {
                             {result.invitingPlayerResult}
                         </div>
                     </div>
-                </div>
-            )
+                </div>)
         }
     }
 

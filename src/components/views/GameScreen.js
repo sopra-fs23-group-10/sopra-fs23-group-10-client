@@ -97,11 +97,6 @@ const GameScreen = () => {
             );
             return (
                     <>
-                        <div className="background-answerSent">
-                            <div className="answerSent-content" style={{textAlign: "center"}}>
-                                Answer sent!
-                            </div>
-                        </div>
                         <div className ="QuestionGrid">
                             {answers}
                         </div>
