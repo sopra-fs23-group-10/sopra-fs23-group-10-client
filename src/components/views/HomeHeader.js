@@ -36,13 +36,14 @@ const HomeHeader = props => {
     }
 
     const edit = () => {
-        return <div className="contentNoHover">
+        return <Link className="contentHover"
+        onClick ={() => toEdit(localStorage.getItem('id'))}>
             Edit Profile
-        </div>
+        </Link>
     }
 
     const toEdit = (userId) => {
-        history.push('/home')
+        history.push("/users/" +userId)
     }
     const [showProfile, setDropDown] = useState(false);
     const dropDown = () =>{
@@ -54,7 +55,7 @@ const HomeHeader = props => {
                         <div className="contentNoHover" style={{textAlign: "left"}}>
                             Points: {points}
                         </div>
-                        <div className="contentHover disabled" style={{textAlign: "right"}}>
+                        <div className="contentHover" style={{textAlign: "right"}}>
                             {edit()}
                         </div>
                         <Button className ="logout"

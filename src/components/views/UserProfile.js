@@ -8,6 +8,8 @@ import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import HomeHeader from "./HomeHeader";
 import ReceiveInvitation from './ReceiveInvitation';
+import 'styles/views/PopUp.scss';
+import Identicon from "react-identicons";
 
 
 const FormField = props => {
@@ -42,9 +44,7 @@ FormField.propTypes = {
 
 
 const UserProfile = props => {
-
     const history = useHistory();
-
     const [username, setUsername] = useState(null);
     const [status, setStatus] = useState(null);
     const [points, setPoints] = useState(null);
@@ -56,9 +56,7 @@ const UserProfile = props => {
         async function fetchData() {
             try {
                 const userData = await fetchUserById(user_id);
-
                 const user = new User(userData);
-
                 setUsername(user.username);
                 setStatus(user.status);
                 setPoints(user.points);
@@ -68,7 +66,6 @@ const UserProfile = props => {
                 alert("Something went wrong while fetching the user data! See the console for details.");
             }
         }
-
         fetchData();
     }, []);
 
@@ -77,11 +74,10 @@ const UserProfile = props => {
     if (username) {
         profileFields = (
             <div>
-                <h2>Profile of {username}:</h2>
                 <FormField
                     label="Username:"
                     value={username}
-                    disabled
+                    onChange={un => setUsername(un)}
                 />
                 <FormField
                     label="Online Status:"
@@ -93,11 +89,6 @@ const UserProfile = props => {
                     value={points}
                     disabled
                 />
-                <FormField
-                    label="Profile Picture:"
-                    value={profilePicture}
-                    disabled
-                />
             </div>
         );
     }
@@ -106,22 +97,31 @@ const UserProfile = props => {
         <>
             <ReceiveInvitation/>
             <HomeHeader height="100"/>
-            <BaseContainer>
-                {profileFields}
-                <Button
-                    width="100%"
-                    hidden={localStorage.getItem('id') !== user_id}
-                    onClick={() => history.push('/users/edit/' + user_id)}
-                >
-                    Edit profile
-                </Button>
-                &nbsp;
-                <Button
-                    width="100%"
-                    onClick={() => history.push('/home')}
-                >
-                    Back to dashboard
-                </Button>
+            <BaseContainer className="popup container">
+                <div className="user-profile container">
+                    <h2>Profile of {username}:</h2>
+                    <Identicon className="profile-picture" string={username}/>
+                    {profileFields}
+                </div>
+
+
+
+                <div className= "twoButtons">
+                    <Button
+                        width="100%"
+                        hidden={localStorage.getItem('id') !== user_id}
+                        onClick={() => history.push('/users/edit/' + user_id)}
+                    >
+                        Edit profile
+                    </Button>
+                    <Button
+                        width="100%"
+                        onClick={() => history.push('/home')}
+                    >
+                        Back to dashboard
+                    </Button>
+                </div>
+
             </BaseContainer>
         </>
 
