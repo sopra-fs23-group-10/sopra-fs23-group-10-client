@@ -19,6 +19,16 @@
     grid-template-rows: 1fr 1fr;
     grid-column-gap: 20px;
     grid-row-gap: 20px;
+    > div {
+      position: relative;
+    }
+    .accent {
+      width: 250px;
+      height: 250px;
+      z-index: 1;
+      margin-left: -125px;
+      margin-top: -125px;
+    }
   }
   .timing-location-answerSent{
     grid-row: 3;
@@ -73,4 +83,12 @@
     transform: translate(-50%, -50%);
   }
 
+  .result {
+    font-family: $fontDisplay;
+    font-size: 200px;
+    font-weight: 600;
+    color: $off_white;
+    text-align: center;
+    transform: translate(0px, -50px);
+  }
 }

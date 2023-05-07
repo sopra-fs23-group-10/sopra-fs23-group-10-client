@@ -5,6 +5,8 @@
     height:auto;
     margin:0px;
     width: 100%;
+    z-index: 5;
+    position: relative;
 
     &:hover {
         transform: translate(-6px, -6px);
@@ -20,4 +22,21 @@
         align-items: center;
     }
 
+    &.inactive {
+        pointer-events: none;
+    }
+  
+    &.disabled {
+        opacity: 0.2;
+        z-index: 0;
+    }
+
+    &.selected {
+        transform: translate(-6px, -6px);
+        filter: drop-shadow(6px 6px 0px $secondary_color);
+        .accent {
+            transform: translate(6px, 6px);
+            filter: none;
+        }
+    }
 }

@@ -7,7 +7,7 @@
     left: calc(50% - 200px);
     right: calc(50% - 200px);
     top: calc(50% - 200px);
-    z-index: 10;
+    z-index: 20;
     filter: drop-shadow(0px 0px 8px #00000032);
 
     p {
@@ -19,7 +19,7 @@
         background-color: #00000032;
         left: 0px;
         top: 0px;
-        z-index: 5;
+        z-index: 15;
         width: 100vw;
         height: 100vh;
     }

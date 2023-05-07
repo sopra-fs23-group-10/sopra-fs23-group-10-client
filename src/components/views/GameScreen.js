@@ -6,27 +6,33 @@ import { useEffect, useState } from 'react';
 import { useHistory, useParams } from "react-router-dom";
 import { sendAnswer } from "helpers/restApi";
 import { Timer } from "components/ui/Timer";
+import star from "images/star.png";
 
 const GameScreen = () => {
     const history = useHistory();
     const [question, setQuestion] = useState(null);
-    const [answered, setAnswered] = useState(false);
+    const [sentAnswer, setSentAnswer] = useState(null);
+    const [correctAnswer, setCorrectAnswer] = useState(null);
     const [time, setTime] = useState(0);
-    const answerTime = 10;
+    const answerTime = 30;
     const { selecting } = useParams();
     const { gameMode, playerMode } = useParams();
     const nQuestions = 4;
 
     useEffect( () => {
         function timeOut() {
-            if (!answered) {
+            if (sentAnswer == null) {
                 answer("stupid answer");
             }
             goToScore();
         }
 
-        if (!question && localStorage.getItem('answered')) {
-            setAnswered(true);
+        if (!question && localStorage.getItem('sentAnswer')) {
+            setSentAnswer(localStorage.getItem('sentAnswer'));
+        }
+
+        if (!question && localStorage.getItem('correctAnswer')) {
+            setCorrectAnswer(localStorage.getItem('correctAnswer'));
         }
 
         if (!question) setQuestion(JSON.parse(localStorage.getItem('question')));
@@ -39,8 +45,8 @@ const GameScreen = () => {
     });
 
     const chooseAnswer = async (str) => {
-        setAnswered(true);
-        localStorage.setItem('answered', true);
+        setSentAnswer(str);
+        localStorage.setItem('sentAnswer', str);
         answer(str);
     }
 
@@ -53,7 +59,16 @@ const GameScreen = () => {
                 str,
                 time
             );
-            if (response && playerMode == "single") goToScore();
+            console.log(response);
+            localStorage.setItem('correctAnswer', response.data.correctAnswer);
+            setCorrectAnswer(response.data.correctAnswer);
+            if (response && playerMode == "single") {
+                const event = new CustomEvent('pause', { detail: null });
+                document.dispatchEvent(event);
+                setTimeout(() => {
+                    goToScore();
+                }, 3000);
+            }
         } catch (error) {
             alert(error);
             history.push("/login");
@@ -61,7 +76,25 @@ const GameScreen = () => {
     } 
 
     const drawQuestion = () => {
-        if (answered) {
+        if (sentAnswer && correctAnswer) {
+            console.log("correct answer = " + correctAnswer);
+            let accent = (str) => {
+                if (str == correctAnswer) return <img className="star accent" src={star}></img>;
+            }
+            let answers = question.allAnswers.map((str) => {
+                    return (
+                        <div key={str}>
+                            {accent(str)}
+                            <GameButton className={ "inactive " + 
+                                (str == sentAnswer ? "selected " : "") +
+                                (str != correctAnswer ? "disabled" : "")
+                                } >
+                                {str}
+                            </GameButton>
+                        </div>
+                    );
+                }
+            );
             return (
                     <>
                         <div className="background-answerSent">
@@ -69,12 +102,14 @@ const GameScreen = () => {
                                 Answer sent!
                             </div>
                         </div>
+                        <div className ="QuestionGrid">
+                            {answers}
+                        </div>
                     </>
-
                 );
         } else if (question) {
             let answers = question.allAnswers.map((str) =>
-                <GameButton key={str} callback={() => chooseAnswer(str)} text={str}/>
+                <GameButton key={str} callback={() => chooseAnswer(str)}>{str}</GameButton>
             );
             return (
                 <>
@@ -85,10 +120,7 @@ const GameScreen = () => {
                     </div>
 
                     <div className ="QuestionGrid">
-                        <div className="answer-1">{answers[0]}</div>
-                        <div className="answer-2">{answers[1]}</div>
-                        <div className="answer-3">{answers[2]}</div>
-                        <div className="answer-4">{answers[3]}</div>
+                        {answers}
                     </div>
                 </>
             );
@@ -96,7 +128,8 @@ const GameScreen = () => {
     }
 
     const cleanup = () => {
-        localStorage.removeItem('answered');
+        localStorage.removeItem('sentAnswer');
+        localStorage.removeItem('correctAnswer');
         localStorage.removeItem('question');
         localStorage.removeItem('startTime');
     }
@@ -125,10 +158,15 @@ const GameScreen = () => {
         setTime(time);
     }
 
+    const showResult = () => {
+        if (correctAnswer) return <div className="result">{correctAnswer == sentAnswer ? "Correct!" : "False!"}</div>
+    }
+
     return (
         <>
             <GameHeader playerMode={playerMode} questionId={localStorage.getItem('question_nr')} showCancelButton={true} height="100"/>
             <div className="GameScreenGrid">
+                {showResult()}
                 {drawQuestion()}
                 <Timer timeLimit={answerTime} getTime={getTime}/>
             </div>
