@@ -10,13 +10,15 @@ import HomeHeader from "./HomeHeader";
 import ReceiveInvitation from './ReceiveInvitation';
 import 'styles/views/PopUp.scss';
 import Identicon from "react-identicons";
+import { updateUser } from '../../helpers/restApi';
+import user from "models/User";
 
 
 const FormField = props => {
     return (
         <div className="user-profile field">
             <label className="user-profile label"
-               hidden={props.hidden}
+                   hidden={props.hidden}
             >
                 {props.label}
             </label>
@@ -46,11 +48,15 @@ FormField.propTypes = {
 const UserProfile = props => {
     const history = useHistory();
     const [username, setUsername] = useState(null);
+    const [originalUsername, setoriginalUsername] = useState (null);
     const [status, setStatus] = useState(null);
     const [points, setPoints] = useState(null);
     const [profilePicture, setProfilePicture] = useState(null);
+    const [msg, setMsg] = useState("");
 
     let { user_id } = useParams();
+
+    console.log(user_id);
 
     useEffect(() => {
         async function fetchData() {
@@ -58,6 +64,7 @@ const UserProfile = props => {
                 const userData = await fetchUserById(user_id);
                 const user = new User(userData);
                 setUsername(user.username);
+                setoriginalUsername(user.username);
                 setStatus(user.status);
                 setPoints(user.points);
                 setProfilePicture(user.profilePicture);
@@ -84,6 +91,27 @@ const UserProfile = props => {
         );
     }
 
+    const checkChanges = async () => {
+        if (username !== originalUsername){
+            try {
+                console.log(username);
+                console.log(originalUsername);
+                setMsg("");
+                await updateUser (user_id, username);
+                history.push('/home');
+            } catch (error) {
+                console.log(error);
+                if (error.response.status === 409) { setMsg("Sorry, but the username is taken"); }
+                else {
+                    alert(error);
+                }
+            }
+        }
+        else{
+            history.push('/home');
+        }
+    }
+
     return (
         <>
             <ReceiveInvitation/>
@@ -94,7 +122,7 @@ const UserProfile = props => {
                         <div className="title"> <strong> EDIT PROFILE </strong></div>
                     </div>
                     <div className="picture-location">
-                        <Identicon className="profile-picture" string={username} size={128}/>
+                        <Identicon className="profile-picture" string={profilePicture} size={140}/>
                     </div>
                     <div className="form-location">
                         {profileFields}
@@ -104,14 +132,13 @@ const UserProfile = props => {
                 <Link to="/resetpassword" style={{textAlign: "right"}}>Change Password</Link>
 
                     <Button
+                        disabled={!username}
                         width="100%"
                         style={{marginTop: "12px"}}
-                        onClick={() => history.push('/home')}
+                        onClick={() => checkChanges()}
                     >
                         Done
                     </Button>
-
-
             </BaseContainer>
         </>
 
