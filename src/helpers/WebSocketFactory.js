@@ -48,7 +48,7 @@ export const openSocket = () => {
 export const register = () => {
     let stompClient = openSocket();
     stompClient.connect({'userId': localStorage.getItem('id')}, () => {
-
+        /*
         if (!listenersAdded && localStorage.getItem('id')) {
             const socket = socketFactory();
             socket.onopen = () => {
@@ -62,6 +62,8 @@ export const register = () => {
 
             listenersAdded = true;
         }
+
+         */
     });
 
     axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
