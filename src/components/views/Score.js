@@ -203,12 +203,19 @@ const Score = props => {
                                 Player 2
                             </div>
                             <div className="background-points">
-
                                 <div className = "player" style={{textAlign: "center"}}>
                                     {usernameInviting}
                                 </div>
                                 <div className = "points-score" style={{textAlign: "center"}}>
                                     {result.invitingPlayerResult}
+                                </div>
+                            </div>
+                            <div className="background-points">
+                                <div className = "player" style={{textAlign: "center"}}>
+                                    {usernameInvited}
+                                </div>
+                                <div className = "points-score" style={{textAlign: "center"}}>
+                                    {result.invitedPlayerResult}
                                 </div>
                             </div>
                         </div>
