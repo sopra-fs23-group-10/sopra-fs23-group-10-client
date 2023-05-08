@@ -199,7 +199,6 @@ const EndGame = props => {
 
     const endPointsScreen = () => {
         if (playerMode == 'duel'){
-            if (selecting == 'selecting'){
                 if (result && usernameInvited && usernameInviting) {
                     return (
                         <>
@@ -269,7 +268,6 @@ const EndGame = props => {
                         </>
                     );
                 }
-            }
         } else if(result && usernameInviting){
             return (
                 <>

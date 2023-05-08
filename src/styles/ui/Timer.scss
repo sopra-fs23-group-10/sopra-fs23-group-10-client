@@ -1,6 +1,7 @@
 @import 'styles/theme.scss';
 
 .timer {
+
     &.container {
         display: grid;
         grid-template-columns: auto 1fr;
@@ -13,11 +14,13 @@
         font-size: 20;
         font-weight: 600;
         color: $off_white;
+        z-index: 1;
     }
 
     &.bar {
         background-color: $secondary_color;
         border-radius: 20px;
         height:100%;
+        z-index: 1;
     }
 }

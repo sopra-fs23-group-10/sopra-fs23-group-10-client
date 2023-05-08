@@ -74,6 +74,7 @@
     align-items: center;
   }
   .background-answerSent{
+    grid-row: 2;
     background-color: $off_white;
     border-radius: $borderRadius;
     flex-grow: 1;

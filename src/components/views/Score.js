@@ -210,35 +210,33 @@ const Score = props => {
 
     const drawTotalResult = () => {
         if (playerMode == 'duel'){
-            if (selecting == 'selecting'){
-                if (result && usernameInvited && usernameInviting) {
-                    return (
-                        <div className="grid grid-1">
-                            <div className="title" style={{textAlign: "left"}}>
-                                Player 1
+            if (result && usernameInvited && usernameInviting) {
+                return (
+                    <div className="grid grid-1">
+                        <div className="title" style={{textAlign: "left"}}>
+                            Player 1
+                        </div>
+                        <div className="title" style={{textAlign: "right"}}>
+                            Player 2
+                        </div>
+                        <div className="background-points">
+                            <div className = "player" style={{textAlign: "center"}}>
+                                {usernameInviting}
                             </div>
-                            <div className="title" style={{textAlign: "right"}}>
-                                Player 2
-                            </div>
-                            <div className="background-points">
-                                <div className = "player" style={{textAlign: "center"}}>
-                                    {usernameInviting}
-                                </div>
-                                <div className = "points-score" style={{textAlign: "center"}}>
-                                    {result.invitingPlayerResult}
-                                </div>
-                            </div>
-                            <div className="background-points">
-                                <div className = "player" style={{textAlign: "center"}}>
-                                    {usernameInvited}
-                                </div>
-                                <div className = "points-score" style={{textAlign: "center"}}>
-                                    {result.invitedPlayerResult}
-                                </div>
+                            <div className = "points-score" style={{textAlign: "center"}}>
+                                {result.invitingPlayerResult}
                             </div>
                         </div>
-                    )
-                }
+                        <div className="background-points">
+                            <div className = "player" style={{textAlign: "center"}}>
+                                {usernameInvited}
+                            </div>
+                            <div className = "points-score" style={{textAlign: "center"}}>
+                                {result.invitedPlayerResult}
+                            </div>
+                        </div>
+                    </div>
+                )
             }
         } else if (result && usernameInviting){
             return(
