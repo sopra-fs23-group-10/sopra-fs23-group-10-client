@@ -88,8 +88,7 @@ const Rules = props => {
             </div>
         </BaseContainer>)
     }
-
-
+    
     return (
         <>
             <ReceiveInvitation/>
