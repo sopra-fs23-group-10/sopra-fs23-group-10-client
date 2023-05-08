@@ -87,6 +87,12 @@ const UserProfile = props => {
                     value={username}
                     onChange={un => setUsername(un)}
                 />
+                <FormField
+                    label="Profile Picture:"
+                    visible = {true}
+                    value={profilePicture}
+                    onChange={pp => setProfilePicture(pp)}
+                />
             </div>
         );
     }
@@ -97,7 +103,7 @@ const UserProfile = props => {
                 console.log(username);
                 console.log(originalUsername);
                 setMsg("");
-                await updateUser (user_id, username);
+                await updateUser (user_id, username, profilePicture);
                 history.push('/home');
             } catch (error) {
                 console.log(error);
@@ -132,7 +138,7 @@ const UserProfile = props => {
                 <Link to="/resetpassword" style={{textAlign: "right"}}>Change Password</Link>
 
                     <Button
-                        disabled={!username}
+                        disabled={!username || !profilePicture}
                         width="100%"
                         style={{marginTop: "12px"}}
                         onClick={() => checkChanges()}
