@@ -14,7 +14,7 @@ import Identicon from 'react-identicons';
 const HomeHeader = props => {
     const history = useHistory();
     const [username, setUsername] = useState(null);
-
+    const [profilePicture, setProfilePicture] = useState(null);
     const [points, setPoints] = useState(null);
 
     useEffect(() => {
@@ -26,6 +26,7 @@ const HomeHeader = props => {
 
                 setUsername(user.username);
                 setPoints(user.points);
+                setProfilePicture(user.profilePicture);
             } catch (error) {
                 history.push("/login");
             }
@@ -97,7 +98,7 @@ const HomeHeader = props => {
                 <a className="content fontbold profile"
                     onClick = {() => {setDropDown(!showProfile)}}>
                     <p className="username">{username}</p>
-                    <Identicon className="profile-picture" string={username}/>
+                    <Identicon className="profile-picture" string={profilePicture}/>
                 </a>
             </div>
             {dropDown()}

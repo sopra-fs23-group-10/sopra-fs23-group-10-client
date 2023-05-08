@@ -87,12 +87,6 @@ const UserProfile = props => {
                     value={username}
                     onChange={un => setUsername(un)}
                 />
-                <FormField
-                    label="Profile Picture:"
-                    visible = {true}
-                    value={profilePicture}
-                    onChange={pp => setProfilePicture(pp)}
-                />
             </div>
         );
     }
