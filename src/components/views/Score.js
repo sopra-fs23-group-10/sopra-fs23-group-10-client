@@ -262,36 +262,34 @@ const Score = props => {
 
     const drawResults = () => {
         if (playerMode == 'duel') {
-            if (selecting == 'selecting') {
-                if (results && usernameInvited && usernameInviting) {
-                    return (
-                        <div className="result-list-container grid grid-0">
-                            {results.map((result, index) => {
-                                return (
-                                    <div style={{gridRow:index+1, gridColumn:1}}>
-                                        <RoundResult
-                                            style={{gridRow:index+1, gridColumn:1}}
-                                            index={index+1}
-                                            key={index}
-                                            points= {result.invitingPlayerResult}
-                                        />
-                                    </div>
-                                );
-                            })}
-                            {results.map((result, index) => {
-                                return (
-                                    <div style={{gridRow:index+1, gridColumn:2}}>
-                                        <RoundResult
-                                            index={index+1}
-                                            key={index}
-                                            points={result.invitedPlayerResult}
-                                        />
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    );
-                }
+            if (results && usernameInvited && usernameInviting) {
+                return (
+                    <div className="result-list-container grid grid-0">
+                        {results.map((result, index) => {
+                            return (
+                                <div style={{gridRow:index+1, gridColumn:1}}>
+                                    <RoundResult
+                                        style={{gridRow:index+1, gridColumn:1}}
+                                        index={index+1}
+                                        key={index}
+                                        points= {result.invitingPlayerResult}
+                                    />
+                                </div>
+                            );
+                        })}
+                        {results.map((result, index) => {
+                            return (
+                                <div style={{gridRow:index+1, gridColumn:2}}>
+                                    <RoundResult
+                                        index={index+1}
+                                        key={index}
+                                        points={result.invitedPlayerResult}
+                                    />
+                                </div>
+                            );
+                        })}
+                    </div>
+                );
             }
         } else if (result && usernameInviting){
             return(
