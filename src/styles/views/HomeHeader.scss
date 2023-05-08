@@ -168,10 +168,22 @@
     opacity: 0.3;
     color: black;
   }
+  .arrow {
+    width: 15px;
+    height: 15px;
+    margin-left: 5px;
+    transform: translateY(-1px);
+    &.hover{
+      @extends .base-transition;
+      color: $secondary_color;
+    }
+
+  }
+  .edit-container {
+    display: flex;
+    align-items: center;
+  }
 }
-
-
-
 
 .profile-background {
   z-index: 0;

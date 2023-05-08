@@ -7,6 +7,7 @@ import React,{useEffect,useState} from 'react';
 import User from "../../models/User";
 import "styles/views/PopUp.scss";
 import Triangle from "images/Triangle.png";
+import arrow from "images/arrow.png";
 import Identicon from 'react-identicons';
 
 
@@ -38,10 +39,11 @@ const HomeHeader = props => {
     }
 
     const edit = () => {
-        return <Link className="contentHover"
-        onClick ={() => toEdit(localStorage.getItem('id'))}>
-            Edit Profile
-        </Link>
+        return <Link className="contentHover "
+                  onClick ={() => toEdit(localStorage.getItem('id'))}>
+                Edit Profile
+                <img className='arrow' src={arrow} style={{position: "absolute", right: "10px", top: "35%", transform: "translateY(-50%)"}}></img>
+            </Link>
     }
 
     const toEdit = (userId) => {
