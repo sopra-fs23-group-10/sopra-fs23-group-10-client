@@ -129,7 +129,6 @@ const GameScreen = () => {
                                 {question.question}
                             </div>
                         </div>
-
                         <div className ="QuestionGrid">
                             {answers}
                         </div>

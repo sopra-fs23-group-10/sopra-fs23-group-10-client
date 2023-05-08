@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {fetchUserById} from 'helpers/restApi';
 import User from 'models/User';
-import {useHistory, useParams} from 'react-router-dom';
+import {Link, useHistory, useParams} from 'react-router-dom';
 import {Button} from 'components/ui/Button';
 import 'styles/views/UserProfile.scss';
 import BaseContainer from "components/ui/BaseContainer";
@@ -10,13 +10,15 @@ import HomeHeader from "./HomeHeader";
 import ReceiveInvitation from './ReceiveInvitation';
 import 'styles/views/PopUp.scss';
 import Identicon from "react-identicons";
+import { updateUser } from '../../helpers/restApi';
+import user from "models/User";
 
 
 const FormField = props => {
     return (
         <div className="user-profile field">
             <label className="user-profile label"
-               hidden={props.hidden}
+                   hidden={props.hidden}
             >
                 {props.label}
             </label>
@@ -46,11 +48,15 @@ FormField.propTypes = {
 const UserProfile = props => {
     const history = useHistory();
     const [username, setUsername] = useState(null);
+    const [originalUsername, setoriginalUsername] = useState (null);
     const [status, setStatus] = useState(null);
     const [points, setPoints] = useState(null);
     const [profilePicture, setProfilePicture] = useState(null);
+    const [msg, setMsg] = useState("");
 
     let { user_id } = useParams();
+
+    console.log(user_id);
 
     useEffect(() => {
         async function fetchData() {
@@ -58,6 +64,7 @@ const UserProfile = props => {
                 const userData = await fetchUserById(user_id);
                 const user = new User(userData);
                 setUsername(user.username);
+                setoriginalUsername(user.username);
                 setStatus(user.status);
                 setPoints(user.points);
                 setProfilePicture(user.profilePicture);
@@ -76,21 +83,33 @@ const UserProfile = props => {
             <div>
                 <FormField
                     label="Username:"
+                    visible = {true}
                     value={username}
                     onChange={un => setUsername(un)}
                 />
-                <FormField
-                    label="Online Status:"
-                    value={status}
-                    disabled
-                />
-                <FormField
-                    label="Total Points:"
-                    value={points}
-                    disabled
-                />
             </div>
         );
+    }
+
+    const checkChanges = async () => {
+        if (username !== originalUsername){
+            try {
+                console.log(username);
+                console.log(originalUsername);
+                setMsg("");
+                await updateUser (user_id, username);
+                history.push('/home');
+            } catch (error) {
+                console.log(error);
+                if (error.response.status === 409) { setMsg("Sorry, but the username is taken"); }
+                else {
+                    alert(error);
+                }
+            }
+        }
+        else{
+            history.push('/home');
+        }
     }
 
     return (
@@ -99,29 +118,27 @@ const UserProfile = props => {
             <HomeHeader height="100"/>
             <BaseContainer className="popup container">
                 <div className="user-profile container">
-                    <h2>Profile of {username}:</h2>
-                    <Identicon className="profile-picture" string={username}/>
-                    {profileFields}
+                    <div className = "title-location" style={{ gridColumn: '1 / span 2', textAlign: 'center' }} >
+                        <div className="title"> <strong> EDIT PROFILE </strong></div>
+                    </div>
+                    <div className="picture-location">
+                        <Identicon className="profile-picture" string={profilePicture} size={140}/>
+                    </div>
+                    <div className="form-location">
+                        {profileFields}
+                    </div>
+
                 </div>
+                <Link to="/resetpassword" style={{textAlign: "right"}}>Change Password</Link>
 
-
-
-                <div className= "twoButtons">
                     <Button
+                        disabled={!username}
                         width="100%"
-                        hidden={localStorage.getItem('id') !== user_id}
-                        onClick={() => history.push('/users/edit/' + user_id)}
+                        style={{marginTop: "12px"}}
+                        onClick={() => checkChanges()}
                     >
-                        Edit profile
+                        Done
                     </Button>
-                    <Button
-                        width="100%"
-                        onClick={() => history.push('/home')}
-                    >
-                        Back to dashboard
-                    </Button>
-                </div>
-
             </BaseContainer>
         </>
 

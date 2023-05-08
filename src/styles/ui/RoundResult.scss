@@ -9,6 +9,8 @@
         grid-gap: 20px;
         padding: 10px 20px 10px 20px;
         margin: 0px;
+        width: 100%;
+        flex-grow: 1;
     }
 
     .index {
@@ -29,3 +31,4 @@
         height: 20px;
     }
 }
+

@@ -6,7 +6,10 @@ import "styles/views/HomeHeader.scss";
 import React,{useEffect,useState} from 'react';
 import User from "../../models/User";
 import "styles/views/PopUp.scss";
+import Triangle from "images/Triangle.png";
+import arrow from "images/arrow.png";
 import Identicon from 'react-identicons';
+
 
 const HomeHeader = props => {
     const history = useHistory();
@@ -36,10 +39,11 @@ const HomeHeader = props => {
     }
 
     const edit = () => {
-        return <Link className="contentHover"
-        onClick ={() => toEdit(localStorage.getItem('id'))}>
-            Edit Profile
-        </Link>
+        return <Link className="contentHover "
+                  onClick ={() => toEdit(localStorage.getItem('id'))}>
+                Edit Profile
+                <img className='arrow' src={arrow} style={{position: "absolute", right: "10px", top: "35%", transform: "translateY(-50%)"}}></img>
+            </Link>
     }
 
     const toEdit = (userId) => {
@@ -51,19 +55,22 @@ const HomeHeader = props => {
             return(
                 <>
                     <div onClick={() => {setDropDown(false)}} className="profile-background"></div>
-                    <div className="dropdown container">
-                        <div className="contentNoHover" style={{textAlign: "left"}}>
-                            Points: {points}
+                    <div className="wrapper">
+                        <img className='Triangle' src={Triangle}></img>
+                        <div className="dropdown container">
+                            <div className="contentNoHover" style={{textAlign: "left"}}>
+                                Points: {points}
+                            </div>
+                            <div className="contentHover" style={{textAlign: "right"}}>
+                                {edit()}
+                            </div>
+                            <Button className ="logout"
+                                    width="100%"
+                                    onClick={() => logout()}
+                            >
+                                LOGOUT
+                            </Button>
                         </div>
-                        <div className="contentHover" style={{textAlign: "right"}}>
-                            {edit()}
-                        </div>
-                        <Button className ="logout"
-                            width="100%"
-                            onClick={() => logout()}
-                        >
-                            LOGOUT
-                        </Button>
                     </div>
                 </>
             )

@@ -208,12 +208,12 @@ const Score = props => {
         }
     }
 
-    const drawResultsTest = () => {
-        if (playerMode == 'duel') {
-            if (selecting == 'selecting') {
+    const drawTotalResult = () => {
+        if (playerMode == 'duel'){
+            if (selecting == 'selecting'){
                 if (result && usernameInvited && usernameInviting) {
                     return (
-                        <div className="grid-1">
+                        <div className="grid grid-1">
                             <div className="title" style={{textAlign: "left"}}>
                                 Player 1
                             </div>
@@ -229,7 +229,7 @@ const Score = props => {
                                 </div>
                             </div>
                             <div className="background-points">
-                                <div className = "player" style={{textAlign: "center"}} >
+                                <div className = "player" style={{textAlign: "center"}}>
                                     {usernameInvited}
                                 </div>
                                 <div className = "points-score" style={{textAlign: "center"}}>
@@ -237,29 +237,13 @@ const Score = props => {
                                 </div>
                             </div>
                         </div>
-                    );
+                    )
                 }
             }
         } else if (result && usernameInviting){
             return(
                 <div>
                     <div className="background-points" style={{ width: '100%', height: '100%', position: 'relative' }}>
-                    </div>
-                </div>)
-        }
-    }
-    const drawTotalResult = () => {
-        if (result && usernameInvited && usernameInviting) {
-            return (
-                <div className="grid grid-1">
-                    <div className="title" style={{textAlign: "left"}}>
-                        Player 1
-                    </div>
-                    <div className="title" style={{textAlign: "right"}}>
-                        Player 2
-                    </div>
-                    <div className="background-points">
-
                         <div className = "player" style={{textAlign: "center"}}>
                             {usernameInviting}
                         </div>
@@ -267,42 +251,69 @@ const Score = props => {
                             {result.invitingPlayerResult}
                         </div>
                     </div>
-                </div>
-            )
+                </div>)
         }
     }
 
-    const drawResults = () => {
+    const drawResultsOption2 = () => {
         if (results && usernameInvited && usernameInviting) {
             return (
-                <div className="result-list-container grid grid-0">
-                        {results.map((result, index) => {
-                            return (
-                                <div style={{gridRow:index+1, gridColumn:1}}>
-                                    <RoundResult
-                                        style={{gridRow:index+1, gridColumn:1}}
-                                        index={index+1}
-                                        key={index}
-                                        points={result.invitingPlayerResult}
-                                    />
-                                </div>
-                            );
-                        })}
-                        {results.map((result, index) => {
-                            return (
-                                <div style={{gridRow:index+1, gridColumn:2}}>
-                                    <RoundResult
-                                        index={index+1}
-                                        key={index}
-                                        points={result.invitedPlayerResult}
-                                    />
-                                </div>
-                            );
-                        })}
+                0
+            )
+    }}
+
+    const drawResults = () => {
+        if (playerMode == 'duel') {
+            if (selecting == 'selecting') {
+                if (results && usernameInvited && usernameInviting) {
+                    return (
+                        <div className="result-list-container grid grid-0">
+                            {results.map((result, index) => {
+                                return (
+                                    <div style={{gridRow:index+1, gridColumn:1}}>
+                                        <RoundResult
+                                            style={{gridRow:index+1, gridColumn:1}}
+                                            index={index+1}
+                                            key={index}
+                                            points= {result.invitingPlayerResult}
+                                        />
+                                    </div>
+                                );
+                            })}
+                            {results.map((result, index) => {
+                                return (
+                                    <div style={{gridRow:index+1, gridColumn:2}}>
+                                        <RoundResult
+                                            index={index+1}
+                                            key={index}
+                                            points={result.invitedPlayerResult}
+                                        />
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    );
+                }
+            }
+        } else if (result && usernameInviting){
+            return(
+                <div className="result-list-container grid-1 ">
+                    {results.map((result, index) => {
+                        return (
+                            <div style = {{marginBottom: '12px'}}>
+                                <RoundResult
+                                    style={{gridRow:index+1,}}
+                                    index={index+1}
+                                    key={index}
+                                    points= {result.invitingPlayerResult}
+                                />
+                            </div>)
+                    })}
                 </div>
             );
         }
     }
+
 
     const drawTimer = () => {
         if ((localStorage.getItem('topics') || gameMode == "image") || selecting != 'selecting') {
