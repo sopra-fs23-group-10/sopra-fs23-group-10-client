@@ -67,12 +67,11 @@ const Home = () => {
                                 >
                             </SelectionButton>
                         </div>
-                        <div class="selection-container">
+                        <div class="selection-container" onClick={() => chooseGameMode(gameModes.image)}>
                             <SelectionButton 
                                 class="game"
                                 title={"Image\nQuiz"}
                                 url={image}
-                                inactive={true}
                                 >
                             </SelectionButton>
                         </div>

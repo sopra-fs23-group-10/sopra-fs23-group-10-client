@@ -1,5 +1,5 @@
 import GameHeader from "components/views/GameHeader";
-import { fetchUsersInGame, getTopicSelection, fetchUserById, getIntermediateResults, handleError, getQuestion } from "helpers/restApi";
+import { fetchUsersInGame, getTopicSelection, fetchUserById, getIntermediateResults, handleError, getQuestion, getImageQuestion } from "helpers/restApi";
 import React, {useEffect, useState } from 'react';
 import { useHistory, useParams } from "react-router-dom";
 import { GameButton } from "components/ui/GameButton";
@@ -31,6 +31,7 @@ const Score = props => {
                 if (parseInt(localStorage.getItem('question_nr')) <= 1) {
                     const response = await fetchUsersInGame(localStorage.getItem("gameId"));
                     let res = new Result(response.data);
+                    console.log(response);
                     setResult(res);
                     await getUser(response.data.invitedPlayerId, setUsernameInvited);
                     await getUser(response.data.invitingPlayerId, setUsernameInviting);
@@ -64,7 +65,7 @@ const Score = props => {
             }
         }
 
-        if (selecting == 'selecting' && !topics && playerMode == 'duel') {
+        if (selecting == 'selecting' && !topics && playerMode == 'duel' && gameMode == "text") {
             if (!localStorage.getItem('topics')) {
                 fetchTopics();
             } else {
@@ -100,6 +101,17 @@ const Score = props => {
         }
     }
 
+    const fetchImageQuestion = async () => {
+        try {
+            const response = await getImageQuestion(localStorage.getItem('gameId'));
+            console.log(response);
+            if (playerMode == 'single' && response) toQuestion(response);
+        } catch (error) {
+            alert(error);
+            history.push("/login");
+        }
+    }
+
     const parseString = (str) => {
         return str.replace('_', ' & ');
     }
@@ -112,8 +124,12 @@ const Score = props => {
     }
 
     const handleTimeOut = () => {
-        if (selecting == 'selecting') {
-            rndTopic();
+        if (gameMode == "text") {
+            if (selecting == 'selecting') {
+                rndTopic();
+            }
+        } else {
+            fetchImageQuestion();
         }
     }
 
@@ -141,28 +157,38 @@ const Score = props => {
     }
 
     const drawTopics = () => {
-        if (playerMode == 'duel') {
-            if (selecting == 'selecting') {
-                if (topics) {
-                    return (
-                        <>
-                            <div className="grid-2">
-                                <div className="title grid2" style={{textAlign: "left"}}>
-                                    Select a topic
-                                </div>
-                                {topics.map((topic)=> (
-                                    <div key={topic} className={'topicSelection column-${index+1}'}>
-                                        <GameButton callback={() => fetchQuestion(topic)}>{parseString(topic)}</GameButton>
+        if (gameMode == "text") {
+            if (playerMode == 'duel') {
+                if (selecting == 'selecting') {
+                    if (topics) {
+                        return (
+                            <>
+                                <div className="grid-2">
+                                    <div className="title grid2" style={{textAlign: "left"}}>
+                                        Select a topic
                                     </div>
-                                ))}
+                                    {topics.map((topic)=> (
+                                        <div key={topic} className={'topicSelection column-${index+1}'}>
+                                            <GameButton callback={() => fetchQuestion(topic)}>{parseString(topic)}</GameButton>
+                                        </div>
+                                    ))}
+                                </div>
+                            </>
+                        );
+                    } else {
+                        return (
+                            <div className="background-topic-waiting">
+                                <div className="topic">
+                                    Waiting for topics...
+                                </div>
                             </div>
-                        </>
-                    );
+                        );
+                    }
                 } else {
                     return (
                         <div className="background-topic-waiting">
                             <div className="topic">
-                                Waiting for topics...
+                                Your opponent is selecting a topic.
                             </div>
                         </div>
                     );
@@ -171,22 +197,14 @@ const Score = props => {
                 return (
                     <div className="background-topic-waiting">
                         <div className="topic">
-                            Your opponent is selecting a topic.
+                            <div style={{ display: 'block' }}>
+                                <p>Are you ready for the next question?</p>
+                                <Button width="100%" onClick={() => getQuestionSingle()}>Continue</Button>
+                            </div>
                         </div>
                     </div>
                 );
             }
-        } else {
-            return (
-                <div className="background-topic-waiting">
-                    <div className="topic">
-                        <div style={{ display: 'block' }}>
-                            <p>Are you ready for the next question?</p>
-                            <Button width="100%" onClick={() => getQuestionSingle()}>Continue</Button>
-                        </div>
-                    </div>
-                </div>
-            );
         }
     }
 
@@ -289,7 +307,7 @@ const Score = props => {
     }
 
     const drawTimer = () => {
-        if (localStorage.getItem('topics') || selecting != 'selecting') {
+        if ((localStorage.getItem('topics') || gameMode == "image") || selecting != 'selecting') {
             return (
                 <Timer timeOut={handleTimeOut} timeLimit={15}/>
             );

@@ -40,7 +40,10 @@ const GameScreen = () => {
             setCorrectAnswer(localStorage.getItem('correctAnswer'));
         }
 
-        if (!question) setQuestion(JSON.parse(localStorage.getItem('question')));
+        if (!question) {
+            setQuestion(JSON.parse(localStorage.getItem('question')));
+        }
+        
         document.addEventListener("timeOut", timeOut);
         document.addEventListener("receivedResult", handleEndResult);
         return () => {
