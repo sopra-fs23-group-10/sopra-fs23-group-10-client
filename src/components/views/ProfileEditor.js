@@ -42,11 +42,12 @@ const ProfileEditor = props => {
 
     const history = useHistory();
     const [username, setUsername] = useState(null);
+    const [profilePicture, setProfilePicture] = useState(null);
     let { user_id } = useParams();
 
     const commitChanges = async () => {
         try {
-            await updateUser(user_id, username);
+            await updateUser(user_id, username, profilePicture);
 
             history.push(`/users/` + user_id);
         } catch (error) {
@@ -63,6 +64,7 @@ const ProfileEditor = props => {
                 const user = new User(userData);
 
                 setUsername(user.username);
+                setProfilePicture(user.profilePicture);
             } catch (error) {
                 console.error(error.message);
                 alert("Something went wrong while fetching the user data! See the console for details.");
@@ -83,6 +85,11 @@ const ProfileEditor = props => {
                     label="Username:"
                     value={username}
                     onChange={un => setUsername(un)}
+                />
+                <FormField
+                    label="Profile Picture:"
+                    value={profilePicture}
+                    onChange={pp => setProfilePicture(pp)}
                 />
             </div>
         );
@@ -106,7 +113,7 @@ const ProfileEditor = props => {
                         style={{color:"darkgreen", float:"right"}}
                         width="49%"
                         hidden={false}
-                        disabled={!username}
+                        disabled={!username || !profilePicture}
                         onClick={() => commitChanges()}
                     >
                         Save changes
