@@ -2,7 +2,6 @@
 
 .timer {
     &.container {
-        // grid-row:3;
         display: grid;
         grid-template-columns: auto 1fr;
         gap: 20px;
@@ -13,6 +12,7 @@
     &.label {
         font-size: 20;
         font-weight: 600;
+        color: $off_white;
     }
 
     &.bar {

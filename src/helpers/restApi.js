@@ -143,6 +143,7 @@ export const fetchOnlineUsers = async () => {
 };
 
 export const createGame = async (invitedUserId, quizType, modeType) => {
+  console.log("create game quizType: " + quizType);
   try {
     const invitingUserId = localStorage.getItem('id');
     const authToken = localStorage.getItem('token');
@@ -197,6 +198,7 @@ export const getQuestion = async (gameId, topic) => {
 }
 
 export const getImageQuestion = async (gameId) => {
+  console.log("get image question gameId: " + gameId);
   try {
     const authToken = localStorage.getItem('token');
     const requestBody = JSON.stringify({gameId: gameId});

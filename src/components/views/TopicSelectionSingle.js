@@ -7,7 +7,6 @@ import {
 import React, {useEffect, useState } from 'react';
 import { GameButton } from "components/ui/GameButton";
 import 'styles/views/TopicSelectionSingle.scss';
-import HomeHeader from "./HomeHeader";
 import { useHistory, useParams } from "react-router-dom";
 import GameHeader from "./GameHeader";
 

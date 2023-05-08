@@ -124,12 +124,12 @@ const Score = props => {
     }
 
     const handleTimeOut = () => {
-        if (gameMode == "text") {
-            if (selecting == 'selecting') {
+        if (selecting == 'selecting') {
+            if (gameMode == "text") {
                 rndTopic();
+            } else {
+                fetchImageQuestion();
             }
-        } else {
-            fetchImageQuestion();
         }
     }
 
@@ -301,16 +301,21 @@ const Score = props => {
                         })}
                 </div>
             );
-        } else {
-            return <div></div>
         }
     }
 
     const drawTimer = () => {
         if ((localStorage.getItem('topics') || gameMode == "image") || selecting != 'selecting') {
+            let timeLimit = parseInt(localStorage.getItem("question_nr")) <= 1 ? 10 : 15;
             return (
-                <Timer timeOut={handleTimeOut} timeLimit={15}/>
+                <Timer timeOut={handleTimeOut} timeLimit={timeLimit}/>
             );
+        }
+    }
+
+    const drawTitle = () => {
+        if (parseInt(localStorage.getItem("question_nr")) <= 1) {
+            return <div className="display">Get Ready!</div>
         }
     }
 
@@ -318,6 +323,7 @@ const Score = props => {
         <>
             <GameHeader playerMode={playerMode} questionId={localStorage.getItem('question_nr')} showCancelButton={true} height="100"/>
             <div className="ScreenGrid-Score">
+                {drawTitle()}
                 {drawResults()}
                 {drawTotalResult()}
                 {drawTopics()}

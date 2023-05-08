@@ -11,6 +11,7 @@ import single from "images/single.png";
 import star from "images/star.png";
 import {PlayerList} from "../ui/PlayerList";
 import ReceiveInvitation from './ReceiveInvitation';
+import { createGame, handleError } from 'helpers/restApi';
 
 const Home = () => {
 
@@ -40,9 +41,8 @@ const Home = () => {
         if (pm === playerModes.duel) {
             history.push("/challenge/" + gameMode.toLowerCase());
         }
-        if (pm === playerModes.single){
-            history.push("/single-topic-selection/" + gameMode.toLowerCase());
-        }
+
+        if (pm === playerModes.single) newGame();
     }
 
     const startGameMenu = () => {
@@ -59,17 +59,17 @@ const Home = () => {
             } else if (gameMode === gameModes.none) {
                 return (    
                     <>      
-                        <div class="selection-container" onClick={() => chooseGameMode(gameModes.text)}>
+                        <div className="selection-container" onClick={() => chooseGameMode(gameModes.text)}>
                             <SelectionButton 
-                                class="game"
+                                className="game"
                                 title={"Trivia\nQuiz"}
                                 url={trivia}
                                 >
                             </SelectionButton>
                         </div>
-                        <div class="selection-container" onClick={() => chooseGameMode(gameModes.image)}>
+                        <div className="selection-container" onClick={() => chooseGameMode(gameModes.image)}>
                             <SelectionButton 
-                                class="game"
+                                className="game"
                                 title={"Image\nQuiz"}
                                 url={image}
                                 >
@@ -80,18 +80,18 @@ const Home = () => {
             } else {
                 return (
                     <> 
-                        <div class="selection-container" onClick={() => choosePlayerMode(playerModes.duel)}>
+                        <div className="selection-container" onClick={() => choosePlayerMode(playerModes.duel)}>
                             <SelectionButton
-                                class="player"
+                                className="player"
                                 title={"Duel\nMode"}
                                 url={duel}
                                 inactive={users.length < 2}
                                 >
                             </SelectionButton>
                         </div>
-                        <div class="selection-container" onClick={() => choosePlayerMode(playerModes.single)}>
+                        <div className="selection-container" onClick={() => choosePlayerMode(playerModes.single)}>
                             <SelectionButton 
-                                class="player"
+                                className="player"
                                 title={"Single\nMode"}
                                 url={single}
                                 >
@@ -100,6 +100,24 @@ const Home = () => {
                     </> 
                 );
             }
+        }
+    }
+
+    async function newGame() {
+        try {
+            console.log("new game");
+            const response = await createGame(1, gameMode.toUpperCase(), 'SINGLE');
+            console.log(response);
+            localStorage.setItem('gameId', response.gameId);
+            if (response) {
+                if (gameMode == gameModes.text){
+                    history.push("/single-topic-selection/" + gameMode.toLowerCase());
+                } else {
+                    history.push("/single-image-start/" + gameMode.toLowerCase());
+                }
+            }
+        } catch (error) {
+            alert(`Something went wrong while creating a new game, ${handleError(error)}`);
         }
     }
 

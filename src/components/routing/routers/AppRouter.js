@@ -16,6 +16,7 @@ import GameScreen from "../../views/GameScreen";
 import Score from "../../views/Score";
 import TopicSelectionSingle from "../../views/TopicSelectionSingle";
 import EndGame from "../../views/EndGame";
+import ImageQuizStart from "components/views/ImageQuizStart";
 
 /**
  * Main router of your application.
@@ -91,9 +92,14 @@ const AppRouter = () => {
             </GameGuard>
           </Route>
           <Route path="/single-topic-selection/:gameMode">
-            <HomeGuard>
+            <GameGuard>
               <TopicSelectionSingle/>
-            </HomeGuard>
+            </GameGuard>
+          </Route>
+          <Route path="/single-image-start/:gameMode">
+            <GameGuard>
+              <ImageQuizStart/>
+            </GameGuard>
           </Route>
           <Route path="/endgame/:playerMode/:gameMode/:selecting">
             <GameGuard>

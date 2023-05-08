@@ -7,7 +7,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { sendAnswer } from "helpers/restApi";
 import { Timer } from "components/ui/Timer";
 import star from "images/star.png";
-import { element } from "prop-types";
+import BaseContainer from "components/ui/BaseContainer";
 
 const GameScreen = () => {
     const history = useHistory();
@@ -173,7 +173,7 @@ const GameScreen = () => {
     }
 
     const getTime = (time) => {
-        setTime(time);
+        setTime(time/1000);
     }
 
     const resultText = () => {
@@ -183,7 +183,17 @@ const GameScreen = () => {
     }
 
     const showResult = () => {
-        if (correctAnswer) return <div className="result">{resultText()}</div>
+        if (correctAnswer) return <div className="display">{resultText()}</div>
+    }
+
+    const showImage = () => {
+        if (gameMode == "image" && question) {
+            return (
+                <BaseContainer className="image-holder">
+                    <img style={{filter: `blur(${20*(time/answerTime)}px)`}} src={`https://imgur.com/${question.apiId}.jpeg`} ></img>
+                </BaseContainer>
+            );
+        }
     }
 
     return (
@@ -191,6 +201,7 @@ const GameScreen = () => {
             <GameHeader playerMode={playerMode} questionId={localStorage.getItem('question_nr')} showCancelButton={true} height="100"/>
             <div className="GameScreenGrid">
                 {showResult()}
+                {showImage()}
                 {drawQuestion()}
             </div>
         </>

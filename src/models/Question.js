@@ -7,6 +7,7 @@ class Question {
         this.incorrectAnswers = null;
         this.allAnswers = null;
         this.question = null;
+        this.apiId = null;
         Object.assign(this, data);
     }
   }
