@@ -9,6 +9,7 @@ import PropTypes from "prop-types";
 import HomeHeader from "./HomeHeader";
 import ReceiveInvitation from './ReceiveInvitation';
 import 'styles/views/PopUp.scss';
+import 'styles/views/ProfilePicture.scss';
 import Identicon from "react-identicons";
 import { updateUser } from '../../helpers/restApi';
 import user from "models/User";
@@ -54,7 +55,18 @@ const UserProfile = props => {
         return string;
     }
 
-    const checkChanges = async () => {
+    const randomStringList = () => {
+        let stringList = [];
+        const numStrings = 9;
+        for (let i = 0; i< numStrings; i++){
+            stringList.push(randomString());
+        }
+        return stringList;
+    }
+
+    const stringList = randomStringList();
+
+    const handleProfilePictureClick = async () => {
         try {
             setMsg("");
             await updateUser (user_id, username, profilePicture);
@@ -77,15 +89,18 @@ const UserProfile = props => {
                     <div className = "title-location" style={{ gridColumn: '1 / span 2', textAlign: 'center' }} >
                         <div className="title"> <strong> CHANGE PROFILE PICTURE </strong></div>
                     </div>
-                    This is where the 9 profile pictures go
-
+                    <div className="ProfilePicture container">
+                        {stringList.map((str, index) => (
+                            <Identicon key={index} className="profile-picture" string={str} size={190} onClick={() => handleProfilePictureClick(str)}/>
+                        ))}
+                    </div>
                 </div>
                 <Button
                     width="100%"
                     style={{marginTop: "12px"}}
-                    onClick={() => checkChanges()}
+                    onClick={() => history.push('/home')}
                 >
-                    Done
+                    Go Back
                 </Button>
             </BaseContainer>
         </>
