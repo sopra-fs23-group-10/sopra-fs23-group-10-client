@@ -129,6 +129,7 @@ const GameScreen = () => {
                                 {question.question}
                             </div>
                         </div>
+                        <div style={{height: '40px'}}></div>
                         <div className ="QuestionGrid">
                             {answers}
                         </div>
@@ -137,8 +138,14 @@ const GameScreen = () => {
             }
             return (
                 <>
-                    {content}
-                    <Timer timeLimit={answerTime} getTime={getTime}/>
+                    <div style={{height: "200px", display: 'grid', gridTemplateRows: '1fr 1fr', gridRowGap: '40px' }}>
+                        <div style={{gridRow: 1}}>
+                            {content}
+                        </div >
+                        <div>
+                        </div>
+                        <Timer timeLimit={answerTime} getTime={getTime}/>
+                    </div>
                 </>
             );
         }
