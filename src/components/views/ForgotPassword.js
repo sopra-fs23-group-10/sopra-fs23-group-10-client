@@ -4,6 +4,7 @@ import BaseContainer from "components/ui/BaseContainer";
 import HomeHeader from "./HomeHeader";
 import {Button} from "../ui/Button";
 import {useHistory} from "react-router-dom";
+import {FormField} from "../ui/FormField";
 
 
 const ForgotPassword = props => {
@@ -17,6 +18,10 @@ const ForgotPassword = props => {
                         Do you want to reset your password? <br />
                     </p>
                 </div>
+                <FormField
+                    label="Write down your e-mail, and we'll send you a new password"
+                />
+
                 <div className="twoButtons">
                     <Button
                         width="80%"
