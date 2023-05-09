@@ -6,7 +6,7 @@ import {Button} from "../ui/Button";
 import {useHistory} from "react-router-dom";
 
 
-const ResetPassword = props => {
+const ForgotPassword = props => {
     const history = useHistory();
     return (
         <>
@@ -38,4 +38,4 @@ const ResetPassword = props => {
 };
 
 
-export default ResetPassword;
+export default ForgotPassword;
