@@ -17,6 +17,7 @@ import Score from "../../views/Score";
 import TopicSelectionSingle from "../../views/TopicSelectionSingle";
 import EndGame from "../../views/EndGame";
 import ImageQuizStart from "components/views/ImageQuizStart";
+import ProfilePicture from "../../views/ProfilePicture";
 
 /**
  * Main router of your application.
@@ -39,6 +40,11 @@ const AppRouter = () => {
           <Route exact path="/users/:user_id">
             <HomeGuard>
               <UserProfile/>
+            </HomeGuard>
+          </Route>
+          <Route exact path="/users/:user_id/profilepicture">
+            <HomeGuard>
+              <ProfilePicture/>
             </HomeGuard>
           </Route>
           <Route exact path="/challenge/:gameMode">
