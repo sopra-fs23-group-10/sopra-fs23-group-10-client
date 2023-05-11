@@ -15,10 +15,10 @@ const GameScreen = () => {
     const [sentAnswer, setSentAnswer] = useState(null);
     const [correctAnswer, setCorrectAnswer] = useState(null);
     const [time, setTime] = useState(0);
-    const answerTime = 30;
+    const answerTime = 10;
     const { selecting } = useParams();
     const { gameMode, playerMode } = useParams();
-    const nQuestions = 5;
+    const nQuestions = 1;
 
     useEffect(() => {
         function timeOut() {

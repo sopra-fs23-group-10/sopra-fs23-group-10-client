@@ -24,12 +24,17 @@ const EndGame = props => {
     useEffect(() => {
         function handleReceiveReply(e) {
             const accepted = JSON.parse(e.detail)[localStorage.getItem('gameId')];
+            if (!accepted) {
+                history.push('/home');
+                return;
+            }
+
             if (rematchSent) {
                 if (accepted) {
                     localStorage.setItem('question_nr', 1);
                     localStorage.removeItem('startTime');
                     history.push(`/topic-selection/duel/${gameMode}/waiting`);
-                } 
+                }
                 setRematchSent(false);
             }
         }
