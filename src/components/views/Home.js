@@ -106,7 +106,7 @@ const Home = () => {
     async function newGame() {
         try {
             console.log("new game");
-            const response = await createGame(1, gameMode.toUpperCase(), 'SINGLE');
+            const response = await createGame(0, gameMode.toUpperCase(), 'SINGLE');
             console.log(response);
             localStorage.setItem('gameId', response.gameId);
             if (response) {

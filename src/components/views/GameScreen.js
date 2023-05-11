@@ -18,7 +18,7 @@ const GameScreen = () => {
     const answerTime = 30;
     const { selecting } = useParams();
     const { gameMode, playerMode } = useParams();
-    const nQuestions = 4;
+    const nQuestions = 5;
 
     useEffect(() => {
         function timeOut() {
