@@ -209,9 +209,9 @@ export const getImageQuestion = async (gameId) => {
   }
 }
 
-export const sendAnswer = async (gameId, userId, questionId, answer, answeredTime) => {
+export const sendAnswer = async (gameId, userId, questionId, answerString, answeredTime) => {
   try {
-    const requestBody = JSON.stringify({userId, questionId, answer, answeredTime})
+    const requestBody = JSON.stringify({userId, questionId, answerString, answeredTime})
     const response = await restApi.put(`/game/question/${gameId}`, requestBody, {headers: {token: localStorage.getItem("token")}})
     return response;
   }
