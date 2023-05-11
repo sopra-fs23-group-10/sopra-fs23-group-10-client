@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {createGame, answerInvite, fetchUserById, finishGame, getFinalResults} from 'helpers/restApi';
+import {createGame, handleError, answerInvite, fetchUserById, finishGame, getFinalResults} from 'helpers/restApi';
 import {useHistory, useParams} from 'react-router-dom';
 import 'styles/views/EndGame.scss';
 import GameHeader from "./GameHeader";
@@ -169,8 +169,26 @@ const EndGame = props => {
         history.push("/home");
     }
 
+    async function newGame() {
+        try {
+            console.log("new game");
+            const response = await createGame(0, gameMode.toUpperCase(), 'SINGLE');
+            console.log(response);
+            localStorage.setItem('gameId', response.gameId);
+            if (response) {
+                if (gameMode == 'text'){
+                    history.push("/single-topic-selection/" + gameMode.toLowerCase());
+                } else {
+                    history.push("/single-image-start/" + gameMode.toLowerCase());
+                }
+            }
+        } catch (error) {
+            alert(`Something went wrong while creating a new game, ${handleError(error)}`);
+        }
+    }
+
     const replay = () => {
-        history.push("/single-topic-selection/" + gameMode);
+        newGame();
     }
 
     const repeatButton = () => {
