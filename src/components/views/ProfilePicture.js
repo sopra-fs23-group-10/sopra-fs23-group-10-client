@@ -13,6 +13,7 @@ import 'styles/views/ProfilePicture.scss';
 import Identicon from "react-identicons";
 import { updateUser } from '../../helpers/restApi';
 import user from "models/User";
+import {Timer} from "../ui/Timer";
 
 
 const UserProfile = props => {
@@ -66,34 +67,51 @@ const UserProfile = props => {
 
     const stringList = randomStringList();
 
-    const handleProfilePictureClick = async () => {
-        try {
-            setMsg("");
-            await updateUser (user_id, username, profilePicture);
-            history.push('/home');
-        } catch (error) {
-            console.log(error);
-            if (error.response.status === 409) { setMsg("Sorry, but the username is taken"); }
-            else {
-                alert(error);
+    const changeProfilePicture = async () => {
+            try {
+                setMsg("");
+                await updateUser (user_id, username, profilePicture);
+                history.push('/home');
+            } catch (error) {
+                console.log(error);
+                if (error.response.status === 409) { setMsg("Sorry, but the username is taken"); }
+                else {
+                    alert(error);
+                }
             }
         }
-    }
+
+
+    const PictureClick = () => {
+            return (
+                <>
+                <div className="invitation overlay"></div>
+                <div className="invitation base-container">
+                    <p>
+                        <strong> Do you want to change your profile picture to: </strong>
+
+                    </p>
+                    <Identicon className="profile-picture" string={profilePicture} size={190}/>
+                    <div className="twoButtons button-container">
+                        <Button onClick={() => changeProfilePicture()}> Yes </Button>
+                        <Button onClick={() => history.push('/home')}>No</Button>
+                    </div>
+                </div>
+            </>)
+        }
 
     return (
         <>
             <ReceiveInvitation/>
             <HomeHeader height="100"/>
             <BaseContainer className="popup container">
-                <div className="user-profile container">
-                    <div className = "title-location" style={{ gridColumn: '1 / span 2', textAlign: 'center' }} >
-                        <div className="title"> <strong> CHANGE PROFILE PICTURE </strong></div>
-                    </div>
-                    <div className="ProfilePicture container">
-                        {stringList.map((str, index) => (
-                            <Identicon key={index} className="profile-picture" string={str} size={190} onClick={() => handleProfilePictureClick(str)}/>
-                        ))}
-                    </div>
+                <div className = "title-location" style={{ gridColumn: '1 / span 2', textAlign: 'center' }} >
+                    <div className="title"> <strong> CHANGE PROFILE PICTURE </strong></div>
+                </div>
+                <div className="ProfilePicture container" >
+                    {stringList.map((str, index) => (
+                        <Identicon key={index} className="profile-picture" string={str} size={190} onClick={() => PictureClick(str)}/>
+                    ))}
                 </div>
                 <Button
                     width="100%"
