@@ -54,7 +54,7 @@ const Login = props => {
                 <>
                     <div className="label-container">
                         Password
-                        <Link to="/forgotpassword" style={{textAlign: "right"}}>Forgot Password?</Link>
+                        <Link to="/resetpassword" style={{textAlign: "right"}}>Forgot Password?</Link>
                     </div>
                     <FormField
                         value={password}
@@ -82,8 +82,4 @@ const Login = props => {
 
 };
 
-/**
- * You can get access to the history object's properties via the withRouter.
- * withRouter will pass updated match, location, and history props to the wrapped component whenever it renders.
- */
 export default Login;

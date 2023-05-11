@@ -275,9 +275,9 @@ export const cancelGame = async (id) => {
   }
 }
 
-export const resetPassword = async (username) => {
+export const resetPassword = async (email) => {
   try {
-    const requestBody = JSON.stringify({username})
+    const requestBody = JSON.stringify({email: email})
     const response = await restApi.post('/reset', requestBody);
     return response;
   } catch (error) {
