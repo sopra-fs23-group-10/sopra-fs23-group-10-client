@@ -196,7 +196,7 @@ const GameScreen = () => {
         if (gameMode == "image" && question) {
             return (
                 <BaseContainer className="image-holder">
-                    <img style={{filter: `blur(${20*(time/answerTime)}px)`}} src={`https://imgur.com/${question.apiId}.jpeg`} ></img>
+                    <img style={{filter: `blur(${correctAnswer ? 0 : 20*(time/answerTime)}px)`}} src={`https://imgur.com/${question.apiId}.jpeg`} ></img>
                 </BaseContainer>
             );
         }
