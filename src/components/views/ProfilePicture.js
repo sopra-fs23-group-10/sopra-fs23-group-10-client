@@ -77,7 +77,7 @@ const UserProfile = props => {
                     <p>
                         <strong> Do you want to change your profile picture to: </strong>
                     </p>
-                    <Identicon className="profile-picture" string={str} size={100}/>
+                    <Identicon className="profile-picture" string={selectedPicture} size={100}/>
                     <div className="twoButtons button-container">
                         <Button onClick={() => changeProfilePicture()}> Yes </Button>
                         <Button onClick={() => history.push('/home')}>No</Button>
@@ -107,10 +107,10 @@ const UserProfile = props => {
                     <div className="title"> <strong> CHANGE PROFILE PICTURE </strong></div>
                 </div>
                 <div className="ProfilePicture container" >
-                    {stringList.map((str, index) => (
-                        <div key={index} onClick={() => PictureClick(str)}>
-                        <Identicon className={`profile-picture ${str === selectedPicture ? 'selected' : ''}`} string={str} size={100} />
-                        </div>
+                   {stringList.map((str, index) => (
+                        <Link onClick={() => PictureClick(str)}>
+                        <Identicon className="profile-picture" string={str} size={100} />
+                        </Link>
                     ))}
                 </div>
                 <Button
