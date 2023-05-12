@@ -35,7 +35,7 @@ const Ranking = props => {
 
     const getStarPlayers = (u) => {
         const sortedUsers = u.sort((a,b) => b.rank -a.rank);
-        const topTenUsers = sortedUsers.slice(0,10);
+        const topTenUsers = sortedUsers.reverse().slice(0,10);
         return topTenUsers;
     }
 
