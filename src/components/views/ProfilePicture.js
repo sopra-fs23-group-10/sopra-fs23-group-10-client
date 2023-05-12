@@ -12,15 +12,15 @@ import 'styles/views/PopUp.scss';
 import 'styles/views/ProfilePicture.scss';
 import Identicon from "react-identicons";
 import { updateUser } from '../../helpers/restApi';
-import user from "models/User";
-import {Timer} from "../ui/Timer";
 
 
 const UserProfile = props => {
     const history = useHistory();
     const [username, setUsername] = useState(null);
-    const [profilePicture, setProfilePicture] = useState(null);
+    const [newprofilePicture, setNewProfilePicture] = useState(null);
     const [msg, setMsg] = useState("");
+    const [selectedPicture, setSelectedPicture] = useState(null);
+
 
     let { user_id } = useParams();
 
@@ -32,7 +32,6 @@ const UserProfile = props => {
                 const userData = await fetchUserById(user_id);
                 const user = new User(userData);
                 setUsername(user.username);
-                setProfilePicture(user.profilePicture);
             } catch (error) {
                 console.error(error.message);
                 alert("Something went wrong while fetching the user data! See the console for details.");
@@ -65,33 +64,20 @@ const UserProfile = props => {
         return stringList;
     }
 
-    const stringList = randomStringList();
-
-    const changeProfilePicture = async () => {
-            try {
-                setMsg("");
-                await updateUser (user_id, username, profilePicture);
-                history.push('/home');
-            } catch (error) {
-                console.log(error);
-                if (error.response.status === 409) { setMsg("Sorry, but the username is taken"); }
-                else {
-                    alert(error);
-                }
-            }
-        }
+    const [stringList, setStringList] = useState(randomStringList());
 
 
-    const PictureClick = () => {
+    const PictureClick = (str) => {
+        console.log(str);
+        setSelectedPicture(str);
             return (
                 <>
                 <div className="invitation overlay"></div>
                 <div className="invitation base-container">
                     <p>
                         <strong> Do you want to change your profile picture to: </strong>
-
                     </p>
-                    <Identicon className="profile-picture" string={profilePicture} size={190}/>
+                    <Identicon className="profile-picture" string={str} size={100}/>
                     <div className="twoButtons button-container">
                         <Button onClick={() => changeProfilePicture()}> Yes </Button>
                         <Button onClick={() => history.push('/home')}>No</Button>
@@ -100,6 +86,18 @@ const UserProfile = props => {
             </>)
         }
 
+    const changeProfilePicture = async () => {
+        try {
+            await updateUser (user_id, username, selectedPicture);
+            history.push('/home');
+        } catch (error) {
+            console.log(error);
+            if (error.response.status === 409) { setMsg("Sorry, but the username is taken"); }
+            else {
+                alert(error);
+            }
+        }
+    }
     return (
         <>
             <ReceiveInvitation/>
@@ -110,7 +108,9 @@ const UserProfile = props => {
                 </div>
                 <div className="ProfilePicture container" >
                     {stringList.map((str, index) => (
-                        <Identicon key={index} className="profile-picture" string={str} size={190} onClick={() => PictureClick(str)}/>
+                        <div key={index} onClick={() => PictureClick(str)}>
+                        <Identicon className={`profile-picture ${str === selectedPicture ? 'selected' : ''}`} string={str} size={100} />
+                        </div>
                     ))}
                 </div>
                 <Button
@@ -122,7 +122,6 @@ const UserProfile = props => {
                 </Button>
             </BaseContainer>
         </>
-
     );
 }
 

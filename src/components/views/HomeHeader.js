@@ -107,7 +107,7 @@ const HomeHeader = props => {
                 <a className="content fontbold profile"
                     onClick = {() => {setDropDown(!showProfile)}}>
                     <p className="username">{username}</p>
-                    <Identicon className="profile-picture" string={profilePicture}/>
+                    <Identicon className="profile-picture" string={profilePicture} size={40}/>
                 </a>
             </div>
             {dropDown()}
