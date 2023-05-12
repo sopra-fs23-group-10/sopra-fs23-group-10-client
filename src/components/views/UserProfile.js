@@ -131,8 +131,8 @@ const UserProfile = props => {
                     </div>
 
                 </div>
+                <div style ={{height: '12px'}}> </div>
                 <Link to="/resetpassword" style={{textAlign: "right"}}>Change Password</Link>
-
                     <Button
                         disabled={!username || !profilePicture}
                         width="100%"
