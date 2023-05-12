@@ -45,11 +45,18 @@
         border-color: $secondary_color;
         margin: 0px;
         border-radius: 100%;
+        display:flex;
+        justify-content:center;
+        align-items: center;
         &.disabled {
             border-color: $disabled_button;
             img {
                 display:none;
             }
+        }
+        img {
+            width:100%;
+            height:100%;
         }
     }
   }

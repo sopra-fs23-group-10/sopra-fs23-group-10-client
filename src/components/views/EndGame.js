@@ -10,6 +10,7 @@ import 'styles/ui/Invitation.scss';
 import ReceiveInvitation from './ReceiveInvitation';
 import BaseContainer from "../ui/BaseContainer";
 import Result from "../../models/Result";
+import { ResultList } from 'components/ui/ResultList';
 
 
 const EndGame = props => {
@@ -20,6 +21,7 @@ const EndGame = props => {
     const { gameMode, playerMode, selecting } = useParams();
     const [rematchSent, setRematchSent] = useState(false);
     const [endedGame, setEndedGame] = useState(false);
+    const [results, setResults] = useState(null);
 
     useEffect(() => {
         function handleReceiveReply(e) {
@@ -43,10 +45,11 @@ const EndGame = props => {
             try {
                 const response = await getFinalResults(localStorage.getItem('gameId'));
                 const res = new Result(response[response.length-1]);
-                setResult(res, () => {
-                    endGame();
-                });
+                console.log(response);
+                setResult(res);
+                setResults(Array.from(response).slice(0, -1));
                 getUsers(res);
+                if (result) endGame();
             } catch(error) {
                 alert(error);
                 history.push("/login");
@@ -63,8 +66,12 @@ const EndGame = props => {
                 if (!endedGame) getResults();
             } else {
                 let res = JSON.parse(localStorage.getItem('result'));
-                setResult(res);
-                getUsers(res);
+                console.log(res);
+                console.log(res[res.length-1]);
+                console.log(Array.from(res).slice(0,-1));
+                setResult(res[res.length-1]);
+                setResults(Array.from(res).slice(0,-1));
+                getUsers(res[res.length-1]);
             }
         }
 
@@ -142,6 +149,37 @@ const EndGame = props => {
         result.invitedPlayerResult > result.invitingPlayerResult) || 
         (result.invitingPlayerId == parseInt(localStorage.getItem('id')) && 
         result.invitingPlayerResult > result.invitedPlayerResult))
+    }
+
+    const pastResults = (inviting) => {
+        if (results) {
+            let playerResults = [];
+            for (let r of results) {
+                inviting ? playerResults.push(r.invitingPlayerResult) : playerResults.push(r.invitedPlayerResult)
+            }
+            return playerResults;
+        }
+    }
+
+    const drawResults = () => {
+        if (results) {
+            if (playerMode == 'duel') {
+                if (results && usernameInvited && usernameInviting) {
+                    return (
+                        <div className="result-list-container grid">
+                            <ResultList style={{gridColumn:1}} results={pastResults(true)}/>
+                            <ResultList style={{gridColumn:2}} results={pastResults(false)}/>
+                        </div>
+                    );
+                }
+            } else if (result && usernameInviting){
+                return(
+                    <div className="result-list-container">
+                        <ResultList results={pastResults(true)}/>
+                    </div>
+                );
+            }
+        }
     }
 
     const resultText = () => {
@@ -225,7 +263,8 @@ const EndGame = props => {
                 if (result && usernameInvited && usernameInviting) {
                     return (
                         <>
-                            <div className="grid-1">
+                            {drawResults()}
+                            <div style={{gridColumn:1}} className="grid-1">
                                 <div className="title" style={{textAlign: "left"}}>
                                     Player 1
                                 </div>
@@ -294,7 +333,8 @@ const EndGame = props => {
         } else if(result && usernameInviting){
             return (
                 <>
-                    <div className="grid-1" style={{ position: 'relative'}} >
+                    {drawResults()}
+                    <div style={{ position: 'relative', gridColumn:1, height:"40vh"}} >
                         <div className="background-points-winner" style={{ width: '100%', height: '100%', position: 'absolute' }}>
                             <div className = "player" style={{textAlign: "center"}}>
                                 {usernameInviting}

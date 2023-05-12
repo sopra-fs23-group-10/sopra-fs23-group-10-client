@@ -6,7 +6,6 @@ import { QuestionResult } from "./QuestionResult";
 export const ResultList = props => {
     const fillRest = () => {
         let n = parseInt(localStorage.getItem('total_questions'));
-        console.log("total questions: " + n + ", res length: " + props.results.length);
         let content = []
         for (let i = props.results.length; i < n; i++) {
             content.push(<QuestionResult answered={false} key={i} points={0}></QuestionResult>);

@@ -68,6 +68,7 @@ const Score = props => {
             }
         }
 
+        console.log("gamemode = " + gameMode);
         if (selecting == 'selecting' && !topics && playerMode == 'duel' && gameMode == "text") {
             if (!localStorage.getItem('topics')) {
                 fetchTopics();
@@ -81,6 +82,7 @@ const Score = props => {
     }, [topics]);
 
     async function fetchTopics() {
+        console.log("fetch topics!");
         try {
             const response = await getTopicSelection(localStorage.getItem("gameId"));
             setTopics(response.topics);
@@ -131,8 +133,6 @@ const Score = props => {
         if (selecting == 'selecting') {
             if (gameMode == "text") {
                 rndTopic();
-            } else {
-                fetchImageQuestion();
             }
         }
     }
@@ -141,6 +141,7 @@ const Score = props => {
         if (localStorage.getItem('topics')) {
             let newTopics = JSON.parse(localStorage.getItem('topics'));
             let rnd = getRandomInt(0, 3);
+            console.log("RAND TOPIC");
             fetchQuestion(newTopics[rnd]); 
         }
     }
@@ -157,7 +158,11 @@ const Score = props => {
     }
 
     const getQuestionSingle = () => {
-        fetchQuestion(localStorage.getItem('topic'));
+        if (gameMode == "text") {
+            fetchQuestion(localStorage.getItem('topic'));
+        } else {
+            fetchImageQuestion();
+        }
     };
 
     const drawTopics = () => {

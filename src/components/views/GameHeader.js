@@ -30,8 +30,7 @@ const GameHeader = props => {
     const handleResult = (msg) => {
         console.log("got result");
         let obj = JSON.parse(msg);
-        let res = obj[obj.length-1];
-        const event = new CustomEvent("receivedResult", { detail: res });
+        const event = new CustomEvent("receivedResult", { detail: obj });
         document.dispatchEvent(event);
     }
 
