@@ -42,7 +42,7 @@ const AppRouter = () => {
               <UserProfile/>
             </HomeGuard>
           </Route>
-          <Route exact path="/users/${user_id}/profilepicture">
+          <Route exact path="/users/:user_id/profilepicture">
             <HomeGuard>
               <ProfilePicture/>
             </HomeGuard>

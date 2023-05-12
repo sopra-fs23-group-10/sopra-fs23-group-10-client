@@ -70,21 +70,28 @@ const ProfilePicture= props => {
     const PictureClick = (str) => {
         console.log(str);
         setSelectedPicture(str);
+        }
+
+    const Change = ()  => {
+        if (selectedPicture){
             return (
                 <>
-                <div className="PictureChange overlay"></div>
-                <div className="PictureChange base-container">
-                    <p>
-                        <strong> Do you want to change your profile picture to: </strong>
-                    </p>
-                    <Identicon className="profile-picture" string={selectedPicture} size={100} />
-                    <div className="twoButtons button-container">
-                        <Button onClick={() => changeProfilePicture()}> Yes </Button>
-                        <Button onClick={() => history.push('/home')}>No</Button>
+                    <div className="PictureChange overlay">
+                        <div className="PictureChange base-container">
+                            <p>
+                                <strong> Do you want to change your profile picture to: </strong>
+                            </p>
+                            <Identicon className="profile-picture" string={selectedPicture} size={100} />
+                            <div className="twoButtons button-container">
+                                <Button onClick={() => changeProfilePicture()}> Yes </Button>
+                                <Button onClick={() => history.push('/home')}>No</Button>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </>)
+
+                </>)
         }
+    }
 
     const changeProfilePicture = async () => {
         try {
@@ -101,7 +108,7 @@ const ProfilePicture= props => {
 
     return (
         <>
-            <ReceiveInvitation/>
+
             <HomeHeader height="100"/>
             <BaseContainer className="popup container">
                 <div className = "title-location" style={{ gridColumn: '1 / span 2', textAlign: 'center' }} >
@@ -109,11 +116,12 @@ const ProfilePicture= props => {
                 </div>
                 <div className="ProfilePicture container">
                     {stringList.map((str, index) => (
-                        <Link >
-                            <Identicon className="profile-picture" string={str} size={100} onClick ={() => PictureClick(str)}/>
-                        </Link>
+                        <div onClick ={() => PictureClick(str)}>
+                            <Identicon className="profile-picture" string={str} size={100} />
+                        </div>
                     ))}
                 </div>
+                {Change()}
                 <Button
                     width="100%"
                     style={{marginTop: "12px"}}
