@@ -76,7 +76,11 @@ const UserProfile = props => {
         fetchData();
     }, []);
 
-    let profileFields = <div>waiting</div>;
+    let profileFields = <FormField
+        label="Username:"
+        visible = {true}
+        value=""
+    />
 
     if (username) {
         profileFields = (
@@ -101,7 +105,7 @@ const UserProfile = props => {
                 history.push('/home');
             } catch (error) {
                 console.log(error);
-                if (error.response.status === 409) { setMsg("Sorry, but the username is taken"); }
+                if (error.status === 409) { setMsg("Sorry, but the username is taken"); }
                 else {
                     alert(error);
                 }
@@ -110,6 +114,12 @@ const UserProfile = props => {
         else{
             history.push('/home');
         }
+    }
+
+    const error = () => {
+        return (
+            <div className='error'>{msg}</div>
+        );
     }
 
     return (
@@ -129,7 +139,7 @@ const UserProfile = props => {
                     <div className="form-location">
                         {profileFields}
                     </div>
-
+                    {error()}
                 </div>
                 <div style ={{height: '12px'}}> </div>
                 <Link to="/resetpassword" style={{textAlign: "right"}}>Change Password</Link>
