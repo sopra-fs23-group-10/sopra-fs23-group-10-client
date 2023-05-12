@@ -122,7 +122,7 @@ const UserProfile = props => {
                         <div className="title"> <strong> EDIT PROFILE </strong></div>
                     </div>
                     <div className="picture-location">
-                        <Link to="/users/:user_id/profilepicture">
+                        <Link to={`/users/${user_id}/profilepicture`}>
                             <Identicon className="profile-picture" string={profilePicture} size={100}/>
                         </Link>
                     </div>

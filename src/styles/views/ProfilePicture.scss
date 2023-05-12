@@ -1,8 +1,8 @@
 @import 'styles/theme';
 
 .ProfilePicture {
-  &.container{
-    display:grid;
+  &.container {
+    display: grid;
     width: 100%;
     grid-template-columns: 1fr 1fr 1fr;
     grid-column-gap: 40px;
@@ -15,3 +15,39 @@
     pointer-events: auto;
   }
 }
+  .PictureChange {
+    position: absolute;
+    width:400px;
+    height: auto;
+    left: calc(50% - 200px);
+    right: calc(50% - 200px);
+    top: calc(50% - 200px);
+    z-index: 20;
+    filter: drop-shadow(0px 0px 8px #00000032);
+
+    p {
+      text-align: center;
+    }
+
+    &.overlay {
+      position: absolute;
+      background-color: #00000032;
+      left: 0px;
+      top: 0px;
+      z-index: 15;
+      width: 100vw;
+      height: 100vh;
+    }
+    &.base-container {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-auto-flow: row;
+      grid-gap: $base_padding;
+    }
+
+    .button-container {
+      width:100%;
+      justify-self: end;
+    }
+  }
+

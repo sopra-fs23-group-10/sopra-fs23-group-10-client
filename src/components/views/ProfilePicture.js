@@ -3,7 +3,6 @@ import {fetchUserById} from 'helpers/restApi';
 import User from 'models/User';
 import {Link, useHistory, useParams} from 'react-router-dom';
 import {Button} from 'components/ui/Button';
-import 'styles/views/UserProfile.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import HomeHeader from "./HomeHeader";
@@ -14,16 +13,16 @@ import Identicon from "react-identicons";
 import { updateUser } from '../../helpers/restApi';
 
 
-const UserProfile = props => {
+const ProfilePicture= props => {
     const history = useHistory();
     const [username, setUsername] = useState(null);
+    const [originalPicture, setoriginalPicture] = useState (null);
     const [newprofilePicture, setNewProfilePicture] = useState(null);
     const [msg, setMsg] = useState("");
     const [selectedPicture, setSelectedPicture] = useState(null);
 
 
     let { user_id } = useParams();
-
     console.log(user_id);
 
     useEffect(() => {
@@ -32,6 +31,7 @@ const UserProfile = props => {
                 const userData = await fetchUserById(user_id);
                 const user = new User(userData);
                 setUsername(user.username);
+                setoriginalPicture(user.profilePicture);
             } catch (error) {
                 console.error(error.message);
                 alert("Something went wrong while fetching the user data! See the console for details.");
@@ -72,12 +72,12 @@ const UserProfile = props => {
         setSelectedPicture(str);
             return (
                 <>
-                <div className="invitation overlay"></div>
-                <div className="invitation base-container">
+                <div className="PictureChange overlay"></div>
+                <div className="PictureChange base-container">
                     <p>
                         <strong> Do you want to change your profile picture to: </strong>
                     </p>
-                    <Identicon className="profile-picture" string={selectedPicture} size={100}/>
+                    <Identicon className="profile-picture" string={selectedPicture} size={100} />
                     <div className="twoButtons button-container">
                         <Button onClick={() => changeProfilePicture()}> Yes </Button>
                         <Button onClick={() => history.push('/home')}>No</Button>
@@ -98,6 +98,7 @@ const UserProfile = props => {
             }
         }
     }
+
     return (
         <>
             <ReceiveInvitation/>
@@ -106,10 +107,10 @@ const UserProfile = props => {
                 <div className = "title-location" style={{ gridColumn: '1 / span 2', textAlign: 'center' }} >
                     <div className="title"> <strong> CHANGE PROFILE PICTURE </strong></div>
                 </div>
-                <div className="ProfilePicture container" >
-                   {stringList.map((str, index) => (
-                        <Link onClick={() => PictureClick(str)}>
-                        <Identicon className="profile-picture" string={str} size={100} />
+                <div className="ProfilePicture container">
+                    {stringList.map((str, index) => (
+                        <Link >
+                            <Identicon className="profile-picture" string={str} size={100} onClick ={() => PictureClick(str)}/>
                         </Link>
                     ))}
                 </div>
@@ -125,4 +126,4 @@ const UserProfile = props => {
     );
 }
 
-export default UserProfile;
+export default ProfilePicture;
