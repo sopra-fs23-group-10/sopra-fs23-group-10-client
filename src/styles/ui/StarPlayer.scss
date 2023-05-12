@@ -1,0 +1,35 @@
+@import 'styles/theme';
+
+.StarPlayer {
+  //cursor: pointer;
+  &.container {
+    border-radius: $base_padding;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px;
+    padding-right: 10px;
+  }
+  &.username {
+    padding-right: 8px;
+    justify-self: left;
+  }
+  &.profile-picture {
+    height: $base_padding !important;
+    width: $base_padding !important;
+    background-color: lightgray;
+    border-radius: 100%;
+    justify-self: left;
+    pointer-events: auto;
+
+  }
+  &.rank {
+    color: black;
+    font-weight: bold;
+    justify-self: left;
+  }
+  &.points {
+    margin-left: auto;
+  }
+
+}
