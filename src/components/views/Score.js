@@ -24,6 +24,7 @@ const Score = props => {
     const [topics, setTopics] = useState(null);
     const [topicSent, setTopicSent] = useState(false);
     let { selecting, gameMode, playerMode } = useParams();
+    const [buttonClicked, setButtonClicked] = useState(false);
 
     useEffect(() => {
         connectQuestion(handleQuestion);
@@ -90,7 +91,8 @@ const Score = props => {
     }
 
     const fetchQuestion = async (topic) => {
-        if (!topicSent) {
+        if (!topicSent && !buttonClicked) {
+            setButtonClicked(true);
             try {
                 const response = await getQuestion(localStorage.getItem('gameId'), topic);
                 if (playerMode == 'single' && response) toQuestion(response);
@@ -156,7 +158,7 @@ const Score = props => {
 
     const getQuestionSingle = () => {
         fetchQuestion(localStorage.getItem('topic'));
-    }
+    };
 
     const drawTopics = () => {
         if (playerMode == 'duel') {
@@ -171,7 +173,7 @@ const Score = props => {
                                     </div>
                                     {topics.map((topic)=> (
                                         <div key={topic} className={'topicSelection column-${index+1}'}>
-                                            <GameButton callback={() => fetchQuestion(topic)}>{parseString(topic)}</GameButton>
+                                            <GameButton callback={() => fetchQuestion(topic)} disabled={buttonClicked}>{parseString(topic)}</GameButton>
                                         </div>
                                     ))}
                                 </div>
@@ -251,7 +253,8 @@ const Score = props => {
                             {result.invitingPlayerResult}
                         </div>
                     </div>
-                </div>)
+                </div>
+            );
         }
     }
 
