@@ -6,8 +6,13 @@ const Player = ({user, action}) => (
     <div
         className="player container" onClick={action ? () => action(user.id) : null}>
         <Identicon className="player profile-picture" string={user.username}/>
-        <div className="player username">{user.username}</div>
-        <div className="player rank">{user.points}</div>
+        <div className="player username">{user.username}
+            <div style ={{height: '20px'}}> </div>
+        </div>
+        <div className="player points">POINTS: {user.points}
+            <div className="player rank">#{user.rank}</div>
+        </div>
+
     </div>
 );
 
