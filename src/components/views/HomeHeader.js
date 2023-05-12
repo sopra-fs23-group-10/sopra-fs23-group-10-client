@@ -65,7 +65,7 @@ const HomeHeader = props => {
                             <div className="contentNoHover" style={{textAlign: "left"}}>
                                 <p>
                                     Points: {points} <br/>
-                                <span style={{fontSize: "medium"}}>#{rank}</span>
+                                <span style={{fontSize: "medium", color: "gray"}  }>#{rank}</span>
                                 </p>
                             </div>
                             <div className="contentHover" style={{textAlign: "right"}}>

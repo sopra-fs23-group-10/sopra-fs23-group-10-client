@@ -123,7 +123,7 @@ const UserProfile = props => {
                     </div>
                     <div className="picture-location">
                         <Link to={`/users/${user_id}/profilepicture`}>
-                            <Identicon className="profile-picture" string={profilePicture} size={100}/>
+                            <Identicon className="profile-picture" string={profilePicture} size={100} style={{ backgroundColor: 'lightgray' }}/>
                         </Link>
                     </div>
                     <div className="form-location">
