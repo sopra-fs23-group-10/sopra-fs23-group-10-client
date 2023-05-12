@@ -16,6 +16,7 @@ const HomeHeader = props => {
     const [username, setUsername] = useState(null);
     const [profilePicture, setProfilePicture] = useState(null);
     const [points, setPoints] = useState(null);
+    const [rank, setRank] = useState(null);
 
     useEffect(() => {
         async function fetchData() {
@@ -27,6 +28,8 @@ const HomeHeader = props => {
                 setUsername(user.username);
                 setPoints(user.points);
                 setProfilePicture(user.profilePicture);
+                setRank(user.rank);
+
             } catch (error) {
                 history.push("/login");
             }
@@ -43,7 +46,7 @@ const HomeHeader = props => {
         return <Link className="contentHover "
                   onClick ={() => toEdit(localStorage.getItem('id'))}>
                 Edit Profile
-                <img className='arrow' src={arrow} style={{position: "absolute", right: "10px", top: "35%", transform: "translateY(-50%)"}}></img>
+                <img className='arrow' src={arrow} style={{position: "absolute", right: "10px", top: "28%", transform: "translateY(-50%)"}}></img>
             </Link>
     }
 
@@ -60,10 +63,16 @@ const HomeHeader = props => {
                         <img className='Triangle' src={Triangle}></img>
                         <div className="dropdown container">
                             <div className="contentNoHover" style={{textAlign: "left"}}>
-                                Points: {points}
+                                <p>
+                                    Points: {points} <br/>
+                                <span style={{fontSize: "medium", color: "gray"}  }>#{rank}</span>
+                                </p>
                             </div>
                             <div className="contentHover" style={{textAlign: "right"}}>
                                 {edit()}
+                                <p>
+
+                                </p>
                             </div>
                             <Button className ="logout"
                                     width="100%"
@@ -98,7 +107,7 @@ const HomeHeader = props => {
                 <a className="content fontbold profile"
                     onClick = {() => {setDropDown(!showProfile)}}>
                     <p className="username">{username}</p>
-                    <Identicon className="profile-picture" string={profilePicture}/>
+                    <Identicon className="profile-picture" string={profilePicture} size={40}/>
                 </a>
             </div>
             {dropDown()}
