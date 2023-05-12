@@ -9,6 +9,8 @@ import {useEffect} from "react";
  * Overhauled by Kyrill Hux
  */
 const App = () => {
+    localStorage.setItem("total_questions", 5);
+
     useEffect(() => {
       register();
     }, []);

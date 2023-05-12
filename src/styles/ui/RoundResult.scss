@@ -32,3 +32,26 @@
     }
 }
 
+.question-result-container {
+    display: flex;
+    align-items: start;
+    margin:0px;
+    gap:20px;
+
+    .question-box {
+        width:20px;
+        height:20px;
+        border-style: solid;
+        border-color: $secondary_color;
+        margin: 0px;
+        border-radius: 100%;
+        &.disabled {
+            border-color: $disabled_button;
+            img {
+                display:none;
+            }
+        }
+    }
+  }
+  
+
