@@ -45,10 +45,7 @@ const Ranking = props => {
             <HomeHeader height="100"/>
             <BaseContainer className="popup container">
                 <div className ="title" style={{textAlign: "center"}}>
-                    <p>
-                        <strong> STAR PLAYERS </strong> <br />
-                        <br />
-                    </p>
+                        <strong> STAR PLAYERS </strong>
                 </div>
                 <div className ="content_location">
                 <StarPlayerList callback={getStarPlayers}/>
