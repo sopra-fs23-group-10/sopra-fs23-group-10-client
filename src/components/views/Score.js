@@ -11,6 +11,8 @@ import {Timer} from "../ui/Timer";
 import BaseContainer from "components/ui/BaseContainer";
 import { Button } from "components/ui/Button";
 import { RoundResult } from "components/ui/RoundResult";
+import { QuestionResult } from "components/ui/QuestionResult";
+import { ResultList } from "components/ui/ResultList";
 
 
 const Score = props => {
@@ -66,6 +68,7 @@ const Score = props => {
             }
         }
 
+        console.log("gamemode = " + gameMode);
         if (selecting == 'selecting' && !topics && playerMode == 'duel' && gameMode == "text") {
             if (!localStorage.getItem('topics')) {
                 fetchTopics();
@@ -79,6 +82,7 @@ const Score = props => {
     }, [topics]);
 
     async function fetchTopics() {
+        console.log("fetch topics!");
         try {
             const response = await getTopicSelection(localStorage.getItem("gameId"));
             setTopics(response.topics);
@@ -129,8 +133,6 @@ const Score = props => {
         if (selecting == 'selecting') {
             if (gameMode == "text") {
                 rndTopic();
-            } else {
-                fetchImageQuestion();
             }
         }
     }
@@ -139,6 +141,7 @@ const Score = props => {
         if (localStorage.getItem('topics')) {
             let newTopics = JSON.parse(localStorage.getItem('topics'));
             let rnd = getRandomInt(0, 3);
+            console.log("RAND TOPIC");
             fetchQuestion(newTopics[rnd]); 
         }
     }
@@ -155,12 +158,16 @@ const Score = props => {
     }
 
     const getQuestionSingle = () => {
-        fetchQuestion(localStorage.getItem('topic'));
+        if (gameMode == "text") {
+            fetchQuestion(localStorage.getItem('topic'));
+        } else {
+            fetchImageQuestion();
+        }
     };
 
     const drawTopics = () => {
-        if (gameMode == "text") {
-            if (playerMode == 'duel') {
+        if (playerMode == 'duel') {
+            if (gameMode == 'text') {
                 if (selecting == 'selecting') {
                     if (topics) {
                         return (
@@ -195,18 +202,18 @@ const Score = props => {
                         </div>
                     );
                 }
-            } else {
-                return (
-                    <div className="background-topic-waiting">
-                        <div className="topic">
-                            <div style={{ display: 'block' }}>
-                                <p>Are you ready for the next question?</p>
-                                <Button width="100%" onClick={() => getQuestionSingle()} disabled={buttonClicked}>Continue</Button>
-                            </div>
+            }
+        } else {
+            return (
+                <div className="background-topic-waiting">
+                    <div className="topic">
+                        <div style={{ display: 'block' }}>
+                            <p>Are you ready for the next question?</p>
+                            <Button width="100%" onClick={() => getQuestionSingle()} disabled={buttonClicked}>Continue</Button>
                         </div>
                     </div>
-                );
-            }
+                </div>
+            );
         }
     }
 
@@ -251,62 +258,35 @@ const Score = props => {
                             {result.invitingPlayerResult}
                         </div>
                     </div>
-                </div>)
+                </div>
+            );
         }
     }
 
-    const drawResultsOption2 = () => {
-        if (results && usernameInvited && usernameInviting) {
-            return (
-                0
-            )
-    }}
+    const pastResults = (inviting) => {
+        if (results) {
+            let playerResults = [];
+            for (let r of results) {
+                inviting ? playerResults.push(r.invitingPlayerResult) : playerResults.push(r.invitedPlayerResult)
+            }
+            return playerResults;
+        }
+    }
 
     const drawResults = () => {
         if (playerMode == 'duel') {
             if (results && usernameInvited && usernameInviting) {
                 return (
                     <div className="result-list-container grid grid-0">
-                        {results.map((result, index) => {
-                            return (
-                                <div style={{gridRow:index+1, gridColumn:1}}>
-                                    <RoundResult
-                                        style={{gridRow:index+1, gridColumn:1}}
-                                        index={index+1}
-                                        key={index}
-                                        points= {result.invitingPlayerResult}
-                                    />
-                                </div>
-                            );
-                        })}
-                        {results.map((result, index) => {
-                            return (
-                                <div style={{gridRow:index+1, gridColumn:2}}>
-                                    <RoundResult
-                                        index={index+1}
-                                        key={index}
-                                        points={result.invitedPlayerResult}
-                                    />
-                                </div>
-                            );
-                        })}
+                        <ResultList style={{gridColumn:1}} results={pastResults(true)}/>
+                        <ResultList style={{gridColumn:2}} results={pastResults(false)}/>
                     </div>
                 );
             }
         } else if (result && usernameInviting){
             return(
                 <div className="result-list-container grid-1 ">
-                    {results.map((result, index) => {
-                        return (
-                            <div style = {{marginBottom: '12px'}}>
-                                <RoundResult
-                                    style={{gridRow:index+1,}}
-                                    index={index+1}
-                                    key={index}
-                                    points= {result.invitingPlayerResult}
-                                />
-                            </div>)
-                    })}
+                    <ResultList results={pastResults(true)}/>
                 </div>
             );
         }
@@ -314,7 +294,7 @@ const Score = props => {
 
 
     const drawTimer = () => {
-        if ((localStorage.getItem('topics') || gameMode == "image") || selecting != 'selecting') {
+        if (playerMode == 'duel' || selecting != 'selecting') {
             let timeLimit = parseInt(localStorage.getItem("question_nr")) <= 1 ? 10 : 15;
             return (
                 <Timer timeOut={handleTimeOut} timeLimit={timeLimit}/>

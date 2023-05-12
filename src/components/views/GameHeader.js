@@ -30,8 +30,7 @@ const GameHeader = props => {
     const handleResult = (msg) => {
         console.log("got result");
         let obj = JSON.parse(msg);
-        let res = obj[obj.length-1];
-        const event = new CustomEvent("receivedResult", { detail: res });
+        const event = new CustomEvent("receivedResult", { detail: obj });
         document.dispatchEvent(event);
     }
 
@@ -109,7 +108,7 @@ const GameHeader = props => {
             <div className="gamecontentheader fontnormal" style={{textAlign: "left"}}>
                 <p>
                     Score <br />
-                    {props.questionId}/5
+                    {props.questionId}/{localStorage.getItem('total_questions')}
                 </p>
             </div>
             <div className="content" style={{textAlign: "right", gridColumn:4}}>

@@ -18,7 +18,7 @@ const GameScreen = () => {
     const answerTime = 10;
     const { selecting } = useParams();
     const { gameMode, playerMode } = useParams();
-    const nQuestions = 5;
+    const nQuestions = parseInt(localStorage.getItem('total_questions'));
 
     useEffect(() => {
         function timeOut() {
