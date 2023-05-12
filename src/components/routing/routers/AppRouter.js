@@ -68,13 +68,8 @@ const AppRouter = () => {
             </LoginGuard>
           </Route>
           <Route exact path="/resetpassword">
-            <HomeGuard>
-              <ResetPassword/>
-            </HomeGuard>
-          </Route>
-          <Route exact path="/forgotpassword">
             <LoginGuard>
-              <ForgotPassword/>
+              <ResetPassword/>
             </LoginGuard>
           </Route>
           <Route path="/ranking">

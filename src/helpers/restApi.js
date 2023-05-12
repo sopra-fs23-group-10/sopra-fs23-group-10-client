@@ -275,3 +275,13 @@ export const cancelGame = async (id) => {
   }
 }
 
+export const resetPassword = async (email) => {
+  try {
+    const requestBody = JSON.stringify({email: email})
+    const response = await restApi.post('/reset', requestBody);
+    return response;
+  } catch (error) {
+    throw new Error(`Something went wrong while resetting the password: \n${handleError(error)}`);
+  }
+}
+

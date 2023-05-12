@@ -2,41 +2,65 @@ import React from 'react';
 import 'styles/views/Registration.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import {FormField} from "components/ui/FormField";
-import HomeHeader from "./HomeHeader";
 import {Button} from "../ui/Button";
 import {Link} from "react-router-dom";
+import HeaderAuthentication from "./HeaderAuthentication";
+import { resetPassword } from 'helpers/restApi';
+import { useState } from 'react';
+import check from "images/checkmark.svg";
 
 
 const ResetPassword = props => {
+    const [email, setEmail] = useState(null);
+    const [sent, setSent] = useState(false);
 
-    return (
-        <>
-            <HomeHeader height="100"/>
-            <div className='challenge popup grid'>
-                <Link to="/home" className='back'>✕ Cancel</Link>
-                <BaseContainer className="popup container">
+    const sendPassword = async () => {
+        const response = await resetPassword(email);
+        console.log(response);
+        if (response) setSent(true);
+    }
+
+    const content = () => {
+        if (!sent) {
+            return (
+                <>
                     <div className ="title" style={{textAlign: "center"}}>
                         <p>
-                            CHANGE PASSWORD <br />
+                            Please enter your email get a new password.<br />
                         </p>
                     </div>
                     <FormField
-                        label="Old Password"
-                    />
-                    <FormField
-                        label="New Password"
-                    />
-                    <FormField
-                        label="Confirm New Password"
+                        label="email"
+                        onChange={email => setEmail(email)}
                     />
                     <div className="popup button-container">
                         <Button
-                            // disabled={!username || !password}
                             width="100%"
-                            //onClick={() => doLogin()}
+                            onClick={() => sendPassword()}
                         >
-                            SET PASSWORD
+                            Send password
                         </Button>
+                    </div>
+                </>
+            );
+        } else {
+            return (
+                <div className='password-sent'>
+                    <img style={{height:'20px', width:'20px'}} src={check}></img>
+                    <p>New password has been sent!</p>
+                </div>
+            )
+        }
+    }
+
+    return (
+        <>
+            <HeaderAuthentication height="100"/>
+            <div className='challenge popup grid'>
+                <Link to="/home" className='back'>✕ Cancel</Link>
+                <BaseContainer className="popup container">
+                    <div className='reset-password'>
+                        {content()}
                     </div>
                 </BaseContainer>
             </div>

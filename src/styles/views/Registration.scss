@@ -51,3 +51,19 @@
     margin-top: 1em;
   }
 }
+
+.reset-password {
+  .password-sent {
+    width:100%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+  }
+  .button-container {
+    margin-top:0px;
+  }
+  .title {
+    margin-bottom: $base_padding;
+  }
+}
+
