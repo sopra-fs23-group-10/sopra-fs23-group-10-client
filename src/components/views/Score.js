@@ -133,6 +133,8 @@ const Score = props => {
         if (selecting == 'selecting') {
             if (gameMode == "text") {
                 rndTopic();
+            } else {
+                fetchImageQuestion();
             }
         }
     }
