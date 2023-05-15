@@ -17,9 +17,9 @@ const ProfilePicture= props => {
     const history = useHistory();
     const [username, setUsername] = useState(null);
     const [originalPicture, setoriginalPicture] = useState (null);
-    const [newprofilePicture, setNewProfilePicture] = useState(null);
     const [msg, setMsg] = useState("");
     const [selectedPicture, setSelectedPicture] = useState(null);
+    const [showPopUp, setPopUp] = useState(false);
 
 
     let { user_id } = useParams();
@@ -72,6 +72,7 @@ const ProfilePicture= props => {
     const PictureClick = (str) => {
         console.log(str);
         setSelectedPicture(str);
+        setPopUp(true);
         }
 
     const Change = ()  => {
@@ -80,13 +81,11 @@ const ProfilePicture= props => {
                 <>
                     <div className="PictureChange overlay">
                         <div className="PictureChange base-container">
-                            <p>
-                                <strong> Do you want to change your profile picture to: </strong>
-                            </p>
+                            <strong> Do you want to change your profile picture to: </strong>
                             <Identicon className="profile-picture" string={selectedPicture} size={100} />
-                            <div className="twoButtons button-container">
+                            <div className="twoButtons button-containerPP">
                                 <Button onClick={() => changeProfilePicture()}> Yes </Button>
-                                <Button onClick={() => history.push('/home')}>No</Button>
+                                <Button onClick={() => {setPopUp(false)}}>No</Button>
                             </div>
                         </div>
                     </div>
@@ -95,13 +94,15 @@ const ProfilePicture= props => {
         }
     }
 
+
+
     const changeProfilePicture = async () => {
         try {
             await updateUser (user_id, username, selectedPicture);
             history.push('/home');
         } catch (error) {
             console.log(error);
-            if (error.response.status === 409) { setMsg("Sorry, but the username is taken"); }
+            if (error.response.status === 409) { setMsg("Sorry, please try again later"); }
             else {
                 alert(error);
             }
