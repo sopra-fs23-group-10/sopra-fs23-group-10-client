@@ -73,7 +73,9 @@ const UserProfile = props => {
                 alert("Something went wrong while fetching the user data! See the console for details.");
             }
         }
-        fetchData();
+        fetchData().catch(error => {
+            console.error(error);
+        });
     }, []);
 
     let profileFields = <div>waiting</div>;

@@ -41,8 +41,14 @@ const TopicSelectionSingle = props => {
                 alert(`Something went wrong while fetching the topcis, ${handleError(error)}`);
             }
         }
-        fetchTopics();
-        if (!localStorage.getItem('gameId')) newGame();
+        fetchTopics().catch(error => {
+            console.error(error);
+        });
+        if (!localStorage.getItem('gameId')) {
+            newGame().catch(error => {
+                console.error(error);
+            });
+        }
 
     }, [topics]);
 

@@ -17,7 +17,9 @@ export const HomeGuard = props => {
   }
 
   if (localStorage.getItem('gameId')) {
-    cancel(localStorage.getItem('gameId'));
+    cancel(localStorage.getItem('gameId')).catch(error => {
+      console.error(error);
+    });
     localStorage.removeItem('gameId');
     localStorage.removeItem('question_nr');
     localStorage.removeItem('topics');
