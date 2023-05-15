@@ -6,14 +6,11 @@ import GameHeader from "./GameHeader";
 import {Button} from "../ui/Button";
 import 'styles/views/PopUp.scss';
 import { Timer } from 'components/ui/Timer';
-import 'styles/ui/Invitation.scss';
 import ReceiveInvitation from './ReceiveInvitation';
 import BaseContainer from "../ui/BaseContainer";
 import Result from "../../models/Result";
 import { ResultList } from 'components/ui/ResultList';
 import User from "../../models/User";
-import 'styles/ui/Invitation.scss';
-import Identicon from "react-identicons";
 
 
 const EndGame = props => {
@@ -220,11 +217,11 @@ const EndGame = props => {
     const resultText = () => {
         if (result) {
             if (result.invitedPlayerResult == result.invitingPlayerResult) {
-                return "It's a draw!"
+                return <strong>It's a draw!</strong>
             } else if (isWon()) {
-                return "You won!"
+                return <strong>You won!</strong>
             } else {
-                return "You lost!"
+                return <strong>You lost!</strong>
             }
         } else {
             return "Waiting..."
@@ -306,13 +303,28 @@ const EndGame = props => {
                     <div className='invite-sent'>
                         <div className="invitation overlay">
                         </div>
-                        <div className="invitation base-container">
-                            <strong> Your updated rank: </strong>
-                            <div> {oldRank} </div>
-                            <div> {newRank} </div>
-                            <div className="button-container">
-                                <Timer timeLimit={2000} timeOut={ClosePopUp}/>
+                        <div className="RankUpdate base-container">
+                            <div className="title-placement" style={{textAlign: "center"}}>
+                                <strong> Your updated rank: </strong>
                             </div>
+                            <div className="rank-placement">
+                                    <p>
+                                        Your old rank: <br />
+                                        {oldRank}
+                                    </p>
+                            </div>
+                            <div className="rank-placement">
+                                    <p style={{ fontSize: '18px' }}>
+                                        <strong>Your new rank: <br />
+                                        {newRank} </strong>
+                                    </p>
+                            </div>
+                            <div className="timer-placement">
+                                <div className="button-container">
+                                    <Timer timeLimit={10} timeOut={ClosePopUp}/>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
 
@@ -376,6 +388,7 @@ const EndGame = props => {
                                 <div className="content">
                                     <div className="topic endgame" style={{textAlign: "center"}}>
                                         {resultText()}
+                                        <div style ={{height:"12px"}}></div>
                                     </div>
                                     <div className="twoButtons">
                                         {repeatButton()}
