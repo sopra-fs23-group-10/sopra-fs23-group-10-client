@@ -1,15 +1,15 @@
 @import 'styles/theme';
 
 .ScreenGrid-Score{
+  display: grid;
   max-height: 100vh;
   height: auto;
   width: 60%;
   margin: 0 auto;
   margin-top: 50px;
-  display: grid;
   grid-template-rows: auto auto auto auto;
   grid-template-columns: 1fr;
-  grid-row-gap: 50px;
+  grid-row-gap: 40px;
   grid-auto-flow: row;
 
   .grid-0 {
@@ -67,6 +67,7 @@
   height: fit-content;
   justify-content: center;
   align-items: center;
+  text-align: center;
   padding: $base_padding;
 }
 
@@ -110,10 +111,9 @@
   grid-row:2;
   background-color: $off_white;
   border-radius: $borderRadius;
-  flex-grow: 1;
   width: 100%;
   margin: 0 auto;
-  height:auto;
+  height:300px;
 }}
 
 
