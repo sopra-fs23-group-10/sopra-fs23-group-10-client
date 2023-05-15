@@ -42,7 +42,11 @@ const Home = () => {
             history.push("/challenge/" + gameMode.toLowerCase());
         }
 
-        if (pm === playerModes.single) newGame();
+        if (pm === playerModes.single) {
+            newGame().catch(error => {
+                console.error(error);
+            });
+        }
     }
 
     const startGameMenu = () => {

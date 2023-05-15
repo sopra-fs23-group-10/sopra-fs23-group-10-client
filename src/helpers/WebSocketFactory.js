@@ -47,24 +47,7 @@ export const openSocket = () => {
 
 export const register = () => {
     let stompClient = openSocket();
-    stompClient.connect({'userId': localStorage.getItem('id')}, () => {
-        /*
-        if (!listenersAdded && localStorage.getItem('id')) {
-            const socket = socketFactory();
-            socket.onopen = () => {
-                stompClient.send('/register', {}, localStorage.getItem('id'));
-            };
-
-            window.addEventListener('beforeunload', () => {
-                stompClient.send('/unregister', {}, localStorage.getItem('id'));
-                stompClient.disconnect();
-            });
-
-            listenersAdded = true;
-        }
-
-         */
-    });
+    stompClient.connect({'userId': localStorage.getItem('id')}, () => {});
 
     axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
     axios.defaults.headers.post['Content-Type'] = 'application/json';

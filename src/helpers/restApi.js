@@ -3,7 +3,10 @@ import { getDomain } from 'helpers/getDomain';
 
 export const restApi = axios.create({
   baseURL: getDomain(),
-  headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+  headers: {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': /^(https?:\/\/(?:sopra-fs23-group-10-server\.oa\.r\.appspot\.com|localhost:8080))$/,
+  },
 });
 
 export const handleError = error => {
