@@ -71,13 +71,19 @@ const Score = props => {
         console.log("gamemode = " + gameMode);
         if (selecting == 'selecting' && !topics && playerMode == 'duel' && gameMode == "text") {
             if (!localStorage.getItem('topics')) {
-                fetchTopics();
+                fetchTopics().catch(error => {
+                    console.error(error);
+                });
             } else {
                 setTopics(JSON.parse(localStorage.getItem('topics')));
             }
         }
 
-        if (!result) fetchGame();
+        if (!result) {
+            fetchGame().catch(error => {
+                console.error(error);
+            });
+        }
         return () => { disconnectQuestion(); }
     }, [topics]);
 
@@ -143,7 +149,9 @@ const Score = props => {
             let newTopics = JSON.parse(localStorage.getItem('topics'));
             let rnd = getRandomInt(0, 3);
             console.log("RAND TOPIC");
-            fetchQuestion(newTopics[rnd]); 
+            fetchQuestion(newTopics[rnd]).catch(error => {
+                console.error(error);
+            });
         }
     }
     
@@ -160,9 +168,13 @@ const Score = props => {
 
     const getQuestionSingle = () => {
         if (gameMode == "text") {
-            fetchQuestion(localStorage.getItem('topic'));
+            fetchQuestion(localStorage.getItem('topic')).catch(error => {
+                console.error(error);
+            });
         } else {
-            fetchImageQuestion();
+            fetchImageQuestion().catch(error => {
+                console.error(error);
+            });
         }
     }
 

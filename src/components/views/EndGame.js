@@ -48,8 +48,14 @@ const EndGame = props => {
                 console.log(response);
                 setResult(res);
                 setResults(Array.from(response).slice(0, -1));
-                getUsers(res);
-                if (result) endGame();
+                getUsers(res).catch(error => {
+                    console.error(error);
+                });
+                if (result) {
+                    endGame().catch(error => {
+                        console.error(error);
+                    });
+                }
             } catch(error) {
                 alert(error);
                 history.push("/login");
@@ -63,7 +69,11 @@ const EndGame = props => {
 
         if (!result) {
             if (selecting == 'selecting') {
-                if (!endedGame) getResults();
+                if (!endedGame) {
+                    getResults().catch(error => {
+                        console.error(error);
+                    });
+                }
             } else {
                 let res = JSON.parse(localStorage.getItem('result'));
                 console.log(res);
@@ -71,7 +81,9 @@ const EndGame = props => {
                 console.log(Array.from(res).slice(0,-1));
                 setResult(res[res.length-1]);
                 setResults(Array.from(res).slice(0,-1));
-                getUsers(res[res.length-1]);
+                getUsers(res[res.length-1]).catch(error => {
+                    console.error(error);
+                });
             }
         }
 
@@ -231,7 +243,9 @@ const EndGame = props => {
     }
 
     const replay = () => {
-        newGame();
+        newGame().catch(error => {
+            console.error(error);
+        });
     }
 
     const repeatButton = () => {

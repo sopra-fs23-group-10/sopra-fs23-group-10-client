@@ -65,14 +65,18 @@ const ChallengePlayer = props => {
     }
 
     const chooseOpponent = (id) => {
-        invite(id);
+        invite(id).catch(error => {
+            console.error(error);
+        });
     }
 
     const challengeRandomUser = () => {
         const id = localStorage.getItem('id');
         const others = users.filter(user => user.id != parseInt(id));
         const rnd = Math.floor(Math.random() * others.length);
-        invite(others[rnd].id);
+        invite(others[rnd].id).catch(error => {
+            console.error(error);
+        });
     }
 
     const sentInvitation = () => {

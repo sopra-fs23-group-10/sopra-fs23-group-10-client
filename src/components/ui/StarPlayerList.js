@@ -20,7 +20,9 @@ export const StarPlayerList = props => {
                 history.push("/login");
             }
         }
-        fetchData();
+        fetchData().catch(error => {
+            console.error(error);
+        });
     }, []);
 
     let userList = <div>waiting</div>;
