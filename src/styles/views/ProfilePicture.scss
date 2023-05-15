@@ -4,15 +4,16 @@
   &.container {
     display: grid;
     width: 100%;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-column-gap: 40px;
-    grid-row-gap: 40px;
-    grid-template-rows: 1fr 1fr 1fr;
-    grid-column: 1/-1;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 40px;
     margin-bottom: $base_padding;
-    justify-content: center;
-    align-content: center;
+    justify-items: center;
+    align-items: center;
     pointer-events: auto;
+  }
+
+  picture{
+    background-color: lightgray;
   }
 }
   .PictureChange {
