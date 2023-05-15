@@ -25,15 +25,16 @@
         background-color: lightgray;
         border-radius: 100%;
         justify-self: left;
-      pointer-events: auto;
-
+        pointer-events: auto;
     }
     &.rank {
        margin-left: auto;
       color: gray;
     }
+
     &.points {
       margin-left: auto;
+      text-align: left;
+      width: 100px;
     }
-
   }

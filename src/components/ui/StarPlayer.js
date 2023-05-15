@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import "styles/ui/StarPlayer.scss";
 import Identicon from 'react-identicons';
 
-const StarPlayer = ({user, action}) => (
+const StarPlayer = ({user}) => (
     <div className="StarPlayer container">
         <div className="StarPlayer rank">#{user.rank}</div>
         <div style ={{height: '20px'}}> </div>
