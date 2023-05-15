@@ -6,12 +6,15 @@ import { cancelGame } from "helpers/restApi";
 import { useHistory } from "react-router-dom";
 import { connectGame, connectResult, disconnectGame, disconnectResult } from "helpers/WebSocketFactory";
 import 'styles/ui/Invitation.scss';
+import DropDown from "components/ui/DropDown";
+import MusicInterface from "components/ui/MusicInterface";
 
 
 const GameHeader = props => {
     const history = useHistory();
     const [cancelled, setCancelled] = useState(false);
     const [sentCancellation, setSentCancellation] = useState(false);
+    const [showMusic, setShowMusic] = useState(false);
 
     useEffect(() => {
         connectGame(handleGameCancelled);
@@ -111,9 +114,16 @@ const GameHeader = props => {
                     {props.questionId}/{localStorage.getItem('total_questions')}
                 </p>
             </div>
-            <div className="content" style={{textAlign: "right", gridColumn:4}}>
-                Music
+            <div style={{textAlign: "right", gridColumn:4, position:"relative"}}>
+                <div className="content nav-item" onClick={() => setShowMusic(!showMusic)}>
+                    Music
+                   
+                </div>
+                <DropDown centered={true} yOffset={60} show={showMusic} setShow={setShowMusic}>
+                    <MusicInterface/>
+                </DropDown>
             </div>
+
             {cancelButton()}
         </header>
     );

@@ -1,0 +1,111 @@
+@import 'styles/theme';
+
+.wrapper{
+    position: absolute;
+    top: calc(#{$header_height} - 10px);
+    width: 300px;
+    right: 0px;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    grid-template-columns: 1fr;
+    z-index:15;
+
+    .Triangle {
+        grid-row: 1;
+        grid-column: 1;
+        position: absolute;
+        top: -10px;
+        right: 25px;
+        width: 20px;
+        height: 10px;
+      }
+
+    &.centered {
+        right: -122px;
+        .Triangle {
+            right: 140px;
+        }
+    }
+  }
+  .dropdown {
+    grid-row: 2;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    position: absolute;
+    padding: $base_padding;
+    border-radius: $borderRadius;
+    width: 300px;
+    height: 150px;
+    margin-right:$base_padding;
+    background-color: $off_white;
+    color: $font_primary;
+    margin-bottom: $base_padding;
+    margin-top: 0px;
+    &.container {
+      display:grid;
+      position: relative;
+      grid-template-columns: 50% 50%;
+      grid-template-rows: 50% 50%;
+      align-items:center;
+      justify-content: space-between;
+      grid-gap: 10px;
+      padding-left: $base_padding;
+      padding-bottom: $base_padding;
+      padding-top: 30px;
+      padding-right: $base_padding;
+      margin:0px;
+    }
+    .logout{
+      grid-column-start:1;
+      grid-column-end:3;
+      grid-row: 2;
+    }
+    .contentNoHover {
+      color: black;
+      font-family: $fontDefault;
+      font-size: 18px;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+    .contentHover {
+      color: black;
+      font-family: $fontDefault;
+      font-size: 18px;
+      text-transform: uppercase;
+      font-weight: bold;
+  
+      &:hover {
+        @extend .base-transition;
+        color: $secondary_color;
+      }
+    } 
+    .disabled {
+      opacity: 0.3;
+      color: black;
+    }
+    .arrow {
+      width: 15px;
+      height: 15px;
+      margin-left: 5px;
+      transform: translateY(-1px);
+      &.hover{
+        @extend .base-transition;
+        color: $secondary_color;
+      }
+  
+    }
+    .edit-container {
+      display: flex;
+      align-items: center;
+    }
+  }
+  
+  .profile-background {
+    z-index: 10;
+    position: absolute;
+    left: -100vw;
+    top: -100vh;
+    width: 200vw;
+    height: 200vh;
+  }
+  

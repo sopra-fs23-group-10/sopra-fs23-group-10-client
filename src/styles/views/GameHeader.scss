@@ -2,6 +2,7 @@
 
 .gameheader {
   height: 100px;
+  font-weight:bold;
   &.container {
     display:grid;
     gap: $base_padding;
