@@ -68,7 +68,9 @@ const ReceiveInvitation = props => {
         setInvitation(null);
         setUsername("");
         if (response[invitation.gameId]) {
-            goToGame();
+            goToGame().catch(error => {
+                console.error(error);
+            });
         }
         const event = new CustomEvent("sendReply", { detail: accepted });
         document.dispatchEvent(event);

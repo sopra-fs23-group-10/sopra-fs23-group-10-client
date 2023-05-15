@@ -41,8 +41,14 @@ const TopicSelectionSingle = props => {
                 alert(`Something went wrong while fetching the topcis, ${handleError(error)}`);
             }
         }
-        fetchTopics();
-        if (!localStorage.getItem('gameId')) newGame();
+        fetchTopics().catch(error => {
+            console.error(error);
+        });
+        if (!localStorage.getItem('gameId')) {
+            newGame().catch(error => {
+                console.error(error);
+            });
+        }
 
     }, [topics]);
 
@@ -90,7 +96,9 @@ const TopicSelectionSingle = props => {
                         <div className="topic-row" key={index} style={{ marginBottom: "20px" }}>
                             {row.map((topic) => (
                                 <div className="topicSelection" key={topic}>
-                                    <GameButton callback={() => fetchQuestion(topic)} disabled={buttonClicked}>{parseString(topic)}</GameButton>
+                                    <GameButton callback={() => fetchQuestion(topic).catch(error => {
+                                        console.error(error);
+                                    })} disabled={buttonClicked}>{parseString(topic)}</GameButton>
                                 </div>
                             ))}
                         </div>

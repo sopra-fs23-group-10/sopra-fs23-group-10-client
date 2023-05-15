@@ -30,7 +30,9 @@ const GameScreen = () => {
                 }, 3000);
                 setTimeoutId(id);
             } else {
-                answer("stupid answer", false);
+                answer("stupid answer", false).catch(error => {
+                    console.error(error);
+                });
             }
         }
 
@@ -65,7 +67,9 @@ const GameScreen = () => {
     });
 
     const chooseAnswer = async (str) => {
-        answer(str, playerMode == 'duel');
+        answer(str, playerMode == 'duel').catch(error => {
+            console.error(error);
+        });
     }
 
     const answer = async (str, wait) => {

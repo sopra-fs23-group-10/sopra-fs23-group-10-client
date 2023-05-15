@@ -39,7 +39,7 @@
     }
 
     &:hover {
-      @extends .base-transition;
+      @extend .base-transition;
       color: $secondary_color;
     }
   }
@@ -160,7 +160,7 @@
     font-weight: bold;
 
     &:hover {
-      @extends .base-transition;
+      @extend .base-transition;
       color: $secondary_color;
     }
   } 
@@ -174,7 +174,7 @@
     margin-left: 5px;
     transform: translateY(-1px);
     &.hover{
-      @extends .base-transition;
+      @extend .base-transition;
       color: $secondary_color;
     }
 
