@@ -151,7 +151,7 @@ export const createGame = async (invitedUserId, quizType, modeType) => {
     const invitingUserId = localStorage.getItem('id');
     const authToken = localStorage.getItem('token');
     const requestBody = JSON.stringify({invitingUserId, invitedUserId, quizType, modeType});
-    const response = await restApi.post('/game/creation', requestBody, {headers: {token: authToken}});
+    const response = await restApi.post('/games', requestBody, {headers: {token: authToken}});
     return response.data;
   } catch (error) {
     throw new Error(`Something went wrong during game creation: \n${handleError(error)}`);
@@ -162,7 +162,7 @@ export const answerInvite = async (gameId, answer) => {
   try {
     const authToken = localStorage.getItem('token');
     const requestBody = JSON.stringify(answer);
-    const response = await restApi.post(`/game/invitation/${gameId}`, requestBody, {headers: {token: authToken}});
+    const response = await restApi.post(`/games/${gameId}/invitation`, requestBody, {headers: {token: authToken}});
     return response.data;
   } catch (error) {
     throw new Error(`Something went wrong during invite response: \n${handleError(error)}`);
@@ -172,7 +172,7 @@ export const answerInvite = async (gameId, answer) => {
 export const getTopicSelection = async (gameId) => {
   try{
     const authToken = localStorage.getItem('token');
-    const response = await restApi.get(`/game/topics/${gameId}`, {headers: {token: authToken}})
+    const response = await restApi.get(`/games/${gameId}/topics`, {headers: {token: authToken}})
     return response.data;
   } catch (error) {
     throw new Error(`Something went wrong while fetching a selection of topics: \n${handleError(error)}`);
@@ -182,7 +182,7 @@ export const getTopicSelection = async (gameId) => {
 export const getAllTopics = async () => {
   try{
     const authToken = localStorage.getItem('token');
-    const response = await restApi.get(`/game/topics/all`, {headers: {token: authToken}})
+    const response = await restApi.get(`/games/topics/all`, {headers: {token: authToken}})
     return response.data;
   } catch (error) {
     throw new Error(`Something went wrong while fetching a selection of topics: \n${handleError(error)}`);
@@ -193,7 +193,7 @@ export const getQuestion = async (gameId, topic) => {
   try {
     const authToken = localStorage.getItem('token');
     const requestBody = JSON.stringify({gameId: gameId, category: topic});
-    const response = await restApi.post("/game/topics", requestBody, {headers: {token: authToken}})
+    const response = await restApi.post("/games/topics", requestBody, {headers: {token: authToken}})
     return response.data;
   } catch (error) {
     throw new Error(`Something went wrong while fetching a question: \n${handleError(error)}`);
@@ -215,7 +215,7 @@ export const getImageQuestion = async (gameId) => {
 export const sendAnswer = async (gameId, userId, questionId, answerString, answeredTime) => {
   try {
     const requestBody = JSON.stringify({userId, questionId, answerString, answeredTime})
-    const response = await restApi.put(`/game/question/${gameId}`, requestBody, {headers: {token: localStorage.getItem("token")}})
+    const response = await restApi.put(`/games/${gameId}/question`, requestBody, {headers: {token: localStorage.getItem("token")}})
     return response;
   }
   catch (error) {
@@ -229,7 +229,7 @@ export const finishGame = async () => {
   try {
     const gameId = localStorage.getItem('gameId');
     const authToken = localStorage.getItem('token');
-    await restApi.delete(`/game/finish/${gameId}`, {headers: {token: authToken}});
+    await restApi.delete(`/games/${gameId}/finish`, {headers: {token: authToken}});
   } catch (error) {
     throw new Error(`Something went wrong during fetching final results: \n${handleError(error)}`);
   }
@@ -239,7 +239,7 @@ export const getFinalResults = async () => {
   try {
     const gameId = localStorage.getItem('gameId');
     const authToken = localStorage.getItem('token');
-    const response = await restApi.get(`/game/finish/${gameId}`, {headers: {token: authToken}});
+    const response = await restApi.get(`/games/${gameId}/finish`, {headers: {token: authToken}});
     return response.data;
   } catch (error) {
     throw new Error(`Something went wrong during fetching final results: \n${handleError(error)}`);
@@ -250,7 +250,7 @@ export const getIntermediateResults = async () => {
   try {
     const gameId = localStorage.getItem('gameId');
     const authToken = localStorage.getItem('token');
-    const response = await restApi.get(`/game/intermediate/${gameId}`, {headers: {token: authToken}});
+    const response = await restApi.get(`/games/${gameId}/intermediate`, {headers: {token: authToken}});
     return response;
   } catch (error) {
     throw new Error(`Something went wrong during fetching intermediate results: \n${handleError(error)}`);
@@ -271,7 +271,7 @@ export const getUser = async () => {
 export const cancelGame = async (id) => {
   try {
     const authToken = localStorage.getItem('token');
-    const response = await restApi.delete(`/games/${id}/deletions`, {headers: {token: authToken}});
+    const response = await restApi.post(`/games/${id}/termination`, {headers: {token: authToken}});
     return response.data;
   } catch (error) {
     throw new Error(`Something went wrong while cancelling the game: \n${handleError(error)}`);
