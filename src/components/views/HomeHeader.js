@@ -71,8 +71,8 @@ const HomeHeader = props => {
                 <Link className="content nav-item" to="/ranking">
                     Ranking
                 </Link>
-                <div className="content nav-item" >
-                    <div style={{height:"100%"}} onClick={() => setShowMusic(!showMusic)}>
+                <div className="content" >
+                    <div className="nav-item" style={{height:"100%"}} onClick={() => setShowMusic(!showMusic)}>
                         Music
                     </div>
                     <DropDown centered={true} yOffset={100} show={showMusic} setShow={setShowMusic}>
