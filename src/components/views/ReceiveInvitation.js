@@ -14,6 +14,7 @@ const ReceiveInvitation = props => {
     const history = useHistory();
     const [invitation, setInvitation] = useState(null);
     const [username, setUsername] = useState("");
+    const [cancelled, setCancelled] = useState(false);
 
     useEffect(() => {
         connectInvitations(handleInvite, handleAnswer);
@@ -57,10 +58,25 @@ const ReceiveInvitation = props => {
     }
 
     const handleAnswer = (msg) => {
-        setInvitation(null);
-        setUsername("");
+        const accepted = JSON.parse(msg)[localStorage.getItem('gameId')];
+        if (accepted) {
+            setCancelled(false);
+            setInvitation(null);
+            setUsername("");
+        } else {
+            setCancelled(true);
+            setTimeout(() => reset(), 3000);
+        }
         throwReply(msg);
         if (props.onAnswer) props.onAnswer(msg);
+    }
+
+    const reset = () => {
+        console.log("RESET FROM RECEIVE INVITATION");
+        setCancelled(false);
+        setInvitation(null);
+        setUsername("");
+        localStorage.removeItem('gameId');
     }
 
     const reply = async (accepted) => {
@@ -92,32 +108,50 @@ const ReceiveInvitation = props => {
         document.dispatchEvent(event);
     }
 
+    const content = () => {
+        if (!cancelled) {
+            return (
+                <>
+                    <p>
+                        {username} has challenged you to a{" "}
+                        {invitation.quizType === "IMAGE" ? "image" : "trivia"} quiz!
+                    </p>
+                    <div className="twoButtons button-container">
+                        <Button onClick={() => reply(false)}>Decline</Button>
+                        <Button onClick={() => reply(true)}>Accept</Button>
+                    </div>
+                    <div>
+                        <Timer
+                            display={true}
+                            timeLimit={60}
+                            timeOut={() => reply(false)}
+                        />
+                    </div>
+                </> 
+            );
+        } else {
+            return (
+                <>
+                    <p>
+                        {username} cancelled the invitation
+                    </p>
+                </>
+            );
+        }
+    }
+
     const receiveInvitation = () => {
         if (invitation) {
             return (
                 <div className="invitation-received">
                     <div className="invitation overlay"></div>
                     <div className="invitation base-container">
-                        <p>
-                            {username} has challenged you to a{" "}
-                            {invitation.quizType === "IMAGE" ? "image" : "trivia"} quiz!
-                        </p>
-                        <div className="twoButtons button-container">
-                            <Button onClick={() => reply(false)}>Decline</Button>
-                            <Button onClick={() => reply(true)}>Accept</Button>
-                        </div>
-                        <div>
-                            <Timer
-                                timeLimit={60}
-                                timeOut={() => reply(false)}
-                            />
-                        </div>
+                       {content()}
                     </div>
                 </div>
             );
         }
     };
-
 
     return (
         <>{receiveInvitation()}</>

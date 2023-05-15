@@ -16,18 +16,21 @@ const ChallengePlayer = props => {
     const { gameMode } = useParams();
     const [users, setUsers] = useState(null);
     const [inviteSent, setInviteSent] = useState(false);
+    const [declined, setDeclined] = useState(false);
 
     useEffect(() => {
         function handleAnswer(e) {
             if (inviteSent) {
                 const accepted = JSON.parse(e.detail)[localStorage.getItem('gameId')];
+                console.log("handle answer, id: " + localStorage.getItem('gameId'));
                 if (accepted) {
                     localStorage.setItem('question_nr', 1);
                     localStorage.removeItem('startTime');
                     history.push(`/topic-selection/duel/${gameMode}/waiting`);
                 } else {
-                    localStorage.removeItem('gameId');
-                    setInviteSent(false);
+                    console.log("DECLINED");
+                    setDeclined(true);
+                    setTimeout(reset, 3000);
                 }
             }
         }
@@ -38,6 +41,13 @@ const ChallengePlayer = props => {
         } 
     }, [inviteSent])
 
+    const reset = () => {
+        console.log("RESET");
+        localStorage.removeItem('gameId');
+        setInviteSent(false);
+        setDeclined(false);
+    }
+
     const getUsers = async (u) => {
         setUsers(u);
     }
@@ -46,6 +56,7 @@ const ChallengePlayer = props => {
         try {
             const response = await createGame(id, gameMode.toUpperCase(), "DUEL");
             localStorage.setItem('gameId', response.gameId);
+            console.log("GAME ID: " + localStorage.getItem('gameId'));
             setInviteSent(true);
         } catch (error) {
             history.push("/home");
@@ -56,8 +67,7 @@ const ChallengePlayer = props => {
     const cancelInvite = async () => {
         try {
             await answerInvite(localStorage.getItem('gameId'), false);
-            localStorage.removeItem('gameId');
-            setInviteSent(false);
+            reset();
         } catch (error) {
             history.push("/home");
             alert(error);
@@ -92,15 +102,29 @@ const ChallengePlayer = props => {
                     <div className="invitation overlay">
                     </div>
                     <div className="invitation base-container">
-                        <a onClick={cancelInvite} style={{textAlign: "right"}}> Cancel Invitation</a>
-                        <div className="p" style={{textAlign: "center"}}>
-                            Invite has been sent. Waiting for answer...
-                        </div>
-                        <div className="button-container">
-                            <Timer timeLimit={60} timeOut={cancelInvite}/>
-                        </div>
+                        {invitationContent()}
                     </div>
                 </div>
+            );
+        }
+    }
+
+    const invitationContent = () => {
+        if (!declined) {
+            return (
+                <>
+                    <a onClick={cancelInvite} style={{textAlign: "right"}}> Cancel Invitation</a>
+                    <div className="p" style={{textAlign: "center"}}>
+                        Invite has been sent. Waiting for answer...
+                    </div>
+                    <div className="button-container">
+                        <Timer timeLimit={60} timeOut={cancelInvite}/>
+                    </div>
+                </>
+            );
+        } else {
+            return (
+                <p>The invitation was declined.</p>
             );
         }
     }

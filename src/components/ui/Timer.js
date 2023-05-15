@@ -57,7 +57,7 @@ export const Timer = props => {
     }
 
     return (
-        <div className="timer container">
+        <div className="timer container" style={!props.display ? {display:"none"} : {}}>
             <div className="timer label">
                 {getMins().toString().padStart(2, '0')}:{getSecs().toString().padStart(2, '0')}
             </div>
@@ -73,4 +73,9 @@ Timer.propTypes = {
     currentTime: PropTypes.number,
     timeOut: PropTypes.func,
     getTime: PropTypes.func,
+    display: PropTypes.bool
 };
+
+Timer.defaultProps = {
+    display: true,
+  };

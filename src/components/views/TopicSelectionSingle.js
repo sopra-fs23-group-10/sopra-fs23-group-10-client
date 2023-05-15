@@ -98,7 +98,7 @@ const TopicSelectionSingle = props => {
                                 <div className="topicSelection" key={topic}>
                                     <GameButton callback={() => fetchQuestion(topic).catch(error => {
                                         console.error(error);
-                                    })} disabled={buttonClicked}>{parseString(topic)}</GameButton>
+                                    })} disabled={buttonClicked} className={buttonClicked ? "inactive" : ""}>{parseString(topic)}</GameButton>
                                 </div>
                             ))}
                         </div>
