@@ -51,10 +51,18 @@ const GameScreen = () => {
         document.addEventListener("timeOut", timeOut);
         document.addEventListener("receivedResult", handleEndResult);
         document.addEventListener("cancelled", handleCancelled);
+        window.onbeforeunload = function() {
+            console.log("before unload");
+            if (timeoutId) {
+                console.log("let's clear timeout");
+                clearTimeout(timeoutId);
+            }
+        };
         return () => {
             document.removeEventListener("timeOut", timeOut);
             document.removeEventListener("receivedResult", handleEndResult);
             document.removeEventListener("cancelled", handleCancelled);
+            window.onbeforeunload = null;
         }
     });
 
@@ -94,7 +102,6 @@ const GameScreen = () => {
 
     const drawQuestion = () => {
         if (correctAnswer) {
-            console.log("correct answer = " + correctAnswer);
             let accent = (str) => {
                 if (str == correctAnswer) return <img className="star accent" src={star}></img>;
             }
@@ -164,6 +171,7 @@ const GameScreen = () => {
 
     const handleEndResult = (e) => {
         let nr = parseInt(localStorage.getItem('question_nr'));
+        console.log("current q: " + nr + ", total qs: " + nQuestions);
         if (selecting != 'selecting' && nr >= nQuestions) {
             cleanup();
             localStorage.setItem('result', JSON.stringify(e.detail));
@@ -172,7 +180,10 @@ const GameScreen = () => {
     }
 
     const handleCancelled = (e) => {
-        console.log("handle cancelled, timeoutId: " + timeoutId);
+        cancelTimeout();
+    }
+
+    const cancelTimeout = () => {
         if (timeoutId) clearTimeout(timeoutId);
     }
 

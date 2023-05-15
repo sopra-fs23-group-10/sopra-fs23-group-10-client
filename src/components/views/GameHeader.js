@@ -40,7 +40,6 @@ const GameHeader = props => {
     }
 
     const cancel = async () => {
-        console.log("cancel: " + localStorage.getItem('gameId'));
         setSentCancellation(true);
         try {
             await cancelGame(localStorage.getItem('gameId'));
@@ -51,7 +50,6 @@ const GameHeader = props => {
     }
 
     const handleGameCancelled = (msg) => {
-        console.log("game cancelled");
         setCancelled(true);
         const pauseEvent = new CustomEvent('pause', { detail: null });
         document.dispatchEvent(pauseEvent);
