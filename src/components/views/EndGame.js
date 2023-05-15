@@ -11,6 +11,9 @@ import ReceiveInvitation from './ReceiveInvitation';
 import BaseContainer from "../ui/BaseContainer";
 import Result from "../../models/Result";
 import { ResultList } from 'components/ui/ResultList';
+import User from "../../models/User";
+import 'styles/ui/Invitation.scss';
+import Identicon from "react-identicons";
 
 
 const EndGame = props => {
@@ -22,7 +25,24 @@ const EndGame = props => {
     const [rematchSent, setRematchSent] = useState(false);
     const [endedGame, setEndedGame] = useState(false);
     const [results, setResults] = useState(null);
+    const [oldRank, setOldRank] = useState(null);
+    const [newRank, setNewRank] = useState(null);
 
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const userData = await fetchUserById(localStorage.getItem('id'));
+                const myUser = new User(userData);
+                setOldRank(myUser.rank);
+
+            } catch (error) {
+                history.push("/login");
+            }
+        }
+        fetchData().catch(error => {
+            console.error(error);
+        });
+    }, []);
     useEffect(() => {
         function handleReceiveReply(e) {
             const accepted = JSON.parse(e.detail)[localStorage.getItem('gameId')];
@@ -40,7 +60,7 @@ const EndGame = props => {
                 setRematchSent(false);
             }
         }
-        
+
         async function getResults(){
             try {
                 const response = await getFinalResults(localStorage.getItem('gameId'));
@@ -110,6 +130,9 @@ const EndGame = props => {
         try {
             const userData = await fetchUserById(id);
             callback(userData.username);
+            if (id == localStorage.getItem('id')){
+                setNewRank(userData.rank);
+            }
         } catch (error){
             alert(error);
         }
@@ -271,6 +294,31 @@ const EndGame = props => {
             );
         }
     }
+    const [showPopUp, setPopUp] =useState(true);
+
+    const ClosePopUp =() =>{
+        setPopUp(false);
+    }
+    const InfoUpdates = ()  => {
+        if (showPopUp){
+            return (
+                <>
+                    <div className='invite-sent'>
+                        <div className="invitation overlay">
+                        </div>
+                        <div className="invitation base-container">
+                            <strong> Your updated rank: </strong>
+                            <div> {oldRank} </div>
+                            <div> {newRank} </div>
+                            <div className="button-container">
+                                <Timer timeLimit={2000} timeOut={ClosePopUp}/>
+                            </div>
+                        </div>
+                    </div>
+
+                </>)
+        }
+    }
 
     const endPointsScreen = () => {
         if (playerMode == 'duel'){
@@ -341,6 +389,7 @@ const EndGame = props => {
                                     </div>
                                 </div>
                             </div>
+                            {InfoUpdates()}
                         </>
                     );
                 }
@@ -375,6 +424,7 @@ const EndGame = props => {
                             </div>
                         </div>
                     </div>
+                    {InfoUpdates()}
                 </>
                 )
         } else {
