@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useHistory, useParams, useLocation} from 'react-router-dom';
 import {Button} from 'components/ui/Button';
 import 'styles/views/PopUp.scss';
+import 'styles/views/Rules.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import HomeHeader from "./HomeHeader";
 import ReceiveInvitation from './ReceiveInvitation';
@@ -40,7 +41,7 @@ const Rules = props => {
     const rulesPopup = () => {
         return (
             <BaseContainer className="popup container">
-            <div className="rulesGrid">
+            <div className="rulesGrid" >
                 <div className="title_location">
                     <div className ="title" style={{textAlign: "center"}}>
                         <strong> GAME RULES </strong>
@@ -95,12 +96,14 @@ const Rules = props => {
         <>
             <ReceiveInvitation/>
             <HomeHeader height="100"/>
-            {isFromRegistration && (
+            <div className="ScreenGrid-Rules">
+                {isFromRegistration && (
                     <div className = "welcome">
                         Welcome&nbsp;&nbsp;{username}!
                     </div>
-            )}
-            {rulesPopup()}
+                )}
+                {rulesPopup()}
+            </div>
         </>
     );
 };
