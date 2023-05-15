@@ -1,4 +1,3 @@
-import React,{useEffect,useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import 'styles/views/PopUp.scss';
 import BaseContainer from "components/ui/BaseContainer";
@@ -6,10 +5,6 @@ import HomeHeader from "./HomeHeader";
 import {Button} from "../ui/Button";
 import ReceiveInvitation from './ReceiveInvitation';
 import {StarPlayerList} from "../ui/StarPlayerList";
-import {fetchUserById} from "../../helpers/restApi";
-import User from "../../models/User";
-import Identicon from "react-identicons";
-
 
 const Ranking = props => {
     const history = useHistory();
