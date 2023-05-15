@@ -34,7 +34,9 @@ const HomeHeader = props => {
                 history.push("/login");
             }
         }
-        fetchData();
+        fetchData().catch(error => {
+            console.error(error);
+        });
     }, []);
 
     const logout = async () => {

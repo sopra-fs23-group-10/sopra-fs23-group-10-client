@@ -71,7 +71,9 @@ const ProfileEditor = props => {
             }
         }
 
-        fetchData();
+        fetchData().catch(error => {
+          console.error(error);
+        });
     }, []);
 
 
