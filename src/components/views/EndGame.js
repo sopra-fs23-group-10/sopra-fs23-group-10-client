@@ -86,7 +86,7 @@ const EndGame = props => {
 
         if (!result) {
             if (selecting == 'selecting') {
-                if (!endedGame) {
+                if (!endedGame && localStorage.getItem('gameId')) {
                     getResults().catch(error => {
                         console.error(error);
                     });
@@ -103,7 +103,6 @@ const EndGame = props => {
                 });
             }
         }
-
         if (playerMode == 'single') localStorage.removeItem('gameId');
 
         document.addEventListener("receiveReply", handleReceiveReply);
