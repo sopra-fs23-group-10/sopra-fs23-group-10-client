@@ -19,14 +19,16 @@ const GameScreen = () => {
     const { selecting } = useParams();
     const { gameMode, playerMode } = useParams();
     const nQuestions = parseInt(localStorage.getItem('total_questions'));
+    const [timeoutId, setTimeoutId] = useState(null);
 
     useEffect(() => {
         function timeOut() {
             if (sentAnswer) {
                 setCorrectAnswer(localStorage.getItem('correctAnswer'));
-                setTimeout(() => {
+                let id = setTimeout(() => {
                     goToScore();
                 }, 3000);
+                setTimeoutId(id);
             } else {
                 answer("stupid answer", false);
             }
@@ -46,9 +48,11 @@ const GameScreen = () => {
         
         document.addEventListener("timeOut", timeOut);
         document.addEventListener("receivedResult", handleEndResult);
+        document.addEventListener("cancelled", handleCancelled);
         return () => {
             document.removeEventListener("timeOut", timeOut);
             document.removeEventListener("receivedResult", handleEndResult);
+            document.removeEventListener("cancelled", handleCancelled);
         }
     });
 
@@ -73,9 +77,10 @@ const GameScreen = () => {
                 setCorrectAnswer(response.data.correctAnswer);
                 const event = new CustomEvent('pause', { detail: null });
                 document.dispatchEvent(event);
-                setTimeout(() => {
+                let id = setTimeout(() => {
                     goToScore();
                 }, 3000);
+                setTimeoutId(id);
             }
         } catch (error) {
             alert(error);
@@ -93,10 +98,11 @@ const GameScreen = () => {
                     return (
                         <div key={str}>
                             {accent(str)}
-                            <GameButton className={ "inactive " + 
-                                (str == sentAnswer ? "selected " : "") +
-                                (str != correctAnswer ? "disabled" : "")
-                                } >
+                            <GameButton 
+                            className={"inactive"}
+                            selected={str == localStorage.getItem('sentAnswer')}
+                            disabled={str != correctAnswer}
+                            >
                                 {str}
                             </GameButton>
                         </div>
@@ -161,8 +167,14 @@ const GameScreen = () => {
         }
     }
 
+    const handleCancelled = (e) => {
+        console.log("handle cancelled, timeoutId: " + timeoutId);
+        if (timeoutId) clearTimeout(timeoutId);
+    }
+
     const goToScore = () => {
         let nr = parseInt(localStorage.getItem('question_nr'));
+        console.log("current q: " + nr + ", total qs: " + nQuestions);
         cleanup();
         if (nr < nQuestions) {
             localStorage.setItem('question_nr', (nr + 1));

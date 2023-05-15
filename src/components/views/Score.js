@@ -22,7 +22,7 @@ const Score = props => {
     const [usernameInviting, setUsernameInviting] = useState("");
     const [usernameInvited, setUsernameInvited] = useState("");
     const [topics, setTopics] = useState(null);
-    const [topicSent, setTopicSent] = useState(false);
+    const [chosenTopic, setChosenTopic] = useState(null);
     let { selecting, gameMode, playerMode } = useParams();
     const [buttonClicked, setButtonClicked] = useState(false);
 
@@ -82,7 +82,6 @@ const Score = props => {
     }, [topics]);
 
     async function fetchTopics() {
-        console.log("fetch topics!");
         try {
             const response = await getTopicSelection(localStorage.getItem("gameId"));
             setTopics(response.topics);
@@ -93,12 +92,12 @@ const Score = props => {
     }
 
     const fetchQuestion = async (topic) => {
-        if (!topicSent && !buttonClicked) {
+        if (!chosenTopic && !buttonClicked) {
             setButtonClicked(true);
             try {
                 const response = await getQuestion(localStorage.getItem('gameId'), topic);
                 if (playerMode == 'single' && response) toQuestion(response);
-                setTopicSent(true);
+                setChosenTopic(topic);
             } catch (error) {
                 alert(error);
                 localStorage.removeItem('topics');
@@ -165,7 +164,7 @@ const Score = props => {
         } else {
             fetchImageQuestion();
         }
-    };
+    }
 
     const drawTopics = () => {
         if (playerMode == 'duel') {
@@ -179,8 +178,13 @@ const Score = props => {
                                         Select a topic
                                     </div>
                                     {topics.map((topic)=> (
-                                        <div key={topic} className={'topicSelection column-${index+1}'}>
-                                            <GameButton callback={() => fetchQuestion(topic)} disabled={buttonClicked}>{parseString(topic)}</GameButton>
+                                        <div key={topic} className={'topicSelection'}>
+                                            <GameButton 
+                                            callback={() => fetchQuestion(topic)} 
+                                            disabled={buttonClicked && chosenTopic != topic} 
+                                            selected={chosenTopic == topic}>
+                                                {parseString(topic)}
+                                            </GameButton>
                                         </div>
                                     ))}
                                 </div>

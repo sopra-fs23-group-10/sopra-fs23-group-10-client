@@ -53,8 +53,10 @@ const GameHeader = props => {
     const handleGameCancelled = (msg) => {
         console.log("game cancelled");
         setCancelled(true);
-        const event = new CustomEvent('pause', { detail: null });
-        document.dispatchEvent(event);
+        const pauseEvent = new CustomEvent('pause', { detail: null });
+        document.dispatchEvent(pauseEvent);
+        const cancelledEvent = new CustomEvent('cancelled', { detail: null });
+        document.dispatchEvent(cancelledEvent);
     }
 
     const ok = () => {
