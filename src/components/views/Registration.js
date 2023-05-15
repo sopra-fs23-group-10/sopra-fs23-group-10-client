@@ -42,7 +42,7 @@ const Registration = props => {
     }
 
     const validateEmailFormat = (email) => {
-        const emailPattern = new RegExp('^[a-z0-9.]+@[a-z]+.[a-z]+$');
+        const emailPattern = /^[a-z0-9.]+@[a-z]+\.[a-z]+$/;
         return emailPattern.test(email);
     }
 

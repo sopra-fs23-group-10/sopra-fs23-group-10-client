@@ -139,7 +139,9 @@ const Score = props => {
             if (gameMode == "text") {
                 rndTopic();
             } else {
-                fetchImageQuestion();
+                fetchImageQuestion().catch(error => {
+                    console.error(error);
+                });
             }
         }
     }
