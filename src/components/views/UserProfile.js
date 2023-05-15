@@ -78,7 +78,11 @@ const UserProfile = props => {
         });
     }, []);
 
-    let profileFields = <div>waiting</div>;
+    let profileFields = <FormField
+        label="Username:"
+        visible = {true}
+        value=""
+    />
 
     if (username) {
         profileFields = (
@@ -103,7 +107,7 @@ const UserProfile = props => {
                 history.push('/home');
             } catch (error) {
                 console.log(error);
-                if (error.response.status === 409) { setMsg("Sorry, but the username is taken"); }
+                if (error.status === 409) { setMsg("Sorry, but the username is taken"); }
                 else {
                     alert(error);
                 }
@@ -112,6 +116,12 @@ const UserProfile = props => {
         else{
             history.push('/home');
         }
+    }
+
+    const error = () => {
+        return (
+            <div className='error'>{msg}</div>
+        );
     }
 
     return (
@@ -124,17 +134,17 @@ const UserProfile = props => {
                         <div className="title"> <strong> EDIT PROFILE </strong></div>
                     </div>
                     <div className="picture-location">
-                        <Link to="/users/:user_id/profilepicture">
-                            <Identicon className="profile-picture" string={profilePicture} size={190}/>
+                        <Link to={`/users/${user_id}/profilepicture`}>
+                            <Identicon className="profile-picture" string={profilePicture} size={100} style={{ backgroundColor: 'lightgray' }}/>
                         </Link>
                     </div>
                     <div className="form-location">
                         {profileFields}
                     </div>
-
+                    {error()}
                 </div>
+                <div style ={{height: '12px'}}> </div>
                 <Link to="/resetpassword" style={{textAlign: "right"}}>Change Password</Link>
-
                     <Button
                         disabled={!username || !profilePicture}
                         width="100%"

@@ -18,7 +18,7 @@ const GameScreen = () => {
     const answerTime = 10;
     const { selecting } = useParams();
     const { gameMode, playerMode } = useParams();
-    const nQuestions = 5;
+    const nQuestions = parseInt(localStorage.getItem('total_questions'));
 
     useEffect(() => {
         function timeOut() {
@@ -124,12 +124,12 @@ const GameScreen = () => {
                 );
                 content = (
                     <>
-                        <div className="background-question">
-                            <div className="question-content" style={{textAlign: "center"}}>
+                        <div className={`background-question ${gameMode == 'image' ? 'image-question' : ''}`}>
+                            <div style={{display:gameMode == 'text' ? "none": "block"}} className="image-question-bg"></div>
+                            <div className='question-content' style={{textAlign: "center"}}>
                                 {question.question}
                             </div>
                         </div>
-                        <div style={{height: '40px'}}></div>
                         <div className ="QuestionGrid">
                             {answers}
                         </div>
@@ -138,14 +138,8 @@ const GameScreen = () => {
             }
             return (
                 <>
-                    <div style={{height: "200px", display: 'grid', gridTemplateRows: '1fr 1fr', gridRowGap: '40px' }}>
-                        <div style={{gridRow: 1}}>
-                            {content}
-                        </div >
-                        <div>
-                        </div>
-                        <Timer timeLimit={answerTime} getTime={getTime}/>
-                    </div>
+                    {content}
+                    <Timer timeLimit={answerTime} getTime={getTime}/>
                 </>
             );
         }
@@ -189,7 +183,7 @@ const GameScreen = () => {
     }
 
     const showResult = () => {
-        if (correctAnswer) return <div className="display">{resultText()}</div>
+        if (correctAnswer) return <div className={`display ${gameMode == 'image' ? 'image-question' : ''}`}>{resultText()}</div>
     }
 
     const showImage = () => {
