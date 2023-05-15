@@ -1,13 +1,13 @@
-import React, {useState, useEffect} from 'react';
-import {createGame, answerInvite} from 'helpers/restApi';
-import {useHistory, useParams, Link} from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {answerInvite, createGame} from 'helpers/restApi';
+import {Link, useHistory, useParams} from 'react-router-dom';
 import 'styles/views/PopUp.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import HomeHeader from "./HomeHeader";
 import {Button} from "../ui/Button";
-import { PlayerList } from 'components/ui/PlayerList';
+import {PlayerList} from 'components/ui/PlayerList';
 import 'styles/views/ChallengePlayer.scss';
-import { Timer } from 'components/ui/Timer';
+import {Timer} from 'components/ui/Timer';
 import 'styles/ui/Invitation.scss';
 import ReceiveInvitation from './ReceiveInvitation';
 
@@ -70,10 +70,16 @@ const ChallengePlayer = props => {
         });
     }
 
+    function cryptoRandom() {
+        const typedArray = new Uint8Array(1);
+        const randomValue = crypto.getRandomValues(typedArray)[0];
+        return randomValue / Math.pow(2, 8);
+    }
+
     const challengeRandomUser = () => {
         const id = localStorage.getItem('id');
         const others = users.filter(user => user.id != parseInt(id));
-        const rnd = Math.floor(Math.random() * others.length);
+        const rnd = cryptoRandom();
         invite(others[rnd].id).catch(error => {
             console.error(error);
         });
