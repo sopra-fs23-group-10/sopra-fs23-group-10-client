@@ -8,30 +8,11 @@ import ReceiveInvitation from './ReceiveInvitation';
 import {StarPlayerList} from "../ui/StarPlayerList";
 import {fetchUserById} from "../../helpers/restApi";
 import User from "../../models/User";
+import Identicon from "react-identicons";
 
 
 const Ranking = props => {
     const history = useHistory();
-    const [users, setUsers] = useState(null);
-    const [username, setUsername] = useState(null);
-    const [points, setPoints] = useState(null);
-    const [rank, setRank] = useState(null);
-
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                const userData = await fetchUserById(localStorage.getItem('id'));
-                const user = new User(userData);
-                setUsername(user.username);
-                setPoints(user.points);
-                setRank(user.rank);
-
-            } catch (error) {
-                history.push("/login");
-            }
-        }
-        fetchData();
-    }, []);
 
     const getStarPlayers = (u) => {
         const sortedUsers = u.sort((a,b) => b.rank -a.rank);
@@ -47,9 +28,7 @@ const Ranking = props => {
                 <div className ="title" style={{textAlign: "center"}}>
                         <strong> STAR PLAYERS </strong>
                 </div>
-                <div className ="content_location">
                 <StarPlayerList callback={getStarPlayers}/>
-                </div>
                 <div className="button-container">
                     <Button
                         width="100%"
@@ -58,7 +37,6 @@ const Ranking = props => {
                         BACK
                     </Button>
                 </div>
-
             </BaseContainer>
         </>
     );
