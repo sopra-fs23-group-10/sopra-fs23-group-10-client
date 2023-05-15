@@ -1,0 +1,27 @@
+@import 'styles/theme';
+
+
+.volume-icon {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    @extend .base-transition;
+    &:hover {
+        transform: scale(1.2);
+    }
+}
+
+.music-interface {
+    position: relative;
+    z-index: 5;
+    &.container {
+        display: grid;
+        grid-template-columns: 20px 1fr;
+        grid-template-rows: 1fr;
+        grid-auto-flow: column;
+        margin:0px;
+        column-gap: 20px;
+        justify-items: center;
+        align-items: center;
+    }
+}

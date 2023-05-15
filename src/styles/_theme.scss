@@ -140,3 +140,15 @@ h3 {
   line-height: 160px;
 }
 
+.nav-item {
+  color: $off_white;
+  font-weight: bold;
+  @extend .base-transition;
+  cursor: pointer;
+
+  &:hover {
+    color: $secondary_color;
+    transform: scale(1.1);
+  }
+}
+

@@ -28,23 +28,13 @@
 
   .content {
     grid-template-columns: 100px 1fr;
-    color: $off_white;
     text-align: right;
     font-family: $fontDefault;
     font-size: 20px;
-    text-transform: uppercase;
-
-    &.fontbold {
-      font-weight: bold;
-    }
-
-    &:hover {
-      @extend .base-transition;
-      color: $secondary_color;
-    }
   }
 
   .profile-container {
+    position: relative;
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -63,8 +53,6 @@
     @extend .base-transition;
 
     &:hover {
-      transform: scale(1.1);
-
       p {
         color: $secondary_color !important;
       }
@@ -85,6 +73,7 @@
       height: $header_height;
       line-height: $header_height;
       margin-left: $base_padding;
+      position: relative;
     }
 
     .disabled{
@@ -92,106 +81,6 @@
       color: $off_white;
     }
   }
-}
-.wrapper{
-  position: absolute;
-  top: $header_height;
-  width: 300px;
-  right: $base_padding;
-  display: grid;
-  grid-template-rows: auto 1fr;
-  grid-template-columns: 1fr 20px;
-  //grid-gap: 10px;
-  .Triangle {
-    grid-row: 1;
-    grid-column: 1;
-    position: absolute;
-    top: -18px;
-    right: 25px;
-    width: 25px;
-    height: 20px;
-  }
-}
-.dropdown {
-  grid-row: 2;
-  grid-column-start: 1;
-  grid-column-end: 2;
-  position: absolute;
-  padding: $base_padding;
-  border-radius: $borderRadius;
-  width: 300px;
-  height: 150px;
-  margin-right:$base_padding;
-  background-color: $off_white;
-  color: $font_primary;
-  margin-bottom: $base_padding;
-  //right:0;
-  margin-top: 0px;
-  &.container {
-    display:grid;
-    position: relative;
-    grid-template-columns: 50% 50%;
-    grid-template-rows: 50% 50%;
-    align-items:center;
-    justify-content: space-between;
-    grid-gap: 10px;
-    padding-left: $base_padding;
-    padding-bottom: $base_padding;
-    padding-top: 30px;
-    padding-right: $base_padding;
-  }
-  .logout{
-    grid-column-start:1;
-    grid-column-end:3;
-    grid-row: 2;
-  }
-  .contentNoHover {
-    color: black;
-    font-family: $fontDefault;
-    font-size: 18px;
-    text-transform: uppercase;
-    font-weight: bold;
-  }
-  .contentHover {
-    color: black;
-    font-family: $fontDefault;
-    font-size: 18px;
-    text-transform: uppercase;
-    font-weight: bold;
-
-    &:hover {
-      @extend .base-transition;
-      color: $secondary_color;
-    }
-  } 
-  .disabled {
-    opacity: 0.3;
-    color: black;
-  }
-  .arrow {
-    width: 15px;
-    height: 15px;
-    margin-left: 5px;
-    transform: translateY(-1px);
-    &.hover{
-      @extend .base-transition;
-      color: $secondary_color;
-    }
-
-  }
-  .edit-container {
-    display: flex;
-    align-items: center;
-  }
-}
-
-.profile-background {
-  z-index: 0;
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100vw;
-  height: 100vh;
 }
 
 

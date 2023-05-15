@@ -37,6 +37,16 @@ const Rules = props => {
         });
     }, []);
 
+    const startMusic = () => {
+        const event = new CustomEvent('playingChange', { detail: true });
+        document.dispatchEvent(event);
+    }
+
+    const buttonClick = () => {
+        history.push('/home');
+        startMusic();
+    }
+
     const rulesPopup = () => {
         return (
             <BaseContainer className="popup container">
@@ -82,7 +92,7 @@ const Rules = props => {
                 <div className ="button_location">
                     <Button
                         width="100%"
-                        onClick={() => history.push('/home')}
+                        onClick={() => buttonClick()}
                     >
                         DONE
                     </Button>

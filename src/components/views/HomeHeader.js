@@ -9,6 +9,9 @@ import "styles/views/PopUp.scss";
 import Triangle from "images/Triangle.png";
 import arrow from "images/arrow.png";
 import Identicon from 'react-identicons';
+import DropDown from "components/ui/DropDown";
+import 'rc-slider/assets/index.css';
+import MusicInterface from "components/ui/MusicInterface";
 
 
 const HomeHeader = props => {
@@ -45,74 +48,70 @@ const HomeHeader = props => {
     }
 
     const edit = () => {
-        return <Link className="contentHover "
+        return <div className="contentHover"
                   onClick ={() => toEdit(localStorage.getItem('id'))}>
                 Edit Profile
                 <img className='arrow' src={arrow} style={{position: "absolute", right: "10px", top: "28%", transform: "translateY(-50%)"}}></img>
-            </Link>
+            </div>
     }
 
     const toEdit = (userId) => {
         history.push("/users/" +userId)
     }
-    const [showProfile, setDropDown] = useState(false);
-    const dropDown = () =>{
-        if(showProfile){
-            return(
-                <>
-                    <div onClick={() => {setDropDown(false)}} className="profile-background"></div>
-                    <div className="wrapper">
-                        <img className='Triangle' src={Triangle}></img>
-                        <div className="dropdown container">
-                            <div className="contentNoHover" style={{textAlign: "left"}}>
-                                <p>
-                                    Points: {points} <br/>
-                                <span style={{fontSize: "medium", color: "gray"}  }>#{rank}</span>
-                                </p>
-                            </div>
-                            <div className="contentHover" style={{textAlign: "right"}}>
-                                {edit()}
-                                <p>
 
-                                </p>
-                            </div>
-                            <Button className ="logout"
-                                    width="100%"
-                                    onClick={() => logout()}
-                            >
-                                LOGOUT
-                            </Button>
-                        </div>
-                    </div>
-                </>
-            )
-        }
-    }
+    const [showProfile, setShowProfile] = useState(false);
+    const [showMusic, setShowMusic] = useState(false);
 
     return (
         <header className="homeheader container">
-            <Link className="logo fontbold" to="/home">
+            <Link className="logo" to="/home">
                 BrainBusters
             </Link>
             <div className="navigation">
-                <Link className="content fontbold" to="/ranking">
-                    RANKING
+                <Link className="content nav-item" to="/ranking">
+                    Ranking
                 </Link>
-                <div className="content fontbold disabled">
-                    MUSIC
+                <div className="content nav-item" >
+                    <div style={{height:"100%"}} onClick={() => setShowMusic(!showMusic)}>
+                        Music
+                    </div>
+                    <DropDown centered={true} yOffset={100} show={showMusic} setShow={setShowMusic}>
+                        <MusicInterface/>
+                    </DropDown>
                 </div>
-                <Link className="content fontbold" to="/rules">
-                    RULES
+                <Link className="content nav-item" to="/rules">
+                    Rules
                 </Link>
             </div>
             <div className="profile-container">
-                <a className="content fontbold profile"
-                    onClick = {() => {setDropDown(!showProfile)}}>
+                <a className="content fontbold profile nav-item"
+                    onClick = {() => {setShowProfile(!showProfile)}}>
                     <p className="username">{username}</p>
                     <Identicon className="profile-picture" string={profilePicture} size={40}/>
                 </a>
+                <DropDown yOffset={83} show={showProfile} setShow={setShowProfile}>
+                    <div className="dropdown container">
+                        <div className="contentNoHover" style={{textAlign: "left"}}>
+                        <p>
+                            Points: {points} <br/>
+                        <span style={{fontSize: "medium", color: "gray"}  }>#{rank}</span>
+                        </p>
+                        </div>
+                        <div className="contentHover" style={{textAlign: "right"}}>
+                            {edit()}
+                            <p>
+
+                            </p>
+                        </div>
+                        <Button className ="logout"
+                                width="100%"
+                                onClick={() => logout()}
+                        >
+                            LOGOUT
+                        </Button>
+                    </div>
+                </DropDown>
             </div>
-            {dropDown()}
         </header>
     );
 };
