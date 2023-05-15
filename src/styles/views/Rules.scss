@@ -1,0 +1,18 @@
+@import 'styles/theme';
+
+.ScreenGrid-Rules{
+  display: grid;
+  max-width: $DESKTOP_WIDTH;
+  grid-template-rows: auto;
+  row-gap: $base_padding;
+}
+.welcome {
+  grid-row: 1;
+  height: 200px;
+  font-family: $fontDisplay;
+  font-size: 200px;
+  font-weight: 600;
+  color: $off_white;
+  text-align: center;
+  transform: translate(0px, -50px);
+}

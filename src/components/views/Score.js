@@ -269,14 +269,12 @@ const Score = props => {
             }
         } else if (result && usernameInviting){
             return(
-                <div>
-                    <div className="background-points" style={{ width: '100%', height: '100%', position: 'relative' }}>
-                        <div className = "player" style={{textAlign: "center"}}>
-                            {usernameInviting}
-                        </div>
-                        <div className = "points-score" style={{textAlign: "center"}}>
-                            {result.invitingPlayerResult}
-                        </div>
+                <div className="background-points" >
+                    <div className = "player" style={{textAlign: "center"}}>
+                        {usernameInviting}
+                    </div>
+                    <div className = "points-score" style={{textAlign: "center"}}>
+                        {result.invitingPlayerResult}
                     </div>
                 </div>
             );
@@ -331,8 +329,8 @@ const Score = props => {
     return (
         <>
             <GameHeader playerMode={playerMode} questionId={localStorage.getItem('question_nr')} showCancelButton={true} height="100"/>
+            {drawTitle()}
             <div className="ScreenGrid-Score">
-                {drawTitle()}
                 {drawResults()}
                 {drawTotalResult()}
                 {drawTopics()}
