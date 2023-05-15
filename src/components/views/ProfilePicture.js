@@ -73,10 +73,14 @@ const ProfilePicture= props => {
         console.log(str);
         setSelectedPicture(str);
         setPopUp(true);
-        }
+    }
+
+    const ClosePopUp =() =>{
+        setPopUp(false);
+    }
 
     const Change = ()  => {
-        if (selectedPicture){
+        if (showPopUp){
             return (
                 <>
                     <div className="PictureChange overlay">
@@ -85,7 +89,7 @@ const ProfilePicture= props => {
                             <Identicon className="profile-picture" string={selectedPicture} size={100} />
                             <div className="twoButtons button-containerPP">
                                 <Button onClick={() => changeProfilePicture()}> Yes </Button>
-                                <Button onClick={() => {setPopUp(false)}}>No</Button>
+                                <Button onClick={() => {ClosePopUp()}}>No</Button>
                             </div>
                         </div>
                     </div>
