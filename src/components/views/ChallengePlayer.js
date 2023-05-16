@@ -79,9 +79,7 @@ const ChallengePlayer = props => {
     const challengeRandomUser = () => {
         const id = localStorage.getItem('id');
         const others = users.filter(user => user.id != parseInt(id));
-        const rnd = cryptoRandom(others.length-1).catch(error => {
-            console.error(error);
-        });
+        const rnd = cryptoRandom(others.length-1);
         invite(others[rnd].id).catch(error => {
             console.error(error);
         });

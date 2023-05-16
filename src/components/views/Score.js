@@ -150,9 +150,7 @@ const Score = props => {
     const rndTopic = () => {
         if (localStorage.getItem('topics')) {
             let newTopics = JSON.parse(localStorage.getItem('topics'));
-            let rnd = cryptoRandom(3).catch(error => {
-                console.error(error);
-            });
+            let rnd = cryptoRandom(3);
             console.log("RAND TOPIC");
             fetchQuestion(newTopics[rnd]).catch(error => {
                 console.error(error);

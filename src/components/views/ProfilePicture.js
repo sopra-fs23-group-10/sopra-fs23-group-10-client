@@ -44,15 +44,11 @@ const ProfilePicture= props => {
 
     const randomString =() => {
         let string = '';
-        const stringLength = cryptoRandom(10).catch(error => {
-            console.error(error);
-        });
+        const stringLength = cryptoRandom(10);
         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
         for ( let i = 0; i < stringLength; i++ ) {
             try {
-                string += characters.charAt(cryptoRandom(characters.length - 1).catch(error => {
-                    console.error(error);
-                }) % characters.length);
+                string += characters.charAt(cryptoRandom(characters.length - 1) % characters.length);
             } catch (error){
                 console.error('An error occurred while generating the random string:', error);
             }
