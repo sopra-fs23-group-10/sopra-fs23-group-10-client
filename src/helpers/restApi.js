@@ -63,7 +63,6 @@ export const updateUser = async (userId, username, profilePicture) => {
   }
 };
 
-
 export const loginUser = async (username, password) => {
   const requestBody = JSON.stringify({username, password});
   const response = await restApi.post('/login', requestBody);
@@ -77,8 +76,6 @@ export const loginUser = async (username, password) => {
     localStorage.getItem('id')
   ]);
 };
-
-
 
 export const fetchUserById = async (userId) => {
   try {

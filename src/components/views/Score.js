@@ -101,8 +101,7 @@ const Score = props => {
         if (!chosenTopic && !buttonClicked) {
             setButtonClicked(true);
             try {
-                const response = await getQuestion(localStorage.getItem('gameId'), topic);
-                if (playerMode == 'single' && response) toQuestion(response);
+                await getQuestion(localStorage.getItem('gameId'), topic);
                 setChosenTopic(topic);
             } catch (error) {
                 alert(error);
@@ -114,9 +113,7 @@ const Score = props => {
 
     const fetchImageQuestion = async () => {
         try {
-            const response = await getImageQuestion(localStorage.getItem('gameId'));
-            console.log(response);
-            if (playerMode == 'single' && response) toQuestion(response);
+            await getImageQuestion(localStorage.getItem('gameId'));
         } catch (error) {
             alert(error);
             history.push("/login");
@@ -129,8 +126,10 @@ const Score = props => {
 
     const toQuestion = (question) => {
         console.log("TO QUESTION");
+        console.log(question);
         localStorage.removeItem('topics');
         localStorage.removeItem('startTime');
+        console.log(JSON.stringify(question));
         localStorage.setItem('question', JSON.stringify(question));
         let nr = parseInt(localStorage.getItem('question_nr'));
         localStorage.setItem('question_nr', (nr + 1));
@@ -297,15 +296,15 @@ const Score = props => {
             if (results && usernameInvited && usernameInviting) {
                 return (
                     <div className="result-list-container grid grid-0">
-                        {/* <ResultList style={{gridColumn:1}} results={pastResults(true)}/> */}
-                        {/* <ResultList style={{gridColumn:2}} results={pastResults(false)}/> */}
+                        <ResultList style={{gridColumn:1}} results={pastResults(true)}/>
+                        <ResultList style={{gridColumn:2}} results={pastResults(false)}/>
                     </div>
                 );
             }
         } else if (result && usernameInviting){
             return(
                 <div className="result-list-container grid-1 ">
-                    {/* <ResultList results={pastResults(true)}/> */}
+                    <ResultList results={pastResults(true)}/>
                 </div>
             );
         }

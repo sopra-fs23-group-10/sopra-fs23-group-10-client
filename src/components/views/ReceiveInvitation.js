@@ -61,7 +61,6 @@ const ReceiveInvitation = props => {
     }
 
     const handleAnswer = (msg) => {
-        console.log("handle answer, answered: " + localStorage.getItem("invitation") + "; " + localStorage.getItem("answered"));
         const accepted = JSON.parse(msg)[localStorage.getItem('gameId')];
         if (!accepted) {
             if (localStorage.getItem("invitation")) {

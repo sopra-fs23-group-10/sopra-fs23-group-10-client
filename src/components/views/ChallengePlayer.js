@@ -58,7 +58,6 @@ const ChallengePlayer = props => {
 
     const cancelInvite = async () => {
         try {
-            console.log("cancel invite!");
             localStorage.setItem("answered", true);
             await answerInvite(localStorage.getItem('gameId'), false);
             localStorage.removeItem('gameId');

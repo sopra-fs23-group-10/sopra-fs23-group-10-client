@@ -8,6 +8,7 @@ import { sendAnswer } from "helpers/restApi";
 import { Timer } from "components/ui/Timer";
 import star from "images/star.png";
 import BaseContainer from "components/ui/BaseContainer";
+import { connectRound, disconnectRound } from "helpers/WebSocketFactory";
 
 const GameScreen = () => {
     const history = useHistory();
@@ -23,14 +24,8 @@ const GameScreen = () => {
 
     useEffect(() => {
         function timeOut() {
-            if (sentAnswer) {
-                setCorrectAnswer(localStorage.getItem('correctAnswer'));
-                let id = setTimeout(() => {
-                    goToScore();
-                }, 3000);
-                setTimeoutId(id);
-            } else {
-                answer("stupid answer").catch(error => {
+            if (!localStorage.getItem('sentAnswer')) {
+                answer("stupid answer", false).catch(error => {
                     console.error(error);
                 });
             }
@@ -48,6 +43,7 @@ const GameScreen = () => {
             setQuestion(JSON.parse(localStorage.getItem('question')));
         }
         
+        if (playerMode == 'duel') connectRound(showCorrectAnswer);
         document.addEventListener("timeOut", timeOut);
         document.addEventListener("receivedResult", handleEndResult);
         document.addEventListener("cancelled", handleCancelled);
@@ -59,21 +55,28 @@ const GameScreen = () => {
             }
         };
         return () => {
+            if (playerMode == 'duel') disconnectRound();
             document.removeEventListener("timeOut", timeOut);
             document.removeEventListener("receivedResult", handleEndResult);
             document.removeEventListener("cancelled", handleCancelled);
             window.onbeforeunload = null;
         }
-    }, []);
+    });
+
+    const showCorrectAnswer = () => {
+        setCorrectAnswer(localStorage.getItem("correctAnswer"));
+        setTimeout(() => goToScore(), 3000);
+    }
 
     const chooseAnswer = async (str) => {
-        answer(str).catch(error => {
+        answer(str, playerMode == "duel").catch(error => {
             console.error(error);
         });
     }
 
-    const answer = async (str) => {
+    const answer = async (str, wait) => {
         try {
+            console.log("SEND ANSWER");
             setSentAnswer(str);
             localStorage.setItem('sentAnswer', str);
             const response = await sendAnswer(
@@ -85,14 +88,11 @@ const GameScreen = () => {
             );
             console.log(response);
             localStorage.setItem('correctAnswer', response.data.correctAnswer);
-            if (response) {
+            if (response && !wait) {
                 setCorrectAnswer(response.data.correctAnswer);
                 const event = new CustomEvent('pause', { detail: null });
                 document.dispatchEvent(event);
-                let id = setTimeout(() => {
-                    goToScore();
-                }, 3000);
-                setTimeoutId(id);
+                showCorrectAnswer();
             }
         } catch (error) {
             alert(error);
@@ -200,7 +200,6 @@ const GameScreen = () => {
     }
 
     const getTime = (time) => {
-        console.log(localStorage.getItem('question_nr'));
         setTime(time/1000);
     }
 
