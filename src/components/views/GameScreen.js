@@ -47,25 +47,18 @@ const GameScreen = () => {
         document.addEventListener("timeOut", timeOut);
         document.addEventListener("receivedResult", handleEndResult);
         document.addEventListener("cancelled", handleCancelled);
-        window.onbeforeunload = function() {
-            console.log("before unload");
-            if (timeoutId) {
-                console.log("let's clear timeout");
-                clearTimeout(timeoutId);
-            }
-        };
         return () => {
             if (playerMode == 'duel') disconnectRound();
             document.removeEventListener("timeOut", timeOut);
             document.removeEventListener("receivedResult", handleEndResult);
             document.removeEventListener("cancelled", handleCancelled);
-            window.onbeforeunload = null;
         }
     });
 
     const showCorrectAnswer = () => {
         setCorrectAnswer(localStorage.getItem("correctAnswer"));
-        setTimeout(() => goToScore(), 3000);
+        let id = setTimeout(() => goToScore(), 3000);
+        setTimeoutId(id);
     }
 
     const chooseAnswer = async (str) => {
@@ -190,7 +183,6 @@ const GameScreen = () => {
 
     const goToScore = () => {
         let nr = parseInt(localStorage.getItem('question_nr'));
-        console.log("go to score, " + nr);
         cleanup();
         if (nr < nQuestions) {
             history.push('/topic-selection/' + playerMode + '/' + gameMode + "/" + (selecting == 'selecting' && playerMode != 'single' ? 'waiting' : 'selecting'));

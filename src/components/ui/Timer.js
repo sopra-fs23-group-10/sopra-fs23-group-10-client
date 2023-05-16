@@ -29,25 +29,23 @@ export const Timer = props => {
         if (localStorage.getItem('paused') != 'true') {
             let currentTime = Date.now() - startTime;
             currentTime = (props.currentTime ? props.currentTime : timeLimit) - currentTime;
-            if (currentTime <= 0) {
+            if (currentTime < 1) {
                 currentTime = 0;
                 if (props.timeOut) props.timeOut();
                 timeOut();
             }
             if (props.getTime) props.getTime(currentTime);
-            setRemainingTime(currentTime);
+            setRemainingTime(Math.round(currentTime/1000));
         }
     }
 
     const getSecs = () => {
-        let secs = Math.floor(remainingTime / 1000);
-        let mins = Math.floor(remainingTime / 1000 / 60);
-        secs -= mins * 60;
+        let secs = Math.floor(remainingTime % 60);
         return secs;
     }
 
     const getMins = () => {
-        let mins = Math.floor(remainingTime / 1000 / 60);
+        let mins = Math.floor(remainingTime / 60);
         return mins
     }
 
@@ -62,7 +60,7 @@ export const Timer = props => {
                 {getMins().toString().padStart(2, '0')}:{getSecs().toString().padStart(2, '0')}
             </div>
             <div style={{ width: '100%' }}>
-                <div style={{ width: `${(remainingTime/timeLimit) * 100}%`}} className="timer bar"></div>
+                <div style={{ width: `${(remainingTime/Math.round(timeLimit / 1000)) * 100}%`}} className="timer bar"></div>
             </div>
         </div>
     );
