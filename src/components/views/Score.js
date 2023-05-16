@@ -151,17 +151,11 @@ const Score = props => {
         if (localStorage.getItem('topics')) {
             let newTopics = JSON.parse(localStorage.getItem('topics'));
             let rnd = cryptoRandom(3);
-            console.log("RAND TOPIC");
+            console.log("RAND TOPIC -> " + rnd.toString());
             fetchQuestion(newTopics[rnd]).catch(error => {
                 console.error(error);
             });
         }
-    }
-    
-    function getRandomInt(min, max) {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min) + min);
     }
 
     const handleQuestion = (msg) => {

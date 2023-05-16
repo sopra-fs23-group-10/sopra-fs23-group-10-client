@@ -15,7 +15,6 @@ export function cryptoRandom(max) {
       randomValue = (randomValue << 8) + randomBytes[i];
     }
   } while (randomValue >= range * Math.floor(256 / range));
-
   if ((randomValue % range) <= 0){return 0;}
   if ((randomValue % range) >= max){return max-1;}
   return randomValue % range;
