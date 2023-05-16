@@ -1,4 +1,4 @@
-# BrainBusters <img src="readme_images/illustration/Logo.png" height="30"/>
+# BrainBusters <img src="readme_images/Logo.png" height="30"/>
 
 ## Table of Content
 
@@ -27,12 +27,24 @@ Next to the single mode, the tournament mode adds an exciting element of competi
 * [Gradle](hhttps://gradle.org/) - Build automation tool
 * [STOMP](https://stomp-js.github.io/stomp-websocket/) - Used for Websockets
 * [The Trivia API](https://the-trivia-api.com/) - API for text questions
-* [Mailjet API](https://www.mailjet.com/) - For sending and receiving mails
+* [Mailjet API](https://www.mailjet.com/) - For sending mails
 
 ## Main Components
 
-TODO
+### Home
+The [Home](https://github.com/sopra-fs23-group-10/sopra-fs23-group-10-client/blob/main/src/components/views/Home.js) file handles the start-up of the game and thus welcomes the user. Due to this reason it has to be very thought out and have in particular a very good design. Additionally, it is connected to the ReceiveInvitation file since an invitation gets you into a game.
 
+### ReceiveInvitation
+The [ReceiveInvitation](https://github.com/sopra-fs23-group-10/sopra-fs23-group-10-client/blob/main/src/components/views/ReceiveInvitation.js) file handles the invitation mechanism of the application, this is a critical part for being able to play the game in duel mode. Additionally, it is supplementing the ChallengePlayer file.
+
+### ChallengePlayer
+The [ChallengePlayer](https://github.com/sopra-fs23-group-10/sopra-fs23-group-10-client/blob/main/src/components/views/ChallengePlayer.js) file handles the system of who can be invited thus perfectly supplementing the ReceiveInvitation file.
+
+### GameHeader
+The [GameHeader](https://github.com/sopra-fs23-group-10/sopra-fs23-group-10-client/blob/main/src/components/views/GameHeader.js) file handles the actions done by the user in the game in the header compartment. Therefore, it is very crucial.
+
+### GameScreen
+The [GameScreen](https://github.com/sopra-fs23-group-10/sopra-fs23-group-10-client/blob/main/src/components/views/GameScreen.js) file draws questions and gets the answers of the user. Therefore, it is very crucial else there the game would not be playable for the users.
 
 ## Launch
 
@@ -78,6 +90,9 @@ Once your changes are pushed onto the main branch, they automatically get deploy
 <img src="readme_images/releases/PublishRelease.png"/>
 
 ## Illustrations
+
+In the following picture one can see our user journey, which helped us define the right user stories in order to guide the user and create an optimal gaming experience.<br>
+<img src="readme_images/illustration/UserJourney.png" height="350"/>
 
 First step in BrainBusters is to create an account<br>
 <img src="readme_images/illustration/RegisterScreen.png" height="350"/>
@@ -125,4 +140,4 @@ We would like to thank our tutor [jemaie](https://github.com/jemaie) and the who
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+This project is licensed under the Apache License 2.0 - see the [LICENSE](https://github.com/sopra-fs23-group-10/sopra-fs23-group-10-client/blob/main/LICENSE) file for details.
