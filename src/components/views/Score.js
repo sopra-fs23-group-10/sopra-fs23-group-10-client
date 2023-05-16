@@ -13,6 +13,7 @@ import { Button } from "components/ui/Button";
 import { RoundResult } from "components/ui/RoundResult";
 import { QuestionResult } from "components/ui/QuestionResult";
 import { ResultList } from "components/ui/ResultList";
+import {cryptoRandom} from "../../helpers/utility";
 
 
 const Score = props => {
@@ -149,7 +150,9 @@ const Score = props => {
     const rndTopic = () => {
         if (localStorage.getItem('topics')) {
             let newTopics = JSON.parse(localStorage.getItem('topics'));
-            let rnd = getRandomInt(0, 3);
+            let rnd = cryptoRandom(3).catch(error => {
+                console.error(error);
+            });
             console.log("RAND TOPIC");
             fetchQuestion(newTopics[rnd]).catch(error => {
                 console.error(error);

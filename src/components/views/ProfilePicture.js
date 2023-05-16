@@ -11,7 +11,7 @@ import 'styles/views/PopUp.scss';
 import 'styles/views/ProfilePicture.scss';
 import Identicon from "react-identicons";
 import { updateUser } from '../../helpers/restApi';
-
+import { cryptoRandom } from '../../helpers/utility';
 
 const ProfilePicture= props => {
     const history = useHistory();
@@ -42,17 +42,20 @@ const ProfilePicture= props => {
         });
     }, []);
 
-    const randomNr = () => {
-        const nr = Math.floor(Math.random() * 10 + 1);
-        return nr;
-    }
-
     const randomString =() => {
         let string = '';
-        const stringLength = randomNr();
+        const stringLength = cryptoRandom(10).catch(error => {
+            console.error(error);
+        });
         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
         for ( let i = 0; i < stringLength; i++ ) {
-            string += characters.charAt(Math.floor(Math.random() * characters.length));
+            try {
+                string += characters.charAt(cryptoRandom(characters.length - 1).catch(error => {
+                    console.error(error);
+                }) % characters.length);
+            } catch (error){
+                console.error('An error occurred while generating the random string:', error);
+            }
         }
         return string;
     }

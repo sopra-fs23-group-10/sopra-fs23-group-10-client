@@ -34,7 +34,7 @@ export const PlayerList = props => {
                     return user.id != localStorage.getItem('id') ?
                         <Player
                             user={user}
-                            key={index}
+                            key={user.id}
                             action={props.action}
                         />
                     :
