@@ -14,7 +14,7 @@ const ReceiveInvitation = props => {
     const history = useHistory();
     const [invitation, setInvitation] = useState(null);
     const [username, setUsername] = useState("");
-    const [cancelled, setCancelled] = useState(false);
+    const [msg, setMsg] = useState(false);
 
     useEffect(() => {
         connectInvitations(handleInvite, handleAnswer);
@@ -31,9 +31,12 @@ const ReceiveInvitation = props => {
         localStorage.setItem('gameId', inv.gameId);
         await getInvitingUser(inv.invitingUserId);
         setInvitation(inv);
+        localStorage.setItem("invitation", true);
     }
 
     const handleReload = async () => {
+        localStorage.removeItem("invitation");
+        localStorage.removeItem("answered");
         if (localStorage.getItem('gameId')) {
             try {
                 localStorage.removeItem('startTime');
@@ -58,31 +61,33 @@ const ReceiveInvitation = props => {
     }
 
     const handleAnswer = (msg) => {
+        console.log("handle answer, answered: " + localStorage.getItem("invitation") + "; " + localStorage.getItem("answered"));
         const accepted = JSON.parse(msg)[localStorage.getItem('gameId')];
-        if (accepted) {
-            setCancelled(false);
-            setInvitation(null);
-            setUsername("");
-        } else {
-            setCancelled(true);
-            setTimeout(() => reset(), 3000);
+        if (!accepted) {
+            if (localStorage.getItem("invitation")) {
+                if (localStorage.getItem("answered")) setMsg("You declined the invitation");
+                else setMsg("The invitation was cancelled");
+            } else {
+                if (localStorage.getItem("answered")) setMsg("You cancelled the invitation");
+                else setMsg("The invitation was declined")
+            }
+            setTimeout(() => { setMsg(null); }, 3000);
+        }
+
+        localStorage.removeItem("invitation");
+        localStorage.removeItem("answered");
+        setInvitation(null);
+        setUsername("");
+        if (!accepted) {
+            localStorage.removeItem('gameId');
         }
         throwReply(msg);
         if (props.onAnswer) props.onAnswer(msg);
     }
 
-    const reset = () => {
-        console.log("RESET FROM RECEIVE INVITATION");
-        setCancelled(false);
-        setInvitation(null);
-        setUsername("");
-        localStorage.removeItem('gameId');
-    }
-
     const reply = async (accepted) => {
+        localStorage.setItem("answered", true);
         const response = await answerInvite(invitation.gameId, accepted);
-        setInvitation(null);
-        setUsername("");
         if (response[invitation.gameId]) {
             goToGame().catch(error => {
                 console.error(error);
@@ -109,7 +114,7 @@ const ReceiveInvitation = props => {
     }
 
     const content = () => {
-        if (!cancelled) {
+        if (!msg) {
             return (
                 <>
                     <p>
@@ -132,7 +137,7 @@ const ReceiveInvitation = props => {
             return (
                 <>
                     <p>
-                        {username} cancelled the invitation
+                        {msg}
                     </p>
                 </>
             );
@@ -140,7 +145,7 @@ const ReceiveInvitation = props => {
     }
 
     const receiveInvitation = () => {
-        if (invitation) {
+        if (invitation || msg) {
             return (
                 <div className="invitation-received">
                     <div className="invitation overlay"></div>
