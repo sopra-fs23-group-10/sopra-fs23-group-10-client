@@ -149,6 +149,7 @@ const EndGame = props => {
 
     const cancelRematch = async () => {
         try {
+            localStorage.setItem("answered", true);
             await answerInvite(localStorage.getItem('gameId'), false);
             localStorage.removeItem('gameId');
             setRematchSent(false);

@@ -16,7 +16,6 @@ const ChallengePlayer = props => {
     const { gameMode } = useParams();
     const [users, setUsers] = useState(null);
     const [inviteSent, setInviteSent] = useState(false);
-    const [declined, setDeclined] = useState(false);
 
     useEffect(() => {
         function handleAnswer(e) {
@@ -28,9 +27,8 @@ const ChallengePlayer = props => {
                     localStorage.removeItem('startTime');
                     history.push(`/topic-selection/duel/${gameMode}/waiting`);
                 } else {
-                    console.log("DECLINED");
-                    setDeclined(true);
-                    setTimeout(reset, 3000);
+                    localStorage.removeItem('gameId');
+                    setInviteSent(false);
                 }
             }
         }
@@ -41,12 +39,6 @@ const ChallengePlayer = props => {
         } 
     }, [inviteSent])
 
-    const reset = () => {
-        console.log("RESET");
-        localStorage.removeItem('gameId');
-        setInviteSent(false);
-        setDeclined(false);
-    }
 
     const getUsers = async (u) => {
         setUsers(u);
@@ -66,8 +58,11 @@ const ChallengePlayer = props => {
 
     const cancelInvite = async () => {
         try {
+            console.log("cancel invite!");
+            localStorage.setItem("answered", true);
             await answerInvite(localStorage.getItem('gameId'), false);
-            reset();
+            localStorage.removeItem('gameId');
+            setInviteSent(false);
         } catch (error) {
             history.push("/home");
             alert(error);
@@ -127,23 +122,17 @@ const ChallengePlayer = props => {
     }
 
     const invitationContent = () => {
-        if (!declined) {
-            return (
-                <>
-                    <a onClick={cancelInvite} style={{textAlign: "right"}}> Cancel Invitation</a>
-                    <div className="p" style={{textAlign: "center"}}>
-                        Invite has been sent. Waiting for answer...
-                    </div>
-                    <div className="button-container font-black">
-                        <Timer timeLimit={60} timeOut={cancelInvite}/>
-                    </div>
-                </>
-            );
-        } else {
-            return (
-                <p>The invitation was declined.</p>
-            );
-        }
+        return (
+            <>
+                <a onClick={cancelInvite} style={{textAlign: "right"}}> Cancel Invitation</a>
+                <div className="p" style={{textAlign: "center"}}>
+                    Invite has been sent. Waiting for answer...
+                </div>
+                <div className="button-container font-black">
+                    <Timer timeLimit={60} timeOut={cancelInvite}/>
+                </div>
+            </>
+        );
     }
 
     return (
