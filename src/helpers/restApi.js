@@ -271,7 +271,7 @@ export const getUser = async () => {
 export const cancelGame = async (id) => {
   try {
     const authToken = localStorage.getItem('token');
-    const response = await restApi.post(`/games/${id}/termination`, {headers: {token: authToken}});
+    const response = await restApi.post(`/games/${id}/termination`, null,{headers: {token: authToken}});
     return response.data;
   } catch (error) {
     throw new Error(`Something went wrong while cancelling the game: \n${handleError(error)}`);
