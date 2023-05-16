@@ -102,7 +102,7 @@ const ReceiveInvitation = props => {
         localStorage.removeItem('question_nr');
         localStorage.removeItem('startTime');
 
-        localStorage.setItem('question_nr', 1);
+        localStorage.setItem('question_nr', 0);
         localStorage.setItem('gameId', invitation.gameId);
 
         history.push(`/topic-selection/duel/${invitation.quizType.toLowerCase()}/selecting`);

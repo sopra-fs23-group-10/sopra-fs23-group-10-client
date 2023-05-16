@@ -17,6 +17,7 @@ const GameHeader = props => {
     const [showMusic, setShowMusic] = useState(false);
 
     useEffect(() => {
+        console.log("GAME HEADER");
         connectGame(handleGameCancelled);
         connectResult(handleResult);
 

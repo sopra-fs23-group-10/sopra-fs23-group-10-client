@@ -50,7 +50,7 @@ const EndGame = props => {
 
             if (rematchSent) {
                 if (accepted) {
-                    localStorage.setItem('question_nr', 1);
+                    localStorage.setItem('question_nr', 0);
                     localStorage.removeItem('startTime');
                     history.push(`/topic-selection/duel/${gameMode}/waiting`);
                 }

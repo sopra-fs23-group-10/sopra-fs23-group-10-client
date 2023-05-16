@@ -30,7 +30,7 @@ const GameScreen = () => {
                 }, 3000);
                 setTimeoutId(id);
             } else {
-                answer("stupid answer", false).catch(error => {
+                answer("stupid answer").catch(error => {
                     console.error(error);
                 });
             }
@@ -64,15 +64,15 @@ const GameScreen = () => {
             document.removeEventListener("cancelled", handleCancelled);
             window.onbeforeunload = null;
         }
-    });
+    }, []);
 
     const chooseAnswer = async (str) => {
-        answer(str, playerMode == 'duel').catch(error => {
+        answer(str).catch(error => {
             console.error(error);
         });
     }
 
-    const answer = async (str, wait) => {
+    const answer = async (str) => {
         try {
             setSentAnswer(str);
             localStorage.setItem('sentAnswer', str);
@@ -85,7 +85,7 @@ const GameScreen = () => {
             );
             console.log(response);
             localStorage.setItem('correctAnswer', response.data.correctAnswer);
-            if (response && !wait) {
+            if (response) {
                 setCorrectAnswer(response.data.correctAnswer);
                 const event = new CustomEvent('pause', { detail: null });
                 document.dispatchEvent(event);
@@ -173,7 +173,6 @@ const GameScreen = () => {
 
     const handleEndResult = (e) => {
         let nr = parseInt(localStorage.getItem('question_nr'));
-        console.log("current q: " + nr + ", total qs: " + nQuestions);
         if (selecting != 'selecting' && nr >= nQuestions) {
             cleanup();
             localStorage.setItem('result', JSON.stringify(e.detail));
@@ -191,10 +190,9 @@ const GameScreen = () => {
 
     const goToScore = () => {
         let nr = parseInt(localStorage.getItem('question_nr'));
-        console.log("current q: " + nr + ", total qs: " + nQuestions);
+        console.log("go to score, " + nr);
         cleanup();
         if (nr < nQuestions) {
-            localStorage.setItem('question_nr', (nr + 1));
             history.push('/topic-selection/' + playerMode + '/' + gameMode + "/" + (selecting == 'selecting' && playerMode != 'single' ? 'waiting' : 'selecting'));
         } else if (selecting == 'selecting') {
             history.push('/endgame/' + playerMode + '/' + gameMode + "/" + selecting);
@@ -202,6 +200,7 @@ const GameScreen = () => {
     }
 
     const getTime = (time) => {
+        console.log(localStorage.getItem('question_nr'));
         setTime(time/1000);
     }
 
