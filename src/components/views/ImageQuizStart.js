@@ -35,7 +35,9 @@ const ImageQuizStart = () => {
             <div className='ScreenGrid-Score'>
                 <div className='display'>Get Ready!</div>
                 <div></div>
-                <Timer timeLimit={5} timeOut={fetchQuestion}></Timer>
+                <div className='font-white'>
+                    <Timer timeLimit={5} timeOut={fetchQuestion}></Timer>
+                </div>
             </div>
         </>
 

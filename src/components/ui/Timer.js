@@ -77,5 +77,5 @@ Timer.propTypes = {
 };
 
 Timer.defaultProps = {
-    display: true,
+    display: true
   };

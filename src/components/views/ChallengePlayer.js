@@ -117,7 +117,7 @@ const ChallengePlayer = props => {
                     <div className="p" style={{textAlign: "center"}}>
                         Invite has been sent. Waiting for answer...
                     </div>
-                    <div className="button-container">
+                    <div className="button-container font-black">
                         <Timer timeLimit={60} timeOut={cancelInvite}/>
                     </div>
                 </>

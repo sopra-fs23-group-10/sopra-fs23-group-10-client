@@ -120,9 +120,8 @@ const ReceiveInvitation = props => {
                         <Button onClick={() => reply(false)}>Decline</Button>
                         <Button onClick={() => reply(true)}>Accept</Button>
                     </div>
-                    <div>
+                    <div className='font-black'>
                         <Timer
-                            display={true}
                             timeLimit={60}
                             timeOut={() => reply(false)}
                         />

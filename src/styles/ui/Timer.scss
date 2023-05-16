@@ -1,7 +1,7 @@
 @import 'styles/theme.scss';
 
 .timer {
-
+    color:inherit;
     &.container {
         display: grid;
         grid-template-columns: auto 1fr;
@@ -13,8 +13,8 @@
     &.label {
         font-size: 20;
         font-weight: 600;
-        color: $off_white;
         z-index: 1;
+        color:inherit;
     }
 
     &.bar {

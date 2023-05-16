@@ -156,7 +156,9 @@ const GameScreen = () => {
             return (
                 <>
                     {content}
-                    <Timer timeLimit={answerTime} getTime={getTime}/>
+                    <div className="font-white">
+                        <Timer timeLimit={answerTime} getTime={getTime}/>
+                    </div>
                 </>
             );
         }
