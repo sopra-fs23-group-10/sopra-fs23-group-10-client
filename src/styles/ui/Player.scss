@@ -3,12 +3,11 @@
 .player {
     cursor: pointer;
     &.container {
-      border-radius: $base_padding;
+      border-radius: $borderRadius;
       display: flex;
       align-items: center;
       gap: 10px;
-      padding: 5px;
-      padding-right: 10px;
+      padding:10px;
       &:hover {
         @extend .base-transition;
         color: $secondary_color;

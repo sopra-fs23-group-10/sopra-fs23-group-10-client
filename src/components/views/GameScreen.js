@@ -216,7 +216,7 @@ const GameScreen = () => {
     const finishTimer = () => {
         if (bothAnswered) {
             return (
-                <Timer timeLimit={5} display={false} timeOut={() => goToScore()}/>
+                <Timer timeLimit={3} display={false} timeOut={() => goToScore()}/>
             )
         }
     }

@@ -49,7 +49,6 @@ const ChallengePlayer = props => {
         try {
             const response = await createGame(id, gameMode.toUpperCase(), "DUEL");
             localStorage.setItem('gameId', response.gameId);
-            console.log("GAME ID: " + localStorage.getItem('gameId'));
             setInviteSent(true);
         } catch (error) {
             history.push("/home");
@@ -125,7 +124,7 @@ const ChallengePlayer = props => {
                             <h3> Challenge Player </h3>
                         </div>
                         <div className="content_location">
-                            <PlayerList callback={getUsers} action={chooseOpponent}/>
+                            <PlayerList callback={getUsers} action={chooseOpponent} charNr={40}/>
                         </div>
                         <div className='fade'></div>
                         <div className='fade-top'></div>
