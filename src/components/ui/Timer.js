@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 export const Timer = props => {
     const timeLimit = 1000 * props.timeLimit;
-    const [remainingTime, setRemainingTime] = useState(timeLimit - 1000);
+    const [remainingTime, setRemainingTime] = useState(timeLimit);
 
     let startTime = localStorage.getItem('startTime') ? parseInt(localStorage.getItem('startTime')) : Date.now();
     localStorage.setItem('startTime', startTime);

@@ -17,7 +17,6 @@ const GameHeader = props => {
     const [showMusic, setShowMusic] = useState(false);
 
     useEffect(() => {
-        console.log("GAME HEADER");
         connectGame(handleGameCancelled);
         connectResult(handleResult);
 
@@ -70,6 +69,7 @@ const GameHeader = props => {
         localStorage.removeItem('startTime');
         localStorage.removeItem('result');
         localStorage.removeItem('topic');
+        localStorage.removeItem('bothAnswered');
         history.push("/home");
     }
 

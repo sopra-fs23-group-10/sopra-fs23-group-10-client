@@ -27,7 +27,6 @@ const Score = props => {
     const [buttonClicked, setButtonClicked] = useState(false);
 
     useEffect(() => {
-        console.log("SCORE! " + localStorage.getItem('question_nr'));
         connectQuestion(handleQuestion);
 
         async function fetchGame() {
