@@ -20,17 +20,23 @@ const Ranking = props => {
             <ReceiveInvitation/>
             <HomeHeader height="100"/>
             <BaseContainer className="popup container">
-                <div className ="title" style={{textAlign: "center"}}>
-                        <strong> STAR PLAYERS </strong>
-                </div>
-                <StarPlayerList callback={getStarPlayers}/>
-                <div className="button-container">
-                    <Button
-                        width="100%"
-                        onClick={() => history.push('/home')}
-                    >
-                        BACK
-                    </Button>
+                <div className="rulesGrid">
+                    <div className="title_location">
+                        <div className ="title" style={{textAlign: "center"}}>
+                            <strong> STAR PLAYERS </strong>
+                        </div>
+                    </div>
+                    <div className="content_location">
+                        <StarPlayerList callback={getStarPlayers}/>
+                    </div>
+                    <div className="button_location">
+                        <Button
+                            width="100%"
+                            onClick={() => history.push('/home')}
+                        >
+                            BACK
+                        </Button>
+                    </div>
                 </div>
             </BaseContainer>
         </>
