@@ -16,7 +16,7 @@ const GameScreen = () => {
     const [sentAnswer, setSentAnswer] = useState(null);
     const [correctAnswer, setCorrectAnswer] = useState(null);
     const [time, setTime] = useState(0);
-    const answerTime = 60;
+    const answerTime = 10;
     const { selecting } = useParams();
     const { gameMode, playerMode } = useParams();
     const nQuestions = parseInt(localStorage.getItem('total_questions'));
