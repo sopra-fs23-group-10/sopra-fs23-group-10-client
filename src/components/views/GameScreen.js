@@ -8,6 +8,8 @@ import { sendAnswer } from "helpers/restApi";
 import { Timer } from "components/ui/Timer";
 import star from "images/star.png";
 import BaseContainer from "components/ui/BaseContainer";
+import { connectRound, disconnectRound } from "helpers/WebSocketFactory";
+import Question from "models/Question";
 
 const GameScreen = () => {
     const history = useHistory();
@@ -15,25 +17,17 @@ const GameScreen = () => {
     const [sentAnswer, setSentAnswer] = useState(null);
     const [correctAnswer, setCorrectAnswer] = useState(null);
     const [time, setTime] = useState(0);
-    const answerTime = 10;
+    const answerTime = 15;
     const { selecting } = useParams();
     const { gameMode, playerMode } = useParams();
     const nQuestions = parseInt(localStorage.getItem('total_questions'));
-    const [timeoutId, setTimeoutId] = useState(null);
+    const [bothAnswered, setBothAnswered] = useState(false);
 
     useEffect(() => {
-        function timeOut() {
-            if (sentAnswer) {
-                setCorrectAnswer(localStorage.getItem('correctAnswer'));
-                let id = setTimeout(() => {
-                    goToScore();
-                }, 3000);
-                setTimeoutId(id);
-            } else {
-                answer("stupid answer", false).catch(error => {
-                    console.error(error);
-                });
-            }
+        function handleBothAnswered() {
+            console.log("HANDLe both answered");
+            setBothAnswered(true);
+            localStorage.setItem("bothAnswered", true);
         }
 
         if (!question && localStorage.getItem('sentAnswer')) {
@@ -47,35 +41,41 @@ const GameScreen = () => {
         if (!question) {
             setQuestion(JSON.parse(localStorage.getItem('question')));
         }
+
+        if (localStorage.getItem("bothAnswered")) setBothAnswered(true);
         
-        document.addEventListener("timeOut", timeOut);
+        if (playerMode == 'duel') connectRound(handleBothAnswered);
         document.addEventListener("receivedResult", handleEndResult);
-        document.addEventListener("cancelled", handleCancelled);
-        window.onbeforeunload = function() {
-            console.log("before unload");
-            if (timeoutId) {
-                console.log("let's clear timeout");
-                clearTimeout(timeoutId);
-            }
-        };
         return () => {
-            document.removeEventListener("timeOut", timeOut);
+            if (playerMode == 'duel') disconnectRound();
             document.removeEventListener("receivedResult", handleEndResult);
-            document.removeEventListener("cancelled", handleCancelled);
-            window.onbeforeunload = null;
         }
-    });
+    }, [question]);
 
     const chooseAnswer = async (str) => {
-        answer(str, playerMode == 'duel').catch(error => {
+        answer(str).catch(error => {
             console.error(error);
         });
     }
 
-    const answer = async (str, wait) => {
+    function timeOut() {
+        console.log("TIME OUT");
+        if (!localStorage.getItem('sentAnswer')) {
+            console.log("TIME OUT, SEND ANSWER");
+            answer("stupid answer", 0).catch(error => {
+                console.error(error);
+            });
+        }
+    }
+
+    const answer = async (str, time) => {
         try {
+            console.log("SEND ANSWER");
             setSentAnswer(str);
             localStorage.setItem('sentAnswer', str);
+            console.log(localStorage.getItem('sentAnswer'));
+            localStorage.removeItem("startTime");
+            const question = JSON.parse(localStorage.getItem('question'));
             const response = await sendAnswer(
                 localStorage.getItem('gameId'), 
                 localStorage.getItem('id'), 
@@ -85,14 +85,11 @@ const GameScreen = () => {
             );
             console.log(response);
             localStorage.setItem('correctAnswer', response.data.correctAnswer);
-            if (response && !wait) {
+            if (response) {
                 setCorrectAnswer(response.data.correctAnswer);
-                const event = new CustomEvent('pause', { detail: null });
-                document.dispatchEvent(event);
-                let id = setTimeout(() => {
-                    goToScore();
-                }, 3000);
-                setTimeoutId(id);
+                const pauseEvt = new CustomEvent('pause', { detail: null });
+                document.dispatchEvent(pauseEvt);
+                setCorrectAnswer(localStorage.getItem("correctAnswer"));
             }
         } catch (error) {
             alert(error);
@@ -110,7 +107,7 @@ const GameScreen = () => {
                         <div key={str}>
                             {accent(str)}
                             <GameButton 
-                            className={"inactive"}
+                            inactive={true}
                             selected={str == localStorage.getItem('sentAnswer')}
                             disabled={str != correctAnswer}
                             >
@@ -157,7 +154,7 @@ const GameScreen = () => {
                 <>
                     {content}
                     <div className="font-white">
-                        <Timer timeLimit={answerTime} getTime={getTime}/>
+                        <Timer timeLimit={answerTime} getTime={getTime} timeOut={timeOut}/>
                     </div>
                 </>
             );
@@ -169,11 +166,11 @@ const GameScreen = () => {
         localStorage.removeItem('correctAnswer');
         localStorage.removeItem('question');
         localStorage.removeItem('startTime');
+        localStorage.removeItem('bothAnswered');
     }
 
     const handleEndResult = (e) => {
         let nr = parseInt(localStorage.getItem('question_nr'));
-        console.log("current q: " + nr + ", total qs: " + nQuestions);
         if (selecting != 'selecting' && nr >= nQuestions) {
             cleanup();
             localStorage.setItem('result', JSON.stringify(e.detail));
@@ -181,20 +178,11 @@ const GameScreen = () => {
         }
     }
 
-    const handleCancelled = (e) => {
-        cancelTimeout();
-    }
-
-    const cancelTimeout = () => {
-        if (timeoutId) clearTimeout(timeoutId);
-    }
-
     const goToScore = () => {
+        console.log("go to score");
         let nr = parseInt(localStorage.getItem('question_nr'));
-        console.log("current q: " + nr + ", total qs: " + nQuestions);
         cleanup();
         if (nr < nQuestions) {
-            localStorage.setItem('question_nr', (nr + 1));
             history.push('/topic-selection/' + playerMode + '/' + gameMode + "/" + (selecting == 'selecting' && playerMode != 'single' ? 'waiting' : 'selecting'));
         } else if (selecting == 'selecting') {
             history.push('/endgame/' + playerMode + '/' + gameMode + "/" + selecting);
@@ -225,6 +213,14 @@ const GameScreen = () => {
         }
     }
 
+    const finishTimer = () => {
+        if (bothAnswered) {
+            return (
+                <Timer timeLimit={5} display={false} timeOut={() => goToScore()}/>
+            )
+        }
+    }
+
     return (
         <>
             <GameHeader playerMode={playerMode} questionId={localStorage.getItem('question_nr')} showCancelButton={true} height="100"/>
@@ -232,6 +228,7 @@ const GameScreen = () => {
                 {showResult()}
                 {showImage()}
                 {drawQuestion()}
+                {finishTimer()}
             </div>
         </>
     );

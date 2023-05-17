@@ -13,7 +13,7 @@ export const GameButton = props => {
   }
 
   return (
-    <div className={`game-button container ${props.disabled ? 'disabled' : ''}`}>
+    <div className={`game-button container ${props.disabled ? 'disabled' : ''} ${props.inactive ? 'inactive' : ''}`}>
       <BaseContainer className={`game-button topicContent ${props.selected ? 'selected' : ''} ${props.className}`} onClick={() => props.callback()} style={{textAlign:"center"}}>
         {props.children}
       </BaseContainer>
@@ -27,5 +27,6 @@ GameButton.propTypes = {
   callback: PropTypes.func,
   className: PropTypes.string,
   selected: PropTypes.bool,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  inactive: PropTypes.bool
 };

@@ -21,6 +21,9 @@ export const HomeGuard = props => {
     localStorage.removeItem('startTime');
     localStorage.removeItem('result');
     localStorage.removeItem('topic');
+    localStorage.removeItem('answered');
+    localStorage.removeItem('invitation');
+    localStorage.removeItem('bothAnswered');
   }
 
   if (localStorage.getItem('gameId')) {

@@ -61,7 +61,6 @@ const ReceiveInvitation = props => {
     }
 
     const handleAnswer = (msg) => {
-        console.log("handle answer, answered: " + localStorage.getItem("invitation") + "; " + localStorage.getItem("answered"));
         const accepted = JSON.parse(msg)[localStorage.getItem('gameId')];
         if (!accepted) {
             if (localStorage.getItem("invitation")) {
@@ -102,7 +101,7 @@ const ReceiveInvitation = props => {
         localStorage.removeItem('question_nr');
         localStorage.removeItem('startTime');
 
-        localStorage.setItem('question_nr', 1);
+        localStorage.setItem('question_nr', 0);
         localStorage.setItem('gameId', invitation.gameId);
 
         history.push(`/topic-selection/duel/${invitation.quizType.toLowerCase()}/selecting`);

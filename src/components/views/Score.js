@@ -32,7 +32,7 @@ const Score = props => {
 
         async function fetchGame() {
             try {
-                if (parseInt(localStorage.getItem('question_nr')) <= 1) {
+                if (parseInt(localStorage.getItem('question_nr')) <= 0) {
                     const response = await fetchUsersInGame(localStorage.getItem("gameId"));
                     let res = new Result(response.data);
                     console.log(response);
@@ -69,7 +69,6 @@ const Score = props => {
             }
         }
 
-        console.log("gamemode = " + gameMode);
         if (selecting == 'selecting' && !topics && playerMode == 'duel' && gameMode == "text") {
             if (!localStorage.getItem('topics')) {
                 fetchTopics().catch(error => {
@@ -102,8 +101,7 @@ const Score = props => {
         if (!chosenTopic && !buttonClicked) {
             setButtonClicked(true);
             try {
-                const response = await getQuestion(localStorage.getItem('gameId'), topic);
-                if (playerMode == 'single' && response) toQuestion(response);
+                await getQuestion(localStorage.getItem('gameId'), topic);
                 setChosenTopic(topic);
             } catch (error) {
                 alert(error);
@@ -115,9 +113,7 @@ const Score = props => {
 
     const fetchImageQuestion = async () => {
         try {
-            const response = await getImageQuestion(localStorage.getItem('gameId'));
-            console.log(response);
-            if (playerMode == 'single' && response) toQuestion(response);
+            await getImageQuestion(localStorage.getItem('gameId'));
         } catch (error) {
             alert(error);
             history.push("/login");
@@ -129,9 +125,14 @@ const Score = props => {
     }
 
     const toQuestion = (question) => {
+        console.log("TO QUESTION");
+        console.log(question);
         localStorage.removeItem('topics');
         localStorage.removeItem('startTime');
+        console.log(JSON.stringify(question));
         localStorage.setItem('question', JSON.stringify(question));
+        let nr = parseInt(localStorage.getItem('question_nr'));
+        localStorage.setItem('question_nr', (nr + 1));
         history.push('/game/' + playerMode + '/' + gameMode + "/" + selecting);
     }
 
@@ -190,7 +191,8 @@ const Score = props => {
                                         <div key={topic} className={'topicSelection'}>
                                             <GameButton 
                                             callback={() => fetchQuestion(topic)} 
-                                            disabled={buttonClicked && chosenTopic != topic} 
+                                            disabled={buttonClicked} 
+                                            inactive={buttonClicked}
                                             selected={chosenTopic == topic}>
                                                 {parseString(topic)}
                                             </GameButton>
@@ -277,13 +279,11 @@ const Score = props => {
     }
 
     const pastResults = (inviting) => {
-        if (results) {
-            let playerResults = [];
-            for (let r of results) {
-                inviting ? playerResults.push(r.invitingPlayerResult) : playerResults.push(r.invitedPlayerResult)
-            }
-            return playerResults;
+        let playerResults = [];
+        for (let r of results) {
+            inviting ? playerResults.push(r.invitingPlayerResult) : playerResults.push(r.invitedPlayerResult)
         }
+        return playerResults;
     }
 
     const drawResults = () => {
@@ -308,7 +308,7 @@ const Score = props => {
 
     const drawTimer = () => {
         if (playerMode == 'duel' || selecting != 'selecting') {
-            let timeLimit = parseInt(localStorage.getItem("question_nr")) <= 1 ? 10 : 15;
+            let timeLimit = parseInt(localStorage.getItem("question_nr")) <= 0 ? 10 : 15;
             return (
                 <div className="font-white">
                     <Timer timeOut={handleTimeOut} timeLimit={timeLimit}/>
@@ -318,7 +318,7 @@ const Score = props => {
     }
 
     const drawTitle = () => {
-        if (parseInt(localStorage.getItem("question_nr")) <= 1) {
+        if (parseInt(localStorage.getItem("question_nr")) <= 0) {
             return <div className="display">Get Ready!</div>
         }
     }

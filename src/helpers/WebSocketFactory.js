@@ -119,6 +119,25 @@ export const disconnectGame = () => {
 };
 
 
+let stompClientRound;
+
+export const connectRound = (roundCallback) => {
+    let stompClient = openSocket();
+    stompClientRound = stompClient;
+    const id = localStorage.getItem('gameId');
+
+    stompClient.connect({'gameId': localStorage.getItem('gameId')}, () => {
+        stompClient.subscribe(`/games/${id}/round`, (message) => {
+            roundCallback(message.body);
+            console.log(`Round ended: Received message: ${message.body}`);
+        });
+    });
+};
+
+export const disconnectRound = () => {
+    stompClientRound.disconnect(() => {console.log("disconnected round")});
+};
+
 let stompClientResult;
 
 export const connectResult = (resultCallback) => {

@@ -24,7 +24,7 @@ const ChallengePlayer = props => {
                 const accepted = JSON.parse(e.detail)[localStorage.getItem('gameId')];
                 console.log("handle answer, id: " + localStorage.getItem('gameId'));
                 if (accepted) {
-                    localStorage.setItem('question_nr', 1);
+                    localStorage.setItem('question_nr', 0);
                     localStorage.removeItem('startTime');
                     history.push(`/topic-selection/duel/${gameMode}/waiting`);
                 } else {
@@ -59,7 +59,6 @@ const ChallengePlayer = props => {
 
     const cancelInvite = async () => {
         try {
-            console.log("cancel invite!");
             localStorage.setItem("answered", true);
             await answerInvite(localStorage.getItem('gameId'), false);
             localStorage.removeItem('gameId');
