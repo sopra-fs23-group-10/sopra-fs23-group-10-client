@@ -62,6 +62,7 @@ export const StarPlayerList = props => {
                                     user={user}
                                     key={user.id}
                                     action={props.action}
+                                    charNr={props.charNr}
                                 />
                                 <div className="highlight-background">
                                     <div className="StarPlayer rank">#{rank}</div>
@@ -96,5 +97,6 @@ export const StarPlayerList = props => {
 
 StarPlayerList.propTypes = {
     callback: PropTypes.func,
-    action: PropTypes.func
+    action: PropTypes.func,
+    charNr: PropTypes.number
 };

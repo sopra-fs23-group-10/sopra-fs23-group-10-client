@@ -36,6 +36,7 @@ export const PlayerList = props => {
                             user={user}
                             key={index}
                             action={props.action}
+                            charNr={props.charNr}
                         />
                     :
                     <></>
@@ -49,5 +50,6 @@ export const PlayerList = props => {
 
 PlayerList.propTypes = {
     callback: PropTypes.func,
-    action: PropTypes.func
+    action: PropTypes.func,
+    charNr: PropTypes.number
 };
