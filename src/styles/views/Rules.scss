@@ -2,7 +2,7 @@
 
 .ScreenGrid-Rules{
   display: grid;
-  max-width: $DESKTOP_WIDTH;
+  //max-width: $DESKTOP_WIDTH;
   grid-template-rows: auto;
   row-gap: $base_padding;
 }
