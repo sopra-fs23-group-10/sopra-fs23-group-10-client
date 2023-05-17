@@ -29,7 +29,6 @@ export const Timer = props => {
         if (localStorage.getItem('paused') != 'true') {
             let currentTime = Date.now() - startTime;
             currentTime = (props.currentTime ? props.currentTime : timeLimit) - currentTime;
-            console.log(currentTime);
             if (currentTime <= 0) {
                 currentTime = 0;
                 if (props.timeOut) props.timeOut();

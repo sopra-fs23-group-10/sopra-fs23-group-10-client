@@ -103,7 +103,7 @@ const GameScreen = () => {
                         <div key={str}>
                             {accent(str)}
                             <GameButton 
-                            className={"inactive"}
+                            inactive={true}
                             selected={str == localStorage.getItem('sentAnswer')}
                             disabled={str != correctAnswer}
                             >
