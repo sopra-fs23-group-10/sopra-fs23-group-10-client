@@ -16,7 +16,7 @@ const GameScreen = () => {
     const [sentAnswer, setSentAnswer] = useState(null);
     const [correctAnswer, setCorrectAnswer] = useState(null);
     const [time, setTime] = useState(0);
-    const answerTime = 10;
+    const answerTime = 60;
     const { selecting } = useParams();
     const { gameMode, playerMode } = useParams();
     const nQuestions = parseInt(localStorage.getItem('total_questions'));
@@ -53,7 +53,7 @@ const GameScreen = () => {
             document.removeEventListener("receivedResult", handleEndResult);
             document.removeEventListener("cancelled", handleCancelled);
         }
-    });
+    }, [question]);
 
     const showCorrectAnswer = () => {
         setCorrectAnswer(localStorage.getItem("correctAnswer"));
