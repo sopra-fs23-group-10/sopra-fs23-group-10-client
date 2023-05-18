@@ -323,7 +323,7 @@ const EndGame = props => {
                             </div>
                             <div className="timer-placement" >
                                 <div className="button-container" >
-                                    <Timer timeLimit={2000} timeOut={ClosePopUp}/>
+                                    <Timer timeLimit={3} timeOut={ClosePopUp}/>
                                 </div>
                             </div>
 
