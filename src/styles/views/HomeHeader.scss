@@ -5,7 +5,7 @@
 
   &.container {
     display: grid;
-    grid-template-columns: 100px minmax(360px, 1fr) minmax(auto, 200px);
+    grid-template-columns: 100px minmax(360px, 1fr) auto;
     align-items: center;
     padding-left: $base_padding;
     padding-right: $base_padding;
