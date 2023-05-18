@@ -1,8 +1,9 @@
 @import 'styles/theme';
 
 .GameScreenGrid {
-  max-height: 100vh;
   width: 60%;
+  height: calc(100% - #{header_height});
+  min-height: 600px;
   margin: 0 auto;
   margin-top: 50px;
   display: grid;
@@ -39,6 +40,7 @@
     grid-template-rows: 1fr 1fr;
     grid-column-gap: 20px;
     grid-row-gap: 20px;
+    height: auto;
     > div {
       position: relative;
     }
@@ -60,7 +62,7 @@
     flex-grow: 1;
     width: 100%;
     margin: 0 auto;
-    height:200px;
+    height:auto;
     display: flex;
     justify-content: center;
     align-items: center;

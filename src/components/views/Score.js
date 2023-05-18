@@ -11,6 +11,7 @@ import {Timer} from "../ui/Timer";
 import { Button } from "components/ui/Button";
 import { ResultList } from "components/ui/ResultList";
 import {cryptoRandom} from "../../helpers/utility";
+import { FontResizer } from "components/ui/FontResizer";
 
 
 const Score = props => {
@@ -242,35 +243,35 @@ const Score = props => {
                         <div className="title" style={{textAlign: "right"}}>
                             Player 2
                         </div>
-                        <div className="background-points">
-                            <div className = "player" style={{textAlign: "center"}}>
+                        <FontResizer className="background-points">
+                            <div className="player">
                                 {usernameInviting}
                             </div>
-                            <div className = "points-score" style={{textAlign: "center"}}>
+                            <div className="points-score">
                                 {result.invitingPlayerResult}
                             </div>
-                        </div>
-                        <div className="background-points">
-                            <div className = "player" style={{textAlign: "center"}}>
+                        </FontResizer>
+                        <FontResizer className="background-points">
+                            <div className="player">
                                 {usernameInvited}
                             </div>
-                            <div className = "points-score" style={{textAlign: "center"}}>
+                            <div className="points-score">
                                 {result.invitedPlayerResult}
                             </div>
-                        </div>
+                        </FontResizer>
                     </div>
                 )
             }
         } else if (result && usernameInviting){
             return(
-                <div className="background-points" >
+                <FontResizer className="background-points" >
                     <div className = "player" style={{textAlign: "center"}}>
                         {usernameInviting}
                     </div>
                     <div className = "points-score" style={{textAlign: "center"}}>
                         {result.invitingPlayerResult}
                     </div>
-                </div>
+                </FontResizer>
             );
         }
     }
@@ -305,7 +306,7 @@ const Score = props => {
 
     const drawTimer = () => {
         if (playerMode == 'duel' || selecting != 'selecting') {
-            let timeLimit = parseInt(localStorage.getItem("question_nr")) <= 0 ? 10 : 15;
+            let timeLimit = parseInt(localStorage.getItem("question_nr")) <= 0 ? 100000 : 100000;
             return (
                 <div className="font-white">
                     <Timer timeOut={handleTimeOut} timeLimit={timeLimit}/>
@@ -316,15 +317,15 @@ const Score = props => {
 
     const drawTitle = () => {
         if (parseInt(localStorage.getItem("question_nr")) <= 0) {
-            return <div className="display">Get Ready!</div>
+            return <div className="display" style={{fontSize:"100px", lineHeight:"50px"}}>Let's go!</div>
         }
     }
 
     return (
         <>
             <GameHeader playerMode={playerMode} gameMode={gameMode} questionId={localStorage.getItem('question_nr')} showCancelButton={true} height="100"/>
-            {drawTitle()}
             <div className="ScreenGrid-Score">
+                {drawTitle()}
                 {drawResults()}
                 {drawTotalResult()}
                 {drawTopics()}

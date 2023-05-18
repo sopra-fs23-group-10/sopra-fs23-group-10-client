@@ -9,7 +9,6 @@ import { Timer } from "components/ui/Timer";
 import star from "images/star.png";
 import BaseContainer from "components/ui/BaseContainer";
 import { connectRound, disconnectRound } from "helpers/WebSocketFactory";
-import Question from "models/Question";
 
 const GameScreen = () => {
     const history = useHistory();
