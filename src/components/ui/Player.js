@@ -12,7 +12,6 @@ const Player = ({user, action, charNr}) => {
             className="player container" onClick={action ? () => action(user.id) : null}>
             <Identicon className="player profile-picture" string={user.username}/>
             <div className="player username">{shortenName(user.username, charNr)}
-                <div style ={{height: '20px'}}> </div>
             </div>
             <div className="player points">POINTS: {user.points}
                 <div className="player rank">#{user.rank}</div>
