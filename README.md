@@ -24,7 +24,7 @@ Next to the single mode, the duel mode adds an exciting element of competition, 
 
 * [React](https://react.dev/) - Front-end JavaScript library concerning the user interface
 * [Spring](https://spring.io/projects/spring-framework) - Framework that enables running JVM
-* [Gradle](hhttps://gradle.org/) - Build automation tool
+* [Gradle](https://gradle.org/) - Build automation tool
 * [STOMP](https://stomp-js.github.io/stomp-websocket/) - Used for Websockets
 * [The Trivia API](https://the-trivia-api.com/) - API for text questions
 * [Mailjet API](https://www.mailjet.com/) - For sending mails
@@ -51,15 +51,16 @@ The [GameScreen](https://github.com/sopra-fs23-group-10/sopra-fs23-group-10-clie
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
 
 Clone the client-repository onto your local machine with the help of [Git](https://git-scm.com/downloads).
+Open Git Bash in your folder, where you want to store your project and write the following command:
 
 ```git clone https://github.com/sopra-fs23-group-10/sopra-fs23-group-10-client.git```
 
 ### Prerequisites and Installation
-For your local development environment, you will need Node.js. You can download it [here](https://nodejs.org). After downloading Node.js we have to install all other dependencies, including React, will get installed with the following command. Please run the command before starting the application for the first time.
+For your local development environment, you will need Node.js. You can download it [here](https://nodejs.org). After downloading Node.js we have to install all other dependencies, including React, will get installed with the following command. Open your IDE with the project and please run the command in the terminal before starting the application for the first time.
 
 ```npm install```
 
-If you want to see your development, run the following command:
+If you want to see your development, run the following command in the terminal:
 
 ```npm run dev```
 
