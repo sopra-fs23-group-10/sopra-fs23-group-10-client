@@ -131,8 +131,8 @@ const Home = () => {
             <ReceiveInvitation/>
             <div className='home container'>
                 <BaseContainer className="home user-container">
+                    <h3>Active Users</h3>
                     <div className='scroll-container'>
-                        <h3>Active Users</h3>
                         <PlayerList callback={getUsers} charNr={13}/>
                     </div>
                 </BaseContainer>

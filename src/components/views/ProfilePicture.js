@@ -67,7 +67,6 @@ const ProfilePicture= props => {
 
     const [stringList, setStringList] = useState(randomStringList());
 
-
     const PictureClick = (str) => {
         console.log(str);
         setSelectedPicture(str);
@@ -118,12 +117,12 @@ const ProfilePicture= props => {
             <HomeHeader height="100"/>
             <BaseContainer className="popup container">
                 <div className = "title-location" style={{ gridColumn: '1 / span 2', textAlign: 'center' }} >
-                    <div className="title"> <strong> CHANGE PROFILE PICTURE </strong></div>
+                    <div className="title"> <strong> CHOOSE A NEW PROFILE PICTURE </strong></div>
                 </div>
                 <div className="ProfilePicture container">
                     {stringList.map((str, index) => (
                         <div onClick ={() => PictureClick(str)}>
-                            <Identicon className="profile-picture" string={str} size={100} />
+                            <Identicon className="pictures" string={str} size={100} />
                         </div>
                     ))}
                 </div>

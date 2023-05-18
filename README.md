@@ -1,4 +1,4 @@
-<img src="readme_images/BrainBusters-1.png" height="150"/>
+<img src="readme_images/BrainBusters-1.png" height="100"/>
 
 ## Table of Content
 
@@ -18,7 +18,7 @@ Brain Busters is a trivia game designed to entertain and educate players on a wi
 
 The game stands out for its various game modes. The classic trivia game offers a traditional style of gameplay, while the image mode gradually reveals blurry pictures. Both modes challenge players on quick decision-making. The facts are accessed and updated using an API, keeping the game up-to-date and accurate.
 
-Next to the single mode, the tournament mode adds an exciting element of competition, allowing players to participate in a bracket-style tournament, creating a more dynamic and engaging experience, as players can track their progress and compete for the ultimate title of Brain Busters champion.
+Next to the single mode, the duel mode adds an exciting element of competition, allowing players to challenge other users, creating a more dynamic and engaging experience, as players can track their progress and compete for the ultimate title of Brain Busters champion.
 
 ## Built With
 
@@ -32,20 +32,19 @@ Next to the single mode, the tournament mode adds an exciting element of competi
 ## Main Components
 
 ### Home
-The [Home](https://github.com/sopra-fs23-group-10/sopra-fs23-group-10-client/blob/main/src/components/views/Home.js) file handles the start-up of the game and thus welcomes the user. Due to this reason it has to be very thought out and have in particular a very good design. Additionally, it is connected to the ReceiveInvitation file since an invitation gets you into a game.
+The [Home](https://github.com/sopra-fs23-group-10/sopra-fs23-group-10-client/blob/main/src/components/views/Home.js) file handles the start-up of a game and guides the user to the start of a game. This entails the logic of the game and player modes and handling of the users, which makes it connected to the ReceiveInvitation/ChallengePlayer component.
 
 ### ReceiveInvitation
-The [ReceiveInvitation](https://github.com/sopra-fs23-group-10/sopra-fs23-group-10-client/blob/main/src/components/views/ReceiveInvitation.js) file handles the invitation mechanism of the application, this is a critical part for being able to play the game in duel mode. Additionally, it is supplementing the ChallengePlayer file.
+The [ReceiveInvitation](https://github.com/sopra-fs23-group-10/sopra-fs23-group-10-client/blob/main/src/components/views/ReceiveInvitation.js) file handles the invitation mechanism of the application, this is a critical part of being able to play the game in duel mode. Additionally, it supplements the ChallengePlayer file.
 
 ### ChallengePlayer
-The [ChallengePlayer](https://github.com/sopra-fs23-group-10/sopra-fs23-group-10-client/blob/main/src/components/views/ChallengePlayer.js) file handles the system of who can be invited thus perfectly supplementing the ReceiveInvitation file.
+The [ChallengePlayer](https://github.com/sopra-fs23-group-10/sopra-fs23-group-10-client/blob/main/src/components/views/ChallengePlayer.js) file handles the system of who can be invited. A crucial point to mention is that online users already in a game, cannot be invited.
 
 ### GameHeader
-The [GameHeader](https://github.com/sopra-fs23-group-10/sopra-fs23-group-10-client/blob/main/src/components/views/GameHeader.js) file handles the actions done by the user in the game in the header compartment. Therefore, it is very crucial.
+The [GameHeader](https://github.com/sopra-fs23-group-10/sopra-fs23-group-10-client/blob/main/src/components/views/GameHeader.js) file lets the user know important information such as the state of the game (Single vs. Duel, Trivia vs. Image Mode) as well as the number of questions asked. In addition, it handles an important aspect of the game logic, which is the "Cancel Game" function. Any user has to option of cancelling a game at any point in time. 
 
 ### GameScreen
-The [GameScreen](https://github.com/sopra-fs23-group-10/sopra-fs23-group-10-client/blob/main/src/components/views/GameScreen.js) file draws questions and gets the answers of the user. Therefore, it is very crucial else there the game would not be playable for the users.
-
+The [GameScreen](https://github.com/sopra-fs23-group-10/sopra-fs23-group-10-client/blob/main/src/components/views/GameScreen.js) file contains a large amount of the game logic and sequence. It draws questions and gets the answers of both the trivia and image mode to the user. In addition, there is a large logic in terms of timers, which benefits the user experience immensely. 
 ## Launch
 
 ### Getting Started
@@ -91,8 +90,9 @@ Once your changes are pushed onto the main branch, they automatically get deploy
 
 ## Illustrations
 
-In the following picture one can see our user journey, which helped us define the right user stories in order to guide the user and create an optimal gaming experience.<br>
-<img src="readme_images/illustration/UserJourney.png" height="350"/>
+In the following picture one can see our user journey, which helped us define the right user stories in order to guide the user and create an optimal gaming experience.<br>  
+<img src="readme_images/illustration/UserJourney.png" height="350"/><br>
+Based on this, we created the following interface.<br>
 
 First step in BrainBusters is to create an account<br>
 <img src="readme_images/illustration/RegisterScreen.png" height="350"/>
