@@ -306,7 +306,7 @@ const Score = props => {
 
     const drawTimer = () => {
         if (playerMode == 'duel' || selecting != 'selecting') {
-            let timeLimit = parseInt(localStorage.getItem("question_nr")) <= 0 ? 100000 : 100000;
+            let timeLimit = parseInt(localStorage.getItem("question_nr")) <= 0 ? 10 : 15;
             return (
                 <div className="font-white">
                     <Timer timeOut={handleTimeOut} timeLimit={timeLimit}/>

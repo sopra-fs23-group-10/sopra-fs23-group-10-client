@@ -2,35 +2,44 @@
 
 .GameScreenGrid {
   width: 60%;
-  height: calc(100% - #{header_height});
+  height: calc(100% - #{$header_height} - #{$base_padding} - #{$base_padding});
   min-height: 600px;
-  margin: 0 auto;
-  margin-top: 50px;
+  margin: $base_padding auto $base_padding auto;
   display: grid;
-  grid-template-rows: repeat(auto);
+  grid-template-rows: minmax(200px, 1fr) 1fr auto;
   grid-template-columns: 1fr;
   grid-row-gap: 50px;
   overflow: visible;
   position:relative;
 
   .image-holder {
-    border-radius: $borderRadius;
     width: 100%;
-    max-height: 400px;
+    height: 100%;
     overflow: hidden;
-    height: auto;
     padding: 0px;
     margin: 0px;
-    display: flex;
     grid-column:1;  
     grid-row:1;
 
-    > img {
-      width: calc(100% + 40px);
-      margin: -20px;
-      align-self: center;
-      height: auto;
-      object-fit: cover;
+    .image {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-size: cover;
+      background-position: center;
+      width:100%;
+      height:100%;
+      .title-holder {
+        display: flex;
+        justify-content: center;
+        width:100%;
+        height:100%;
+        .display {
+          font-size: 7em;
+          z-index: 10;
+          line-height:1em;
+        }
+      }
     }
   }
 
@@ -40,7 +49,7 @@
     grid-template-rows: 1fr 1fr;
     grid-column-gap: 20px;
     grid-row-gap: 20px;
-    height: auto;
+    height: 220px;
     > div {
       position: relative;
     }
@@ -67,14 +76,18 @@
     justify-content: center;
     align-items: center;
     padding: $base_padding;
+    
   }
   .image-question {
+    flex: 1 100%;
     grid-row: 1;
     grid-column:1;
     background-color: rgba(255, 255, 255, 0);
     color: $off_white !important;
     z-index:1;
     height:100%;
+    display: flex;
+    position: relative;
     > div {
       color: $off_white;
       z-index:1;
@@ -87,15 +100,6 @@
       filter: blur(20px);
       position: absolute;
       z-index:0;
-    }
-
-    &.display {
-      font-size: 20vw;
-      @media only screen and (min-width: 800px) {
-        &.display {
-          transform: translate(0, 5vw);
-        }
-      }
     }
   }
   .question-content {
