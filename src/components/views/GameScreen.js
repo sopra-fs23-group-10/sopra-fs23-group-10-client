@@ -214,7 +214,7 @@ const GameScreen = () => {
     }
 
     const finishTimer = () => {
-        if (bothAnswered) {
+        if (bothAnswered || (playerMode == 'single' && correctAnswer)) {
             return (
                 <Timer timeLimit={3} display={false} timeOut={() => goToScore()}/>
             )
