@@ -17,6 +17,7 @@
     &.username {
       padding-right: 8px;
       justify-self: left;
+      white-space: nowrap;
     }
     &.profile-picture {
         height: $base_padding !important;

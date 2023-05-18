@@ -48,6 +48,10 @@ const Rules = props => {
         startMusic();
     }
 
+    const shortenName = (name, n) => {
+        return (name.length > n) ? name.slice(0, n-1) + '...' : name;
+    }
+
     const rulesPopup = () => {
         return (
             <BaseContainer className="popup container">
@@ -109,7 +113,7 @@ const Rules = props => {
             <div className="ScreenGrid-Rules">
                 {isFromRegistration && (
                     <div className = "welcome">
-                        Welcome&nbsp;&nbsp;{username}!
+                        Welcome,&nbsp;{username ? shortenName(username, 15) : ""}!
                     </div>
                 )}
                 {rulesPopup()}

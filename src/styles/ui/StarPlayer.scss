@@ -1,7 +1,6 @@
 @import 'styles/theme';
 
 .StarPlayer {
-  //cursor: pointer;
   &.container {
     border-radius: $base_padding;
     display: flex;
@@ -12,6 +11,7 @@
   &.username {
     padding-right: 8px;
     justify-self: left;
+    white-space: nowrap;
   }
   &.profile-picture {
     height: $base_padding !important;

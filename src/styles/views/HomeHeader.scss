@@ -53,6 +53,10 @@
     cursor: pointer;
     @extend .base-transition;
 
+    .username {
+      white-space: nowrap;
+    }
+
     &:hover {
       p {
         color: $secondary_color !important;
