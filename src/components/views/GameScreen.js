@@ -220,7 +220,7 @@ const GameScreen = () => {
     const finishTimer = () => {
         if (bothAnswered || (playerMode == 'single' && correctAnswer)) {
             return (
-                <Timer timeLimit={10} display={false} timeOut={() => goToScore()}/>
+                <Timer timeLimit={3} display={false} timeOut={() => goToScore()}/>
             )
         }
     }
