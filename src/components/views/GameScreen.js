@@ -9,6 +9,7 @@ import { Timer } from "components/ui/Timer";
 import star from "images/star.png";
 import BaseContainer from "components/ui/BaseContainer";
 import { connectRound, disconnectRound } from "helpers/WebSocketFactory";
+import { FontResizer } from "components/ui/FontResizer";
 
 const GameScreen = () => {
     const history = useHistory();
@@ -199,14 +200,18 @@ const GameScreen = () => {
     }
 
     const showResult = () => {
-        if (correctAnswer) return <div className={`display ${gameMode == 'image' ? 'image-question' : ''}`}>{resultText()}</div>
+        if (correctAnswer) return <div className='display'>{resultText()}</div>
     }
 
     const showImage = () => {
         if (gameMode == "image" && question) {
             return (
                 <BaseContainer className="image-holder">
-                    <img style={{filter: `blur(${correctAnswer ? 0 : 20*(time/answerTime)}px)`}} src={`https://imgur.com/${question.apiId}.jpeg`} ></img>
+                    <div className="image" style={{filter: `blur(${correctAnswer ? 0 : 20*(time/answerTime)}px)`, background: `url(https://imgur.com/${question.apiId}.jpeg)`}}>
+                    <FontResizer className="title-holder">
+                        {showResult()}
+                    </FontResizer>
+                    </div>
                 </BaseContainer>
             );
         }
@@ -215,7 +220,7 @@ const GameScreen = () => {
     const finishTimer = () => {
         if (bothAnswered || (playerMode == 'single' && correctAnswer)) {
             return (
-                <Timer timeLimit={3} display={false} timeOut={() => goToScore()}/>
+                <Timer timeLimit={10} display={false} timeOut={() => goToScore()}/>
             )
         }
     }
@@ -224,7 +229,6 @@ const GameScreen = () => {
         <>
             <GameHeader playerMode={playerMode} gameMode={gameMode} questionId={localStorage.getItem('question_nr')} showCancelButton={true} height="100"/>
             <div className="GameScreenGrid">
-                {showResult()}
                 {showImage()}
                 {drawQuestion()}
                 {finishTimer()}
