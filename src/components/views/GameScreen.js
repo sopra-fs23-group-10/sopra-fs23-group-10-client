@@ -225,10 +225,18 @@ const GameScreen = () => {
         }
     }
 
+    const showResultText = () => {
+        console.log(gameMode == 'text');
+        if (gameMode == 'text') {
+            return showResult();
+        }
+    }
+
     return (
         <>
             <GameHeader playerMode={playerMode} gameMode={gameMode} questionId={localStorage.getItem('question_nr')} showCancelButton={true} height="100"/>
             <div className="GameScreenGrid">
+                {showResultText()}
                 {showImage()}
                 {drawQuestion()}
                 {finishTimer()}
