@@ -130,7 +130,7 @@ const ProfilePicture= props => {
                 <Button
                     width="100%"
                     style={{marginTop: "12px"}}
-                    onClick={() => history.push('/home')}
+                    onClick={() => history.push(`/users/${user_id}`)}
                 >
                     Go Back
                 </Button>
