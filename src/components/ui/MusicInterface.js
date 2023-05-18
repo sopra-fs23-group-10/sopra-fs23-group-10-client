@@ -12,20 +12,11 @@ const MusicInterface = props => {
     const [prevVolume, setPrevVolume] = useState(parseFloat(localStorage.getItem("volume")));
     const color = "#4B1BCE";
 
-    useEffect(() => {
-        startMusic();
-    }, []);
-
     const onMusicChange = (value) => {
         setVolume(value);
         const event = new CustomEvent('volumeChange', { detail: value });
         document.dispatchEvent(event);
     }
-
-    const startMusic = () => {
-        const event = new CustomEvent('playingChange', { detail: true });
-        document.dispatchEvent(event);
-      }
 
     const toggleMute = () => {
         if (volume == 0) {

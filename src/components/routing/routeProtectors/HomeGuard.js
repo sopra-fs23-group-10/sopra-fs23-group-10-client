@@ -33,7 +33,6 @@ export const HomeGuard = props => {
     cleanup();
     return props.children;
   } else if (localStorage.getItem("token")){
-    startMusic();
     return props.children;
   } else {
     return <Redirect to="/login"/>;
