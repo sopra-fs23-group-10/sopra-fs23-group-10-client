@@ -1,4 +1,4 @@
-# BrainBusters <img src="readme_images/Logo.png" height="30"/>
+<img src="readme_images/BrainBusters-1.png" height="150"/>
 
 ## Table of Content
 
