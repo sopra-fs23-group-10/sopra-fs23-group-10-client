@@ -33,7 +33,7 @@ const ImageQuizStart = () => {
 
     return (
         <>
-            <GameHeader showCancelButton={true} questionId={localStorage.getItem('question_nr')} playerMode="single" height="100"></GameHeader>
+            <GameHeader showCancelButton={true} gameMode={gameMode} questionId={localStorage.getItem('question_nr')} playerMode="single" height="100"></GameHeader>
             <div className='ScreenGrid-Score'>
                 <div className='display'>Get Ready!</div>
                 <div></div>

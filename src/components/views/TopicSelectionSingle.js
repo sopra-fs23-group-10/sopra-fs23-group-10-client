@@ -120,7 +120,7 @@ const TopicSelectionSingle = props => {
     const drawHeader = () => {
         if (localStorage.getItem('gameId')){
             return (
-                <GameHeader showCancelButton={true} questionId={localStorage.getItem('question_nr')} playerMode="single" height="100"/>
+                <GameHeader showCancelButton={true} gameMode={gameMode} questionId={localStorage.getItem('question_nr')} playerMode="single" height="100"/>
             );
         }
     }

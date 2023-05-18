@@ -223,7 +223,7 @@ const GameScreen = () => {
 
     return (
         <>
-            <GameHeader playerMode={playerMode} questionId={localStorage.getItem('question_nr')} showCancelButton={true} height="100"/>
+            <GameHeader playerMode={playerMode} gameMode={gameMode} questionId={localStorage.getItem('question_nr')} showCancelButton={true} height="100"/>
             <div className="GameScreenGrid">
                 {showResult()}
                 {showImage()}

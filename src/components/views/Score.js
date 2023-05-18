@@ -322,7 +322,7 @@ const Score = props => {
 
     return (
         <>
-            <GameHeader playerMode={playerMode} questionId={localStorage.getItem('question_nr')} showCancelButton={true} height="100"/>
+            <GameHeader playerMode={playerMode} gameMode={gameMode} questionId={localStorage.getItem('question_nr')} showCancelButton={true} height="100"/>
             {drawTitle()}
             <div className="ScreenGrid-Score">
                 {drawResults()}

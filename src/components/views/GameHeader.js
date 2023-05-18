@@ -108,7 +108,7 @@ const GameHeader = props => {
             <div className="gamecontentheader fontnormal" style={{textAlign: "left"}}>
                 <p>
                     {props.playerMode.charAt(0).toUpperCase() + props.playerMode.slice(1)} Mode <br />
-                    Trivia Quiz
+                    {props.gameMode == 'text' ? "Trivia" : "Image"} Quiz
                 </p>
             </div>
             <div className="gamecontentheader fontnormal" style={{textAlign: "left"}}>
@@ -134,6 +134,7 @@ const GameHeader = props => {
 
 GameHeader.propTypes = {
     playerMode: PropTypes.string,
+    gameMode: PropTypes.string,
     height: PropTypes.number,
     questionId: PropTypes.string,
     showCancelButton: PropTypes.bool

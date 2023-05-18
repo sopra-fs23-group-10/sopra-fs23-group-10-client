@@ -167,6 +167,7 @@ const EndGame = props => {
                     <div className = "invitation overlay">
                     </div>
                     <div className = "invitation base-container">
+                        <a onClick={() => cancelRematch()} style={{textAlign: "right"}}> Cancel Invitation</a>
                         <p> Rematch has been sent. Waiting for answer...</p>
                         <div className="button-container font-black">
                             <Timer timeLimit={60} timeOut={cancelRematch}/>
@@ -323,7 +324,7 @@ const EndGame = props => {
                             </div>
                             <div className="timer-placement" >
                                 <div className="button-container" >
-                                    <Timer timeLimit={2000} timeOut={ClosePopUp}/>
+                                    <Timer timeLimit={3} timeOut={ClosePopUp}/>
                                 </div>
                             </div>
 
@@ -459,7 +460,7 @@ const EndGame = props => {
     return (
         <>
             {drawRematch()}
-            <GameHeader playerMode={playerMode} questionId={localStorage.getItem("question_nr")} showCancelButton={false} height="100"/>
+            <GameHeader playerMode={playerMode} gameMode={gameMode} questionId={localStorage.getItem("question_nr")} showCancelButton={false} height="100"/>
             <div className="ScreenGrid">
                 {endPointsScreen()}
             </div>
