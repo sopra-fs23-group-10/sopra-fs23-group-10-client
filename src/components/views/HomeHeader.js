@@ -6,12 +6,14 @@ import "styles/views/HomeHeader.scss";
 import React,{useEffect,useState} from 'react';
 import User from "../../models/User";
 import "styles/views/PopUp.scss";
-import Triangle from "images/Triangle.png";
 import arrow from "images/arrow.png";
 import Identicon from 'react-identicons';
 import DropDown from "components/ui/DropDown";
 import 'rc-slider/assets/index.css';
 import MusicInterface from "components/ui/MusicInterface";
+import Music from "images/Music.png";
+import result from "images/result.svg";
+import trophy from "images/trophy.svg";
 
 
 const HomeHeader = props => {
@@ -73,10 +75,12 @@ const HomeHeader = props => {
             </Link>
             <div className="navigation">
                 <Link className="content nav-item" to="/ranking">
+                    <img className='icons' src={trophy} style={{right: "65px", top: "50%", width: "33px", height: "33px"}}></img>
                     Ranking
                 </Link>
                 <div className="content" >
                     <div className="nav-item" style={{height:"100%"}} onClick={() => setShowMusic(!showMusic)}>
+                        <img className='icons' src={Music} style={{right: "50px", top: "50%", width: "30px", height: "30px"}}></img>
                         Music
                     </div>
                     <DropDown centered={true} yOffset={100} show={showMusic} setShow={setShowMusic}>
@@ -84,6 +88,7 @@ const HomeHeader = props => {
                     </DropDown>
                 </div>
                 <Link className="content nav-item" to="/rules">
+                    <img className='icons' src={result} style={{right: "45px", top: "49%", width: "30px", height: "30px"}}></img>
                     Rules
                 </Link>
             </div>

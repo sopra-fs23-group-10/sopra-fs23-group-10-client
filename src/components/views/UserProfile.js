@@ -12,6 +12,8 @@ import 'styles/views/PopUp.scss';
 import Identicon from "react-identicons";
 import { updateUser } from '../../helpers/restApi';
 import user from "models/User";
+import star from "../../images/star.png";
+import clickable_edit from "images/clickable_edit.svg";
 
 
 const FormField = props => {
@@ -134,9 +136,13 @@ const UserProfile = props => {
                         <div className="title"> <strong> EDIT PROFILE </strong></div>
                     </div>
                     <div className="picture-location">
-                        <Link to={`/users/${user_id}/profilepicture`}>
-                            <Identicon className="profile-picture" string={profilePicture} size={100} style={{ backgroundColor: 'lightgray' }}/>
-                        </Link>
+                        <div className="profile-picture-container">
+                            <Link to={`/users/${user_id}/profilepicture`}>
+                                <Identicon className="picture" string={profilePicture} size={100} style={{ backgroundColor: 'lightgray' }}/>
+                                <img className='edit-icon' src={clickable_edit}></img>
+                            </Link>
+                        </div>
+
                     </div>
                     <div className="form-location">
                         {profileFields}
@@ -144,7 +150,6 @@ const UserProfile = props => {
                     {error()}
                 </div>
                 <div style ={{height: '12px'}}> </div>
-                <Link to="/resetpassword" style={{textAlign: "right"}}>Change Password</Link>
                     <Button
                         disabled={!username || !profilePicture}
                         width="100%"

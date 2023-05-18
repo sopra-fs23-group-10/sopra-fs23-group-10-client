@@ -11,9 +11,11 @@
     align-items: center;
     pointer-events: auto;
   }
-
-  picture{
-    background-color: lightgray;
+  .pictures{
+    background-color: #faf6f8;
+    border-radius: 100%;
+    cursor: pointer;
+    background-color: lightgrey;
   }
 }
   .PictureChange {
@@ -52,6 +54,7 @@
       width:100%;
       justify-self: end;
     }
+
   }
 
 
