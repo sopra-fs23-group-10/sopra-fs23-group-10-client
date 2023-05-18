@@ -6,7 +6,6 @@ import "styles/views/HomeHeader.scss";
 import React,{useEffect,useState} from 'react';
 import User from "../../models/User";
 import "styles/views/PopUp.scss";
-import Triangle from "images/Triangle.png";
 import arrow from "images/arrow.png";
 import Identicon from 'react-identicons';
 import DropDown from "components/ui/DropDown";
