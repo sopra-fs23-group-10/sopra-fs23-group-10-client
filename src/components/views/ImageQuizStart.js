@@ -10,7 +10,7 @@ const ImageQuizStart = () => {
     let { gameMode } = useParams();
     const history = useHistory();
 
-    localStorage.setItem('question_nr', 1);
+    localStorage.setItem('question_nr', 0);
 
     const fetchQuestion = async () => {
         try {
@@ -26,6 +26,8 @@ const ImageQuizStart = () => {
     const toQuestion = (question) => {
         localStorage.removeItem('startTime');
         localStorage.setItem('question', JSON.stringify(question));
+        let nr = parseInt(localStorage.getItem('question_nr'));
+        localStorage.setItem('question_nr', (nr + 1));
         history.push('/game/single/' + gameMode + "/selecting");
     }
 

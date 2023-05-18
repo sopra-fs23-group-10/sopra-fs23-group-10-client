@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 export const Timer = props => {
     const timeLimit = 1000 * props.timeLimit;
-    const [remainingTime, setRemainingTime] = useState(timeLimit - 1000);
+    const [remainingTime, setRemainingTime] = useState(timeLimit);
 
     let startTime = localStorage.getItem('startTime') ? parseInt(localStorage.getItem('startTime')) : Date.now();
     localStorage.setItem('startTime', startTime);
@@ -34,20 +34,18 @@ export const Timer = props => {
                 if (props.timeOut) props.timeOut();
                 timeOut();
             }
-            if (props.getTime) props.getTime(currentTime);
-            setRemainingTime(currentTime);
+            if (props.getTime) props.getTime(currentTime + 1000);
+            setRemainingTime(Math.round(currentTime/1000));
         }
     }
 
     const getSecs = () => {
-        let secs = Math.floor(remainingTime / 1000);
-        let mins = Math.floor(remainingTime / 1000 / 60);
-        secs -= mins * 60;
+        let secs = Math.floor(remainingTime % 60);
         return secs;
     }
 
     const getMins = () => {
-        let mins = Math.floor(remainingTime / 1000 / 60);
+        let mins = Math.floor(remainingTime / 60);
         return mins
     }
 
@@ -62,7 +60,7 @@ export const Timer = props => {
                 {getMins().toString().padStart(2, '0')}:{getSecs().toString().padStart(2, '0')}
             </div>
             <div style={{ width: '100%' }}>
-                <div style={{ width: `${(remainingTime/timeLimit) * 100}%`}} className="timer bar"></div>
+                <div style={{ width: `${(remainingTime/Math.round(timeLimit / 1000)) * 100}%`}} className="timer bar"></div>
             </div>
         </div>
     );

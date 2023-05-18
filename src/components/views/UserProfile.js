@@ -84,7 +84,7 @@ const UserProfile = props => {
         value=""
     />
 
-    if (username) {
+    if (profilePicture) {
         profileFields = (
             <div>
                 <FormField

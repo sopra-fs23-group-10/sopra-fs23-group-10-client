@@ -24,7 +24,7 @@ const ChallengePlayer = props => {
                 const accepted = JSON.parse(e.detail)[localStorage.getItem('gameId')];
                 console.log("handle answer, id: " + localStorage.getItem('gameId'));
                 if (accepted) {
-                    localStorage.setItem('question_nr', 1);
+                    localStorage.setItem('question_nr', 0);
                     localStorage.removeItem('startTime');
                     history.push(`/topic-selection/duel/${gameMode}/waiting`);
                 } else {
@@ -49,7 +49,6 @@ const ChallengePlayer = props => {
         try {
             const response = await createGame(id, gameMode.toUpperCase(), "DUEL");
             localStorage.setItem('gameId', response.gameId);
-            console.log("GAME ID: " + localStorage.getItem('gameId'));
             setInviteSent(true);
         } catch (error) {
             history.push("/home");
@@ -59,7 +58,6 @@ const ChallengePlayer = props => {
 
     const cancelInvite = async () => {
         try {
-            console.log("cancel invite!");
             localStorage.setItem("answered", true);
             await answerInvite(localStorage.getItem('gameId'), false);
             localStorage.removeItem('gameId');
@@ -126,7 +124,7 @@ const ChallengePlayer = props => {
                             <h3> Challenge Player </h3>
                         </div>
                         <div className="content_location">
-                            <PlayerList callback={getUsers} action={chooseOpponent}/>
+                            <PlayerList callback={getUsers} action={chooseOpponent} charNr={40}/>
                         </div>
                         <div className='fade'></div>
                         <div className='fade-top'></div>

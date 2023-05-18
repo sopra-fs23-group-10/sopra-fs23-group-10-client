@@ -3,9 +3,9 @@ import music from "music/Derp Nugget.mp3";
 
 const Music = props => {
     const [audio] = useState(new Audio(music));
-    localStorage.setItem("volume", 1);
 
     useEffect(() => {
+        localStorage.setItem("volume", 1);
         audio.loop = true;
         document.addEventListener("volumeChange", handleVolumeChanged);
         document.addEventListener("playingChange", handlePlayingChanged);

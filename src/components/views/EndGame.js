@@ -11,6 +11,7 @@ import BaseContainer from "../ui/BaseContainer";
 import Result from "../../models/Result";
 import { ResultList } from 'components/ui/ResultList';
 import User from "../../models/User";
+import star from "../../images/star.png";
 
 
 const EndGame = props => {
@@ -50,7 +51,7 @@ const EndGame = props => {
 
             if (rematchSent) {
                 if (accepted) {
-                    localStorage.setItem('question_nr', 1);
+                    localStorage.setItem('question_nr', 0);
                     localStorage.removeItem('startTime');
                     history.push(`/topic-selection/duel/${gameMode}/waiting`);
                 }
@@ -314,14 +315,15 @@ const EndGame = props => {
                                     </p>
                             </div>
                             <div className="rank-placement">
-                                    <p style={{ fontSize: '18px' }}>
-                                        <strong>Your new rank: <br />
+                                <p style={{ fontSize: '18px', color: 'white' }}>
+                                    <strong>Your new rank: <br />
                                         {newRank} </strong>
-                                    </p>
+                                </p>
+                                <img className='star accent' src={star}></img>
                             </div>
-                            <div className="timer-placement">
-                                <div className="button-container">
-                                    <Timer timeLimit={10} timeOut={ClosePopUp}/>
+                            <div className="timer-placement" >
+                                <div className="button-container" >
+                                    <Timer timeLimit={2000} timeOut={ClosePopUp}/>
                                 </div>
                             </div>
 

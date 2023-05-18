@@ -59,6 +59,10 @@ const HomeHeader = props => {
         history.push("/users/" +userId)
     }
 
+    const shortenName = (name, n) => {
+        return (name.length > n) ? name.slice(0, n-1) + '...' : name;
+    }
+
     const [showProfile, setShowProfile] = useState(false);
     const [showMusic, setShowMusic] = useState(false);
 
@@ -86,7 +90,7 @@ const HomeHeader = props => {
             <div className="profile-container">
                 <a className="content fontbold profile nav-item"
                     onClick = {() => {setShowProfile(!showProfile)}}>
-                    <p className="username">{username}</p>
+                    <p className="username">{username ? shortenName(username, 12) : ""}</p>
                     <Identicon className="profile-picture" string={profilePicture} size={40}/>
                 </a>
                 <DropDown yOffset={83} show={showProfile} setShow={setShowProfile}>

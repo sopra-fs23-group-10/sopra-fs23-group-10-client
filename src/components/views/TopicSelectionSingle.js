@@ -19,7 +19,7 @@ const TopicSelectionSingle = props => {
     const [topicSent, setTopicSent] = useState(false);
     const [buttonClicked, setButtonClicked] = useState(false);
 
-    localStorage.setItem('question_nr', 1);
+    localStorage.setItem('question_nr', 0);
 
     useEffect(() => {
         async function newGame() {
@@ -76,6 +76,8 @@ const TopicSelectionSingle = props => {
         localStorage.removeItem('topics');
         localStorage.removeItem('startTime');
         localStorage.setItem('question', JSON.stringify(question));
+        let nr = parseInt(localStorage.getItem('question_nr'));
+        localStorage.setItem('question_nr', (nr + 1));
         history.push('/game/single/' + gameMode + "/selecting");
     }
 
@@ -96,9 +98,16 @@ const TopicSelectionSingle = props => {
                         <div className="topic-row" key={index} style={{ marginBottom: "20px" }}>
                             {row.map((topic) => (
                                 <div className="topicSelection" key={topic}>
-                                    <GameButton callback={() => fetchQuestion(topic).catch(error => {
+                                    <GameButton 
+                                    callback={() => fetchQuestion(topic).catch(error => {
                                         console.error(error);
-                                    })} disabled={buttonClicked} className={buttonClicked ? "inactive" : ""}>{parseString(topic)}</GameButton>
+                                    })} 
+                                    disabled={buttonClicked} 
+                                    inactive={buttonClicked}
+                                    selected={localStorage.getItem("topic") == topic}
+                                    >
+                                        {parseString(topic)}
+                                    </GameButton>
                                 </div>
                             ))}
                         </div>
