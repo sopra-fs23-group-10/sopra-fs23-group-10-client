@@ -46,13 +46,15 @@ const ChallengePlayer = props => {
     }
 
     const invite = async (id) => {
-        try {
-            const response = await createGame(id, gameMode.toUpperCase(), "DUEL");
-            localStorage.setItem('gameId', response.gameId);
-            setInviteSent(true);
-        } catch (error) {
-            history.push("/home");
-            alert(error);
+        if (!inviteSent) {
+            try {
+                const response = await createGame(id, gameMode.toUpperCase(), "DUEL");
+                localStorage.setItem('gameId', response.gameId);
+                setInviteSent(true);
+            } catch (error) {
+                history.push("/home");
+                alert(error);
+            }
         }
     }
 
@@ -61,6 +63,7 @@ const ChallengePlayer = props => {
             localStorage.setItem("answered", true);
             await answerInvite(localStorage.getItem('gameId'), false);
             localStorage.removeItem('gameId');
+            localStorage.removeItem('startTime');
             setInviteSent(false);
         } catch (error) {
             history.push("/home");

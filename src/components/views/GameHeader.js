@@ -70,6 +70,8 @@ const GameHeader = props => {
         localStorage.removeItem('result');
         localStorage.removeItem('topic');
         localStorage.removeItem('bothAnswered');
+        localStorage.removeItem('answered');
+        localStorage.removeItem('invitation');
         history.push("/home");
     }
 
@@ -80,7 +82,7 @@ const GameHeader = props => {
                     <div className="invitation overlay">
                     </div>
                     <div className="invitation base-container">
-                        {sentCancellation ? <p>You have successfully cancelled the game</p> : <p>Your opponent has cancelled the game.</p>}
+                        {sentCancellation ? <p>The game has been cancelled</p> : <p>Your opponent has cancelled the game.</p>}
                         <div className="button-container">
                             <Button width="100%" onClick={() => ok()}>Ok</Button>
                         </div>
