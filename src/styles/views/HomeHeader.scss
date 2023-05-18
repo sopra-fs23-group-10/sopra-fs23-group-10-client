@@ -73,14 +73,21 @@
       align-self: center;
       height: $header_height;
       line-height: $header_height;
-      margin-left: $base_padding;
+      margin-left: 70px;
       position: relative;
+      display: flex;
+      align-items: center;
     }
 
     .disabled{
       opacity: 0.5;
       color: $off_white;
     }
+  }
+  .icons{
+    margin-right: 10px;
+    position: absolute;
+    transform: translateY(-50%);
   }
 }
 
