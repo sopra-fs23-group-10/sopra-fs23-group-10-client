@@ -8,10 +8,7 @@ import {connectQuestion, disconnectQuestion} from "../../helpers/WebSocketFactor
 import 'styles/views/Score.scss';
 import Question from "models/Question";
 import {Timer} from "../ui/Timer";
-import BaseContainer from "components/ui/BaseContainer";
 import { Button } from "components/ui/Button";
-import { RoundResult } from "components/ui/RoundResult";
-import { QuestionResult } from "components/ui/QuestionResult";
 import { ResultList } from "components/ui/ResultList";
 import {cryptoRandom} from "../../helpers/utility";
 
