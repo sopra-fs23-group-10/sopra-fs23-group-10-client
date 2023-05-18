@@ -67,7 +67,6 @@ const ProfilePicture= props => {
 
     const [stringList, setStringList] = useState(randomStringList());
 
-
     const PictureClick = (str) => {
         console.log(str);
         setSelectedPicture(str);
@@ -123,7 +122,7 @@ const ProfilePicture= props => {
                 <div className="ProfilePicture container">
                     {stringList.map((str, index) => (
                         <div onClick ={() => PictureClick(str)}>
-                            <Identicon className="profile-picture" string={str} size={100} />
+                            <Identicon className="pictures" string={str} size={100} />
                         </div>
                     ))}
                 </div>

@@ -138,7 +138,7 @@ const UserProfile = props => {
                     <div className="picture-location">
                         <div className="profile-picture-container">
                             <Link to={`/users/${user_id}/profilepicture`}>
-                                <Identicon className="profile-picture" string={profilePicture} size={100} style={{ backgroundColor: 'lightgray' }}/>
+                                <Identicon className="picture" string={profilePicture} size={100} style={{ backgroundColor: 'lightgray' }}/>
                                 <img className='edit-icon' src={clickable_edit}></img>
                             </Link>
                         </div>
