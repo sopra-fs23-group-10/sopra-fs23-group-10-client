@@ -1,3 +1,7 @@
+[![Deploy Project to App Engine](https://github.com/sopra-fs23-group-10/sopra-fs23-group-10-client/actions/workflows/main.yml/badge.svg)](https://github.com/sopra-fs23-group-10/sopra-fs23-group-10-client/actions/workflows/main.yml)
+[![npm version](https://img.shields.io/badge/npm-9.3.1-blue.svg)](https://www.npmjs.com/package/npm/v/9.3.1)
+[![React version](https://img.shields.io/badge/React-17.0.2-blue.svg)](https://reactjs.org/)
+
 <img src="readme_images/BrainBusters-1.png" height="100"/>
 
 ## Table of Content
