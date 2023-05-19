@@ -34,13 +34,13 @@ const ReceiveInvitation = props => {
         localStorage.setItem("invitation", true);
     }
 
-    const handleReload = async () => {
+    const handleReload = () => {
         localStorage.removeItem("invitation");
         localStorage.removeItem("answered");
         if (localStorage.getItem('gameId')) {
             try {
                 localStorage.removeItem('startTime');
-                const response = await answerInvite(localStorage.getItem('gameId'), false);
+                const response = answerInvite(localStorage.getItem('gameId'), false);
                 const event = new CustomEvent("sendReply", { detail: false });
                 document.dispatchEvent(event);
             } catch (error) {
