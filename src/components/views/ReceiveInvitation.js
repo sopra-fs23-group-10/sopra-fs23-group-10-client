@@ -22,7 +22,7 @@ const ReceiveInvitation = props => {
         return () => {
             window.removeEventListener('beforeunload', handleReload);
             disconnectInvitations();
-        }   
+        };
     }, [invitation]);
 
     const handleInvite = async (msg) => {
