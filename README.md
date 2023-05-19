@@ -118,7 +118,7 @@ npm run build
 
 Features that new developers who want to contribute to our project could add.
 
-- new Game mode music quiz.<br>
+- new Game mode music quiz<br>
 - convert to iOS & Android native app
 - increase responsiveness for mobile browsers
 - add new records to our image database
