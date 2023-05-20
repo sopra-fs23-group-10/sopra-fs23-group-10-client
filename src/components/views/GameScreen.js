@@ -86,7 +86,6 @@ const GameScreen = () => {
             console.log(response);
             localStorage.setItem('correctAnswer', response.data.correctAnswer);
             if (response) {
-                setCorrectAnswer(response.data.correctAnswer);
                 const pauseEvt = new CustomEvent('pause', { detail: null });
                 document.dispatchEvent(pauseEvt);
                 setCorrectAnswer(localStorage.getItem("correctAnswer"));
