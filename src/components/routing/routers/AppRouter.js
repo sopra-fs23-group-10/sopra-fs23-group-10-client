@@ -6,9 +6,7 @@ import {LoginGuard} from "components/routing/routeProtectors/LoginGuard";
 import Registration from "../../views/Registration";
 import Login from "../../views/Login";
 import UserProfile from "../../views/UserProfile";
-import ProfileEditor from "../../views/ProfileEditor";
 import ResetPassword from "../../views/ResetPassword";
-import ForgotPassword from "../../views/ForgotPassword";
 import ChallengePlayer from "../../views/ChallengePlayer";
 import Ranking from "../../views/Ranking";
 import Rules from "../../views/Rules";
@@ -50,11 +48,6 @@ const AppRouter = () => {
           <Route exact path="/challenge/:gameMode">
             <HomeGuard>
               <ChallengePlayer/>
-            </HomeGuard>
-          </Route>
-          <Route path="/users/edit/:user_id">
-            <HomeGuard>
-              <ProfileEditor/>
             </HomeGuard>
           </Route>
           <Route exact path="/registration">

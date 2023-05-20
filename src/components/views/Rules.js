@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useHistory, useParams, useLocation} from 'react-router-dom';
+import {useHistory, useLocation} from 'react-router-dom';
 import {Button} from 'components/ui/Button';
 import 'styles/views/PopUp.scss';
 import 'styles/views/Rules.scss';

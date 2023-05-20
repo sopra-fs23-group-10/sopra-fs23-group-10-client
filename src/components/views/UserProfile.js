@@ -11,8 +11,6 @@ import ReceiveInvitation from './ReceiveInvitation';
 import 'styles/views/PopUp.scss';
 import Identicon from "react-identicons";
 import { updateUser } from '../../helpers/restApi';
-import user from "models/User";
-import star from "../../images/star.png";
 import clickable_edit from "images/clickable_edit.svg";
 
 
@@ -51,8 +49,6 @@ const UserProfile = props => {
     const history = useHistory();
     const [username, setUsername] = useState(null);
     const [originalUsername, setoriginalUsername] = useState (null);
-    const [status, setStatus] = useState(null);
-    const [points, setPoints] = useState(null);
     const [profilePicture, setProfilePicture] = useState(null);
     const [msg, setMsg] = useState("");
 
@@ -67,8 +63,6 @@ const UserProfile = props => {
                 const user = new User(userData);
                 setUsername(user.username);
                 setoriginalUsername(user.username);
-                setStatus(user.status);
-                setPoints(user.points);
                 setProfilePicture(user.profilePicture);
             } catch (error) {
                 console.error(error.message);

@@ -219,8 +219,15 @@ const GameScreen = () => {
     const finishTimer = () => {
         if (bothAnswered || (playerMode == 'single' && correctAnswer)) {
             return (
-                <Timer timeLimit={10} display={false} timeOut={() => goToScore()}/>
+                <Timer timeLimit={3} display={false} timeOut={() => goToScore()}/>
             )
+        }
+    }
+
+    const showResultText = () => {
+        console.log(gameMode == 'text');
+        if (gameMode == 'text') {
+            return showResult();
         }
     }
 
@@ -228,6 +235,7 @@ const GameScreen = () => {
         <>
             <GameHeader playerMode={playerMode} gameMode={gameMode} questionId={localStorage.getItem('question_nr')} showCancelButton={true} height="100"/>
             <div className="GameScreenGrid">
+                {showResultText()}
                 {showImage()}
                 {drawQuestion()}
                 {finishTimer()}

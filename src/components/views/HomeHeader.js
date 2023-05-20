@@ -107,10 +107,10 @@ const HomeHeader = props => {
                         </p>
                         </div>
                         <div className="contentHover" style={{textAlign: "right"}}>
+                        <p>
                             {edit()}
-                            <p>
-
-                            </p>
+                            <div style={{height: "22px"}}> </div>
+                        </p>
                         </div>
                         <Button className ="logout"
                                 width="100%"

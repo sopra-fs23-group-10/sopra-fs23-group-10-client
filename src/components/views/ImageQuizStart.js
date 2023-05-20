@@ -1,8 +1,7 @@
-import {useHistory} from 'react-router-dom';
+import {useHistory, useParams} from 'react-router-dom';
 import "styles/views/Home.scss";
 import { Timer } from 'components/ui/Timer';
-import { useParams } from 'react-router-dom';
-import { getImageQuestion, createGame, handleError } from 'helpers/restApi';
+import { getImageQuestion } from 'helpers/restApi';
 import GameHeader from './GameHeader';
 import 'styles/views/Score.scss';
 

@@ -12,6 +12,7 @@ import Result from "../../models/Result";
 import { ResultList } from 'components/ui/ResultList';
 import User from "../../models/User";
 import star from "../../images/star.png";
+import { FontResizer } from 'components/ui/FontResizer';
 
 
 const EndGame = props => {
@@ -239,6 +240,7 @@ const EndGame = props => {
         localStorage.removeItem('question_nr');
         localStorage.removeItem('result');
         localStorage.removeItem('topic');
+        localStorage.removeItem('startTime');
     }
 
     const home = () => {
@@ -349,42 +351,42 @@ const EndGame = props => {
                                     Player 2
                                 </div>
                                 {result.invitingPlayerResult > result.invitedPlayerResult ? (
-                                    <div className="background-points-winner">
+                                    <FontResizer className="background-points-winner">
                                         <div className = "player" style={{textAlign: "center"}}>
                                             {usernameInviting}
                                         </div>
                                         <div className = "points-endgame" style={{textAlign: "center"}}>
                                             {result.invitingPlayerResult}
                                         </div>
-                                    </div>
+                                    </FontResizer>
                                 ) : (
-                                    <div className="background-points-loser">
+                                    <FontResizer className="background-points-loser">
                                         <div className = "player player-loser" style={{textAlign: "center"}}>
                                             {usernameInviting}
                                         </div>
                                         <div className = "points-endgame points-loser" style={{textAlign: "center"}}>
                                             {result.invitingPlayerResult}
                                         </div>
-                                    </div>
+                                    </FontResizer>
                                 ) }
                                 {result.invitingPlayerResult < result.invitedPlayerResult ? (
-                                    <div className="background-points-winner">
+                                    <FontResizer className="background-points-winner">
                                         <div className = "player" style={{textAlign: "center"}} >
                                             {usernameInvited}
                                         </div>
                                         <div className = "points-endgame" style={{textAlign: "center"}}>
                                             {result.invitedPlayerResult}
                                         </div>
-                                    </div>
+                                    </FontResizer>
                                 ) : (
-                                    <div className="background-points-loser">
+                                    <FontResizer className="background-points-loser">
                                         <div className = "player player-loser" style={{textAlign: "center"}}>
                                             {usernameInvited}
                                         </div>
                                         <div className = "points-endgame points-loser" style={{textAlign: "center"}}>
                                             {result.invitedPlayerResult}
                                         </div>
-                                    </div>
+                                    </FontResizer>
                                 ) }
                             </div>
                             <div className="background-rematchoption">
@@ -413,19 +415,16 @@ const EndGame = props => {
             return (
                 <>
                     {drawResults()}
-                    <div style={{ position: 'relative', gridColumn:1, height:"40vh"}} >
-                        <div className="background-points-winner" style={{ width: '100%', height: '100%', position: 'absolute' }}>
+                    <div style={{ position: 'relative', gridColumn:1, height:"100%"}} >
+                        <FontResizer className="background-points-winner" style={{ width: '100%', height: '100%', position: 'absolute' }}>
                             <div className = "player" style={{textAlign: "center"}}>
                                 {usernameInviting}
                             </div>
                             <div className = "points-endgame" style={{textAlign: "center"}}>
                                 {result.invitingPlayerResult}
                             </div>
-                        </div>
+                        </FontResizer>
                     </div>
-                    <>
-                        <div style={{ paddingTop: '40px' }}></div>
-                    </>
                     <div className="background-rematchoption" >
                         <div className="content">
                             <div className="twoButtons">

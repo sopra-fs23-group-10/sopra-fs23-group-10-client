@@ -1,12 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {fetchUserById} from 'helpers/restApi';
 import User from 'models/User';
-import {Link, useHistory, useParams} from 'react-router-dom';
+import {useHistory, useParams} from 'react-router-dom';
 import {Button} from 'components/ui/Button';
 import BaseContainer from "components/ui/BaseContainer";
-import PropTypes from "prop-types";
 import HomeHeader from "./HomeHeader";
-import ReceiveInvitation from './ReceiveInvitation';
 import 'styles/views/PopUp.scss';
 import 'styles/views/ProfilePicture.scss';
 import Identicon from "react-identicons";
@@ -16,7 +14,6 @@ import { cryptoRandom } from '../../helpers/utility';
 const ProfilePicture= props => {
     const history = useHistory();
     const [username, setUsername] = useState(null);
-    const [originalPicture, setoriginalPicture] = useState (null);
     const [msg, setMsg] = useState("");
     const [selectedPicture, setSelectedPicture] = useState(null);
     const [showPopUp, setPopUp] = useState(false);
@@ -31,7 +28,6 @@ const ProfilePicture= props => {
                 const userData = await fetchUserById(user_id);
                 const user = new User(userData);
                 setUsername(user.username);
-                setoriginalPicture(user.profilePicture);
             } catch (error) {
                 console.error(error.message);
                 alert("Something went wrong while fetching the user data! See the console for details.");
@@ -130,7 +126,7 @@ const ProfilePicture= props => {
                 <Button
                     width="100%"
                     style={{marginTop: "12px"}}
-                    onClick={() => history.push('/home')}
+                    onClick={() => history.push(`/users/${user_id}`)}
                 >
                     Go Back
                 </Button>

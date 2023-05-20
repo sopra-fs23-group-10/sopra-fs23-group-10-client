@@ -1,5 +1,5 @@
 import "styles/views/HomeHeader.scss";
-import React,{useState} from 'react';
+import React from 'react';
 import "styles/views/PopUp.scss";
 import Triangle from "images/Triangle.png";
 import PropTypes from "prop-types";

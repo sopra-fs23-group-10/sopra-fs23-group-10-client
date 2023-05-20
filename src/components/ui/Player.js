@@ -10,7 +10,7 @@ const Player = ({user, action, charNr}) => {
     return (
         <div
             className="player container" onClick={action ? () => action(user.id) : null}>
-            <Identicon className="player profile-picture" string={user.username}/>
+            <Identicon className="player profile-picture" string={user.profilePicture}/>
             <div className="player username">{shortenName(user.username, charNr)}
             </div>
             <div className="player points">POINTS: {user.points}
