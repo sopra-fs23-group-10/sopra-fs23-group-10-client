@@ -95,9 +95,9 @@ const TopicSelectionSingle = props => {
                         Select a topic
                     </div>
                     {topicRows.map((row, index) => (
-                        <div className="topic-row" key={index} style={{ marginBottom: "20px" }}>
+                        <div className="topic-row boing-intro" key={index} style={{ marginBottom: "20px" }}>
                             {row.map((topic) => (
-                                <div className="topicSelection" key={topic}>
+                                <div className="topicSelection boing-intro" key={topic}>
                                     <GameButton 
                                     callback={() => fetchQuestion(topic).catch(error => {
                                         console.error(error);

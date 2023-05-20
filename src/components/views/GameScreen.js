@@ -133,7 +133,7 @@ const GameScreen = () => {
                 );
             } else {
                 let answers = question.allAnswers.map((str) =>
-                    <GameButton key={str} callback={() => chooseAnswer(str)} text={str}></GameButton>
+                    <GameButton key={str} className="boing-intro" callback={() => chooseAnswer(str)} text={str}></GameButton>
                 );
                 content = (
                     <>

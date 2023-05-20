@@ -267,6 +267,7 @@ const EndGame = props => {
     }
 
     const replay = () => {
+        cleanup();
         newGame().catch(error => {
             console.error(error);
         });
