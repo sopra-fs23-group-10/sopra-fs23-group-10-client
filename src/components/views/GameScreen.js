@@ -138,7 +138,7 @@ const GameScreen = () => {
                 );
                 content = (
                     <>
-                        <div className={`background-question ${gameMode == 'image' ? 'image-question' : ''}`}>
+                        <div className={`background-question bounce-intro ${gameMode == 'image' ? 'image-question' : ''}`}>
                             <div style={{display:gameMode == 'text' ? "none": "block"}} className="image-question-bg"></div>
                             <div className='question-content' style={{textAlign: "center"}}>
                                 {question.question}
@@ -207,7 +207,7 @@ const GameScreen = () => {
         if (gameMode == "image" && question) {
             return (
                 <BaseContainer className="image-holder">
-                    <div className="image" style={{filter: `blur(${correctAnswer ? 0 : 20*(time/answerTime)}px)`, background: `url(https://imgur.com/${question.apiId}.jpeg)`}}>
+                    <div className="image" style={{filter: `blur(${correctAnswer ? 0 : 20*(time/answerTime)}px)`, background: `url(https://imgur.com/${question.apiId}.jpeg)`, backgroundSize:"cover", backgroundPosition:"center"}}>
                     <FontResizer className="title-holder">
                         {showResult()}
                     </FontResizer>
