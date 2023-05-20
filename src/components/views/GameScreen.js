@@ -110,9 +110,8 @@ const GameScreen = () => {
                             inactive={true}
                             selected={str == localStorage.getItem('sentAnswer')}
                             disabled={str != correctAnswer}
-                            >
-                                {str}
-                            </GameButton>
+                            text={str}
+                            ></GameButton>
                         </div>
                     );
                 }
@@ -134,7 +133,7 @@ const GameScreen = () => {
                 );
             } else {
                 let answers = question.allAnswers.map((str) =>
-                    <GameButton key={str} callback={() => chooseAnswer(str)}>{str}</GameButton>
+                    <GameButton key={str} callback={() => chooseAnswer(str)} text={str}></GameButton>
                 );
                 content = (
                     <>

@@ -191,8 +191,8 @@ const Score = props => {
                                             callback={() => fetchQuestion(topic)} 
                                             disabled={buttonClicked} 
                                             inactive={buttonClicked}
-                                            selected={chosenTopic == topic}>
-                                                {parseString(topic)}
+                                            selected={chosenTopic == topic}
+                                            text={parseString(topic)}>
                                             </GameButton>
                                         </div>
                                     ))}

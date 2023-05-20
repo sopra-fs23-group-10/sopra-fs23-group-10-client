@@ -22,6 +22,14 @@
         align-items: center;
     }
 
+    .font-small {
+        font-size: 11px !important;
+    }
+
+    .font-medium {
+        font-size: 14px !important;
+    }
+
     &.inactive {
         pointer-events: none;
     }

@@ -6,11 +6,11 @@ export const FontResizer = props => {
 
     useEffect(() => {
         function handleWindowResize() {
-          setHeight(ref.current.clientHeight);
+          if (ref) setHeight(ref.current.clientHeight);
         }
     
         window.addEventListener('resize', handleWindowResize);
-        setHeight(ref.current.clientHeight);
+        if (ref) setHeight(ref.current.clientHeight);
     
         return () => {
           window.removeEventListener('resize', handleWindowResize);

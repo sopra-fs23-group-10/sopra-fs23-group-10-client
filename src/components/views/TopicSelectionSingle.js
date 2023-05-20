@@ -105,9 +105,8 @@ const TopicSelectionSingle = props => {
                                     disabled={buttonClicked} 
                                     inactive={buttonClicked}
                                     selected={localStorage.getItem("topic") == topic}
-                                    >
-                                        {parseString(topic)}
-                                    </GameButton>
+                                    text={parseString(topic)}
+                                    ></GameButton>
                                 </div>
                             ))}
                         </div>
