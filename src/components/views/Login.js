@@ -25,6 +25,8 @@ const Login = props => {
             setMsg("");
             await loginUser(username, password);
             history.push(`/home`);
+            const event = new CustomEvent('splayMusic', { detail: true });
+            document.dispatchEvent(event);
         } catch (error) {
             if (error.response.status === 404) {
                 setMsg("Sorry, this username does not exist.");

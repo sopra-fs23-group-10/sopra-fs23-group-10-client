@@ -308,7 +308,7 @@ const EndGame = props => {
                     <div className='invite-sent'>
                         <div className="invitation overlay">
                         </div>
-                        <div className="RankUpdate base-container">
+                        <div className="RankUpdate base-container boing-intro">
                             <div className="title-placement" style={{textAlign: "center"}}>
                                 <strong> Your updated rank: </strong>
                             </div>

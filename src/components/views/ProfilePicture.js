@@ -111,7 +111,7 @@ const ProfilePicture= props => {
         <>
 
             <HomeHeader height="100"/>
-            <BaseContainer className="popup container">
+            <BaseContainer className="popup container bounce-intro">
                 <div className = "title-location" style={{ gridColumn: '1 / span 2', textAlign: 'center' }} >
                     <div className="title"> <strong> CHOOSE A NEW PROFILE PICTURE </strong></div>
                 </div>

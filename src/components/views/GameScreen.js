@@ -102,7 +102,7 @@ const GameScreen = () => {
             let accent = (str) => {
                 if (str == correctAnswer) return <img className="star accent" src={star}></img>;
             }
-            let answers = question.allAnswers.map((str) => {
+            let answers = question.allAnswers.map((str, index) => {
                     return (
                         <div key={str}>
                             {accent(str)}
@@ -111,6 +111,7 @@ const GameScreen = () => {
                             selected={str == localStorage.getItem('sentAnswer')}
                             disabled={str != correctAnswer}
                             text={str}
+                            delay={index/10}
                             ></GameButton>
                         </div>
                     );
@@ -132,8 +133,8 @@ const GameScreen = () => {
                     </div>
                 );
             } else {
-                let answers = question.allAnswers.map((str) =>
-                    <GameButton key={str} className="boing-intro" callback={() => chooseAnswer(str)} text={str}></GameButton>
+                let answers = question.allAnswers.map((str, index) =>
+                    <GameButton delay={index/10} key={str} className="boing-intro" callback={() => chooseAnswer(str)} text={str}></GameButton>
                 );
                 content = (
                     <>

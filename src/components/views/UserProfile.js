@@ -124,7 +124,7 @@ const UserProfile = props => {
         <>
             <ReceiveInvitation/>
             <HomeHeader height="100"/>
-            <BaseContainer className="popup container">
+            <BaseContainer className="popup container boing-intro">
                 <div className="user-profile container">
                     <div className = "title-location" style={{ gridColumn: '1 / span 2', textAlign: 'center' }} >
                         <div className="title"> <strong> EDIT PROFILE </strong></div>

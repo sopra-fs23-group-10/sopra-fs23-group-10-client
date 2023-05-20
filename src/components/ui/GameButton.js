@@ -36,8 +36,8 @@ export const GameButton = props => {
   }
 
   return (
-    <div ref={ref} className={`game-button container ${props.disabled ? 'disabled' : ''} ${props.inactive ? 'inactive' : ''}`}>
-      <BaseContainer className={`game-button topicContent 
+    <div ref={ref} style={{animationDelay:`${props.delay}s`, transform:'scale(0)'}} className={`game-button container boing-intro ${props.disabled ? 'disabled' : ''} ${props.inactive ? 'inactive' : ''}`}>
+      <BaseContainer className={`game-button topicContent
                                 ${props.selected ? 'selected' : ''} 
                                 ${resizeText(props.text)} 
                                 ${props.className ? props.className : ''}`
@@ -57,5 +57,10 @@ GameButton.propTypes = {
   className: PropTypes.string,
   selected: PropTypes.bool,
   disabled: PropTypes.bool,
-  inactive: PropTypes.bool
+  inactive: PropTypes.bool,
+  delay: PropTypes.number
+};
+
+GameButton.defaultProps = {
+  delay: 0,
 };

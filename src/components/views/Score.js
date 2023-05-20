@@ -185,14 +185,16 @@ const Score = props => {
                                     <div className="title grid2" style={{textAlign: "left"}}>
                                         Select a topic
                                     </div>
-                                    {topics.map((topic)=> (
+                                    {topics.map((topic, index)=> (
                                         <div key={topic} className={'topicSelection'}>
                                             <GameButton 
                                             callback={() => fetchQuestion(topic)} 
                                             disabled={buttonClicked} 
                                             inactive={buttonClicked}
                                             selected={chosenTopic == topic}
-                                            text={parseString(topic)}>
+                                            text={parseString(topic)}
+                                            delay={index/10}
+                                            >
                                             </GameButton>
                                         </div>
                                     ))}
@@ -210,7 +212,7 @@ const Score = props => {
                     }
                 } else {
                     return (
-                        <div className="background-topic-waiting">
+                        <div className="background-topic-waiting bounce-intro" style={{animationDelay:'0.15s'}}>
                             <div className="topic">
                                 Your opponent is selecting a topic.
                             </div>
@@ -220,7 +222,7 @@ const Score = props => {
             }
         } else {
             return (
-                <div className="background-topic-waiting">
+                <div className="background-topic-waiting bounce-intro" style={{animationDelay:'0.1s'}}>
                     <div className="topic">
                         <div style={{ display: 'block' }}>
                             <p>Are you ready for the next question?</p>
@@ -243,7 +245,7 @@ const Score = props => {
                         <div className="title" style={{textAlign: "right"}}>
                             Player 2
                         </div>
-                        <FontResizer className="background-points">
+                        <FontResizer className="background-points bounce-intro" style={{animationDelay:'0.05s'}}>
                             <div className="player">
                                 {usernameInviting}
                             </div>
@@ -251,7 +253,7 @@ const Score = props => {
                                 {result.invitingPlayerResult}
                             </div>
                         </FontResizer>
-                        <FontResizer className="background-points">
+                        <FontResizer className="background-points bounce-intro" style={{animationDelay:'0.1s'}}>
                             <div className="player">
                                 {usernameInvited}
                             </div>
@@ -264,7 +266,7 @@ const Score = props => {
             }
         } else if (result && usernameInviting){
             return(
-                <FontResizer className="background-points" >
+                <FontResizer className="background-points bounce-intro" style={{animationDelay:'0.05s'}}>
                     <div className = "player" style={{textAlign: "center"}}>
                         {usernameInviting}
                     </div>
@@ -288,7 +290,7 @@ const Score = props => {
         if (playerMode == 'duel') {
             if (results && usernameInvited && usernameInviting) {
                 return (
-                    <div className="result-list-container grid grid-0">
+                    <div className="result-list-container grid grid-0 bounce-intro">
                         <ResultList style={{gridColumn:1}} results={pastResults(true)}/>
                         <ResultList style={{gridColumn:2}} results={pastResults(false)}/>
                     </div>
@@ -296,7 +298,7 @@ const Score = props => {
             }
         } else if (result && usernameInviting){
             return(
-                <div className="result-list-container grid-1 ">
+                <div className="result-list-container grid-1 bounce-intro">
                     <ResultList results={pastResults(true)}/>
                 </div>
             );

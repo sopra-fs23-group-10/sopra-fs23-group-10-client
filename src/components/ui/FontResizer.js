@@ -18,7 +18,7 @@ export const FontResizer = props => {
       }, []);
 
     return (
-        <div ref={ref} {...props} style={{ fontSize:height/10}}>
+        <div ref={ref} {...props} style={{...props.style, fontSize:height/10}}>
             {props.children}
         </div>
     );

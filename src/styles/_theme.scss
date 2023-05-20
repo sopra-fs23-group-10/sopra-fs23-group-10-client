@@ -119,6 +119,18 @@ h3 {
   }
 }
 
+@keyframes bounce {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 @keyframes pulse {
   0% {
     transform: scale(1);
@@ -128,6 +140,27 @@ h3 {
   }
   20% {
     transform: scale(1);
+  }
+}
+
+@keyframes popup {
+  0% {
+    transform: scale(0) rotate(-0.05turn);
+  }
+  80% {
+    transform: scale(1.1) rotate(0.01turn);
+  }
+  100% {
+    transform: scale(1) rotate(0turn);
+  }
+}
+
+@keyframes upscale {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.2);
   }
 }
 
@@ -181,8 +214,12 @@ h3 {
 }
 
 .boing-intro {
-  transition: boing 0.3s;
-} 
+  animation: popup 0.3s 1 ease-in-out forwards;
+}
+
+.bounce-intro {
+  animation: bounce 0.2s 1 ease-in-out;
+}
 
 .bobbing {
   animation: bobbing 1s infinite ease-in-out;

@@ -94,10 +94,10 @@ const TopicSelectionSingle = props => {
                     <div className="title spread" style={{ textAlign: "left" }}>
                         Select a topic
                     </div>
-                    {topicRows.map((row, index) => (
-                        <div className="topic-row boing-intro" key={index} style={{ marginBottom: "20px" }}>
-                            {row.map((topic) => (
-                                <div className="topicSelection boing-intro" key={topic}>
+                    {topicRows.map((row, x) => (
+                        <div className="topic-row" key={x} style={{ marginBottom: "20px" }}>
+                            {row.map((topic, y) => (
+                                <div className="topicSelection" key={topic}>
                                     <GameButton 
                                     callback={() => fetchQuestion(topic).catch(error => {
                                         console.error(error);
@@ -106,6 +106,7 @@ const TopicSelectionSingle = props => {
                                     inactive={buttonClicked}
                                     selected={localStorage.getItem("topic") == topic}
                                     text={parseString(topic)}
+                                    delay={(x * 3 + y)/10}
                                     ></GameButton>
                                 </div>
                             ))}

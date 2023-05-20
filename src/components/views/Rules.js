@@ -38,14 +38,8 @@ const Rules = props => {
         });
     }, []);
 
-    const startMusic = () => {
-        const event = new CustomEvent('playingChange', { detail: true });
-        document.dispatchEvent(event);
-    }
-
     const buttonClick = () => {
         history.push('/home');
-        startMusic();
     }
 
     const shortenName = (name, n) => {
@@ -54,7 +48,7 @@ const Rules = props => {
 
     const rulesPopup = () => {
         return (
-            <BaseContainer className="popup container">
+            <BaseContainer className="popup container boing-intro">
             <div className="rulesGrid" >
                 <div className="title_location">
                     <div className ="title" style={{textAlign: "center"}}>

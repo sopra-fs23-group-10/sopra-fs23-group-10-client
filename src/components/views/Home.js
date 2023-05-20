@@ -53,7 +53,7 @@ const Home = () => {
         if (users) {
             if (!startGame) {
                 return (
-                    <div className='home start-container'>
+                    <div className='home start-container boing-intro'>
                         <img className='star' src={star}></img>
                         <button onClick={() => start()} className='home start-game-button'>
                             <p className='home start-game'>Start Game</p>
@@ -130,7 +130,7 @@ const Home = () => {
             <HomeHeader/>
             <ReceiveInvitation/>
             <div className='home container'>
-                <BaseContainer className="home user-container">
+                <BaseContainer className="home user-container bounce-intro">
                     <h3>Active Users</h3>
                     <div className='scroll-container'>
                         <PlayerList callback={getUsers} charNr={13}/>

@@ -45,6 +45,8 @@ const HomeHeader = props => {
     }, []);
 
     const logout = async () => {
+        const event = new CustomEvent('playingChange', { detail: false });
+        document.dispatchEvent(event);
         await logoutUser(useHistory);
         history.push('/login');
     }

@@ -19,6 +19,8 @@ const Registration = props => {
     const doRegistration = async () => {
         try {
             setMsg("");
+            const event = new CustomEvent('playingChange', { detail: true });
+            document.dispatchEvent(event);
             if (!validateEmailFormat(email)) { 
                 setMsg("Please enter a valid email address."); 
                 return;
