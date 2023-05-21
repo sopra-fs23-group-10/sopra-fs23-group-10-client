@@ -92,7 +92,17 @@
     margin-right: 10px;
     position: absolute;
     transform: translateY(-50%);
+    &:hover {
+      filter: hue-rotate(270deg);
+      color: $secondary_color;
+    }
   }
+}
+
+.editProfile{
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 

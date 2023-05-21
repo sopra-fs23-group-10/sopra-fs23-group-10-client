@@ -52,11 +52,18 @@ const HomeHeader = props => {
     }
 
     const edit = () => {
-        return <div className="contentHover"
-                  onClick ={() => toEdit(localStorage.getItem('id'))}>
-                Edit Profile
-                <img className='arrow' src={arrow} style={{position: "absolute", right: "10px", top: "28%", transform: "translateY(-50%)"}}></img>
-            </div>
+        return (
+            <>
+                <div className="contentHover" style={{ position: 'relative'}}>
+                    <div className="editProfile" style={{ position: 'absolute', top: '0', left: '0' }}
+                        onClick={() => toEdit(localStorage.getItem('id'))}
+                    >
+                    Edit Profile
+                    <img className='arrow' src={arrow} style={{position: "absolute", right: "-20px", top: "58%", transform: "translateY(-50%)"}}></img>
+                    </div>
+                </div>
+            </>
+            )
     }
 
     const toEdit = (userId) => {
@@ -111,7 +118,7 @@ const HomeHeader = props => {
                         <div className="contentHover" style={{textAlign: "right"}}>
                         <p>
                             {edit()}
-                            <div style={{height: "22px"}}> </div>
+                            <div style={{height: "46px"}}> </div>
                         </p>
                         </div>
                         <Button className ="logout"
