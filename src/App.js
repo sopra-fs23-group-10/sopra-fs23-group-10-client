@@ -5,7 +5,7 @@ import {useEffect} from "react";
 import Music from "components/views/Music";
 
 const App = () => {
-    localStorage.setItem("total_questions", 1);
+    localStorage.setItem("total_questions", 5);
 
     useEffect(() => {
       register();
