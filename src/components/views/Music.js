@@ -26,7 +26,11 @@ const Music = props => {
     }
 
     const handlePlayingChanged = (e) => {
-        console.log("handle playing changed");
+        console.log("handle playing changed, " + e.detail);
+        if (e.detail) {
+            audio.currentTime = 0;
+            audio.loop = true;
+        }
         e.detail ? audio.play() : audio.pause();
         audio.volume = parseInt(localStorage.getItem("volume"));
     }
