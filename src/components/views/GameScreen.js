@@ -62,13 +62,13 @@ const GameScreen = () => {
         console.log("TIME OUT");
         if (!localStorage.getItem('sentAnswer')) {
             console.log("TIME OUT, SEND ANSWER");
-            answer("stupid answer", 0).catch(error => {
+            answer("stupid answer").catch(error => {
                 console.error(error);
             });
         }
     }
 
-    const answer = async (str, time) => {
+    const answer = async (str) => {
         try {
             console.log("SEND ANSWER");
             setSentAnswer(str);
