@@ -2,6 +2,7 @@
 
 .homeheader {
   height: $header_height;
+  position: relative;
 
   &.container {
     display: grid;

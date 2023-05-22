@@ -37,7 +37,12 @@ $header_height:100px;
 
 .fill {
   width: 100vw;
-  height: 100vh;
+  height: auto;
+  min-height: 100vh;
+}
+
+#root {
+  @extend .fill;
 }
 
 h2,h1,h3 {
