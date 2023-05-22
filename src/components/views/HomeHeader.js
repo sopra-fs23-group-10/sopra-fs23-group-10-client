@@ -83,23 +83,23 @@ const HomeHeader = props => {
                 BrainBusters
             </Link>
             <div className="navigation">
-                <Link className="content nav-item" to="/ranking">
-                    <img className='icons' src={trophy} style={{right: "65px", top: "50%", width: "33px", height: "33px"}}></img>
+                <div className="content nav-item" onClick={() => history.push("/ranking")}>
+                    <img className='icons' src={trophy} style={{right: "65px", top: "52%"}}></img>
                     Ranking
-                </Link>
+                </div>
                 <div className="content" >
                     <div className="nav-item" style={{height:"100%"}} onClick={() => setShowMusic(!showMusic)}>
-                        <img className='icons' src={Music} style={{right: "50px", top: "50%", width: "30px", height: "30px"}}></img>
+                        <img className='icons' src={Music} style={{right: "50px", top: "52%"}}></img>
                         Music
                     </div>
                     <DropDown centered={true} yOffset={100} show={showMusic} setShow={setShowMusic}>
                         <MusicInterface/>
                     </DropDown>
                 </div>
-                <Link className="content nav-item" to="/rules">
-                    <img className='icons' src={result} style={{right: "45px", top: "49%", width: "30px", height: "30px"}}></img>
+                <div className="content nav-item" onClick={() => history.push("/rules")}>
+                    <img className='icons' src={result} style={{right: "45px", top: "51%"}}></img>
                     Rules
-                </Link>
+                </div>
             </div>
             <div className="profile-container">
                 <a className="content fontbold profile nav-item"
