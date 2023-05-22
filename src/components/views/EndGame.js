@@ -46,7 +46,8 @@ const EndGame = props => {
         function handleReceiveReply(e) {
             const accepted = JSON.parse(e.detail)[localStorage.getItem('gameId')];
             if (!accepted) {
-                history.push('/home');
+                localStorage.removeItem('gameId');
+                setRematchSent(false);
                 return;
             }
 
@@ -58,6 +59,10 @@ const EndGame = props => {
                 }
                 setRematchSent(false);
             }
+        }
+
+        function returnHome() {
+            home();
         }
 
         async function getResults(){
@@ -108,8 +113,10 @@ const EndGame = props => {
         if (playerMode == 'single') localStorage.removeItem('gameId');
 
         document.addEventListener("receiveReply", handleReceiveReply);
+        document.addEventListener("endPopup", returnHome);
         return () => {
             document.removeEventListener("receiveReply", handleReceiveReply);
+            document.removeEventListener("endPopup", returnHome);
         }   
     });
 

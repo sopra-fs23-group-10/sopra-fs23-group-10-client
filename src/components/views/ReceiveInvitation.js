@@ -70,7 +70,11 @@ const ReceiveInvitation = props => {
                 if (localStorage.getItem("answered")) setMsg("You cancelled the invitation");
                 else setMsg("The invitation was declined")
             }
-            setTimeout(() => { setMsg(null); }, 1000);
+            setTimeout(() => { 
+                const event = new CustomEvent("endPopup", { detail: null });
+                document.dispatchEvent(event);
+                setMsg(null); 
+            }, 1000);
         }
 
         localStorage.removeItem("invitation");
