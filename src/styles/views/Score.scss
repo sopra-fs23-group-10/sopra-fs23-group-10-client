@@ -2,10 +2,12 @@
 
 .ScreenGrid-Score{
   display: grid;
-  height: calc(100vh - #{$header_height} - #{$base_padding} - #{$base_padding});
+  // height: calc(100vh - #{$header_height});
+  height: auto;
   min-height: 600px;
   grid-template-rows: auto 1fr auto;
-  margin: $base_padding auto $base_padding auto;
+  margin: 0px auto 0px auto;
+  padding: $base_padding 0px $base_padding 0px;
   width: 60%;
   grid-template-columns: 1fr;
   grid-row-gap: 40px;
