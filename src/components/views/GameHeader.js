@@ -8,6 +8,8 @@ import { connectGame, connectResult, disconnectGame, disconnectResult } from "he
 import 'styles/ui/Invitation.scss';
 import DropDown from "components/ui/DropDown";
 import MusicInterface from "components/ui/MusicInterface";
+import Music from "images/Music.png";
+
 
 
 const GameHeader = props => {
@@ -81,7 +83,7 @@ const GameHeader = props => {
                 <div className='invite-sent'>
                     <div className="invitation overlay">
                     </div>
-                    <div className="invitation base-container">
+                    <div className="invitation base-container" style={{fontWeight:"normal"}}>
                         {sentCancellation ? <p>The game has been cancelled</p> : <p>Your opponent has cancelled the game.</p>}
                         <div className="button-container">
                             <Button width="100%" onClick={() => ok()}>Ok</Button>
@@ -119,8 +121,8 @@ const GameHeader = props => {
             </div>
             <div style={{textAlign: "right", gridColumn:4, position:"relative"}}>
                 <div className="content nav-item" onClick={() => setShowMusic(!showMusic)}>
+                    <img className='icons' src={Music} style={{position: "absolute", right: "60px", top:"4px"}}></img>
                     Music
-                   
                 </div>
                 <DropDown centered={true} yOffset={60} show={showMusic} setShow={setShowMusic}>
                     <MusicInterface/>
