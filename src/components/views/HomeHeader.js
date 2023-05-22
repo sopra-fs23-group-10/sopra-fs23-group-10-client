@@ -27,9 +27,7 @@ const HomeHeader = props => {
         async function fetchData() {
             try {
                 const userData = await fetchUserById(localStorage.getItem('id'));
-
                 const user = new User(userData);
-
                 setUsername(user.username);
                 setPoints(user.points);
                 setProfilePicture(user.profilePicture);

@@ -88,6 +88,7 @@ const Registration = props => {
             <BaseContainer className="registration container secondary">
                 Already have an account? <Link to="/login">Sign in here.</Link>
             </BaseContainer>
+            <div className='padding'></div>
         </>
     );
 };

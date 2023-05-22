@@ -59,9 +59,7 @@ const GameScreen = () => {
     }
 
     function timeOut() {
-        console.log("TIME OUT");
         if (!localStorage.getItem('sentAnswer')) {
-            console.log("TIME OUT, SEND ANSWER");
             answer("stupid answer").catch(error => {
                 console.error(error);
             });
@@ -70,7 +68,6 @@ const GameScreen = () => {
 
     const answer = async (str) => {
         try {
-            console.log("SEND ANSWER");
             setSentAnswer(str);
             localStorage.setItem('sentAnswer', str);
             console.log(localStorage.getItem('sentAnswer'));
@@ -234,11 +231,12 @@ const GameScreen = () => {
     return (
         <>
             <GameHeader playerMode={playerMode} gameMode={gameMode} questionId={localStorage.getItem('question_nr')} showCancelButton={true} height="100"/>
-            <div className="GameScreenGrid">
+            <div className={`GameScreenGrid ${gameMode}`}>
                 {showResultText()}
                 {showImage()}
                 {drawQuestion()}
                 {finishTimer()}
+                <div className='padding'></div>
             </div>
         </>
     );

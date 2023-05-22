@@ -50,6 +50,10 @@ h2,h1,h3 {
   padding:0px;
 }
 
+.padding {
+  height:$base_padding;
+}
+
 /* mixins
 
   these allow you to create small snippets that you can insert with a one-liner in other stylesheets

@@ -2,8 +2,7 @@
 
 .ScreenGrid-Score{
   display: grid;
-  // height: calc(100vh - #{$header_height});
-  height: auto;
+  height: calc(100vh - #{$header_height});
   min-height: 600px;
   grid-template-rows: auto 1fr auto;
   margin: 0px auto 0px auto;

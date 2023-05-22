@@ -39,12 +39,13 @@ const ImageQuizStart = () => {
     return (
         <>
             <GameHeader showCancelButton={true} gameMode={gameMode} questionId={localStorage.getItem('question_nr')} playerMode="single" height="100"></GameHeader>
-            <div className='ScreenGrid-Score'>
+            <div className='ScreenGrid-Score' style={{height:"auto"}}>
                 <div className='display bobbing'>Get Ready!</div>
                 <div style={{fontSize:"400px", lineHeight:"400px"}} className='display pulse-animation'>{time}</div>
                 <div className='font-white'>
                     <Timer display={false} timeLimit={3} getTime={getTime} timeOut={fetchQuestion}></Timer>
                 </div>
+                <div className='padding'></div>
             </div>
         </>
 
