@@ -67,7 +67,7 @@ export const StarPlayerList = props => {
                                 <div className="highlight-background">
                                     <div className="StarPlayer rank">#{rank}</div>
                                     <div style ={{height: '20px'}}> </div>
-                                    <Identicon className="player profile-picture" string={username}/>
+                                    <Identicon className="player profile-picture" {user.profilePicture}/>
                                     <div className="StarPlayer username">{username}
                                     </div>
                                     <div className="StarPlayer points">POINTS: {points}
