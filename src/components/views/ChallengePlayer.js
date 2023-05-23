@@ -63,6 +63,7 @@ const ChallengePlayer = props => {
                 setRefresh(refresh + 1);
             }, 2000);
         } else {
+            alert(`Something went wrong while creating a new game, ${handleError(error)}`);
             history.push("/home");
         }
     }

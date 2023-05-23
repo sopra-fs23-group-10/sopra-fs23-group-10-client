@@ -164,6 +164,7 @@ const EndGame = props => {
                 home();
             }, 2000);
         } else {
+            alert(`Something went wrong while creating a new game, ${handleError(error)}`);
             home();
         }
     }
