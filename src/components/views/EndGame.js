@@ -26,6 +26,7 @@ const EndGame = props => {
     const [results, setResults] = useState(null);
     const [oldRank, setOldRank] = useState(null);
     const [newRank, setNewRank] = useState(null);
+    const [msg, setMsg] = useState(null);
 
     useEffect(() => {
         async function fetchData() {
@@ -151,8 +152,20 @@ const EndGame = props => {
             setRematchSent(true);
             setEndedGame(true);
         } catch (error) {
-            alert(error);
-            history.push("/home");
+            handleInvitationError(error);
+        }
+    }
+
+    const handleInvitationError = (error) => {
+        if (error.response.status == 409) {
+            setMsg("This player is already in a game.")
+            setTimeout(() => {
+                setMsg(null);
+                home();
+            }, 2000);
+        } else {
+            alert(`Something went wrong while creating a new game, ${handleError(error)}`);
+            home();
         }
     }
 
@@ -464,8 +477,23 @@ const EndGame = props => {
         )
     }
 
+    const showMessage = () => {
+        if (msg) {
+            return (
+                <div className='invite-sent'>
+                    <div className="invitation overlay">
+                    </div>
+                    <div className="invitation base-container">
+                        <p>{msg}</p>
+                    </div>
+                </div>
+            );
+        }
+    }
+
     return (
         <>
+            {showMessage()}
             {drawRematch()}
             <GameHeader playerMode={playerMode} gameMode={gameMode} questionId={localStorage.getItem("question_nr")} showCancelButton={false} height="100"/>
             <div className="ScreenGrid">

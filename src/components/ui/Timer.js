@@ -55,7 +55,7 @@ export const Timer = props => {
     }
 
     return (
-        <div className="timer container" style={!props.display ? {display:"none"} : {}}>
+        <div className="timer container" style={!props.display ? {display:"none", height:'0px', opacity:"0"} : {}}>
             <div className="timer label">
                 {getMins().toString().padStart(2, '0')}:{getSecs().toString().padStart(2, '0')}
             </div>

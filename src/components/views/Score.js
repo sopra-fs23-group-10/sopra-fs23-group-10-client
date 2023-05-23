@@ -147,7 +147,7 @@ const Score = props => {
     }
 
     const rndTopic = () => {
-        if (localStorage.getItem('topics')) {
+        if (localStorage.getItem('topics') && !chosenTopic) {
             let newTopics = JSON.parse(localStorage.getItem('topics'));
             let rnd = cryptoRandom(3);
             console.log("RAND TOPIC -> " + rnd.toString());
@@ -163,14 +163,17 @@ const Score = props => {
     }
 
     const getQuestionSingle = () => {
-        if (gameMode == "text") {
-            fetchQuestion(localStorage.getItem('topic')).catch(error => {
-                console.error(error);
-            });
-        } else {
-            fetchImageQuestion().catch(error => {
-                console.error(error);
-            });
+        if (!buttonClicked) {
+            setButtonClicked(true);
+            if (gameMode == "text") {
+                fetchQuestion(localStorage.getItem('topic')).catch(error => {
+                    console.error(error);
+                });
+            } else {
+                fetchImageQuestion().catch(error => {
+                    console.error(error);
+                });
+            }
         }
     }
 
@@ -309,6 +312,7 @@ const Score = props => {
     const drawTimer = () => {
         if (playerMode == 'duel' || selecting != 'selecting') {
             let timeLimit = parseInt(localStorage.getItem("question_nr")) <= 0 ? 10 : 15;
+            timeLimit = gameMode == 'image' ? 3 : timeLimit;
             return (
                 <div className="font-white">
                     <Timer timeOut={handleTimeOut} timeLimit={timeLimit}/>

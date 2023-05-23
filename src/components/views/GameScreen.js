@@ -222,7 +222,6 @@ const GameScreen = () => {
     }
 
     const showResultText = () => {
-        console.log(gameMode == 'text');
         if (gameMode == 'text') {
             return showResult();
         }
@@ -236,7 +235,6 @@ const GameScreen = () => {
                 {showImage()}
                 {drawQuestion()}
                 {finishTimer()}
-                <div className='padding'></div>
             </div>
         </>
     );
