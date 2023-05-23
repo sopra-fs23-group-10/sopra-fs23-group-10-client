@@ -3,7 +3,7 @@ import music from "music/Derp Nugget.mp3";
 
 const Music = props => {
     const [audio] = useState(new Audio(music));
-    localStorage.setItem("volume", 1);
+    if (!localStorage.getItem("volume")) localStorage.setItem("volume", 1);
 
     useEffect(() => {
         console.log("set volume in local storage");
@@ -28,6 +28,7 @@ const Music = props => {
     const handlePlayingChanged = (e) => {
         console.log("handle playing changed, " + e.detail);
         if (e.detail) {
+            if (!localStorage.getItem("volume")) localStorage.setItem("volume", 1);
             audio.currentTime = 0;
             audio.loop = true;
         }

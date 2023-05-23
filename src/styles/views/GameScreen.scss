@@ -16,6 +16,7 @@
 
   &.image {
     grid-template-rows: minmax(200px, 1fr) auto auto;
+    max-width:800px;
   }
 
   .image-holder {

@@ -236,7 +236,6 @@ const GameScreen = () => {
                 {showImage()}
                 {drawQuestion()}
                 {finishTimer()}
-                <div className='padding'></div>
             </div>
         </>
     );

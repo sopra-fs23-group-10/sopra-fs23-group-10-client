@@ -133,7 +133,7 @@ const Home = () => {
                 <BaseContainer className="home user-container bounce-intro">
                     <h3>Active Users</h3>
                     <div className='scroll-container'>
-                        <PlayerList callback={getUsers} charNr={13}/>
+                        <PlayerList callback={getUsers} charNr={10}/>
                     </div>
                 </BaseContainer>
                 <div className='home start-game-container'>
