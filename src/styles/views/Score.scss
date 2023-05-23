@@ -2,12 +2,12 @@
 
 .ScreenGrid-Score{
   display: grid;
-  max-height: 100vh;
-  height: auto;
+  height: calc(100vh - #{$header_height});
+  min-height: 600px;
+  grid-template-rows: auto 1fr auto;
+  margin: 0px auto 0px auto;
+  padding: $base_padding 0px $base_padding 0px;
   width: 60%;
-  margin: 0 auto;
-  margin-top: 50px;
-  grid-template-rows: auto auto auto auto;
   grid-template-columns: 1fr;
   grid-row-gap: 40px;
   grid-auto-flow: row;
@@ -30,7 +30,8 @@
   }
 
   .grid-1 {
-    grid-template-rows: 20px 90%;
+    grid-template-rows: 20px 1fr;
+    height:100%;
   }
 
   .grid-2 {
@@ -74,8 +75,7 @@
 .player{
   font-family: $fontDisplay;
   color: $secondary_color;
-  font-size: 8vh;
-  transform: translate(7px, calc(0vh - 20px));
+  font-size: 1.5em;
   font-weight: bold;
   align-items: center;
   justify-content: space-between;
@@ -83,11 +83,11 @@
 .points-score{
   font-family: $fontDisplay;
   color: $secondary_color;
-  font-size: 20vh;
+  font-size: 7em;
+  line-height: 0.6em;
   font-weight: bold;
   align-items: center;
   justify-content: space-between;
-  transform: translate(0px, calc(-13vh - 0px));
 }
 
 .background-topic-waiting{
@@ -113,7 +113,8 @@
   border-radius: $borderRadius;
   width: 100%;
   margin: 0 auto;
-  height:400px;
+  height: 100%;
+  text-align: center;
 }}
 
 

@@ -11,7 +11,7 @@ import ReceiveInvitation from './ReceiveInvitation';
 import 'styles/views/PopUp.scss';
 import Identicon from "react-identicons";
 import { updateUser } from '../../helpers/restApi';
-import user from "models/User";
+import clickable_edit from "images/clickable_edit.svg";
 
 
 const FormField = props => {
@@ -49,8 +49,6 @@ const UserProfile = props => {
     const history = useHistory();
     const [username, setUsername] = useState(null);
     const [originalUsername, setoriginalUsername] = useState (null);
-    const [status, setStatus] = useState(null);
-    const [points, setPoints] = useState(null);
     const [profilePicture, setProfilePicture] = useState(null);
     const [msg, setMsg] = useState("");
 
@@ -65,8 +63,6 @@ const UserProfile = props => {
                 const user = new User(userData);
                 setUsername(user.username);
                 setoriginalUsername(user.username);
-                setStatus(user.status);
-                setPoints(user.points);
                 setProfilePicture(user.profilePicture);
             } catch (error) {
                 console.error(error.message);
@@ -128,15 +124,19 @@ const UserProfile = props => {
         <>
             <ReceiveInvitation/>
             <HomeHeader height="100"/>
-            <BaseContainer className="popup container">
+            <BaseContainer className="popup container boing-intro">
                 <div className="user-profile container">
                     <div className = "title-location" style={{ gridColumn: '1 / span 2', textAlign: 'center' }} >
                         <div className="title"> <strong> EDIT PROFILE </strong></div>
                     </div>
                     <div className="picture-location">
-                        <Link to={`/users/${user_id}/profilepicture`}>
-                            <Identicon className="profile-picture" string={profilePicture} size={100} style={{ backgroundColor: 'lightgray' }}/>
-                        </Link>
+                        <div className="profile-picture-container">
+                            <Link to={`/users/${user_id}/profilepicture`}>
+                                <Identicon className="picture" string={profilePicture} size={100} style={{ backgroundColor: 'lightgray' }}/>
+                                <img className='edit-icon' src={clickable_edit}></img>
+                            </Link>
+                        </div>
+
                     </div>
                     <div className="form-location">
                         {profileFields}
@@ -144,7 +144,6 @@ const UserProfile = props => {
                     {error()}
                 </div>
                 <div style ={{height: '12px'}}> </div>
-                <Link to="/resetpassword" style={{textAlign: "right"}}>Change Password</Link>
                     <Button
                         disabled={!username || !profilePicture}
                         width="100%"

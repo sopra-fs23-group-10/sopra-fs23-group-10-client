@@ -22,7 +22,7 @@ const ReceiveInvitation = props => {
         return () => {
             window.removeEventListener('beforeunload', handleReload);
             disconnectInvitations();
-        }   
+        };
     }, [invitation]);
 
     const handleInvite = async (msg) => {
@@ -34,13 +34,13 @@ const ReceiveInvitation = props => {
         localStorage.setItem("invitation", true);
     }
 
-    const handleReload = async () => {
+    const handleReload = () => {
         localStorage.removeItem("invitation");
         localStorage.removeItem("answered");
         if (localStorage.getItem('gameId')) {
             try {
                 localStorage.removeItem('startTime');
-                const response = await answerInvite(localStorage.getItem('gameId'), false);
+                const response = answerInvite(localStorage.getItem('gameId'), false);
                 const event = new CustomEvent("sendReply", { detail: false });
                 document.dispatchEvent(event);
             } catch (error) {
@@ -70,7 +70,11 @@ const ReceiveInvitation = props => {
                 if (localStorage.getItem("answered")) setMsg("You cancelled the invitation");
                 else setMsg("The invitation was declined")
             }
-            setTimeout(() => { setMsg(null); }, 3000);
+            setTimeout(() => { 
+                const event = new CustomEvent("endPopup", { detail: null });
+                document.dispatchEvent(event);
+                setMsg(null); 
+            }, 1000);
         }
 
         localStorage.removeItem("invitation");

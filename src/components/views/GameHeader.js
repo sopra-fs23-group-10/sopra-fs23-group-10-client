@@ -8,6 +8,8 @@ import { connectGame, connectResult, disconnectGame, disconnectResult } from "he
 import 'styles/ui/Invitation.scss';
 import DropDown from "components/ui/DropDown";
 import MusicInterface from "components/ui/MusicInterface";
+import Music from "images/Music.png";
+
 
 
 const GameHeader = props => {
@@ -70,6 +72,8 @@ const GameHeader = props => {
         localStorage.removeItem('result');
         localStorage.removeItem('topic');
         localStorage.removeItem('bothAnswered');
+        localStorage.removeItem('answered');
+        localStorage.removeItem('invitation');
         history.push("/home");
     }
 
@@ -79,8 +83,8 @@ const GameHeader = props => {
                 <div className='invite-sent'>
                     <div className="invitation overlay">
                     </div>
-                    <div className="invitation base-container">
-                        {sentCancellation ? <p>You have successfully cancelled the game</p> : <p>Your opponent has cancelled the game.</p>}
+                    <div className="invitation base-container" style={{fontWeight:"normal"}}>
+                        {sentCancellation ? <p>The game has been cancelled</p> : <p>Your opponent has cancelled the game.</p>}
                         <div className="button-container">
                             <Button width="100%" onClick={() => ok()}>Ok</Button>
                         </div>
@@ -106,7 +110,7 @@ const GameHeader = props => {
             <div className="gamecontentheader fontnormal" style={{textAlign: "left"}}>
                 <p>
                     {props.playerMode.charAt(0).toUpperCase() + props.playerMode.slice(1)} Mode <br />
-                    Trivia Quiz
+                    {props.gameMode == 'text' ? "Trivia" : "Image"} Quiz
                 </p>
             </div>
             <div className="gamecontentheader fontnormal" style={{textAlign: "left"}}>
@@ -117,8 +121,8 @@ const GameHeader = props => {
             </div>
             <div style={{textAlign: "right", gridColumn:4, position:"relative"}}>
                 <div className="content nav-item" onClick={() => setShowMusic(!showMusic)}>
+                    <img className='icons' src={Music} style={{position: "absolute", right: "60px", top:"4px"}}></img>
                     Music
-                   
                 </div>
                 <DropDown centered={true} yOffset={60} show={showMusic} setShow={setShowMusic}>
                     <MusicInterface/>
@@ -132,6 +136,7 @@ const GameHeader = props => {
 
 GameHeader.propTypes = {
     playerMode: PropTypes.string,
+    gameMode: PropTypes.string,
     height: PropTypes.number,
     questionId: PropTypes.string,
     showCancelButton: PropTypes.bool

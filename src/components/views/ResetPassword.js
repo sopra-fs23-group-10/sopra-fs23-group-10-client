@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import 'styles/views/Registration.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import {FormField} from "components/ui/FormField";
@@ -6,7 +6,6 @@ import {Button} from "../ui/Button";
 import {Link} from "react-router-dom";
 import HeaderAuthentication from "./HeaderAuthentication";
 import { resetPassword } from 'helpers/restApi';
-import { useState } from 'react';
 import check from "images/checkmark.svg";
 
 

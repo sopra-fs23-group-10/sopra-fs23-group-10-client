@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useHistory, useParams, useLocation} from 'react-router-dom';
+import {useHistory, useLocation} from 'react-router-dom';
 import {Button} from 'components/ui/Button';
 import 'styles/views/PopUp.scss';
 import 'styles/views/Rules.scss';
@@ -38,19 +38,17 @@ const Rules = props => {
         });
     }, []);
 
-    const startMusic = () => {
-        const event = new CustomEvent('playingChange', { detail: true });
-        document.dispatchEvent(event);
-    }
-
     const buttonClick = () => {
         history.push('/home');
-        startMusic();
+    }
+
+    const shortenName = (name, n) => {
+        return (name.length > n) ? name.slice(0, n-1) + '...' : name;
     }
 
     const rulesPopup = () => {
         return (
-            <BaseContainer className="popup container">
+            <BaseContainer className="popup container boing-intro">
             <div className="rulesGrid" >
                 <div className="title_location">
                     <div className ="title" style={{textAlign: "center"}}>
@@ -109,7 +107,7 @@ const Rules = props => {
             <div className="ScreenGrid-Rules">
                 {isFromRegistration && (
                     <div className = "welcome">
-                        Welcome&nbsp;&nbsp;{username}!
+                        Welcome,&nbsp;{username ? shortenName(username, 15) : ""}!
                     </div>
                 )}
                 {rulesPopup()}

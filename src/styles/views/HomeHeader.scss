@@ -2,10 +2,11 @@
 
 .homeheader {
   height: $header_height;
+  position: relative;
 
   &.container {
     display: grid;
-    grid-template-columns: 100px minmax(360px, 1fr) minmax(auto, 200px);
+    grid-template-columns: 100px minmax(360px, 1fr) auto;
     align-items: center;
     padding-left: $base_padding;
     padding-right: $base_padding;
@@ -53,10 +54,8 @@
     cursor: pointer;
     @extend .base-transition;
 
-    &:hover {
-      p {
-        color: $secondary_color !important;
-      }
+    .username {
+      white-space: nowrap;
     }
 
     p {
@@ -73,8 +72,10 @@
       align-self: center;
       height: $header_height;
       line-height: $header_height;
-      margin-left: $base_padding;
+      margin-left: 70px;
       position: relative;
+      display: flex;
+      align-items: center;
     }
 
     .disabled{
@@ -82,7 +83,24 @@
       color: $off_white;
     }
   }
+  .icons{
+    margin-right: 10px;
+    position: absolute;
+    transform: translateY(-50%);
+    &:hover {
+      filter: hue-rotate(270deg);
+      color: $secondary_color;
+    }
+  }
 }
+
+.editProfile{
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+
 
 
 

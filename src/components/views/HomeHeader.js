@@ -6,12 +6,14 @@ import "styles/views/HomeHeader.scss";
 import React,{useEffect,useState} from 'react';
 import User from "../../models/User";
 import "styles/views/PopUp.scss";
-import Triangle from "images/Triangle.png";
 import arrow from "images/arrow.png";
 import Identicon from 'react-identicons';
 import DropDown from "components/ui/DropDown";
 import 'rc-slider/assets/index.css';
 import MusicInterface from "components/ui/MusicInterface";
+import Music from "images/Music.png";
+import result from "images/result.svg";
+import trophy from "images/trophy.svg";
 
 
 const HomeHeader = props => {
@@ -25,9 +27,7 @@ const HomeHeader = props => {
         async function fetchData() {
             try {
                 const userData = await fetchUserById(localStorage.getItem('id'));
-
                 const user = new User(userData);
-
                 setUsername(user.username);
                 setPoints(user.points);
                 setProfilePicture(user.profilePicture);
@@ -43,16 +43,25 @@ const HomeHeader = props => {
     }, []);
 
     const logout = async () => {
+        const event = new CustomEvent('playingChange', { detail: false });
+        document.dispatchEvent(event);
         await logoutUser(useHistory);
         history.push('/login');
     }
 
     const edit = () => {
-        return <div className="contentHover"
-                  onClick ={() => toEdit(localStorage.getItem('id'))}>
-                Edit Profile
-                <img className='arrow' src={arrow} style={{position: "absolute", right: "10px", top: "28%", transform: "translateY(-50%)"}}></img>
-            </div>
+        return (
+            <>
+                <div className="contentHover" style={{ position: 'relative'}}>
+                    <div className="editProfile" style={{ position: 'absolute', top: '0', left: '0' }}
+                        onClick={() => toEdit(localStorage.getItem('id'))}
+                    >
+                    Edit Profile
+                    <img className='arrow' src={arrow} style={{position: "absolute", right: "-20px", top: "58%", transform: "translateY(-50%)"}}></img>
+                    </div>
+                </div>
+            </>
+            )
     }
 
     const toEdit = (userId) => {
@@ -72,20 +81,23 @@ const HomeHeader = props => {
                 BrainBusters
             </Link>
             <div className="navigation">
-                <Link className="content nav-item" to="/ranking">
+                <div className="content nav-item" onClick={() => history.push("/ranking")}>
+                    <img className='icons' src={trophy} style={{right: "65px", top: "52%"}}></img>
                     Ranking
-                </Link>
+                </div>
                 <div className="content" >
                     <div className="nav-item" style={{height:"100%"}} onClick={() => setShowMusic(!showMusic)}>
+                        <img className='icons' src={Music} style={{right: "50px", top: "52%"}}></img>
                         Music
                     </div>
                     <DropDown centered={true} yOffset={100} show={showMusic} setShow={setShowMusic}>
                         <MusicInterface/>
                     </DropDown>
                 </div>
-                <Link className="content nav-item" to="/rules">
+                <div className="content nav-item" onClick={() => history.push("/rules")}>
+                    <img className='icons' src={result} style={{right: "45px", top: "51%"}}></img>
                     Rules
-                </Link>
+                </div>
             </div>
             <div className="profile-container">
                 <a className="content fontbold profile nav-item"
@@ -102,10 +114,10 @@ const HomeHeader = props => {
                         </p>
                         </div>
                         <div className="contentHover" style={{textAlign: "right"}}>
+                        <p>
                             {edit()}
-                            <p>
-
-                            </p>
+                            <div style={{height: "46px"}}> </div>
+                        </p>
                         </div>
                         <Button className ="logout"
                                 width="100%"

@@ -1,7 +1,8 @@
 @import 'styles/theme.scss';
 
 .invitation {
-    position: absolute;
+    position: fixed;
+    overflow: hidden;
     width:400px;
     height: auto;
     left: calc(50% - 200px);
@@ -15,13 +16,13 @@
     }
 
     &.overlay {
-        position: absolute;
+        position: fixed;
         background-color: #00000032;
         left: 0px;
         top: 0px;
         z-index: 20;
-        width: 100vw;
-        height: 100vh;
+        width: 200vw;
+        height: 200vh;
     }
 
     &.base-container {

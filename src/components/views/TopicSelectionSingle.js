@@ -94,9 +94,9 @@ const TopicSelectionSingle = props => {
                     <div className="title spread" style={{ textAlign: "left" }}>
                         Select a topic
                     </div>
-                    {topicRows.map((row, index) => (
-                        <div className="topic-row" key={index} style={{ marginBottom: "20px" }}>
-                            {row.map((topic) => (
+                    {topicRows.map((row, x) => (
+                        <div className="topic-row" key={x} style={{ marginBottom: "20px" }}>
+                            {row.map((topic, y) => (
                                 <div className="topicSelection" key={topic}>
                                     <GameButton 
                                     callback={() => fetchQuestion(topic).catch(error => {
@@ -105,9 +105,9 @@ const TopicSelectionSingle = props => {
                                     disabled={buttonClicked} 
                                     inactive={buttonClicked}
                                     selected={localStorage.getItem("topic") == topic}
-                                    >
-                                        {parseString(topic)}
-                                    </GameButton>
+                                    text={parseString(topic)}
+                                    delay={(x * 3 + y)/10}
+                                    ></GameButton>
                                 </div>
                             ))}
                         </div>
@@ -120,7 +120,7 @@ const TopicSelectionSingle = props => {
     const drawHeader = () => {
         if (localStorage.getItem('gameId')){
             return (
-                <GameHeader showCancelButton={true} questionId={localStorage.getItem('question_nr')} playerMode="single" height="100"/>
+                <GameHeader showCancelButton={true} gameMode={gameMode} questionId={localStorage.getItem('question_nr')} playerMode="single" height="100"/>
             );
         }
     }

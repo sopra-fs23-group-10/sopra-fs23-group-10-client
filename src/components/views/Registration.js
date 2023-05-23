@@ -19,6 +19,8 @@ const Registration = props => {
     const doRegistration = async () => {
         try {
             setMsg("");
+            const event = new CustomEvent('playingChange', { detail: true });
+            document.dispatchEvent(event);
             if (!validateEmailFormat(email)) { 
                 setMsg("Please enter a valid email address."); 
                 return;
@@ -86,6 +88,7 @@ const Registration = props => {
             <BaseContainer className="registration container secondary">
                 Already have an account? <Link to="/login">Sign in here.</Link>
             </BaseContainer>
+            <div className='padding'></div>
         </>
     );
 };

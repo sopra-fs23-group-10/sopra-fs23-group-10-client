@@ -12,6 +12,7 @@ import Result from "../../models/Result";
 import { ResultList } from 'components/ui/ResultList';
 import User from "../../models/User";
 import star from "../../images/star.png";
+import { FontResizer } from 'components/ui/FontResizer';
 
 
 const EndGame = props => {
@@ -45,7 +46,8 @@ const EndGame = props => {
         function handleReceiveReply(e) {
             const accepted = JSON.parse(e.detail)[localStorage.getItem('gameId')];
             if (!accepted) {
-                history.push('/home');
+                localStorage.removeItem('gameId');
+                setRematchSent(false);
                 return;
             }
 
@@ -57,6 +59,10 @@ const EndGame = props => {
                 }
                 setRematchSent(false);
             }
+        }
+
+        function returnHome() {
+            home();
         }
 
         async function getResults(){
@@ -107,8 +113,10 @@ const EndGame = props => {
         if (playerMode == 'single') localStorage.removeItem('gameId');
 
         document.addEventListener("receiveReply", handleReceiveReply);
+        document.addEventListener("endPopup", returnHome);
         return () => {
             document.removeEventListener("receiveReply", handleReceiveReply);
+            document.removeEventListener("endPopup", returnHome);
         }   
     });
 
@@ -167,6 +175,7 @@ const EndGame = props => {
                     <div className = "invitation overlay">
                     </div>
                     <div className = "invitation base-container">
+                        <a onClick={() => cancelRematch()} style={{textAlign: "right"}}> Cancel Invitation</a>
                         <p> Rematch has been sent. Waiting for answer...</p>
                         <div className="button-container font-black">
                             <Timer timeLimit={60} timeOut={cancelRematch}/>
@@ -238,6 +247,7 @@ const EndGame = props => {
         localStorage.removeItem('question_nr');
         localStorage.removeItem('result');
         localStorage.removeItem('topic');
+        localStorage.removeItem('startTime');
     }
 
     const home = () => {
@@ -264,6 +274,7 @@ const EndGame = props => {
     }
 
     const replay = () => {
+        cleanup();
         newGame().catch(error => {
             console.error(error);
         });
@@ -304,7 +315,7 @@ const EndGame = props => {
                     <div className='invite-sent'>
                         <div className="invitation overlay">
                         </div>
-                        <div className="RankUpdate base-container">
+                        <div className="RankUpdate base-container boing-intro">
                             <div className="title-placement" style={{textAlign: "center"}}>
                                 <strong> Your updated rank: </strong>
                             </div>
@@ -323,7 +334,7 @@ const EndGame = props => {
                             </div>
                             <div className="timer-placement" >
                                 <div className="button-container" >
-                                    <Timer timeLimit={2000} timeOut={ClosePopUp}/>
+                                    <Timer timeLimit={3} timeOut={ClosePopUp}/>
                                 </div>
                             </div>
 
@@ -348,42 +359,42 @@ const EndGame = props => {
                                     Player 2
                                 </div>
                                 {result.invitingPlayerResult > result.invitedPlayerResult ? (
-                                    <div className="background-points-winner">
+                                    <FontResizer className="background-points-winner">
                                         <div className = "player" style={{textAlign: "center"}}>
                                             {usernameInviting}
                                         </div>
                                         <div className = "points-endgame" style={{textAlign: "center"}}>
                                             {result.invitingPlayerResult}
                                         </div>
-                                    </div>
+                                    </FontResizer>
                                 ) : (
-                                    <div className="background-points-loser">
+                                    <FontResizer className="background-points-loser">
                                         <div className = "player player-loser" style={{textAlign: "center"}}>
                                             {usernameInviting}
                                         </div>
                                         <div className = "points-endgame points-loser" style={{textAlign: "center"}}>
                                             {result.invitingPlayerResult}
                                         </div>
-                                    </div>
+                                    </FontResizer>
                                 ) }
                                 {result.invitingPlayerResult < result.invitedPlayerResult ? (
-                                    <div className="background-points-winner">
+                                    <FontResizer className="background-points-winner">
                                         <div className = "player" style={{textAlign: "center"}} >
                                             {usernameInvited}
                                         </div>
                                         <div className = "points-endgame" style={{textAlign: "center"}}>
                                             {result.invitedPlayerResult}
                                         </div>
-                                    </div>
+                                    </FontResizer>
                                 ) : (
-                                    <div className="background-points-loser">
+                                    <FontResizer className="background-points-loser">
                                         <div className = "player player-loser" style={{textAlign: "center"}}>
                                             {usernameInvited}
                                         </div>
                                         <div className = "points-endgame points-loser" style={{textAlign: "center"}}>
                                             {result.invitedPlayerResult}
                                         </div>
-                                    </div>
+                                    </FontResizer>
                                 ) }
                             </div>
                             <div className="background-rematchoption">
@@ -412,19 +423,16 @@ const EndGame = props => {
             return (
                 <>
                     {drawResults()}
-                    <div style={{ position: 'relative', gridColumn:1, height:"40vh"}} >
-                        <div className="background-points-winner" style={{ width: '100%', height: '100%', position: 'absolute' }}>
+                    <div style={{ position: 'relative', gridColumn:1, height:"100%"}} >
+                        <FontResizer className="background-points-winner" style={{ width: '100%', height: '100%', position: 'absolute' }}>
                             <div className = "player" style={{textAlign: "center"}}>
                                 {usernameInviting}
                             </div>
                             <div className = "points-endgame" style={{textAlign: "center"}}>
                                 {result.invitingPlayerResult}
                             </div>
-                        </div>
+                        </FontResizer>
                     </div>
-                    <>
-                        <div style={{ paddingTop: '40px' }}></div>
-                    </>
                     <div className="background-rematchoption" >
                         <div className="content">
                             <div className="twoButtons">
@@ -459,7 +467,7 @@ const EndGame = props => {
     return (
         <>
             {drawRematch()}
-            <GameHeader playerMode={playerMode} questionId={localStorage.getItem("question_nr")} showCancelButton={false} height="100"/>
+            <GameHeader playerMode={playerMode} gameMode={gameMode} questionId={localStorage.getItem("question_nr")} showCancelButton={false} height="100"/>
             <div className="ScreenGrid">
                 {endPointsScreen()}
             </div>

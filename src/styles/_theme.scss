@@ -36,13 +36,22 @@ $base_padding: 40px;
 $header_height:100px;
 
 .fill {
-  min-width: 100vw;
+  width: 100vw;
+  height: auto;
   min-height: 100vh;
+}
+
+#root {
+  @extend .fill;
 }
 
 h2,h1,h3 {
   margin:0px;
   padding:0px;
+}
+
+.padding {
+  height:$base_padding;
 }
 
 /* mixins
@@ -119,6 +128,51 @@ h3 {
   }
 }
 
+@keyframes bounce {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  10% {
+    transform: scale(1.1);
+  }
+  20% {
+    transform: scale(1);
+  }
+}
+
+@keyframes popup {
+  0% {
+    transform: scale(0) rotate(-0.05turn);
+  }
+  80% {
+    transform: scale(1.1) rotate(0.01turn);
+  }
+  100% {
+    transform: scale(1) rotate(0turn);
+  }
+}
+
+@keyframes upscale {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.2);
+  }
+}
+
 .star {
   position: absolute;
   width: 400px;
@@ -146,8 +200,13 @@ h3 {
   @extend .base-transition;
   cursor: pointer;
 
+  img {
+    width:20px;
+    height:20px;
+  }
+
   &:hover {
-    color: $secondary_color;
+    color: $off_white;
     transform: scale(1.1);
   }
 }
@@ -162,4 +221,20 @@ h3 {
 
 .font-purple {
   color: $secondary_color;
+}
+
+.pulse-animation {
+  animation: pulse 1s ease-in-out infinite;
+}
+
+.boing-intro {
+  animation: popup 0.3s 1 ease-in-out forwards;
+}
+
+.bounce-intro {
+  animation: bounce 0.2s 1 ease-in-out;
+}
+
+.bobbing {
+  animation: bobbing 1s infinite ease-in-out;
 }

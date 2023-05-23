@@ -24,6 +24,8 @@ const Login = props => {
         try {
             setMsg("");
             await loginUser(username, password);
+            const event = new CustomEvent('playingChange', { detail: true });
+            document.dispatchEvent(event);
             history.push(`/home`);
         } catch (error) {
             if (error.response.status === 404) {
@@ -76,6 +78,7 @@ const Login = props => {
             <BaseContainer className="login container secondary">
                 No account yet? <Link to ="/registration">  Register here.</Link>
             </BaseContainer>
+            <div className='padding'></div>
         </>
 
     );

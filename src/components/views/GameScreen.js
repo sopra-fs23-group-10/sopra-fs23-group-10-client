@@ -9,7 +9,7 @@ import { Timer } from "components/ui/Timer";
 import star from "images/star.png";
 import BaseContainer from "components/ui/BaseContainer";
 import { connectRound, disconnectRound } from "helpers/WebSocketFactory";
-import Question from "models/Question";
+import { FontResizer } from "components/ui/FontResizer";
 
 const GameScreen = () => {
     const history = useHistory();
@@ -59,18 +59,15 @@ const GameScreen = () => {
     }
 
     function timeOut() {
-        console.log("TIME OUT");
         if (!localStorage.getItem('sentAnswer')) {
-            console.log("TIME OUT, SEND ANSWER");
-            answer("stupid answer", 0).catch(error => {
+            answer("stupid answer").catch(error => {
                 console.error(error);
             });
         }
     }
 
-    const answer = async (str, time) => {
+    const answer = async (str) => {
         try {
-            console.log("SEND ANSWER");
             setSentAnswer(str);
             localStorage.setItem('sentAnswer', str);
             console.log(localStorage.getItem('sentAnswer'));
@@ -86,7 +83,6 @@ const GameScreen = () => {
             console.log(response);
             localStorage.setItem('correctAnswer', response.data.correctAnswer);
             if (response) {
-                setCorrectAnswer(response.data.correctAnswer);
                 const pauseEvt = new CustomEvent('pause', { detail: null });
                 document.dispatchEvent(pauseEvt);
                 setCorrectAnswer(localStorage.getItem("correctAnswer"));
@@ -102,7 +98,7 @@ const GameScreen = () => {
             let accent = (str) => {
                 if (str == correctAnswer) return <img className="star accent" src={star}></img>;
             }
-            let answers = question.allAnswers.map((str) => {
+            let answers = question.allAnswers.map((str, index) => {
                     return (
                         <div key={str}>
                             {accent(str)}
@@ -110,9 +106,9 @@ const GameScreen = () => {
                             inactive={true}
                             selected={str == localStorage.getItem('sentAnswer')}
                             disabled={str != correctAnswer}
-                            >
-                                {str}
-                            </GameButton>
+                            text={str}
+                            delay={index/10}
+                            ></GameButton>
                         </div>
                     );
                 }
@@ -133,12 +129,12 @@ const GameScreen = () => {
                     </div>
                 );
             } else {
-                let answers = question.allAnswers.map((str) =>
-                    <GameButton key={str} callback={() => chooseAnswer(str)}>{str}</GameButton>
+                let answers = question.allAnswers.map((str, index) =>
+                    <GameButton delay={index/10} key={str} className="boing-intro" callback={() => chooseAnswer(str)} text={str}></GameButton>
                 );
                 content = (
                     <>
-                        <div className={`background-question ${gameMode == 'image' ? 'image-question' : ''}`}>
+                        <div className={`background-question bounce-intro ${gameMode == 'image' ? 'image-question' : ''}`}>
                             <div style={{display:gameMode == 'text' ? "none": "block"}} className="image-question-bg"></div>
                             <div className='question-content' style={{textAlign: "center"}}>
                                 {question.question}
@@ -200,35 +196,47 @@ const GameScreen = () => {
     }
 
     const showResult = () => {
-        if (correctAnswer) return <div className={`display ${gameMode == 'image' ? 'image-question' : ''}`}>{resultText()}</div>
+        if (correctAnswer) return <div className='display'>{resultText()}</div>
     }
 
     const showImage = () => {
         if (gameMode == "image" && question) {
             return (
                 <BaseContainer className="image-holder">
-                    <img style={{filter: `blur(${correctAnswer ? 0 : 20*(time/answerTime)}px)`}} src={`https://imgur.com/${question.apiId}.jpeg`} ></img>
+                    <div className="image" style={{filter: `blur(${correctAnswer ? 0 : 20*(time/answerTime)}px)`, background: `url(https://imgur.com/${question.apiId}.jpeg)`, backgroundSize:"cover", backgroundPosition:"center"}}>
+                    <FontResizer className="title-holder">
+                        {showResult()}
+                    </FontResizer>
+                    </div>
                 </BaseContainer>
             );
         }
     }
 
     const finishTimer = () => {
-        if (bothAnswered) {
+        if (bothAnswered || (playerMode == 'single' && correctAnswer)) {
             return (
                 <Timer timeLimit={3} display={false} timeOut={() => goToScore()}/>
             )
         }
     }
 
+    const showResultText = () => {
+        console.log(gameMode == 'text');
+        if (gameMode == 'text') {
+            return showResult();
+        }
+    }
+
     return (
         <>
-            <GameHeader playerMode={playerMode} questionId={localStorage.getItem('question_nr')} showCancelButton={true} height="100"/>
-            <div className="GameScreenGrid">
-                {showResult()}
+            <GameHeader playerMode={playerMode} gameMode={gameMode} questionId={localStorage.getItem('question_nr')} showCancelButton={true} height="100"/>
+            <div className={`GameScreenGrid ${gameMode}`}>
+                {showResultText()}
                 {showImage()}
                 {drawQuestion()}
                 {finishTimer()}
+                <div className='padding'></div>
             </div>
         </>
     );

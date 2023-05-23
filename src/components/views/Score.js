@@ -11,6 +11,7 @@ import {Timer} from "../ui/Timer";
 import { Button } from "components/ui/Button";
 import { ResultList } from "components/ui/ResultList";
 import {cryptoRandom} from "../../helpers/utility";
+import { FontResizer } from "components/ui/FontResizer";
 
 
 const Score = props => {
@@ -184,14 +185,16 @@ const Score = props => {
                                     <div className="title grid2" style={{textAlign: "left"}}>
                                         Select a topic
                                     </div>
-                                    {topics.map((topic)=> (
+                                    {topics.map((topic, index)=> (
                                         <div key={topic} className={'topicSelection'}>
                                             <GameButton 
                                             callback={() => fetchQuestion(topic)} 
                                             disabled={buttonClicked} 
                                             inactive={buttonClicked}
-                                            selected={chosenTopic == topic}>
-                                                {parseString(topic)}
+                                            selected={chosenTopic == topic}
+                                            text={parseString(topic)}
+                                            delay={index/10}
+                                            >
                                             </GameButton>
                                         </div>
                                     ))}
@@ -209,7 +212,7 @@ const Score = props => {
                     }
                 } else {
                     return (
-                        <div className="background-topic-waiting">
+                        <div className="background-topic-waiting bounce-intro" style={{animationDelay:'0.15s'}}>
                             <div className="topic">
                                 Your opponent is selecting a topic.
                             </div>
@@ -219,7 +222,7 @@ const Score = props => {
             }
         } else {
             return (
-                <div className="background-topic-waiting">
+                <div className="background-topic-waiting bounce-intro" style={{animationDelay:'0.1s'}}>
                     <div className="topic">
                         <div style={{ display: 'block' }}>
                             <p>Are you ready for the next question?</p>
@@ -242,35 +245,35 @@ const Score = props => {
                         <div className="title" style={{textAlign: "right"}}>
                             Player 2
                         </div>
-                        <div className="background-points">
-                            <div className = "player" style={{textAlign: "center"}}>
+                        <FontResizer className="background-points bounce-intro" style={{animationDelay:'0.05s'}}>
+                            <div className="player">
                                 {usernameInviting}
                             </div>
-                            <div className = "points-score" style={{textAlign: "center"}}>
+                            <div className="points-score">
                                 {result.invitingPlayerResult}
                             </div>
-                        </div>
-                        <div className="background-points">
-                            <div className = "player" style={{textAlign: "center"}}>
+                        </FontResizer>
+                        <FontResizer className="background-points bounce-intro" style={{animationDelay:'0.1s'}}>
+                            <div className="player">
                                 {usernameInvited}
                             </div>
-                            <div className = "points-score" style={{textAlign: "center"}}>
+                            <div className="points-score">
                                 {result.invitedPlayerResult}
                             </div>
-                        </div>
+                        </FontResizer>
                     </div>
                 )
             }
         } else if (result && usernameInviting){
             return(
-                <div className="background-points" >
+                <FontResizer className="background-points bounce-intro" style={{animationDelay:'0.05s'}}>
                     <div className = "player" style={{textAlign: "center"}}>
                         {usernameInviting}
                     </div>
                     <div className = "points-score" style={{textAlign: "center"}}>
                         {result.invitingPlayerResult}
                     </div>
-                </div>
+                </FontResizer>
             );
         }
     }
@@ -287,7 +290,7 @@ const Score = props => {
         if (playerMode == 'duel') {
             if (results && usernameInvited && usernameInviting) {
                 return (
-                    <div className="result-list-container grid grid-0">
+                    <div className="result-list-container grid grid-0 bounce-intro">
                         <ResultList style={{gridColumn:1}} results={pastResults(true)}/>
                         <ResultList style={{gridColumn:2}} results={pastResults(false)}/>
                     </div>
@@ -295,7 +298,7 @@ const Score = props => {
             }
         } else if (result && usernameInviting){
             return(
-                <div className="result-list-container grid-1 ">
+                <div className="result-list-container grid-1 bounce-intro">
                     <ResultList results={pastResults(true)}/>
                 </div>
             );
@@ -316,15 +319,15 @@ const Score = props => {
 
     const drawTitle = () => {
         if (parseInt(localStorage.getItem("question_nr")) <= 0) {
-            return <div className="display">Get Ready!</div>
+            return <div className="display" style={{fontSize:"100px", lineHeight:"50px"}}>Let's go!</div>
         }
     }
 
     return (
         <>
-            <GameHeader playerMode={playerMode} questionId={localStorage.getItem('question_nr')} showCancelButton={true} height="100"/>
-            {drawTitle()}
+            <GameHeader playerMode={playerMode} gameMode={gameMode} questionId={localStorage.getItem('question_nr')} showCancelButton={true} height="100"/>
             <div className="ScreenGrid-Score">
+                {drawTitle()}
                 {drawResults()}
                 {drawTotalResult()}
                 {drawTopics()}

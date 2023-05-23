@@ -20,10 +20,10 @@
         width:250px;
         height:250px;
         cursor: pointer;
-        animation:bobbing 1s infinite ease-in-out;
+        animation: bobbing 1s infinite ease-in-out;
 
         &:hover {
-            animation: boing 0.5s ease 1;
+            animation: upscale 0.3s ease 1 forwards;
         }
     }
 

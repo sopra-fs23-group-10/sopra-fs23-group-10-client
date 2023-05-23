@@ -34,7 +34,7 @@ export const Timer = props => {
                 if (props.timeOut) props.timeOut();
                 timeOut();
             }
-            if (props.getTime) props.getTime(currentTime + 1000);
+            if (props.getTime) props.getTime(currentTime);
             setRemainingTime(Math.round(currentTime/1000));
         }
     }
