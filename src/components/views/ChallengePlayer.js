@@ -1,5 +1,5 @@
-import React, {useEffect, useState, useRef} from 'react';
-import {answerInvite, createGame} from 'helpers/restApi';
+import React, {useEffect, useState} from 'react';
+import {answerInvite, createGame, handleError} from 'helpers/restApi';
 import {Link, useHistory, useParams} from 'react-router-dom';
 import 'styles/views/PopUp.scss';
 import BaseContainer from "components/ui/BaseContainer";

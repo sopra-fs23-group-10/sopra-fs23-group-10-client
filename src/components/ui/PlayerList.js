@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import "styles/ui/PlayerList.scss";
 import Player from "../ui/Player";
-import {useEffect, useImperativeHandle, useState, useRef, forwardRef} from 'react';
+import {useEffect, useState} from 'react';
 import { fetchOnlineUsers } from "helpers/restApi";
 import { useHistory } from "react-router-dom";
 
