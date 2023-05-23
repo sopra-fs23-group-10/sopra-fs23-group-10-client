@@ -133,7 +133,7 @@
   height: auto;
   left: calc(50% - 200px);
   right: calc(50% - 200px);
-  top: calc(50% - 200px);
+  top: calc(70% - 200px);
   z-index: 20;
   filter: drop-shadow(0px 0px 8px #00000032);
 
@@ -158,17 +158,18 @@
     grid-gap: 40px;
   }
 
-  .button-container {
-    width: 100%;
-    justify-self: end;
-  }
-
   .rank-placement {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    text-align: center;
+    z-index: 5;
+    font-family: $fontDisplay;
+    font-size: 50px;
+    position: relative;
+    cursor: pointer;
+    height:210px;
+    width:400px;
+    overflow: hidden;
+    background-color: transparent;
+    border-style: none;
+    margin-top: -80px;
   }
 
   .rank-column {
@@ -186,11 +187,14 @@
   }
 
   .timer-placement {
-    grid-row: 3;
-    grid-column: 1/-1;
+    position: absolute;
+    z-index: -1;
+
   }
   .timer-label{
-      color: black;
+      color: transparent;
+      position: absolute;
+      z-index: -1;
     }
   .accent {
     width: 180px;

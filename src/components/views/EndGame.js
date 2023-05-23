@@ -24,7 +24,6 @@ const EndGame = props => {
     const [rematchSent, setRematchSent] = useState(false);
     const [endedGame, setEndedGame] = useState(false);
     const [results, setResults] = useState(null);
-    const [oldRank, setOldRank] = useState(null);
     const [newRank, setNewRank] = useState(null);
 
     useEffect(() => {
@@ -32,7 +31,6 @@ const EndGame = props => {
             try {
                 const userData = await fetchUserById(localStorage.getItem('id'));
                 const myUser = new User(userData);
-                setOldRank(myUser.rank);
 
             } catch (error) {
                 history.push("/login");
@@ -312,35 +310,20 @@ const EndGame = props => {
         if (showPopUp){
             return (
                 <>
-                    <div className='invite-sent'>
-                        <div className="invitation overlay">
+                    <div className="RankUpdate">
+                        <img className='star' src={star} ></img>
+                        <div className="rank-placement">
+                            <p style={{color: 'white' }}>
+                                <strong>YOUR CURRENT RANK: <br />
+                                    {newRank} </strong>
+                            </p>
                         </div>
-                        <div className="RankUpdate base-container boing-intro">
-                            <div className="title-placement" style={{textAlign: "center"}}>
-                                <strong> Your updated rank: </strong>
+                        <div className="timer-placement" >
+                            <div className="timer-label">
+                                <Timer timeLimit={3} timeOut={ClosePopUp}/>
                             </div>
-                            <div className="rank-placement">
-                                    <p>
-                                        Your old rank: <br />
-                                        {oldRank}
-                                    </p>
-                            </div>
-                            <div className="rank-placement">
-                                <p style={{ fontSize: '18px', color: 'white' }}>
-                                    <strong>Your new rank: <br />
-                                        {newRank} </strong>
-                                </p>
-                                <img className='star accent' src={star}></img>
-                            </div>
-                            <div className="timer-placement" >
-                                <div className="button-container" >
-                                    <Timer timeLimit={3} timeOut={ClosePopUp}/>
-                                </div>
-                            </div>
-
                         </div>
                     </div>
-
                 </>)
         }
     }
