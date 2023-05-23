@@ -52,40 +52,48 @@ export const StarPlayerList = props => {
     }, []);
 
     let userList = <div>waiting</div>;
+    let starPlayers = [];
 
     if (users) {
         userList = (
             <ul className="user-list">
-                {users.map(user => {
-                    if (rank < 1 || rank >10) {
-                        return (
-                            <>
-                                <StarPlayer
-                                    user={user}
-                                    key={user.id}
-                                    action={props.action}
-                                    charNr={props.charNr}
-                                />
-                            </>
-                        );
-                    } else if (user.id === currentUserId){
+                {users.map((user) => {
+                    if (user.id === currentUserId) {
                         return (
                             <div className="highlight-background" key={user.id}>
                                 <StarPlayer user={user} key={user.id} action={props.action} />
                             </div>
                         );
-                    } else{
+                    } else {
                         return (
                             <StarPlayer user={user} key={user.id} action={props.action} />
-                        )
+                        );
                     }
                 })}
             </ul>
         );
     }
 
-    return userList;
-}
+    return (
+        <>
+            {userList}
+            {rank < 1 || rank > 10 ? (
+                <div className="StarPlayer container" style={{ backgroundColor: 'lightgrey', borderRadius: '12px' }}>
+                    <div className="StarPlayer rank">#{rank}</div>
+                    <div style={{ height: '20px' }}></div>
+                    <Identicon className="player profile-picture" string={profilePicture} />
+                    <div className="StarPlayer username">{username}</div>
+                    <div className="StarPlayer points">POINTS: {points}</div>
+                </div>
+            ) : (
+                <div>
+                </div>
+            )}
+        </>
+    );
+};
+
+
 
 StarPlayerList.propTypes = {
     callback: PropTypes.func,
