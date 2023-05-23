@@ -9,7 +9,7 @@
 - [Introduction](#introduction)
 - [Built With](#built-with)
 - [Main Components](#main-components)
-- [Launch](#launch)
+- [Deploy Locally with NPM](#deploy-locally-with-npm)
 - [Deployment](#deployment)
 - [Illustrations](#illustrations)
 - [Roadmap](#roadmap)
