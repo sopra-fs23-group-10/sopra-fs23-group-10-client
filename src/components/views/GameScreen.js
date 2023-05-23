@@ -222,7 +222,6 @@ const GameScreen = () => {
     }
 
     const showResultText = () => {
-        console.log(gameMode == 'text');
         if (gameMode == 'text') {
             return showResult();
         }

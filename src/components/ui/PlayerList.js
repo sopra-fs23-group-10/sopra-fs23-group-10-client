@@ -1,29 +1,30 @@
 import PropTypes from "prop-types";
 import "styles/ui/PlayerList.scss";
 import Player from "../ui/Player";
-import {useEffect, useState} from 'react';
+import {useEffect, useImperativeHandle, useState, useRef, forwardRef} from 'react';
 import { fetchOnlineUsers } from "helpers/restApi";
 import { useHistory } from "react-router-dom";
 
 
 export const PlayerList = props => {
-    const history = useHistory;
+    const history = useHistory();
     const [users, setUsers] = useState(null);
 
     useEffect(() => {
-        async function fetchData() {
-            try {
-                const response = await fetchOnlineUsers();
-                setUsers(response.data);
-                if (props.callback) props.callback(response.data);
-            } catch (error) {
-                history.push("/login");
-            }
-        }
         fetchData().catch(error => {
             console.error(error);
         });
-    }, []);
+    }, [props.refresh]);
+
+    const fetchData = async() => {
+        try {
+            const response = await fetchOnlineUsers();
+            setUsers(response.data);
+            if (props.callback) props.callback(response.data);
+        } catch (error) {
+            history.push("/login");
+        }
+    }
 
     let userList = <div>waiting</div>;
 
@@ -51,5 +52,6 @@ export const PlayerList = props => {
 PlayerList.propTypes = {
     callback: PropTypes.func,
     action: PropTypes.func,
-    charNr: PropTypes.number
+    charNr: PropTypes.number,
+    refresh: PropTypes.number
 };

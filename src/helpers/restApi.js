@@ -145,15 +145,11 @@ export const fetchOnlineUsers = async () => {
 
 export const createGame = async (invitedUserId, quizType, modeType) => {
   console.log("create game quizType: " + quizType);
-  try {
-    const invitingUserId = localStorage.getItem('id');
-    const authToken = localStorage.getItem('token');
-    const requestBody = JSON.stringify({invitingUserId, invitedUserId, quizType, modeType});
-    const response = await restApi.post('/games', requestBody, {headers: {token: authToken}});
-    return response.data;
-  } catch (error) {
-    throw new Error(`Something went wrong during game creation: \n${handleError(error)}`);
-  }
+  const invitingUserId = localStorage.getItem('id');
+  const authToken = localStorage.getItem('token');
+  const requestBody = JSON.stringify({invitingUserId, invitedUserId, quizType, modeType});
+  const response = await restApi.post('/games', requestBody, {headers: {token: authToken}});
+  return response.data;
 };
 
 export const answerInvite = async (gameId, answer) => {
