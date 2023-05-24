@@ -78,10 +78,10 @@ export const StarPlayerList = props => {
         <>
             {userList}
             {rank < 1 || rank > 10 ? (
-                <div className="StarPlayer container" style={{ backgroundColor: 'lightgrey', borderRadius: '12px' }}>
+                <div className="StarPlayer container own-user" style={{ backgroundColor: 'lightgrey', borderRadius: '12px'}}>
                     <div className="StarPlayer rank">#{rank}</div>
                     <div style={{ height: '20px' }}></div>
-                    <Identicon className="player profile-picture" string={profilePicture} />
+                    <Identicon className="StarPlayer profile-picture" string={profilePicture} />
                     <div className="StarPlayer username">{username}</div>
                     <div className="StarPlayer points">POINTS: {points}</div>
                 </div>
