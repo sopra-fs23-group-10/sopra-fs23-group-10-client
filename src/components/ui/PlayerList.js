@@ -30,7 +30,7 @@ export const PlayerList = props => {
 
     if (users) {
         userList = (
-            <ul className="user-list">
+            <ul style={props.style ? {...props.style} : {}} className="user-list">
                 {users.map((user, index) => {
                     return user.id != localStorage.getItem('id') ?
                         <Player
