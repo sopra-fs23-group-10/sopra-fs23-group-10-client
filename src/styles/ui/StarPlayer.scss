@@ -6,31 +6,42 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 10px;
+    padding: 20px;
+    position: relative;
   }
   &.username {
     padding-right: 8px;
     justify-self: left;
     white-space: nowrap;
+    position: absolute;
+    left: 115px
   }
-  &.profile-picture {
+  .profile-picture {
     height: $base_padding !important;
     width: $base_padding !important;
     background-color: lightgray;
     border-radius: 100%;
     justify-self: left;
-    pointer-events: auto;
-
+    white-space: nowrap;
+    position: absolute;
+    left: 55px
   }
   &.rank {
+    position: absolute;
+    left: 10px;
     color: black;
     font-weight: bold;
-    justify-self: left;
+
   }
   &.points {
     margin-left: auto;
     text-align: left;
     width: 100px;
   }
+
+  &.own-user {
+    position: sticky;
+    bottom: 0;
+    z-index: 1; }
 
 }
