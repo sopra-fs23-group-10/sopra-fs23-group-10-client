@@ -132,9 +132,7 @@ const Home = () => {
             <div className='home container'>
                 <BaseContainer className="home user-container bounce-intro">
                     <h3>Active Users</h3>
-                    <div className='scroll-container'>
-                        <PlayerList callback={getUsers} charNr={10} refresh={0}/>
-                    </div>
+                    <PlayerList style={{height:"100%", overflow:"scroll", position:"relative", zIndex:"5"}} callback={getUsers} charNr={10} refresh={0}/>
                 </BaseContainer>
                 <div className='home start-game-container'>
                     {startGameMenu()}

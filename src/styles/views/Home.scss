@@ -25,9 +25,7 @@
     grid-row: 1;
     width: 100%;
     max-height: 100%;
-    overflow: hidden;
     margin: 0px;
-    overflow-y: scroll;
   }
   &.start-game-container{
     grid-column-start: 1;
@@ -42,11 +40,6 @@
     &.user-container {
       display: none;
     }
-  }
-  .scroll-container {
-    height:100%;
-    width:100%;
-    overflow: auto;
   }
   &.start-game-button {
     z-index: 5;
