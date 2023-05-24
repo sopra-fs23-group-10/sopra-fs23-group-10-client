@@ -327,7 +327,7 @@ const EndGame = props => {
                         <img className='star' src={star} ></img>
                         <div className="rank-placement">
                             <p style={{color: 'white' }}>
-                                <strong>YOUR CURRENT RANK: <br />
+                                <strong>YOUR RANK: <br />
                                     {newRank} </strong>
                             </p>
                         </div>
