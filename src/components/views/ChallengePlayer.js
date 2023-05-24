@@ -160,7 +160,7 @@ const ChallengePlayer = props => {
                             <Button
                                 width="100%"
                                 onClick={() => challengeRandomUser()}
-                                disabled={users == null}
+                                disabled={users == null || users.length < 2}
                             >
                                 Random
                             </Button>
