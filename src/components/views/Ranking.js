@@ -19,7 +19,7 @@ const Ranking = props => {
         <>
             <ReceiveInvitation/>
             <HomeHeader height="100"/>
-            <BaseContainer className="popup container boing-intro">
+            <BaseContainer style={{marginBottom:"0px"}} className="popup container boing-intro">
                 <div className="rulesGrid">
                     <div className="title_location">
                         <div className ="title" style={{textAlign: "center"}}>
