@@ -23,7 +23,7 @@ const Ranking = props => {
                 <div className="rulesGrid">
                     <div className="title_location">
                         <div className ="title" style={{textAlign: "center"}}>
-                            <strong> STAR PLAYERS </strong>
+                            <strong> TOP 10 STAR PLAYERS </strong>
                         </div>
                     </div>
                     <div className="content_location">

@@ -115,7 +115,7 @@ const GameHeader = props => {
             </div>
             <div className="gamecontentheader fontnormal" style={{textAlign: "left"}}>
                 <p>
-                    Score <br />
+                    Round <br />
                     {props.questionId}/{localStorage.getItem('total_questions')}
                 </p>
             </div>

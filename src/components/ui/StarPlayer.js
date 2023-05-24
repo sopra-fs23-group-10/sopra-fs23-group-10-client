@@ -7,6 +7,10 @@ const StarPlayer = ({user, charNr}) => {
         return (name.length > n) ? name.slice(0, n-1) + '...' : name;
     }
 
+    if (user.rank > 10) {
+        return null;
+    }
+
     return (
         <div className="StarPlayer container">
             <div className="StarPlayer rank">#{user.rank}</div>
